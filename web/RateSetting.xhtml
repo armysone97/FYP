@@ -3,163 +3,163 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-          <title>STEM CS Valitation Programme</title>
+        <title>STEM CS Valitation Programme</title>
         <style type="text/css"> 
-             #smallButton{
-            font-size: 25px;
-            column-width: 10px;
-            width: 200px;
-            height: 40px;
-        }
-        
-        #ddlYear{
-            font-size: 25px;
-            column-width: 10px;
-            width: 200px;
-            height: 40px;
-        }
-        
-         #txtbox {
-         font-size: 18pt;
-         height: 35px;
-         width : 100px;
-        }
+            #smallButton{
+                font-size: 25px;
+                column-width: 10px;
+                width: 200px;
+                height: 40px;
+            }
+
+            #ddlYear{
+                font-size: 25px;
+                column-width: 10px;
+                width: 200px;
+                height: 40px;
+            }
+
+            #txtbox {
+                font-size: 18pt;
+                height: 35px;
+                width : 100px;
+            }
 
         </style>
     </h:head>
-    
+
     <h:body>
         <div align="center">
-        <h1>STEM CS VALITATION PROGRAMME</h1>
-        <h1>RATE SETTING</h1>
-    <form name="RateSetting" id="RateSetting">
-        <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
-            
-             <tr>
-            <th colspan="2" align="right"><input id="smallButton" type="submit" value="Log out" class="button" /><br /></th>
-            </tr> 
-            
-            <tr>
-             <th><label>&nbsp;</label></th>
-             <th><label>&nbsp;</label></th> 
-            </tr>
-            
-            <tr>
-                <th colspan="2" align="left"> <label for="year"><font size="5" >Year: </font></label>
-             <select id="ddlYear"> <!--SHOULD NOT BE HARD CODE-->
-                    <option value="y2018">2018</option>
-                    <option value="y2017">2017</option>
-                    <option value="y2016">2016</option>
-                    <option value="y2015">2015</option>
-                </select>
-            </th>
-            </tr>   
-            
-            <tr>
-             <th><label>&nbsp;</label></th>
-             <th><label>&nbsp;</label></th> 
-            </tr>
-        </table>
-        
-        <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
-            <tr>
-             <th align="left"><label for="MaxNumSampleAss"><font size="5" >Set maximum number samples assessment <br /> (per CS Level per teacher) </font></label></th>
-              <th align="left"><label for="simbol"><font size="5" >: </font></label><input id="txtbox" name="MaxNumSampleAss" type="text" autofocus="autofocus" required="required" size="3"/></th>
-             </tr> 
-             
-           <tr>
-             <th rowspan="2" align="left"><label for="HourlyRate"><font size="5" >Set hourly rate </font></label></th>
-              <th align="right">
-                  <label for="simbol"><font size="5" >: Master Trainer</font>
-                  </label><input id="txtbox" name="HourlyRateM" type="text" required="required" size="3"/>
-                  <label for="simbol"><font size="5" >  /hr</font></label>
-              </th>
-             </tr> 
-            
-             <tr>
-            <th align="right">
-                <label for="simbol"><font size="5" > &nbsp; Evaluator</font></label> 
-                <input id="txtbox" name="HourlyRateE" type="text" required="required" size="3"/>
-                <label for="simbol"><font size="5" >  /hr</font></label>
-            </th>
-             </tr> 
-             
-             <tr>
-             <th align="left"><label for="RateOfMileage"><font size="5" >Set rate of mileage </font></label></th>
-              <th align="left">
-                  <label for="simbol"><font size="5" >: </font></label>
-                  <input id="txtbox" name="MaxNumSampleAss" type="text" required="required" size="3"/>
-              <label for="simbol"><font size="5" >  /km</font></label>
-              </th>
-             </tr> 
-            
-            <tr>
-             <th colspan="2" align="left"><label for="SetAssMin"><font size="5" >Set assessment minutes <br /> (per student) </font></label></th>
-             </tr> 
-             
-        </table>
- 
-        
-        
-         <table border="1" cellpadding="10px" cellspacing="0" width="800px" align="center">
-            <tr>
-             <th rowspan="2"><label for="CSLevel"><font size="5" >CS Levels </font></label></th>
-             <th colspan="2"><label for="Formative"><font size="5" >Formative </font></label></th>
-            <th colspan="2"><label for="Summative"><font size="5" >Summative </font></label></th>
-            </tr> 
-            
-            <tr>
-             <td align="center"><label for="Project"><font size="5" >Project </font></label></td>
-             <td align="center"><label for="Collaboration"><font size="5" >Collaboration </font></label></td>
-            <td align="center"><label for="Practical"><font size="5" >Practical </font></label></td>
-             <td align="center"><label for="Groupwork"><font size="5" >Groupwork </font></label></td>
-           </tr> 
-            
-            <!--BELOW SHOULD NOT BE HARD CODE-->
-            
-             <tr>
-             <td><input id="txtbox" name="cslvl" type="text" placeholder="CS1" autofocus="autofocus" required="required" size="10" value="CS1"/></td>
-             <td align="center"> <input id="txtbox" name="txtbox1" type="text" required="required" size="3"/></td>
-           <td align="center"> <input id="txtbox" name="txtbox2" type="text" required="required" size="3"/></td>
-           <td align="center"> <input id="txtbox" name="txtbox3" type="text" required="required" size="3"/></td>
-           <td align="center"> <input id="txtbox" name="txtbox4" type="text" required="required" size="3"/></td>
-           </tr> 
-            
-              <tr>
-             <td><input id="txtbox" name="cslvl" type="text" placeholder="CS1" required="required" size="10" value="CS2"/></td>
-            <td align="center"> <input id="txtbox" name="txtbox1" type="text" required="required" size="3"/></td>
-           <td align="center"> <input id="txtbox" name="txtbox2" type="text" required="required" size="3"/></td>
-           <td align="center"> <input id="txtbox" name="txtbox3" type="text" required="required" size="3"/></td>
-           <td align="center"> <input id="txtbox" name="txtbox4" type="text" required="required" size="3"/></td>
-           </tr> 
-            
-              <tr>
-             <td><input id="txtbox" name="cslvl" type="text" placeholder="CS1" required="required" size="10" value="CS3"/></td>
-              <td align="center"> <input id="txtbox" name="txtbox1" type="text" required="required" size="3"/></td>
-           <td align="center"> <input id="txtbox" name="txtbox2" type="text" required="required" size="3"/></td>
-           <td align="center"> <input id="txtbox" name="txtbox3" type="text" required="required" size="3"/></td>
-           <td align="center"> <input id="txtbox" name="txtbox4" type="text" required="required" size="3"/></td>
-           </tr> 
-        </table>  
-        
-        
-         <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
-            
-             <tr>
-             <th><label>&nbsp;</label></th>
-             <th><label>&nbsp;</label></th> 
-            </tr>
-             
-             <tr>
-            <th align="left"><input id="smallButton" type="submit" value="Cancel" class="button" /><br /></th>
-            <th align="right"><input id="smallButton" type="reset" value="Reset" class="button" /><br /></th>
-            <th align="right"><input id="smallButton" type="submit" value="Confirm" class="button" /><br /></th>
-            </tr> 
-           
-        </table>
-        
-        </form>
-</div>
+            <h1>STEM CS VALITATION PROGRAMME</h1>
+            <h1>RATE SETTING</h1>
+            <form name="RateSetting" id="RateSetting">
+                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
+
+                    <tr>
+                        <th colspan="2" align="right"><input id="smallButton" type="submit" value="Log out" class="button" /><br /></th>
+                    </tr> 
+
+                    <tr>
+                        <th><label>&nbsp;</label></th>
+                        <th><label>&nbsp;</label></th> 
+                    </tr>
+
+                    <tr>
+                        <th colspan="2" align="left"> <label for="year"><font size="5" >Year: </font></label>
+                            <select id="ddlYear"> <!--SHOULD NOT BE HARD CODE-->
+                                <option value="y2018">2018</option>
+                                <option value="y2017">2017</option>
+                                <option value="y2016">2016</option>
+                                <option value="y2015">2015</option>
+                            </select>
+                        </th>
+                    </tr>   
+
+                    <tr>
+                        <th><label>&nbsp;</label></th>
+                        <th><label>&nbsp;</label></th> 
+                    </tr>
+                </table>
+
+                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
+                    <tr>
+                        <th align="left"><label for="MaxNumSampleAss"><font size="5" >Set maximum number samples assessment <br /> (per CS Level per teacher) </font></label></th>
+                        <th align="left"><label for="simbol"><font size="5" >: </font></label><input id="txtbox" name="MaxNumSampleAss" type="text" autofocus="autofocus" required="required" size="3"/></th>
+                    </tr> 
+
+                    <tr>
+                        <th rowspan="2" align="left"><label for="HourlyRate"><font size="5" >Set hourly rate </font></label></th>
+                        <th align="right">
+                            <label for="simbol"><font size="5" >: Master Trainer</font>
+                            </label><input id="txtbox" name="HourlyRateM" type="text" required="required" size="3"/>
+                            <label for="simbol"><font size="5" >  /hr</font></label>
+                        </th>
+                    </tr> 
+
+                    <tr>
+                        <th align="right">
+                            <label for="simbol"><font size="5" > &nbsp; Evaluator</font></label> 
+                            <input id="txtbox" name="HourlyRateE" type="text" required="required" size="3"/>
+                            <label for="simbol"><font size="5" >  /hr</font></label>
+                        </th>
+                    </tr> 
+
+                    <tr>
+                        <th align="left"><label for="RateOfMileage"><font size="5" >Set rate of mileage </font></label></th>
+                        <th align="left">
+                            <label for="simbol"><font size="5" >: </font></label>
+                            <input id="txtbox" name="MaxNumSampleAss" type="text" required="required" size="3"/>
+                            <label for="simbol"><font size="5" >  /km</font></label>
+                        </th>
+                    </tr> 
+
+                    <tr>
+                        <th colspan="2" align="left"><label for="SetAssMin"><font size="5" >Set assessment minutes <br /> (per student) </font></label></th>
+                    </tr> 
+
+                </table>
+
+
+
+                <table border="1" cellpadding="10px" cellspacing="0" width="800px" align="center">
+                    <tr>
+                        <th rowspan="2"><label for="CSLevel"><font size="5" >CS Levels </font></label></th>
+                        <th colspan="2"><label for="Formative"><font size="5" >Formative </font></label></th>
+                        <th colspan="2"><label for="Summative"><font size="5" >Summative </font></label></th>
+                    </tr> 
+
+                    <tr>
+                        <td align="center"><label for="Project"><font size="5" >Project </font></label></td>
+                        <td align="center"><label for="Collaboration"><font size="5" >Collaboration </font></label></td>
+                        <td align="center"><label for="Practical"><font size="5" >Practical </font></label></td>
+                        <td align="center"><label for="Groupwork"><font size="5" >Groupwork </font></label></td>
+                    </tr> 
+
+                    <!--BELOW SHOULD NOT BE HARD CODE-->
+
+                    <tr>
+                        <td><input id="txtbox" name="cslvl" type="text" placeholder="CS1" autofocus="autofocus" required="required" size="10" value="CS1"/></td>
+                        <td align="center"> <input id="txtbox" name="txtbox1" type="text" required="required" size="3"/></td>
+                        <td align="center"> <input id="txtbox" name="txtbox2" type="text" required="required" size="3"/></td>
+                        <td align="center"> <input id="txtbox" name="txtbox3" type="text" required="required" size="3"/></td>
+                        <td align="center"> <input id="txtbox" name="txtbox4" type="text" required="required" size="3"/></td>
+                    </tr> 
+
+                    <tr>
+                        <td><input id="txtbox" name="cslvl" type="text" placeholder="CS1" required="required" size="10" value="CS2"/></td>
+                        <td align="center"> <input id="txtbox" name="txtbox1" type="text" required="required" size="3"/></td>
+                        <td align="center"> <input id="txtbox" name="txtbox2" type="text" required="required" size="3"/></td>
+                        <td align="center"> <input id="txtbox" name="txtbox3" type="text" required="required" size="3"/></td>
+                        <td align="center"> <input id="txtbox" name="txtbox4" type="text" required="required" size="3"/></td>
+                    </tr> 
+
+                    <tr>
+                        <td><input id="txtbox" name="cslvl" type="text" placeholder="CS1" required="required" size="10" value="CS3"/></td>
+                        <td align="center"> <input id="txtbox" name="txtbox1" type="text" required="required" size="3"/></td>
+                        <td align="center"> <input id="txtbox" name="txtbox2" type="text" required="required" size="3"/></td>
+                        <td align="center"> <input id="txtbox" name="txtbox3" type="text" required="required" size="3"/></td>
+                        <td align="center"> <input id="txtbox" name="txtbox4" type="text" required="required" size="3"/></td>
+                    </tr> 
+                </table>  
+
+
+                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
+
+                    <tr>
+                        <th><label>&nbsp;</label></th>
+                        <th><label>&nbsp;</label></th> 
+                    </tr>
+
+                    <tr>
+                        <th align="left"><input id="smallButton" type="submit" value="Cancel" class="button" /><br /></th>
+                        <th align="right"><input id="smallButton" type="reset" value="Reset" class="button" /><br /></th>
+                        <th align="right"><input id="smallButton" type="submit" value="Confirm" class="button" /><br /></th>
+                    </tr> 
+
+                </table>
+
+            </form>
+        </div>
     </h:body>
 </html>
 

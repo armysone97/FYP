@@ -1,0 +1,255 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <style type="text/css"> 
+            #smallButton{
+                font-size: 25px;
+                column-width: 10px;
+                width: 200px;
+                height: 40px;
+            }
+
+            #ddlYear{
+                font-size: 25px;
+                column-width: 10px;
+                width: 200px;
+                height: 40px;
+            }
+
+            #txtbox {
+                font-size: 18pt;
+                height: 35px;
+                width : 300px;
+            }
+
+            #txtboxSmall {
+                font-size: 18pt;
+                height: 35px;
+                width : 100px;
+            }
+
+            #txtboxSmaller {
+                font-size: 18pt;
+                height: 35px;
+                width : 80px;
+            }
+
+            #radiobutton { 
+                width: 2em; 
+                height: 2em; 
+            }
+
+            /* List View */  
+
+            * {
+                box-sizing: border-box;
+            }
+
+            /* Create two equal columns that floats next to each other */
+            .column {
+                float: left;
+                width: 50%;
+                padding: 10px;
+            }
+
+            /* Clear floats after the columns */
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+            /* Style the buttons */
+            .btn {
+                border: none;
+                outline: none;
+                padding: 12px 16px;
+                background-color: #f1f1f1;
+                cursor: pointer;
+            }
+
+            .btn:hover {
+                background-color: #ddd;
+            }
+
+            .btn.active {
+                background-color: #666;
+                color: white;
+            }
+
+        </style>
+    </h:head>
+    <h:body>
+        <div align="center">
+            <h1>STEM CS VALITATION PROGRAMME</h1>
+            <h1>EvaluatorWorkloadAllocationApplication</h1>
+            <form name="EvaluatorWorkloadAllocationApplication" id="EvaluatorWorkloadAllocationApplication">
+                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
+
+                    <tr>
+                        <th colspan="4" align="right"><input id="smallButton" type="submit" value="Log out" class="button" /><br /></th>
+                    </tr> 
+
+                    <tr>
+                        <th><label>&nbsp;</label></th>
+                        <th><label>&nbsp;</label></th> 
+                    </tr>
+                </table> 
+
+                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center" style="float: left;">
+
+                    <tr>
+                        <th align="left"> <label for="evaluator"><font size="5" >Evaluator </font></label></th>
+                        <th align="left"><label for="simbol"><font size="5" >: </font></label>
+                            <select id="ddlYear"> <!--SHOULD NOT BE HARD CODE-->
+                                <option value="evaluator">A1</option>
+                                <option value="evaluator">B2</option>
+                                <option value="evaluator">C3</option>
+                                <option value="evaluator">D4</option>
+                            </select>
+                        </th>
+                    </tr>   
+
+                    <tr>
+                        <th align="left"> <label for="state"><font size="5" >Please Select School </font></label></th>
+                        <th align="left"><label for="simbol"><font size="5" >: </font></label>
+                            <select id="ddlYear"> <!--SHOULD NOT BE HARD CODE-->
+                                <option value="school">SMK Air Itam</option>
+                                <option value="school">SMK Air Hitam</option>
+                                <option value="school">SMK Air Putih</option>
+                                <option value="school">SMK Air Merah</option>
+                            </select>
+                        </th>
+                    </tr>   
+
+                    <tr>
+                        <th align="left"> <label for="CSLevel"><font size="5" >CS Level</font></label></th>
+                        <th align="left"><label for="simbol"><font size="5" >: </font></label>
+                            <select id="ddlYear"> <!--SHOULD NOT BE HARD CODE-->
+                                <option value="cs1">CS 1</option>
+                                <option value="cs2">CS 2</option>
+                                <option value="cs3">CS 3</option>
+                                <option value="cs4">CS 4</option>
+                            </select>
+                        </th>
+                    </tr>   
+
+                    <tr>
+                        <th align="left"> <label for="teacher"><font size="5" >Select Teacher </font></label></th>
+                        <th align="left"><label for="simbol"><font size="5" >: </font></label>
+                            <select id="ddlYear"> <!--SHOULD NOT BE HARD CODE-->
+                                <option value="teacher">Lee Mei Mei</option>
+                                <option value="teacher">Wong Siew Siew</option>
+                                <option value="teacher">Teoh Ying Ying</option>
+                                <option value="teacher">Teh Wan Wan</option>
+                            </select>
+                        </th>
+                    </tr>   
+
+                    <tr>
+                        <th align="left"><label for="totalStudent"><font size="5" >Total Student</font></label></th>
+                        <th align="left">
+                            <label for="simbol"><font size="5" >: </font></label>
+                            <input id="txtboxSmall" name="totalStudent" type="text" required="required" size="30"/>
+                        </th>
+                    </tr> 
+
+                </table>   
+
+
+                <table border="0" cellpadding="10px" cellspacing="0" width="500px" align="center" style="float: right;">
+
+                    <tr>
+                        <th align="left"><label for="workloadLimit"><font size="5" >Workload Limit</font></label></th>
+                        <th align="left">
+                            <label for="simbol"><font size="5" >: </font></label>
+                            <input id="txtboxSmall" name="workloadLimit" type="text" required="required" size="30"/>
+                            <label for="hr"><font size="5" >hours </font></label>
+                        </th>
+                    </tr> 
+
+                    <tr>
+                        <th align="left"><label for="workloadAssigned"><font size="5" >Workload Assigned</font></label></th>
+                        <th align="left">
+                            <label for="simbol"><font size="5" >: </font></label>
+                            <input id="txtboxSmall" name="workloadAssigned" type="text" required="required" size="30"/>
+                            <label for="hr"><font size="5" >hours </font></label>
+                        </th>
+                    </tr> 
+                </table>
+
+                <fieldset style="display: inline-block">
+                    <legend id="assessmentType" align="left"><font size="5" align="left">Assessment Type</font></legend>
+                    <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="left" >
+
+                        <tr>
+                            <th colspan="2" align="left"><label for="Formative"><font size="5" >Formative Assessment</font></label></th>
+                            <th colspan="2" align="left"><label for="Summative"><font size="5" >Summative Assessment</font></label></th>
+                        </tr> 
+
+
+                        <tr>
+                            <th colspan="2" align="left"><input id="radiobutton" type="radio" name="collaboration" value="collaboration" size="30px" /><font size="5">Collaboration</font></th>
+                            <th colspan="2" align="left"><input id="radiobutton" type="radio" name="groupWork" value="groupWork" size="30px" /><font size="5">Group Work</font></th>
+                        </tr> 
+
+                        <tr>
+                            <th colspan="2" align="left"><input id="radiobutton" type="radio" name="project" value="project" size="30px" /><font size="5">Project</font></th>
+                            <th colspan="2" align="left"><input id="radiobutton" type="radio" name="practical" value="practical" size="30px" /><font size="5">Practical</font></th>
+                        </tr> 
+
+                    </table>
+                </fieldset>
+
+                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">    
+                    <tr>
+                        <th><label>&nbsp;</label></th>
+                        <th><label>&nbsp;</label></th> 
+                    </tr>
+
+                    <tr>
+                        <th colspan="3" align="right"><input id="smallButton" type="reset" value="Reset" class="button" /><br /></th>
+                        <th align="right"><input onclick="listView()" id="smallButton" type="submit" value="Add" class="button" /><br /></th>
+                    </tr>
+                </table>
+
+            </form>
+        </div>
+
+        <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
+
+            <tr>
+                <th align="left"><label for="workloadLimit"><font size="5" >Workload List</font></label></th>
+            </tr> 
+            <tr>
+                <th align="left"><div class="row" width="800px">
+                        <div class="column" style="background-color:#aaa;">
+                            <h2>Column 1</h2>
+                            <p>Some text..</p>
+                        </div></div></th>
+            </tr> 
+            <tr>
+                <th align="left"><div class="row" width="800px">
+                        <div class="column" style="background-color:#aaa;">
+                            <h2>Column 2</h2>
+                            <p>Some text..</p>
+                        </div></div></th>
+            </tr> 
+
+        </table>
+
+        <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">    
+            <tr>
+                <th><label>&nbsp;</label></th>
+                <th><label>&nbsp;</label></th> 
+            </tr>
+
+            <tr>
+                <th align="left"><input id="smallButton" type="submit" value="Cancel" class="button" /><br /></th>
+                <th align="right"><input onclick="listView()" id="smallButton" type="submit" value="Confirm" class="button" /><br /></th>
+            </tr>
+        </table>
+    </h:body>
+</html>
+

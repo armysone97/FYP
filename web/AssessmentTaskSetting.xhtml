@@ -1,29 +1,42 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>STEM CS Valitation Programme</title>
         <style type="text/css"> 
-            #smallButton{
+            
+             .buttonStyle{
                 font-size: 25px;
                 column-width: 10px;
                 width: 200px;
                 height: 40px;
             }
 
-            #ddlYear{
-                font-size: 25px;
+            .ddlStyle{
+                font-size: 20px;
                 column-width: 10px;
                 width: 200px;
                 height: 40px;
             }
 
-            #txtbox {
+            .txtboxStyle {
                 font-size: 18pt;
                 height: 35px;
                 width : 200px;
             }
+
+            .lblStyle{
+                font-size: 20pt;
+            }
+            
+            
+      /*      #txtbox {
+                font-size: 18pt;
+                height: 35px;
+                width : 200px;
+            } */
 
         </style>
     </h:head>
@@ -31,11 +44,13 @@
         <div align="center">
             <h1>STEM CS VALITATION PROGRAMME</h1>
             <h1>ASSESSMENT TASK SETTING</h1>
-            <form name="AssessmentTaskSetting" id="CSLevelSetting">
+            <h:form id="CSLevelSetting">
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
                     <tr>
-                        <th colspan="4" align="right"><input id="smallButton" type="submit" value="Log out" class="button" /><br /></th>
+                        <th colspan="4" align="right">         
+                            <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle" action="Login"/>
+                       </th>
                     </tr> 
 
                     <tr>
@@ -44,24 +59,32 @@
                     </tr>
 
                     <tr>
-                        <th colspan="4" align="left"> <label for="year"><font size="5" >Year: </font></label>
-                            <select id="ddlYear"> <!--SHOULD NOT BE HARD CODE-->
-                                <option value="y2018">2018</option>
-                                <option value="y2017">2017</option>
-                                <option value="y2016">2016</option>
-                                <option value="y2015">2015</option>
-                            </select>
+                        <th colspan="4" align="left">
+                          <h:outputText id="lblYear" value="Year : "  styleClass="lblStyle"/>
+                            
+                               <h:selectOneMenu styleClass="ddlStyle">
+                                <f:selectItem itemValue = "2018" itemLabel = "2018" /> 
+                                <f:selectItem itemValue = "2017" itemLabel = "2017" /> 
+                                <f:selectItem itemValue = "2016" itemLabel = "2016" /> 
+                                <f:selectItem itemValue = "2015" itemLabel = "2015" /> 
+                            </h:selectOneMenu>  
                         </th>
                     </tr>   
 
                     <tr>
-                        <th colspan="4" align="left"> <label for="CSLevel"><font size="5" >CS Level: </font></label>
-                            <select id="ddlYear"> <!--SHOULD NOT BE HARD CODE-->
-                                <option value="cs1">CS 1</option>
-                                <option value="cs2">CS 2</option>
-                                <option value="cs3">CS 3</option>
-                                <option value="cs4">CS 4</option>
-                            </select>
+                        <th colspan="4" align="left"> 
+                            
+                            
+                                <h:outputText id="lblCSLevel" value="CS Level : "  styleClass="lblStyle"/>
+                            
+                               <h:selectOneMenu styleClass="ddlStyle">
+                                <f:selectItem itemValue = "CS1" itemLabel = "CS 1" /> 
+                                <f:selectItem itemValue = "CS2" itemLabel = "CS 2" /> 
+                                <f:selectItem itemValue = "CS3" itemLabel = "CS 3" /> 
+                                <f:selectItem itemValue = "CS4" itemLabel = "CS 4" /> 
+                            </h:selectOneMenu>  
+                            
+                           
                         </th>
                     </tr>   
 
@@ -73,22 +96,22 @@
 
                 <table border="1" cellpadding="10px" cellspacing="0" width="800px" align="center">
                     <tr>
-                        <th colspan="2" align="center"><label for="Formative"><font size="5" >Formative </font></label></th>
-                        <th colspan="2" align="center"><label for="Summative"><font size="5" >Summative</font></label></th>
+                         <th colspan="2"><h:outputText id="lblFormative" value="Formative"  styleClass="lblStyle"/></th>
+                        <th colspan="2"><h:outputText id="lblSummative" value="Summative"  styleClass="lblStyle"/></th>
+                     </tr> 
+
+                    <tr>
+                       <td align="left"><h:outputText id="lblProject" value="Project"  styleClass="lblStyle"/></td>
+                         <th align="left"> <h:inputText id="txtProject" styleClass="txtboxStyle" required="required" size="20"/></th>
+                        <td align="left"><h:outputText id="lblPractical" value="Practical"  styleClass="lblStyle"/></td>
+                       <th align="left"><h:inputText id="txtPractical" styleClass="txtboxStyle" required="required" size="20"/></th>
                     </tr> 
 
                     <tr>
-                        <th align="left"><label for="Project"><font size="5" >Project </font></label></th>
-                        <th align="left"><input id="txtbox" name="project" type="text" autofocus="autofocus" required="required" size="20"/></th>
-                        <th align="left"><label for="Practical"><font size="5" >Practical </font></label></th>
-                        <th align="left"><input id="txtbox" name="practical" type="text" required="required" size="20"/></th>
-                    </tr> 
-
-                    <tr>
-                        <th align="left"><label for="Collaboration"><font size="5" >Collaboration </font></label></th>
-                        <th align="left"><input id="txtbox" name="collaboration" type="text" required="required" size="20"/></th>
-                        <th align="left"><label for="Groupwork"><font size="5" >Groupwork </font></label></th>
-                        <th align="left"><input id="txtbox" name="groupwork" type="text" required="required" size="20"/></th>
+                         <td align="left"><h:outputText id="lblCollaboration" value="Collaboration"  styleClass="lblStyle"/></td>
+                       <th align="left"><h:inputText id="txtCollaboration" styleClass="txtboxStyle" required="required" size="20"/></th>
+                           <td align="left"><h:outputText id="lblGroupwork" value="Groupwork"  styleClass="lblStyle"/></td>
+                    <th align="left"><h:inputText id="txtGroupwork" styleClass="txtboxStyle" required="required" size="20"/></th>
                     </tr> 
 
                 </table>
@@ -101,16 +124,16 @@
                         <th><label>&nbsp;</label></th>
                         <th><label>&nbsp;</label></th> 
                     </tr>
-
+                    
                     <tr>
-                        <th colspan="2" align="left"><input id="smallButton" type="submit" value="Cancel" class="button" /><br /></th>
-                        <th align="right"><input id="smallButton" type="reset" value="Reset" class="button" /><br /></th>
-                        <th align="right"><input id="smallButton" type="submit" value="Confirm" class="button" /><br /></th>
+                        <th colspan="2" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenu"/></th>
+                        <th align="right"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
+                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenu"/></th>
                     </tr> 
 
                 </table>
 
-            </form>
+            </h:form>
         </div>
     </h:body>
 </html>

@@ -1,45 +1,54 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>STEM CS Valitation Programme</title>
         <style type="text/css"> 
-            #smallButton{
+            .buttonStyle{
                 font-size: 25px;
                 column-width: 10px;
                 width: 200px;
                 height: 40px;
             }
 
-            #ddlYear{
-                font-size: 25px;
+            .ddlStyle{
+                font-size: 20px;
                 column-width: 10px;
                 width: 200px;
                 height: 40px;
             }
 
-            #txtbox {
+            .txtboxStyle {
                 font-size: 18pt;
                 height: 35px;
-                width : 300px;
+                width : 250px;
             }
 
-            #txtboxSmall {
+            .txtboxSmallStyle {
                 font-size: 18pt;
                 height: 35px;
                 width : 100px;
             }
 
-            #txtboxSmaller {
+            .txtboxSmallestStyle {
                 font-size: 18pt;
                 height: 35px;
                 width : 80px;
             }
 
-            #checkbox{
-                width: 2em; 
-                height: 2em;
+            .lblStyle{
+                font-size: 20pt;
+            }
+            
+           /*  .lblStyleSpecial{
+                font-size: 20pt;
+                 vertical-align: top;
+            } */
+
+            .checkboxStyle{
+               font-size: 20pt;
             }
 
         </style>
@@ -48,11 +57,13 @@
         <div align="center">
             <h1>STEM CS VALITATION PROGRAMME</h1>
             <h1>EVALUATOR PERSONAL DETAILS</h1>
-            <form name="EvaluatorPersonalDetails" id="EvaluatorPersonalDetails">
+            <h:form id="EvaluatorPersonalDetails">
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
                     <tr>
-                        <th colspan="2" align="right"><input id="smallButton" type="submit" value="Log out" class="button" /><br /></th>
+                        <th colspan="3" align="right">     
+                            <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle" action="Login"/>
+                        </th>
                     </tr> 
 
                     <tr>
@@ -61,91 +72,151 @@
                     </tr>
 
                     <tr>
-                        <th align="left"><label for="name"><font size="5" >Name </font></label></th>
+                        <th align="left"> <h:outputText id="lblName" value="Name"  styleClass="lblStyle"/></th>
+                         <th align="left">
+                            <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/>
+                        </th>
                         <th align="left">
-                            <label for="simbol"><font size="5" >: </font></label>
-                            <input id="txtbox" name="name" type="text" autofocus="autofocus" required="required" size="30"/>
+                            <h:inputText id="txtName" styleClass="txtboxStyle" required="required" size="35"/>
+                        </th>
+                      
+                    </tr> 
+
+                    <tr>
+                        <th align="left"> <h:outputText id="lblStaffID" value="Staff ID"  styleClass="lblStyle"/></th>
+                          <th align="left">
+                            <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/>
+                        </th>
+                        <th align="left">
+                           <h:inputText id="txtStaffID" styleClass="txtboxSmallStyle" required="required" size="35"/>
                         </th>
                     </tr> 
 
                     <tr>
-                        <th align="left"><label for="staffID"><font size="5" >Staff ID </font></label></th>
+                        <th align="left"> <h:outputText id="lblContactNo" value="Contact No"  styleClass="lblStyle"/></th>
+                          <th align="left">
+                            <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/>
+                        </th>
                         <th align="left">
-                            <label for="simbol"><font size="5" >: </font></label>
-                            <input id="txtboxSmall" name="staffID" type="text" required="required" size="30"/>
+                            <h:inputText id="txtContactNo" styleClass="txtboxStyle" required="required" size="35"/>
                         </th>
                     </tr> 
 
                     <tr>
-                        <th align="left"><label for="contactNo"><font size="5" >Contact No </font></label></th>
-                        <th align="left">
-                            <label for="simbol"><font size="5" >: </font></label>
-                            <input id="txtbox" name="contactNo" type="text" required="required" size="30"/>
-                        </th>
-                    </tr> 
+                        <th align="left"> <h:outputText id="lblFaculty" value="Faculty/Centre"  styleClass="lblStyle"/></th>
 
-                    <tr>
-                        <th align="left"><label for="faculty"><font size="5" >Faculty/Centre </font></label></th>
+                          <th align="left">
+                            <h:outputText id="simbol4" value=": "  styleClass="lblStyle"/>
+                        </th>
+                        
                         <th align="left">
-                            <label for="simbol"><font size="5" >: </font></label>
-                            <select id="ddlYear"> <!--SHOULD NOT BE HARD CODE-->
-                                <option value="faculty">FOCS</option>
-                                <option value="faculty">FOAS</option>
-                                <option value="faculty">FEBE</option>
-                                <option value="faculty">FSAH</option>
-                            </select>
+                          
+                            <h:selectOneMenu styleClass="ddlStyle">
+                                <f:selectItem itemValue = "FOCS" itemLabel = "FOCS" /> 
+                                <f:selectItem itemValue = "FOAS" itemLabel = "FOAS" /> 
+                                <f:selectItem itemValue = "FEBE" itemLabel = "FEBE" /> 
+                                <f:selectItem itemValue = "FSAH" itemLabel = "FSAH" /> 
+                            </h:selectOneMenu>  
+
+
+                            <!--  <select id="ddlYear"> SHOULD NOT BE HARD CODE
+                                  <option value="faculty">FOCS</option>
+                                  <option value="faculty">FOAS</option>
+                                  <option value="faculty">FEBE</option>
+                                  <option value="faculty">FSAH</option>
+                              </select> -->
                         </th></tr> 
 
                     <tr>
-                        <th align="left"><label for="branch"><font size="5" >Branch </font></label></th>
+                        <th align="left"> <h:outputText id="lblBranch" value="Branch"  styleClass="lblStyle"/></th>
+                        
+                          <th align="left">
+                            <h:outputText id="simbol5" value=": "  styleClass="lblStyle"/>
+                        </th>
+                        
                         <th align="left">
-                            <label for="simbol"><font size="5" >: </font></label>
-                            <select id="ddlYear"> <!--SHOULD NOT BE HARD CODE-->
-                                <option value="country">Pulau Pinang</option>
-                                <option value="country">Kuala Lumpur</option>
-                                <option value="country">Kedah</option>
-                                <option value="country">Johor</option>
-                            </select>
+                           <h:selectOneMenu styleClass="ddlStyle">
+                                <f:selectItem itemValue = "PP" itemLabel = "Pulau Pinang" /> 
+                                <f:selectItem itemValue = "KL" itemLabel = "Kuala Lumpur" /> 
+                                <f:selectItem itemValue = "KD" itemLabel = "Kedah" /> 
+                                <f:selectItem itemValue = "JH" itemLabel = "Johor" /> 
+                            </h:selectOneMenu>  
+
+
+                            <!--    <select id="ddlYear"> SHOULD NOT BE HARD CODE
+                                    <option value="country">Pulau Pinang</option>
+                                    <option value="country">Kuala Lumpur</option>
+                                    <option value="country">Kedah</option>
+                                    <option value="country">Johor</option>
+                                </select>-->
                         </th></tr> 
 
                     <tr>
-                        <th rowspan="2" align="left"><label for="Roles"><font size="5" >Roles </font></label></th>
+                        <th align="left"> <h:outputText id="lblRoles" value="Roles"  styleClass="lblStyle"/></th>
+
+                          <th align="left">
+                            <h:outputText id="simbol6" value=": "  styleClass="lblStyle"/>
+                        </th>
+                        
                         <th align="left"> 
-                            <label for="simbol"><font size="5" > : </font></label> 
-                            <input type="checkbox" id="checkbox" name="chkboxe" ><font size="5" >&nbsp;  Evaluator</font></input></th>
+                          
+                            <h:selectManyCheckbox styleClass = "checkboxStyle" > <!-- layout="pageDirection" -->
+                                <f:selectItem itemValue = "EV" itemLabel = "Evaluator &nbsp; &nbsp;" /> 
+                                <f:selectItem itemValue = "MT" itemLabel = "Master Trainer" /> 
+                            </h:selectManyCheckbox> 
+                        </th>
+
+
+                       <!--     <input type="checkbox" id="checkbox" name="chkboxe" ><font size="5" >&nbsp;  Evaluator</font></input></th> -->
                     </tr> 
 
-                    <tr>
+                  <!--  <tr>
                         <th align="left">
                             &nbsp; &nbsp;   <input type="checkbox" id="checkbox" name="chkboxM" ><font size="5" > &nbsp;  Master Trainer</font></input></th>
-                    </tr> 
+                    </tr>  -->
 
                     <tr>
-                        <th align="left"><label for="status"><font size="5" >Status </font></label></th>
+                        <th align="left"> <h:outputText id="lblStatus" value="Status"  styleClass="lblStyle"/></th>
+
+                          <th align="left">
+                            <h:outputText id="simbol7" value=": "  styleClass="lblStyle"/>
+                        </th>
+                        
                         <th align="left">
-                            <label for="simbol"><font size="5" >: </font></label>
-                            <select id="ddlYear"> <!--SHOULD NOT BE HARD CODE-->
+                             <h:selectOneMenu styleClass="ddlStyle">
+                                <f:selectItem itemValue = "Avaliable" itemLabel = "Avaliable" /> 
+                                <f:selectItem itemValue = "Resign" itemLabel = "Resign" /> 
+                                <f:selectItem itemValue = "Retired" itemLabel = "Retired" /> 
+                            </h:selectOneMenu> 
+                            
+                       <!--     <select id="ddlYear"> SHOULD NOT BE HARD CODE
                                 <option value="status">Avaliable</option>
                                 <option value="status">Resign</option>
                                 <option value="status">Retired</option>
-                            </select>
+                            </select>-->
                         </th></tr> 
 
                     <tr>
-                        <th align="left"><label for="workloadLimit"><font size="5" >Workload Limit</font></label></th>
+                        <th align="left"> <h:outputText id="lblWorkloadLimit" value="Workload Limit"  styleClass="lblStyle"/></th>
+                    
+                          <th align="left">
+                            <h:outputText id="simbol8" value=": "  styleClass="lblStyle"/>
+                        </th>
+                        
                         <th align="left">
-                            <label for="simbol"><font size="5" >: </font></label>
-                            <input id="txtboxSmall" name="workloadLimit" type="text" required="required" size="30"/>
-                            <label for="hr"><font size="5" >hour(s) </font></label>
+                             <h:inputText id="txtWorkloadLimit" styleClass="txtboxSmallStyle" required="required" size="35"/>
+                            <h:outputText id="hr1" value=" hour(s)"  styleClass="lblStyle"/>
                         </th>
                     </tr> 
 
                     <tr>
-                        <th align="left"><input id="smallButton" type="submit" value="Cancel" class="button" /><br /> </th>
-                        <th align="right"><input id="smallButton" type="submit" value="Confirm" class="button" /><br /></th>
-                    </tr>
+                        <th colspan="2" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenu"/></th>
+                        <!--<th><input type="submit" id="submit" value="Login" class="button" onclick="LoginFunction()" /><br /></th>
+                        -->
+                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenu"/></th>
+                    </tr>    
                 </table>   
-            </form>
+            </h:form>
         </div>
     </h:body>
 </html>

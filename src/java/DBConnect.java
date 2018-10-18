@@ -56,7 +56,6 @@ public class DBConnect {
     }
     
     public void main(String[] args){
-        DBConnect dbconnect = new DBConnect();
-        dbconnect.getData();
+        getData();
     }
 }

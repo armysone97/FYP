@@ -1,57 +1,64 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
+         <title>STEM CS Validation Programme</title>
+         
        <style type="text/css"> 
-            #smallButton{
+         .buttonStyle{
                 font-size: 25px;
                 column-width: 10px;
                 width: 200px;
                 height: 40px;
             }
 
-            #ddlYear{
-                font-size: 25px;
+            .ddlStyle{
+                font-size: 20px;
                 column-width: 10px;
                 width: 200px;
                 height: 40px;
             }
 
-            #txtbox {
+            .lblStyle{
+                font-size: 20pt;
+            }
+
+            .txtboxStyle {
                 font-size: 18pt;
                 height: 35px;
-                width : 300px;
+                width : 250px;
             }
 
-            #txtboxSmall {
+            .txtboxSmallStyle {
                 font-size: 18pt;
                 height: 35px;
                 width : 100px;
             }
 
-            #txtboxSmaller {
+            .txtboxSmallestStyle {
                 font-size: 18pt;
                 height: 35px;
                 width : 80px;
             }
 
-            #radiobutton { 
-                width: 2em; 
-                height: 2em; 
+            .radiobuttonStyle{ 
+                font-size: 18pt;
             }
-
         </style>
     </h:head>
     <h:body>
         <div align="center">
-            <h1>STEM CS VALITATION PROGRAMME</h1>
+            <h1>STEM CS VALIDATION PROGRAMME</h1>
             <h1>MILEAGE CLAIM APPLICATION</h1>
-            <form name="MileageClaimApplication" id="MileageClaimApplication">
+            <h:form id="MileageClaimApplication">
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
-                    <tr>
-                        <th colspan="2" align="right"><input id="smallButton" type="submit" value="Log out" class="button" /><br /></th>
+                     <tr>
+                        <th colspan="3" align="right">     
+                            <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle" action="Login"/>
+                        </th>
                     </tr> 
 
                     <tr>
@@ -59,92 +66,130 @@
                         <th><label>&nbsp;</label></th> 
                     </tr>
 
-                    <tr>
-                        <th align="left"><label for="staffID"><font size="5" >Staff ID </font></label></th>
+                   <tr>
+                        <th align="left"> <h:outputText id="lblStaffID" value="Staff ID"  styleClass="lblStyle"/></th>
+                        <th align="right">
+                            <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/>
+                        </th>
                         <th align="left">
-                            <label for="simbol"><font size="5" >: </font></label>
-                            <input id="txtboxSmall" name="staffID" type="text" autofocus="autofocus" required="required" size="30"/>
+                            <h:inputText id="txtStaffID" styleClass="txtboxSmallStyle" required="required" size="35"/>
                         </th>
                     </tr> 
 
                     <tr>
-                        <th align="left"><label for="name"><font size="5" >Name </font></label></th>
-                        <th align="left">
-                            <label for="simbol"><font size="5" >: </font></label>
-                            <input id="txtbox" name="name" type="text" required="required" size="30"/>
+                        <th align="left"> <h:outputText id="lblName" value="Name"  styleClass="lblStyle"/></th>
+                        <th align="right">
+                            <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/>
                         </th>
-                    </tr> 
+                        <th align="left">
+                            <h:inputText id="txtName" styleClass="txtboxStyle" required="required" size="35"/>
+                        </th>
 
-                  
-                    <tr>
-                        <th rowspan="2" align="left"><label for="Roles"><font size="5" >Roles </font></label></th>
+                    </tr> 
+<tr>
+                        <th align="left"> <h:outputText id="lblRoles" value="Roles"  styleClass="lblStyle"/></th>
+
+                        <th align="right">
+                            <h:outputText id="simbol6" value=": "  styleClass="lblStyle"/>
+                        </th>
+
                         <th align="left"> 
-                            <label for="simbol"><font size="5" > : </font></label> 
-                            <input id="radiobutton" type="radio" name="roles" value="evaluator" size="30px" /><font size="5">Evaluator</font></th>
-                         </tr> 
 
-                    <tr>
+                            <h:selectOneRadio layout="lineDirection" styleClass="radiobuttonStyle"> 
+                                <f:selectItem itemValue = "EV" itemLabel = "Evaluator " /> 
+                                <f:selectItem itemValue = "MT" itemLabel = "Master Trainer" /> 
+                            </h:selectOneRadio>
+
+                        </th>
+                    </tr> 
+                    
+                     <tr>
+                        <th align="left"> <h:outputText id="lblRate" value="Rate"  styleClass="lblStyle"/></th>
+                    
+                          <th align="right">
+                            <h:outputText id="simbol5" value=": "  styleClass="lblStyle"/>
+                        </th>
+                        
                         <th align="left">
-                            &nbsp; &nbsp;   <input id="radiobutton" type="radio" name="roles" value="masterTrainer" size="30px" /><font size="5">Master Trainer</font></th>
+                             <h:outputText id="simbol10" value="RM "  styleClass="lblStyle"/>
+                             <h:inputText id="txtHourlyRate" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                        </th>
+                    </tr> 
+                    
+                    <tr>
+                        <th align="left"> <h:outputText id="lblToll" value="Toll"  styleClass="lblStyle"/></th>
+                    
+                          <th align="right">
+                            <h:outputText id="simbol6" value=": "  styleClass="lblStyle"/>
+                        </th>
+                        
+                        <th align="left">
+                             <h:outputText id="simbol11" value="RM "  styleClass="lblStyle"/>
+                             <h:inputText id="txtToll" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                        </th>
+                    </tr> 
+                    
+                     <tr>
+                        <th align="left"> <h:outputText id="lblParking" value="Parking"  styleClass="lblStyle"/></th>
+                    
+                          <th align="right">
+                            <h:outputText id="simbol7" value=": "  styleClass="lblStyle"/>
+                        </th>
+                        
+                        <th align="left">
+                             <h:outputText id="simbol12" value="RM "  styleClass="lblStyle"/>
+                             <h:inputText id="txtParking" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                        </th>
                     </tr> 
                    
- 
-                    <tr>
-                        <th align="left"><label for="rate"><font size="5" >Rate/km</font></label></th>
+                   
+                     <tr>
+                        <th align="left"> <h:outputText id="lblAccomodation" value="Accomodation"  styleClass="lblStyle"/></th>
+                    
+                          <th align="right">
+                            <h:outputText id="simbol8" value=": "  styleClass="lblStyle"/>
+                        </th>
+                        
                         <th align="left">
-                            <label for="simbol"><font size="5" >: RM </font></label>
-                            <input id="txtboxSmall" name="rate" type="text" required="required" size="30"/>
+                             <h:outputText id="simbol13" value="RM "  styleClass="lblStyle"/>
+                             <h:inputText id="txtAccomodation" styleClass="txtboxSmallestStyle" required="required" size="5"/>
                         </th>
                     </tr> 
                     
                      <tr>
-                        <th align="left"><label for="toll"><font size="5" >Toll</font></label></th>
+                        <th align="left"> <h:outputText id="lblMileage" value="Mileage"  styleClass="lblStyle"/></th>
+                    
+                          <th align="right">
+                            <h:outputText id="simbol15" value=": "  styleClass="lblStyle"/>
+                        </th>
+                        
                         <th align="left">
-                            <label for="simbol"><font size="5" >: RM </font></label>
-                            <input id="txtboxSmall" name="toll" type="text" required="required" size="30"/>
+                           <h:inputText id="txtMileage" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                            <h:outputText id="simbol16" value=" km "  styleClass="lblStyle"/>
+                             
                         </th>
                     </tr> 
+                   
                     
                      <tr>
-                        <th align="left"><label for="parking"><font size="5" >Parking</font></label></th>
-                        <th align="left">
-                            <label for="simbol"><font size="5" >: RM </font></label>
-                            <input id="txtboxSmall" name="parking" type="text" required="required" size="30"/>
-                        </th>
-                    </tr> 
+                        <th align="left"> <h:outputText id="lblTotal" value="Total"  styleClass="lblStyle"/></th>
                     
+                          <th align="right">
+                            <h:outputText id="simbol9" value=": "  styleClass="lblStyle"/>
+                        </th>
+                        
+                        <th align="left">
+                            <h:outputText id="simbol14" value="RM "  styleClass="lblStyle"/>
+                             <h:inputText id="txtTotal" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                        </th>
+                    </tr> 
+
                      <tr>
-                        <th align="left"><label for="accomodation"><font size="5" >Accomodation</font></label></th>
-                        <th align="left">
-                            <label for="simbol"><font size="5" >: RM </font></label>
-                            <input id="txtboxSmall" name="accomodation" type="text" required="required" size="30"/>
-                        </th>
+                        <th colspan="2" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuEvaluator"/></th>
+                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuEvaluator"/></th>
                     </tr> 
-
-
-                    <tr>
-                        <th align="left"><label for="mileage"><font size="5" >Mileage</font></label></th>
-                        <th align="left">
-                            <label for="simbol"><font size="5" >: </font></label>
-                            <input id="txtboxSmall" name="mileage" type="text" required="required" size="30"/>
-                            <label for="hr"><font size="5" >km </font></label>
-                        </th>
-                    </tr> 
-
-                    <tr>
-                        <th align="left"><label for="total"><font size="5" >Total</font></label></th>
-                        <th align="left">
-                            <label for="simbol"><font size="5" >: RM </font></label>
-                            <input id="txtboxSmall" name="total" type="text" required="required" size="30"/>
-                        </th>
-                    </tr> 
-
-                    <tr>
-                        <th align="left"><input id="smallButton" type="submit" value="Cancel" class="button" /><br /> </th>
-                        <th align="right"><input id="smallButton" type="submit" value="Confirm" class="button" /><br /></th>
-                    </tr>
                 </table>   
-            </form>
+            </h:form>
         </div>
     </h:body>
 </html>

@@ -1,22 +1,49 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>STEM CS Valitation Programme</title>
+        <title>STEM CS Validation Programme</title>
         <style type="text/css"> 
-            #smallButton{
+            .buttonStyle{
                 font-size: 25px;
                 column-width: 10px;
                 width: 200px;
                 height: 40px;
             }
 
-            #ddlYear{
-                font-size: 25px;
+            .ddlStyle{
+                font-size: 20px;
                 column-width: 10px;
                 width: 200px;
                 height: 40px;
+            }
+
+            .txtboxStyle {
+                font-size: 18pt;
+                height: 35px;
+                width : 250px;
+            }
+
+            .txtboxSmallStyle {
+                font-size: 18pt;
+                height: 35px;
+                width : 100px;
+            }
+
+            .txtboxSmallestStyle {
+                font-size: 18pt;
+                height: 35px;
+                width : 80px;
+            }
+
+            .lblStyle{
+                font-size: 20pt;
+            }
+
+            .checkboxStyle{
+                font-size: 20pt;
             }
 
             #teacherList{
@@ -25,42 +52,23 @@
                 width: 150px;
                 height: 35px;
             }
-
-            #txtbox {
-                font-size: 18pt;
-                height: 35px;
-                width : 300px;
-            }
-
-            #txtboxSmall {
-                font-size: 18pt;
-                height: 35px;
-                width : 100px;
-            }
-
-            #txtboxSmaller {
-                font-size: 18pt;
-                height: 35px;
-                width : 80px;
-            }
-
-            #checkbox{
-                width: 2em; 
-                height: 2em;
-            }
-
         </style>
     </h:head>
     <h:body>
+        
+        <!-- Drop down list + textbox -> html, not jsf tag-->
+        
         <div align="center">
-            <h1>STEM CS VALITATION PROGRAMME</h1>
+            <h1>STEM CS VALIDATION PROGRAMME</h1>
             <h1>MAINTAIN TEACHER</h1>
-            <form name="MaintainSchoolDetails" id="MaintainSchoolDetails">
+            <h:form id="MaintainSchoolDetails">
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
                     <tr>
-                        <th colspan="4" align="right"><input id="smallButton" type="submit" value="Log out" class="button" /><br /></th>
-                    </tr> 
+                        <th colspan="4" align="right">     
+                            <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle" action="Login"/>
+                        </th>
+                    </tr>
 
                     <tr>
                         <th><label>&nbsp;</label></th>
@@ -68,34 +76,41 @@
                     </tr>
 
                     <tr>
-                        <th align="left"> <label for="state"><font size="5" >Please Select State </font></label></th>
-                        <th align="left"><label for="simbol"><font size="5" >: </font></label>
-                            <select id="ddlYear"> <!--SHOULD NOT BE HARD CODE-->
-                                <option value="country">Pulau Pinang</option>
-                                <option value="country">Kuala Lumpur</option>
-                                <option value="country">Kedah</option>
-                                <option value="country">Johor</option>
-                            </select>
+                        <th align="left"> 
+                            <h:outputText id="lblState" value="Please Select State"  styleClass="lblStyle"/>
+                        </th>
+                        <th align="left">
+                            <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> 
+                            <h:selectOneMenu styleClass="ddlStyle">
+                                <f:selectItem itemValue = "statePP" itemLabel = "Pulau Pinang" /> 
+                                <f:selectItem itemValue = "stateKL" itemLabel = "Kuala Lumpur" /> 
+                                <f:selectItem itemValue = "stateKD" itemLabel = "Kedah" /> 
+                                <f:selectItem itemValue = "stateJH" itemLabel = "Johor" /> 
+                            </h:selectOneMenu>  
                         </th>
                     </tr>   
 
                     <tr>
-                        <th align="left"> <label for="state"><font size="5" >Please Select School </font></label></th>
-                        <th align="left"><label for="simbol"><font size="5" >: </font></label>
-                            <select id="ddlYear"> <!--SHOULD NOT BE HARD CODE-->
-                                <option value="school">SMK Air Itam</option>
-                                <option value="school">SMK Air Hitam</option>
-                                <option value="school">SMK Air Putih</option>
-                                <option value="school">SMK Air Merah</option>
-                            </select>
+                        <th align="left"> 
+                            <h:outputText id="lblSchool" value="Please Select School"  styleClass="lblStyle"/>
                         </th>
-                    </tr>   
+                        <th align="left">
+                            <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/> 
+                            <h:selectOneMenu styleClass="ddlStyle">
+                                <f:selectItem itemValue = "school1" itemLabel = "SMK Air Itam" /> 
+                                <f:selectItem itemValue = "school2" itemLabel = "SMK Air Hitam" /> 
+                                <f:selectItem itemValue = "school3" itemLabel = "SMK Air Putih" /> 
+                                <f:selectItem itemValue = "school4" itemLabel = "SMK Air Merah" /> 
+                            </h:selectOneMenu>  
+                        </th>
+                    </tr> 
+
 
                     <tr>
-                        <th align="left"><input id="smallButton" type="submit" value="Cancel" class="button" /><br /></th>
-                        <th align="left"><input id="smallButton" type="reset" value="Reset" class="button" /><br /></th>
-                        <th align="left"><input id="smallButton" type="submit" value="Confirm" class="button" /><br /></th>
-                    </tr>
+                        <th align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                        <th align="right"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
+                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                    </tr> 
                 </table>   
 
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
@@ -105,13 +120,15 @@
                     </tr>
 
                     <tr>
-                        <th colspan="6" align="left"> <label for="year"><font size="5" >Year: </font></label>
-                            <select id="ddlYear"> <!--SHOULD NOT BE HARD CODE-->
-                                <option value="y2018">2018</option>
-                                <option value="y2017">2017</option>
-                                <option value="y2016">2016</option>
-                                <option value="y2015">2015</option>
-                            </select>
+                        <th colspan="4" align="left">
+                            <h:outputText id="lblYear" value="Year : "  styleClass="lblStyle"/>
+
+                            <h:selectOneMenu styleClass="ddlStyle">
+                                <f:selectItem itemValue = "2018" itemLabel = "2018" /> 
+                                <f:selectItem itemValue = "2017" itemLabel = "2017" /> 
+                                <f:selectItem itemValue = "2016" itemLabel = "2016" /> 
+                                <f:selectItem itemValue = "2015" itemLabel = "2015" /> 
+                            </h:selectOneMenu>  
                         </th>
                     </tr>   
 
@@ -124,19 +141,86 @@
 
                 <table border="1" cellpadding="10px" cellspacing="0" width="800px" align="center">
                     <tr>
-                        <th colspan="2" align="center"><label for="teacherList"><font size="5" >Teacher List </font></label></th>
-                        <th colspan="4" align="center"><label for="CSLevel"><font size="5" >CS Level</font></label></th>
+                        <th colspan="2" align="center">
+                            <h:outputText id="lblTeacherName" value="Teacher List"  styleClass="lblStyle"/>
+                        </th>
+                        <th colspan="4" align="center">
+                            <h:outputText id="lblCSLevel" value="CS Level"  styleClass="lblStyle"/>
+                        </th>
                     </tr> 
 
                     <tr>
-                        <th align="center"><label for="teacherName"><font size="5" >Teacher Name </font></label></th>
-                        <th align="center"><label for="status"><font size="5" >Status </font></label></th>
-                        <th align="center"><label for="CSLevel"><font size="5" >CS Level 1</font></label></th>
-                        <th align="center"><label for="noEnrol"><font size="5" >Number of <br /> Enrolment Student</font></label></th>
-                        <th align="center"><label for="CSLevel"><font size="5" >CS Level 2</font></label></th>
-                        <th align="center"><label for="noEnrol"><font size="5" >Number of <br /> Enrolment Student</font></label></th>
+                        <th align="center"> <h:outputText id="lblTeacherName" value="Teacher Name"  styleClass="lblStyle"/></th>
+                        <th align="center"><h:outputText id="lblStatus" value="Status"  styleClass="lblStyle"/></th>
+                        <th align="center"><h:outputText id="lblCSLevel1" value="CS Level 1"  styleClass="lblStyle"/></th>
+                        <th align="center"><h:outputText id="lblNoEnrol1" value="Number of Enrolment Student"  styleClass="lblStyle"/></th>
+                        <th align="center"><h:outputText id="lblCSLevel2" value="CS Level 2"  styleClass="lblStyle"/></th>
+                        <th align="center"><h:outputText id="lblNoEnrol2" value="Number of Enrolment Student"  styleClass="lblStyle"/></th>
                     </tr> 
 
+                    <tr>
+                        <th align="center"> 
+                            <input list="teacher" name="teacherList" id="teacherList" />
+                             <h:selectOneMenu id="teacherList" styleClass="ddlStyle">
+                                <f:selectItem itemValue = "2018" itemLabel = "2018" /> 
+                                <f:selectItem itemValue = "2017" itemLabel = "2017" /> 
+                                <f:selectItem itemValue = "2016" itemLabel = "2016" /> 
+                                <f:selectItem itemValue = "2015" itemLabel = "2015" /> 
+                            </h:selectOneMenu>  
+                        </th>
+
+                        <th align="center">  
+                            <h:inputText id="txtStatus1" styleClass="txtboxSmallStyle" required="required" size="10"/>
+                        </th>
+                        <th align="center">  
+                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem/>
+                            </h:selectBooleanCheckbox> 
+                        </th>
+                        <th align="center">  
+                            <h:inputText id="txtNoEnrol1CS1" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                        </th>
+                        <th align="center">  
+                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem/>
+                            </h:selectBooleanCheckbox> 
+                        </th>
+                        <th align="center">  
+                            <h:inputText id="txtNoEnrol1CS2" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                        </th>
+                    </tr> 
+
+             <tr>
+                        <th align="center"> 
+                            <input list="teacher" name="teacherList" id="teacherList" />
+                            <datalist id="teacher">
+                                <option value="Lee Mei Mei" />
+                                <option value="Wong Siew Siew" />
+                                <option value="Teoh Ying Ying" />
+                                <option value="Teh Wan Wan" />
+                            </datalist>  
+                        </th>
+
+                        <th align="center">  
+                            <h:inputText id="txtStatus2" styleClass="txtboxSmallStyle" required="required" size="10"/>
+                        </th>
+                        <th align="center">  
+                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem/>
+                            </h:selectBooleanCheckbox> 
+                        </th>
+                        <th align="center">  
+                            <h:inputText id="txtNoEnrol2CS1" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                        </th>
+                        <th align="center">  
+                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem/>
+                            </h:selectBooleanCheckbox> 
+                        </th>
+                        <th align="center">  
+                            <h:inputText id="txtNoEnrol2CS2" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                        </th>
+                    </tr> 
                     <tr>
                         <th align="center"> 
                             <input list="teacher" name="teacherList" id="teacherList" />
@@ -147,16 +231,30 @@
                                 <option value="Teh Wan Wan" />
                             </datalist>  
                         </th>
-                        <th align="center"><input id="txtboxSmall" name="status" type="text" autofocus="autofocus" required="required" size="10"/></th>
-                        <th align="center"><input type="checkbox" id="checkbox" name="chkbox1" > </input></th>
-                        <th align="center"><input id="txtboxSmaller" name="noEnrol" type="text" placeholder="0" required="required" size="5"/></th>
-                        <th align="center"><input type="checkbox" id="checkbox" name="chkbox2" > </input></th>
-                        <th align="center"><input id="txtboxSmaller" name="noEnrol" type="text" placeholder="0" required="required" size="5"/></th>
-                    </tr> 
 
+                        <th align="center">  
+                            <h:inputText id="txtStatus3" styleClass="txtboxSmallStyle" required="required" size="10"/>
+                        </th>
+                        <th align="center">  
+                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem/>
+                            </h:selectBooleanCheckbox> 
+                        </th>
+                        <th align="center">  
+                            <h:inputText id="txtNoEnrol3CS1" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                        </th>
+                        <th align="center">  
+                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem/>
+                            </h:selectBooleanCheckbox> 
+                        </th>
+                        <th align="center">  
+                            <h:inputText id="txtNoEnrol3CS2" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                        </th>
+                    </tr> 
                     <tr>
                         <th align="center"> 
-                            <input id="teacherList" list="teacher" name="teacher"/>
+                            <input list="teacher" name="teacherList" id="teacherList" />
                             <datalist id="teacher">
                                 <option value="Lee Mei Mei" />
                                 <option value="Wong Siew Siew" />
@@ -164,16 +262,30 @@
                                 <option value="Teh Wan Wan" />
                             </datalist>  
                         </th>
-                        <th align="center"><input id="txtboxSmall" name="status" type="text" autofocus="autofocus" required="required" size="10"/></th>
-                        <th align="center"><input type="checkbox" id="checkbox" name="chkbox1" > </input></th>
-                        <th align="center"><input id="txtboxSmaller" name="noEnrol" type="text" placeholder="0" required="required" size="5"/></th>
-                        <th align="center"><input type="checkbox" id="checkbox" name="chkbox2" > </input></th>
-                        <th align="center"><input id="txtboxSmaller" name="noEnrol" type="text" placeholder="0" required="required" size="5"/></th>
-                    </tr> 
 
+                        <th align="center">  
+                            <h:inputText id="txtStatus4" styleClass="txtboxSmallStyle" required="required" size="10"/>
+                        </th>
+                        <th align="center">  
+                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem/>
+                            </h:selectBooleanCheckbox> 
+                        </th>
+                        <th align="center">  
+                            <h:inputText id="txtNoEnrol4CS1" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                        </th>
+                        <th align="center">  
+                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem/>
+                            </h:selectBooleanCheckbox> 
+                        </th>
+                        <th align="center">  
+                            <h:inputText id="txtNoEnrol4CS2" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                        </th>
+                    </tr> 
                     <tr>
                         <th align="center"> 
-                            <input id="teacherList" list="teacher" name="teacher"/>
+                            <input list="teacher" name="teacherList" id="teacherList" />
                             <datalist id="teacher">
                                 <option value="Lee Mei Mei" />
                                 <option value="Wong Siew Siew" />
@@ -181,47 +293,27 @@
                                 <option value="Teh Wan Wan" />
                             </datalist>  
                         </th>
-                        <th align="center"><input id="txtboxSmall" name="status" type="text" autofocus="autofocus" required="required" size="10"/></th>
-                        <th align="center"><input type="checkbox" id="checkbox" name="chkbox1" > </input></th>
-                        <th align="center"><input id="txtboxSmaller" name="noEnrol" type="text" placeholder="0" required="required" size="5"/></th>
-                        <th align="center"><input type="checkbox" id="checkbox" name="chkbox2" > </input></th>
-                        <th align="center"><input id="txtboxSmaller" name="noEnrol" type="text" placeholder="0" required="required" size="5"/></th>
-                    </tr> 
 
-                    <tr>
-                        <th align="center"> 
-                            <input id="teacherList" list="teacher" name="teacher"/>
-                            <datalist id="teacher">
-                                <option value="Lee Mei Mei" />
-                                <option value="Wong Siew Siew" />
-                                <option value="Teoh Ying Ying" />
-                                <option value="Teh Wan Wan" />
-                            </datalist>  
+                        <th align="center">  
+                            <h:inputText id="txtStatus5" styleClass="txtboxSmallStyle" required="required" size="10"/>
                         </th>
-                        <th align="center"><input id="txtboxSmall" name="status" type="text" autofocus="autofocus" required="required" size="10"/></th>
-                        <th align="center"><input type="checkbox" id="checkbox" name="chkbox1" > </input></th>
-                        <th align="center"><input id="txtboxSmaller" name="noEnrol" type="text" placeholder="0" required="required" size="5"/></th>
-                        <th align="center"><input type="checkbox" id="checkbox" name="chkbox2" > </input></th>
-                        <th align="center"><input id="txtboxSmaller" name="noEnrol" type="text" placeholder="0" required="required" size="5"/></th>
-                    </tr> 
-
-                    <tr>
-                        <th align="center"> 
-                            <input id="teacherList" list="teacher" name="teacher"/>
-                            <datalist id="teacher">
-                                <option value="Lee Mei Mei" />
-                                <option value="Wong Siew Siew" />
-                                <option value="Teoh Ying Ying" />
-                                <option value="Teh Wan Wan" />
-                            </datalist>  
+                        <th align="center">  
+                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem/>
+                            </h:selectBooleanCheckbox> 
                         </th>
-                        <th align="center"><input id="txtboxSmall" name="status" type="text" autofocus="autofocus" required="required" size="10"/></th>
-                        <th align="center"><input type="checkbox" id="checkbox" name="chkbox1" > </input></th>
-                        <th align="center"><input id="txtboxSmaller" name="noEnrol" type="text" placeholder="0" required="required" size="5"/></th>
-                        <th align="center"><input type="checkbox" id="checkbox" name="chkbox2" > </input></th>
-                        <th align="center"><input id="txtboxSmaller" name="noEnrol" type="text" placeholder="0" required="required" size="5"/></th>
+                        <th align="center">  
+                            <h:inputText id="txtNoEnrol5CS1" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                        </th>
+                        <th align="center">  
+                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem/>
+                            </h:selectBooleanCheckbox> 
+                        </th>
+                        <th align="center">  
+                            <h:inputText id="txtNoEnrol5CS2" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                        </th>
                     </tr> 
-
                 </table>
 
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
@@ -230,13 +322,13 @@
                         <th><label>&nbsp;</label></th>
                         <th><label>&nbsp;</label></th> 
                     </tr>
-
+                    
                     <tr>
-                        <th align="left"><input id="smallButton" type="submit" value="Cancel" class="button" /><br /></th>
-                        <th align="right"><input id="smallButton" type="submit" value="Confirm" class="button" /><br /></th>
-                    </tr>
+                        <th align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                    </tr>  
                 </table>   
-            </form>
+            </h:form>
         </div>
     </h:body>
 </html>

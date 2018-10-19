@@ -2,7 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
+     <h:head>
         <title>STEM CS Validation Programme</title>
         <style type="text/css"> 
             .buttonBigStyle{
@@ -24,13 +24,14 @@
     <h:body>
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
-            <h1>STEM CS MANAGEMENT - MAIN MENU</h1>
-            <h:form id="STEMCSManagementMainMenu">
+            <h1>MAIN MENU - EVALUATOR</h1>
+            <h:form id="mainMenuEvaluator">
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
                     <tr>
-                        <th colspan="2" align="right">  
-                            <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle" action="Login"/></th>
+                        <th colspan="2" align="right">
+                            <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle" action="Login"/>
+                        </th>
                     </tr> 
 
                     <tr>
@@ -39,16 +40,9 @@
                     </tr>
 
                     <tr>
-                        <th><h:commandButton id="btnCSLevelSetting" value="CS Level Setting" styleClass="buttonBigStyle" action="CSLevelSetting"/></th> 
-                        <th><h:commandButton id="btnAssessmentTaskSetting" value="Assessment Task Setting" styleClass="buttonBigStyle" action="AssessmentTaskSetting"/></th> 
-                    </tr> 
-
-                    <tr>
-                        <th><h:commandButton id="btnRateSetting" value="Rate Setting" styleClass="buttonBigStyle" action="RateSetting"/></th> 
-                        <th><h:commandButton id="btnYearOfStudySetting" value="Year of Study Setting" styleClass="buttonBigStyle" action="YearOfStudySetting"/></th> 
-                    </tr>  
-
-
+                        <th><h:commandButton id="btnWorkloadClaimApplication" value="Workload Claim Application" styleClass="buttonBigStyle" action="WorkloadClaimApplication"/></th> 
+                        <th><h:commandButton id="btnMileageClaimApplication" value="Mileage Claim Application" styleClass="buttonBigStyle" action="MileageClaimApplication"/></th> 
+                   </tr> 
                 </table>
             </h:form>
         </div>

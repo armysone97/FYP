@@ -7,9 +7,11 @@
     </h:head>
     <h:body>
         <h:form>
-            <h:outputText value="#{dbconnect.getData}" />
+            <h:inputText id="inputtxt" value="#{evaluatorPersonalDetails.branch}" />
+            <h:inputText id="inputxt" value="#{evaluatorPersonalDetails.contactNum}" />
+            <!--<h:outputText value="{dbconnect.getData}" /> -->
             <!--<h:commandButton id="submit" value="Submit" action="home" /> -->
-            <!-- <h:commandButton id="submit" value="Submit" action={user.insertData}" /> -->
+            <h:commandButton id="submit" value="Submit" action="#{evaluatorPersonalDetails.createData()}" /> 
         </h:form>
     </h:body>
 </html>

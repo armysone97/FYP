@@ -1,3 +1,6 @@
+
+import com.jsf.EvaluatorPersonalDetails;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -12,8 +15,12 @@ public class Main {
     
     public static void main(String[] args){
         
-        //DBConnect connect = new DBConnect();
-        //connect.getData();
+        EvaluatorPersonalDetails conn = new EvaluatorPersonalDetails();
+        conn.createData();
+        
+//        DBConnect connect = new DBConnect();
+//        connect.getData();
+ 
         
         
     }

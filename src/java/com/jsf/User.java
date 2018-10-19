@@ -20,8 +20,8 @@ import javax.faces.bean.SessionScoped;
 public class User {
     
     private Connection con;
-    
     private String name;
+    private Integer id;
 
     public User() {
     }
@@ -31,8 +31,9 @@ public class User {
             Class.forName("com.mysql.cj.jdbc.Driver");
             
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO try (name) VALUES (?)");
+            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO try (name, id) VALUES (?, ?)");
             statement.setString(1, name);
+            statement.setInt(2, id);
             statement.executeUpdate();
             statement.close();
             con.close();
@@ -52,4 +53,14 @@ public class User {
     public void main(String args[]){
         insertData();
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
+    
 }

@@ -102,6 +102,8 @@ public class EvaluatorPersonalDetails {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            System.out.println("Connected");
+            con.setAutoCommit(false);
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO evaluatorpersonaldetails (staffID, name, campus, faculty, contactNo, status, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
                       
             statement.setString(1, staffID);
@@ -114,6 +116,7 @@ public class EvaluatorPersonalDetails {
             statement.setString(8, Integer.toString(contactNum));
             
             statement.executeUpdate();
+            con.commit();
             statement.close();
             con.close();
             

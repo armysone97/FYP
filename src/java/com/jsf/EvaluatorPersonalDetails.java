@@ -6,7 +6,6 @@
 package com.jsf;
 
 import java.sql.*;
-import javax.faces.FacesException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -29,6 +28,7 @@ public class EvaluatorPersonalDetails {
     private String role;
     private String status;
     private Integer workloadLimit;
+    private String roleID;
 
     public EvaluatorPersonalDetails() {
     }
@@ -97,31 +97,13 @@ public class EvaluatorPersonalDetails {
         this.workloadLimit = workloadLimit;
     }
     
-//    public void connection(){
-//        try{
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//        }catch(Exception ex){
-//            System.out.println("Error:" + ex);
-//        }
-//      
-//    }
-    
-    public void createData(){
-//        String host = "jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-//        String username = "root";
-//        String password = "";
-        System.out.println("Connected1");
+    //save evaluator personal details
+    public void evaluatorData(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            System.out.println("Connected");
-           // con.setAutoCommit(false);
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO evaluatorpersonaldetails (staffID, name, campus, faculty, contactNo, status, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            
-//            con = DriverManager.getConnection(host, username, password);
-//            String query = "INSERT INTO evaluatorpersonaldetails (staffID, name, campus, faculty, contactNo, status, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-//            statement = (PreparedStatement) con.prepareStatement(query);
-//            
+                      
             statement.setString(1, staffID);
             statement.setString(2, evaName);
             statement.setString(3, branch);
@@ -132,34 +114,44 @@ public class EvaluatorPersonalDetails {
             statement.setString(8, Integer.toString(contactNum));
             
             statement.executeUpdate();
-            //con.commit();
             statement.close();
             con.close();
             
         }catch(Exception ex){
-            System.out.println("Error:" + ex);
-            //throw new FacesException(e);
+            System.out.println("Error: " + ex);
         }
         
-//        try{
-//            Connection con1 = DriverManager.getConnection(host, username, password);
-//            String query = "INSERT INTO evaluatorroledetails (RD_ID, roleID, staffID) VALUES (?, ?, ?)";
-//            PreparedStatement statement = (PreparedStatement) con1.prepareStatement(query);
-//            
-//            statement.setString(1, "R1");
-//            statement.setString(2, "r2");
-//            statement.setString(3, staffID);
-//
-//            statement.executeUpdate();
-//            statement.close();
-//            con1.close();
-//            
-//        }catch(SQLException e){
-//            e.printStackTrace();
-//        }
+        evaluatorRole();
+    }
+    
+    //save evalutor role
+    public void evaluatorRole(){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM roles");
+            
+            while(rs.next()){
+                String rID = rs.getString("roleID");
+                String rType = rs.getString("roleType");
+                
+                if(role.equals(rType)){
+                    roleID = rID;
+                }
+            }
+            
+            st.close();
+            con.close();
+            
+            System.out.println(roleID);
+            
+        }catch(Exception ex){
+            System.out.println("Error: " + ex);
+        }
     }
     
     public void main(String args[]){
-        createData();
+        evaluatorData();
     }
 }

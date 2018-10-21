@@ -62,76 +62,69 @@ public class Login {
         this.role = role;
     }
 
-    public void verifyRole() {
-        FacesContext context = FacesContext.getCurrentInstance();
+    public void verifyRole(String staffID) {
 
+        FacesContext context = FacesContext.getCurrentInstance();
+        int count = 0;
+        String roleType = "";
         Boolean verify = false;
         Boolean verify1 = false;
-        String roleID = "", staffID = "";
         String roleTypes = "";
 
-        if (role.equals("")) {
-            context.addMessage(null, new FacesMessage("Role must be selected, please try again!"));
-        } else {
-            switch (role) {
-                case "1":
-                    roleTypes = "Admin";
-                    break;
-                case "2":
-                    roleTypes = "Evaluator";
-                    break;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+
+            PreparedStatement st = con.prepareStatement("SELECT roleID FROM evaluatorroledetails WHERE staffID = ?");
+            st.setString(1, staffID);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                count += 1;
+                context.addMessage(null, new FacesMessage("success1"));
+
+                verify1 = true;
             }
-
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-                Statement st = con.createStatement();
-                ResultSet rs = st.executeQuery("SELECT * FROM roles");
-
-                while (rs.next()) {
-                    if (roleTypes.equals(rs.getString("roleType"))) {
-                        roleID = rs.getString("roleID");
-                        context.addMessage(null, new FacesMessage("success"));
-                        verify = true;
-                        break;
-                    }
-                }
-
-            } catch (Exception ex) {
-                System.out.println("Error: " + ex);
-            }
-
-            if (!verify) {
-                context.addMessage(null, new FacesMessage("Invalid role."));
-            } else {
-                try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-
-                    PreparedStatement st = con.prepareStatement("SELECT staffID, roleID FROM evaluatorroledetails WHERE roleID = ?");
-                    st.setString(1, roleID);
-                    ResultSet rs = st.executeQuery();
-
-                    while (rs.next()) {
-                        staffID = rs.getString("staffID");
-                        context.addMessage(null, new FacesMessage("success1"));
-                        verify1 = true;
-                        verifyUser(staffID);
-                        break;
-                    }
-                } catch (Exception ex) {
-                    // context.addMessage(null, new FacesMessage("successaxxxx"));
-                    System.out.println("Error: " + ex);
-                }
-
-                if (!verify1) {
-                    context.addMessage(null, new FacesMessage(roleTypes + " don't have an account, please try again!"));
-                }
-            }
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
         }
+        if (!verify1) {
+            context.addMessage(null, new FacesMessage("Invalid role, please try again!"));
+        } else {
+            if (count == 3) {
+                roleType = "Admin";
+                context.addMessage(null, new FacesMessage("success login admin"));
+
+            } else {
+                roleType = "Evaluator";
+                if (role.equals("")) {
+                    context.addMessage(null, new FacesMessage("Role must be selected, please try again!"));
+                } else {
+                    switch (role) {
+                        case "1":
+                            roleTypes = "Admin";
+                            break;
+                        case "2":
+                            roleTypes = "Evaluator";
+                            break;
+                    }
+
+                }
+
+                if (roleTypes.equals(roleType)) {
+                    context.addMessage(null, new FacesMessage("success login evaluator"));
+
+                } else {
+                    context.addMessage(null, new FacesMessage("Invalid role, username or password, please try again!"));
+
+                }
+            }
+
+        }
+
     }
 
-    public void verifyUser(String staffID) {
+    public void verifyUser() {
 
 //         RequestContext.getCurrentInstance().execute("alert('peek-a-boo');");
 //         PrimeFaces.current().executeScript("alert('peek-a-boo');");
@@ -152,6 +145,7 @@ public class Login {
 //        showMessageDialog(null, "This is even shorter");     
         FacesContext context = FacesContext.getCurrentInstance();
         Boolean verify = false;
+        String staffID = "";
 
         if (username.equals("") || password.equals("")) {
             context.addMessage(null, new FacesMessage("Username or password cannot be empty, please try again!"));
@@ -160,14 +154,20 @@ public class Login {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-                PreparedStatement st = con.prepareStatement("SELECT username, password FROM evaluatorpersonaldetails WHERE staffID = ?");
-                st.setString(1, staffID);
-                ResultSet rs = st.executeQuery();
+                Statement st = con.createStatement();
+                ResultSet rs = st.executeQuery("SELECT staffID, username, password FROM evaluatorpersonaldetails");
 
+//                PreparedStatement st = con.prepareStatement("SELECT username, password FROM evaluatorpersonaldetails WHERE staffID = ?");
+//                st.setString(1, staffID);
+//                ResultSet rs = st.executeQuery();
                 while (rs.next()) {
                     if (username.equals(rs.getString("username")) && password.equals(rs.getString("password"))) {
+                        staffID = rs.getString("staffID");
+
                         context.addMessage(null, new FacesMessage("success"));
+
                         verify = true;
+                        verifyRole(staffID);
                         break;
                     }
                 }
@@ -191,7 +191,7 @@ public class Login {
 
     public void main(String args[]) {
 
-        verifyRole();
+        verifyUser();
     }
 
 }

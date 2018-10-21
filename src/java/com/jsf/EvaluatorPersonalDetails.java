@@ -29,6 +29,8 @@ public class EvaluatorPersonalDetails {
     private String status;
     private Integer workloadLimit;
     private String roleID;
+    private Integer count;
+    private String rdID;
 
     public EvaluatorPersonalDetails() {
     }
@@ -102,8 +104,6 @@ public class EvaluatorPersonalDetails {
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            //System.out.println("Connected");
-            //con.setAutoCommit(false);
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO evaluatorpersonaldetails (staffID, name, campus, faculty, contactNo, status, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
                       
             statement.setString(1, staffID);
@@ -116,7 +116,6 @@ public class EvaluatorPersonalDetails {
             statement.setString(8, Integer.toString(contactNum));
             
             statement.executeUpdate();
-            //con.commit();
             statement.close();
             con.close();
             
@@ -124,57 +123,87 @@ public class EvaluatorPersonalDetails {
             System.out.println("Error: " + ex);
         }
         
-        evaluatorRole();
+        verifyRole();
     }
     
-    //save evalutor role
-    public void evaluatorRole(){
+    //verify role type
+    public void verifyRole(){
+
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            System.out.println("Connected");
-            con.setAutoCommit(false);
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO try (name, id) VALUES (?, ?)");
-                      
-            statement.setString(1, evaName);
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM roles");
             
-            statement.setInt(2, contactNum);
-           
+            while(rs.next()){
+              String rID = rs.getString("roleID");
+              String rType = rs.getString("roleType");
+                
+                if(role.equals(rType)){
+                    roleID = rID;
+                    break;
+                }
+            }
+            
+            st.close();
+            con.close();
+            
+        }catch(Exception ex){
+            System.out.println("Error: " + ex);
+        }
+        
+        countRole(roleID);
+    }
+    
+    //count role to auto-generate id
+    public void countRole(String roleID){
+        
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM evaluatorroledetails");
+            
+            while(rs.next()){
+              count = rs.getInt("COUNT(*)");
+            }
+            
+            rs.close();
+            st.close();
+            con.close();
+            
+        }catch(Exception ex){
+            System.out.println("Error: " + ex);
+        }
+       
+        evaluatorRole(roleID, count);
+    }
+    
+    //save evaluator role
+    public void evaluatorRole(String roleID, Integer count){
+        
+        count = count + 1;
+        rdID = "RD" + Integer.toString(count);
+        
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO evaluatorroledetails (RD_ID, roleID, staffID) VALUES (?, ?, ?)");
+                      
+            statement.setString(1, rdID);
+            statement.setString(2, roleID);
+            statement.setString(3, staffID);
             
             statement.executeUpdate();
-            con.commit();
             statement.close();
             con.close();
             
         }catch(Exception ex){
             System.out.println("Error: " + ex);
         }
-//        try{
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-//            Statement st = con.createStatement();
-//            ResultSet rs = st.executeQuery("SELECT * FROM roles");
-//            
-//            while(rs.next()){
-////              String rID = rs.getString("roleID");
-////                String rType = rs.getString("roleType");
-//                
-//                if(role.equals(rs.getString("roleType"))){
-//                    roleID = rs.getString("roleID");
-//                }
-//            }
-//            
-//            System.out.println("success");
-//            st.close();
-//            con.close();
-//            
-//        }catch(Exception ex){
-//            System.out.println("Error: " + ex);
-//        }
     }
     
     public void main(String args[]){
         evaluatorData();
-        //evaluatorRole();
     }
 }

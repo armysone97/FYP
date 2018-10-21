@@ -62,7 +62,7 @@ public class Login {
         this.role = role;
     }
 
-    public void verifyRole(String staffID) {
+    public String verifyRole(String staffID) {
 
         FacesContext context = FacesContext.getCurrentInstance();
         int count = 0;
@@ -70,6 +70,7 @@ public class Login {
         Boolean verify = false;
         Boolean verify1 = false;
         String roleTypes = "";
+        String nextPage = "";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -94,6 +95,7 @@ public class Login {
             if (count == 3) {
                 roleType = "Admin";
                 context.addMessage(null, new FacesMessage("success login admin"));
+                nextPage = "loginAdmin";
 
             } else {
                 roleType = "Evaluator";
@@ -113,6 +115,7 @@ public class Login {
 
                 if (roleTypes.equals(roleType)) {
                     context.addMessage(null, new FacesMessage("success login evaluator"));
+                    nextPage = "loginEvaluator";
 
                 } else {
                     context.addMessage(null, new FacesMessage("Invalid role, username or password, please try again!"));
@@ -121,10 +124,12 @@ public class Login {
             }
 
         }
+        
+        return nextPage;
 
     }
 
-    public void verifyUser() {
+    public String verifyUser() {
 
 //         RequestContext.getCurrentInstance().execute("alert('peek-a-boo');");
 //         PrimeFaces.current().executeScript("alert('peek-a-boo');");
@@ -146,6 +151,7 @@ public class Login {
         FacesContext context = FacesContext.getCurrentInstance();
         Boolean verify = false;
         String staffID = "";
+        String nextPage = "";
 
         if (username.equals("") || password.equals("")) {
             context.addMessage(null, new FacesMessage("Username or password cannot be empty, please try again!"));
@@ -167,7 +173,7 @@ public class Login {
                         context.addMessage(null, new FacesMessage("success"));
 
                         verify = true;
-                        verifyRole(staffID);
+                        nextPage = verifyRole(staffID);
                         break;
                     }
                 }
@@ -182,16 +188,33 @@ public class Login {
                 context.addMessage(null, new FacesMessage("Invalid username or password, please try again!"));
             }
         }
+        
+        return nextPage;
 
 //   int input = JOptionPane.showConfirmDialog(null, 
 //                "Click ok if you are ok", "Be ok!", JOptionPane.DEFAULT_OPTION);
 //        // 0=ok
 //        System.out.println(input);
     }
+    
+//    public String try1() {
+//        String nextPage = "";
+//        setUsername("ABC");
+//       nextPage =  try2();
+//       return nextPage;
+//    }
+//    
+//     public String try2() {
+//       setUsername("ABCDD");
+//       return "loginAdmin";
+//    }
 
+    
     public void main(String args[]) {
 
         verifyUser();
+     // try1();
+     // try2();
     }
 
 }

@@ -5,8 +5,13 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>STEM CS Validation Programme</title>
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{cSLevelSetting.get_year2()}"/>
+        </f:metadata>
         <style type="text/css"> 
-            
+
+
+
             .buttonStyle{
                 font-size: 25px;
                 column-width: 10px;
@@ -36,9 +41,9 @@
             .lblStyle{
                 font-size: 20pt;
             }
-            
+
             .checkboxStyle{
-               font-size: 20pt;
+                font-size: 20pt;
             }
         </style>
     </h:head>
@@ -51,7 +56,7 @@
 
                     <tr>
                         <th colspan="5" align="right">
-                                 <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle" action="Login"/>
+                            <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle" action="Login"/>
                         </th>
                     </tr> 
 
@@ -63,21 +68,18 @@
                     <tr>
                         <th colspan="5" align="left"> 
                             <h:outputText id="lblYear" value="Year : "  styleClass="lblStyle"/>
-                            
-                               <h:selectOneMenu styleClass="ddlStyle">
-                                <f:selectItem itemValue = "2018" itemLabel = "2018" /> 
-                                <f:selectItem itemValue = "2017" itemLabel = "2017" /> 
-                                <f:selectItem itemValue = "2016" itemLabel = "2016" /> 
-                                <f:selectItem itemValue = "2015" itemLabel = "2015" /> 
+
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.year}">
+                                <f:selectItems value="#{cSLevelSetting.get_year()}" /> 
                             </h:selectOneMenu>  
-                            
-                            
-                           <!-- <select id="ddlYear"> SHOULD NOT BE HARD CODE
-                                <option value="y2018">2018</option>
-                                <option value="y2017">2017</option>
-                                <option value="y2016">2016</option>
-                                <option value="y2015">2015</option>
-                            </select>-->
+
+
+                            <!-- <select id="ddlYear"> SHOULD NOT BE HARD CODE
+                                 <option value="y2018">2018</option>
+                                 <option value="y2017">2017</option>
+                                 <option value="y2016">2016</option>
+                                 <option value="y2015">2015</option>
+                             </select>-->
                         </th>
                     </tr>   
 
@@ -89,7 +91,7 @@
 
 
 
-                <table border="1" cellpadding="10px" cellspacing="0" width="800px" align="center">
+                <table border="1" cellpadding="10px" cellspacing="0" width="800px" align="center" value="#{cSLevelSetting.cities}" >
                     <tr>
                         <th rowspan="2"><h:outputText id="lblCSLevel" value="CS Level"  styleClass="lblStyle"/></th>
                         <th colspan="2"><h:outputText id="lblFormative" value="Formative"  styleClass="lblStyle"/></th>
@@ -106,7 +108,7 @@
                     <!--BELOW SHOULD NOT BE HARD CODE-->
 
                     <tr>
-                        <td> <h:inputText id="txtCSLevel1" styleClass="txtboxSmallStyle" required="required" size="10" value="CS1"/></td>
+                        <td> <h:inputText id="txtCSLevel1" styleClass="txtboxSmallStyle" required="required" size="10" value="#{cSLevelSetting.CS1}"/></td>
                         <td align="center"> 
                             <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
                                 <f:selectItem/>
@@ -117,22 +119,22 @@
                                 <f:selectItem/>
                             </h:selectBooleanCheckbox> 
                         </td>
-                          <td align="center"> 
+                        <td align="center"> 
                             <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
                                 <f:selectItem/>
                             </h:selectBooleanCheckbox> 
                         </td>
-                          <td align="center"> 
+                        <td align="center"> 
                             <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
                                 <f:selectItem/>
                             </h:selectBooleanCheckbox> 
                         </td>
                     </tr> 
 
-              <tr>
-                        <td> <h:inputText id="txtCSLevel2" styleClass="txtboxSmallStyle" required="required" size="10" value="CS2"/></td>
+                    <tr>
+                        <td> <h:inputText id="txtCSLevel2" styleClass="txtboxSmallStyle" required="required" size="10" value="#{cSLevelSetting.CS2}"/></td>
                         <td align="center"> 
-    
+
                             <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
                                 <f:selectItem/>
                             </h:selectBooleanCheckbox> 
@@ -142,20 +144,20 @@
                                 <f:selectItem/>
                             </h:selectBooleanCheckbox> 
                         </td>
-                          <td align="center"> 
+                        <td align="center"> 
                             <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
                                 <f:selectItem/>
                             </h:selectBooleanCheckbox> 
                         </td>
-                          <td align="center"> 
+                        <td align="center"> 
                             <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
                                 <f:selectItem/>
                             </h:selectBooleanCheckbox> 
                         </td>
                     </tr> 
-                    
-                     <tr>
-                        <td> <h:inputText id="txtCSLevel3" styleClass="txtboxSmallStyle" required="required" size="10" value="CS3"/></td>
+
+                    <tr>
+                        <td> <h:inputText id="txtCSLevel3" styleClass="txtboxSmallStyle" required="required" size="10"/></td>
                         <td align="center"> 
                             <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
                                 <f:selectItem/>
@@ -166,12 +168,12 @@
                                 <f:selectItem/>
                             </h:selectBooleanCheckbox> 
                         </td>
-                          <td align="center"> 
+                        <td align="center"> 
                             <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
                                 <f:selectItem/>
                             </h:selectBooleanCheckbox> 
                         </td>
-                          <td align="center"> 
+                        <td align="center"> 
                             <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
                                 <f:selectItem/>
                             </h:selectBooleanCheckbox> 
@@ -186,11 +188,11 @@
                         <th><label>&nbsp;</label></th>
                         <th><label>&nbsp;</label></th> 
                     </tr>
-                    
+
                     <tr>
                         <th colspan="3" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
                         <th align="right"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
-                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{cSLevelSetting.addCS()}"/></th>
                     </tr> 
                 </table>
 

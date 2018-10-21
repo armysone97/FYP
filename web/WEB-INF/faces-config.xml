@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+
+    <!--    <navigation-rule>
+        <from-view-id>/login.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>loginAdmin</from-outcome>
+            <to-view-id>/mainMenuAdmin.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>loginEvaluator</from-outcome>
+            <to-view-id>/mainMenuEvaluator.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>-->
+    
+    <navigation-rule>
+        <from-view-id>/Login.xhtml</from-view-id>
+
+        <navigation-case>
+            <from-action>#{login.verifyUser()}</from-action>
+            <from-outcome>loginEvaluator</from-outcome>
+            <to-view-id>/MainMenuEvaluator.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{login.verifyUser()}</from-action>
+            <from-outcome>loginAdmin</from-outcome>
+            <to-view-id>/MainMenuAdmin.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/CSLevelSetting.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{cSLevelSetting.addCS()}</from-action>
+            <from-outcome>refreshTable</from-outcome>
+            <to-view-id>/CSLevelSetting.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/test1.xhtml</from-view-id>
+        <navigation-case>
+            <from-action>#{cSLevelSetting.addCS()}</from-action>
+            <from-outcome>refreshTable</from-outcome>
+            <to-view-id>/test1.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+</faces-config>
+

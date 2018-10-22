@@ -22,7 +22,7 @@ public class EvaluatorPersonalDetails {
     private Connection con;
     private String evaName;
     private String staffID;
-    private Integer contactNum;
+    private String contactNum;
     private String branch;
     private String faculty;
     private String role;
@@ -51,11 +51,11 @@ public class EvaluatorPersonalDetails {
         this.staffID = staffID;
     }
 
-    public Integer getContactNum() {
+    public String getContactNum() {
         return contactNum;
     }
 
-    public void setContactNum(Integer contactNum) {
+    public void setContactNum(String contactNum) {
         this.contactNum = contactNum;
     }
 
@@ -103,17 +103,17 @@ public class EvaluatorPersonalDetails {
     public void evaluatorData(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO evaluatorpersonaldetails (staffID, name, campus, faculty, contactNo, status, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
                       
             statement.setString(1, staffID);
             statement.setString(2, evaName);
             statement.setString(3, branch);
             statement.setString(4, faculty);
-            statement.setInt(5, contactNum);
+            statement.setString(5, contactNum);
             statement.setString(6, status);
             statement.setString(7, staffID);
-            statement.setString(8, Integer.toString(contactNum));
+            statement.setString(8, contactNum);
             
             statement.executeUpdate();
             statement.close();
@@ -131,7 +131,7 @@ public class EvaluatorPersonalDetails {
 
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM roles");
             
@@ -160,7 +160,7 @@ public class EvaluatorPersonalDetails {
         
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM evaluatorroledetails");
             
@@ -187,7 +187,7 @@ public class EvaluatorPersonalDetails {
         
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO evaluatorroledetails (RD_ID, roleID, staffID) VALUES (?, ?, ?)");
                       
             statement.setString(1, rdID);
@@ -201,6 +201,7 @@ public class EvaluatorPersonalDetails {
         }catch(Exception ex){
             System.out.println("Error: " + ex);
         }
+        
     }
     
     public void main(String args[]){

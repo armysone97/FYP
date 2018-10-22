@@ -67,7 +67,7 @@
 
                     <tr>
                         <th colspan="4" align="right">     
-                            <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle" action="Login"/>
+                            <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle" />
                         </th>
                     </tr> 
 
@@ -88,11 +88,8 @@
 
                         <th align="right">
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> </th>
-                        <th align="left">   <h:selectOneMenu styleClass="ddlStyle">
-                                <f:selectItem itemValue = "E1" itemLabel = "AAA" /> 
-                                <f:selectItem itemValue = "E2" itemLabel = "BBB" /> 
-                                <f:selectItem itemValue = "E3" itemLabel = "CCC" /> 
-                                <f:selectItem itemValue = "E4" itemLabel = "DDD" /> 
+                            <th align="left">   <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.evaluator}">
+                                    <f:selectItems value="#{evaluatorWorkloadAllocation.get_EvaluatorList()}" />
                             </h:selectOneMenu>  
                         </th>
                     </tr>  

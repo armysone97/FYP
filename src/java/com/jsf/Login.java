@@ -74,7 +74,7 @@ public class Login {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
 
             PreparedStatement st = con.prepareStatement("SELECT roleID FROM evaluatorroledetails WHERE staffID = ?");
             st.setString(1, staffID);
@@ -94,9 +94,22 @@ public class Login {
         } else {
             if (count == 3) {
                 roleType = "Admin";
-                context.addMessage(null, new FacesMessage("success login admin"));
-                nextPage = "loginAdmin";
+                //  context.addMessage(null, new FacesMessage("success login admin"));
+                if (role.equals("")) {
+                    context.addMessage(null, new FacesMessage("Role must be selected, please try again!"));
+                } else {
+                    switch (role) {
+                        case "1":
+                            roleTypes = "Admin";
+                            nextPage = "loginAdmin";
+                            break;
+                        case "2":
+                            roleTypes = "Evaluator";
+                            nextPage = "loginEvaluator";
+                            break;
+                    }
 
+                }
             } else {
                 roleType = "Evaluator";
                 if (role.equals("")) {
@@ -124,7 +137,7 @@ public class Login {
             }
 
         }
-        
+
         return nextPage;
 
     }
@@ -159,7 +172,7 @@ public class Login {
         } else {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery("SELECT staffID, username, password FROM evaluatorpersonaldetails");
 
@@ -188,7 +201,7 @@ public class Login {
                 context.addMessage(null, new FacesMessage("Invalid username or password, please try again!"));
             }
         }
-        
+
         return nextPage;
 
 //   int input = JOptionPane.showConfirmDialog(null, 
@@ -196,7 +209,7 @@ public class Login {
 //        // 0=ok
 //        System.out.println(input);
     }
-    
+
 //    public String try1() {
 //        String nextPage = "";
 //        setUsername("ABC");
@@ -208,13 +221,11 @@ public class Login {
 //       setUsername("ABCDD");
 //       return "loginAdmin";
 //    }
-
-    
     public void main(String args[]) {
 
         verifyUser();
-     // try1();
-     // try2();
+        // try1();
+        // try2();
     }
 
 }

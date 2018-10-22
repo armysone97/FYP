@@ -85,9 +85,6 @@ public class CSLevelSetting {
 //
 //        return year_list1;
 //    }
-    
-    
-    
     public List<String> get_year() {
 // 	try {
 // 	 	Connection connection=null;
@@ -103,13 +100,15 @@ public class CSLevelSetting {
 // 	 	 System.out.println(e);
 // 	}
 
+        year_list.clear();
+
         FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         String tmp = "";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT roleType FROM roles");
 
@@ -137,26 +136,25 @@ public class CSLevelSetting {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stem_cs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcs?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT roleType FROM roles");
 
             while (rs.next()) {
 
                 tmp = rs.getString("roleType");
-                
-             //   String ss = setCS1;
-                
-                if(count == 1){
-                     setCS1(tmp + count);
-                     context.addMessage(null, new FacesMessage("a : " + count + tmp));
-                }else if (count == 2){
-                    setCS2(tmp  + count);
+
+                //   String ss = setCS1;
+                if (count == 1) {
+                    setCS1(tmp + count);
+                    context.addMessage(null, new FacesMessage("a : " + count + tmp));
+                } else if (count == 2) {
+                    setCS2(tmp + count);
                     context.addMessage(null, new FacesMessage("a : " + count + tmp));
                 }
-              //  for(int i = 1; i < 3; i++){
-                   
-               // }
+                //  for(int i = 1; i < 3; i++){
+
+                // }
                 count += 1;
             }
 

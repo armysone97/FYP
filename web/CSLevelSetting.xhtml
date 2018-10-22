@@ -5,15 +5,154 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>STEM CS Validation Programme</title>
-        <f:metadata>
-            <f:event type="preRenderView" listener="#{cSLevelSetting.get_year2()}"/>
-        </f:metadata>
+        <!--        <f:metadata>
+                    <f:event type="preRenderView" listener="{cSLevelSetting.get_year2()}"/>
+                </f:metadata>-->
+
+        <script>
+            var count = 0;
+
+            function addRow() {
+
+               if (count === 0) {
+                    var x = document.getElementById("table1a");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                    }
+
+                    var x = document.getElementById("table1b");
+                    if (x.style.display === "none") {
+                        x.style.display = "table-cell";
+                    }
+
+                    count++;
+                } else if (count === 1) {
+                    var x = document.getElementById("table2a");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                    }
+
+                    var x = document.getElementById("table2b");
+                    if (x.style.display === "none") {
+                        x.style.display = "table-cell";
+                    }
+                    count++;
+                } else if (count === 2) {
+                    var x = document.getElementById("table3a");
+                    if (x.style.display === "none") {
+                        x.style.display = "block";
+                    }
+
+                    var x = document.getElementById("table3b");
+                    if (x.style.display === "none") {
+                        x.style.display = "table-cell";
+                    }
+                }
+                return false;
+            }
+
+            function addRow1() {
+//                var y = document.getElementById("assList");
+//                var z = y.length;
+
+                var checkedValue = null;
+                var inputElements = document.getElementsByClassName('verifyCheckForJS');
+                for (var i = 0; inputElements[i]; ++i) {
+                    if (inputElements[i].checked) {
+                        checkedValue = inputElements[i].value;
+                        break;
+                    }
+                }
+
+                alert(checkedValue);
+
+                //  if (z === 0) {
+                var x = document.getElementById("table1");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                }
+                //   } else {
+                var x = document.getElementById("table3");
+                if (x.style.display === "none") {
+                    x.style.display = "table-cell";
+                }
+                //   }
+
+                //   alert("x :" + z + "bbb");
+
+                return false;
+            }
+
+            function initialRow() {
+
+                var x = document.getElementById("table1a");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+
+                var x = document.getElementById("table1b");
+                if (x.style.display === "none") {
+                    x.style.display = "table-cell";
+                } else {
+                    x.style.display = "none";
+                }
+
+                var x = document.getElementById("table2a");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+
+                var x = document.getElementById("table2b");
+                if (x.style.display === "none") {
+                    x.style.display = "table-cell";
+                } else {
+                    x.style.display = "none";
+                }
+
+                var x = document.getElementById("table3a");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+
+                var x = document.getElementById("table3b");
+                if (x.style.display === "none") {
+                    x.style.display = "table-cell";
+                } else {
+                    x.style.display = "none";
+                }
+
+                return false;
+            }
+
+            function myFunctionCorrect() {
+
+                var x = document.getElementById("table2");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+                } else {
+                    x.style.display = "none";
+                }
+
+                return false;
+            }
+        </script>
+
         <style type="text/css"> 
-
-
-
             .buttonStyle{
                 font-size: 25px;
+                column-width: 10px;
+                width: 200px;
+                height: 40px;
+            }
+
+            .buttonSmallStyle{
+                font-size: 20px;
                 column-width: 10px;
                 width: 200px;
                 height: 40px;
@@ -29,7 +168,7 @@
             .txtboxStyle {
                 font-size: 18pt;
                 height: 35px;
-                width : 250px;
+                width : 150px;
             }
 
             .txtboxSmallStyle {
@@ -47,7 +186,7 @@
             }
         </style>
     </h:head>
-    <h:body>
+    <h:body onload="initialRow()"> <!--onload="myFunction()"-->
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
             <h1>CS LEVEL SETTING</h1>
@@ -66,12 +205,14 @@
                     </tr>
 
                     <tr>
-                        <th colspan="5" align="left"> 
+                        <th colspan="3" align="left"> 
                             <h:outputText id="lblYear" value="Year : "  styleClass="lblStyle"/>
 
                             <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.year}">
+                                <!--<f:selectItem itemValue="ss" />--> 
                                 <f:selectItems value="#{cSLevelSetting.get_year()}" /> 
                             </h:selectOneMenu>  
+
 
 
                             <!-- <select id="ddlYear"> SHOULD NOT BE HARD CODE
@@ -80,6 +221,14 @@
                                  <option value="y2016">2016</option>
                                  <option value="y2015">2015</option>
                              </select>-->
+                        </th>
+
+                        <th align="right"> 
+                            <h:commandButton id="btnAdd" value="#{cSLevelSetting.changeButtonName()}" styleClass="buttonSmallStyle" action="#{cSLevelSetting.changeButtonAction()}"/>
+                        </th> 
+
+                        <th align="right"> 
+                            <h:inputText id="txtNewCSLevel" styleClass="txtboxStyle" disabled="#{cSLevelSetting.changeTextboxDisabled()}" size="10" value="#{cSLevelSetting.newCSLevel}"/>
                         </th>
                     </tr>   
 
@@ -91,9 +240,9 @@
 
 
 
-                <table border="1" cellpadding="10px" cellspacing="0" width="800px" align="center" value="#{cSLevelSetting.cities}" >
+                <table border="1" cellpadding="10px" cellspacing="0" width="800px" align="center">
                     <tr>
-                        <th rowspan="2"><h:outputText id="lblCSLevel" value="CS Level"  styleClass="lblStyle"/></th>
+                        <th rowspan="2"><h:outputText id="lblCSLevel" value="CS Level &nbsp;  &nbsp;  &nbsp; "  styleClass="lblStyle"/></th>
                         <th colspan="2"><h:outputText id="lblFormative" value="Formative"  styleClass="lblStyle"/></th>
                         <th colspan="2"><h:outputText id="lblSummative" value="Summative"  styleClass="lblStyle"/></th>
                     </tr> 
@@ -104,82 +253,114 @@
                         <td align="center"><h:outputText id="lblPractical" value="Practical"  styleClass="lblStyle"/></td>
                         <td align="center"><h:outputText id="lblGroupwork" value="Groupwork"  styleClass="lblStyle"/></td>
                     </tr> 
-
-                    <!--BELOW SHOULD NOT BE HARD CODE-->
+                    <!--<table id="table1" border="1" cellpadding="10px" cellspacing="0" width="800px" align="center">-->
 
                     <tr>
-                        <td> <h:inputText id="txtCSLevel1" styleClass="txtboxSmallStyle" required="required" size="10" value="#{cSLevelSetting.CS1}"/></td>
-                        <td align="center"> 
-                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
-                                <f:selectItem/>
-                            </h:selectBooleanCheckbox> 
+
+                        <td id="table1a"> 
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo1}">
+                                <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu>  
                         </td>
-                        <td align="center"> 
-                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
-                                <f:selectItem/>
-                            </h:selectBooleanCheckbox> 
-                        </td>
-                        <td align="center"> 
-                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
-                                <f:selectItem/>
-                            </h:selectBooleanCheckbox> 
-                        </td>
-                        <td align="center"> 
-                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
-                                <f:selectItem/>
-                            </h:selectBooleanCheckbox> 
+                        <td id="table1b" colspan="4" align="center"> 
+                            <h:selectManyCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem itemValue="ProjectNo1" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="CollaborationNo1" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="PracticalNo1" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="GroupworkNo1" itemLabel=" &nbsp;"/>
+                            </h:selectManyCheckbox> 
                         </td>
                     </tr> 
 
                     <tr>
-                        <td> <h:inputText id="txtCSLevel2" styleClass="txtboxSmallStyle" required="required" size="10" value="#{cSLevelSetting.CS2}"/></td>
-                        <td align="center"> 
+                        <td id="table2a"> 
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo2}">
+                                <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu>  
+                        </td>
 
-                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
-                                <f:selectItem/>
-                            </h:selectBooleanCheckbox> 
-                        </td>
-                        <td align="center"> 
-                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
-                                <f:selectItem/>
-                            </h:selectBooleanCheckbox> 
-                        </td>
-                        <td align="center"> 
-                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
-                                <f:selectItem/>
-                            </h:selectBooleanCheckbox> 
-                        </td>
-                        <td align="center"> 
-                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
-                                <f:selectItem/>
-                            </h:selectBooleanCheckbox> 
+                        <td id="table2b" colspan="4" align="center"> 
+                            <h:selectManyCheckbox styleClass = "checkboxStyle" value="#{cSLevelSetting.assessmentList}" >
+                                <f:selectItem itemValue="ProjectNo2" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="CollaborationNo2" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="PracticalNo2" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="GroupworkNo2" itemLabel=" &nbsp;"/>
+                            </h:selectManyCheckbox> 
                         </td>
                     </tr> 
 
                     <tr>
-                        <td> <h:inputText id="txtCSLevel3" styleClass="txtboxSmallStyle" required="required" size="10"/></td>
-                        <td align="center"> 
-                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
-                                <f:selectItem/>
-                            </h:selectBooleanCheckbox> 
+
+                        <td id="table3a"> 
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo3}">
+                                <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu>  
                         </td>
-                        <td align="center"> 
-                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
-                                <f:selectItem/>
-                            </h:selectBooleanCheckbox> 
-                        </td>
-                        <td align="center"> 
-                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
-                                <f:selectItem/>
-                            </h:selectBooleanCheckbox> 
-                        </td>
-                        <td align="center"> 
-                            <h:selectBooleanCheckbox styleClass = "checkboxStyle" >
-                                <f:selectItem/>
-                            </h:selectBooleanCheckbox> 
+                        <td id="table3b" colspan="4" align="center"> 
+                            <h:selectManyCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem itemValue="ProjectNo3" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="CollaborationNo3" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="PracticalNo3" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="GroupworkNo3" itemLabel=" &nbsp;"/>
+                            </h:selectManyCheckbox> 
                         </td>
                     </tr> 
-                </table>    
+                </table>   
+                <!--</table>-->
+
+                <!--BELOW SHOULD NOT BE HARD CODE-->
+
+
+                <table id="table2" border="1" cellpadding="10px" cellspacing="0" width="800px" align="center" >
+                    <!--                    <tr>
+                                            <td> 
+                                                <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo1}">
+                                                    <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
+                                                </h:selectOneMenu>  
+                                            </td>
+                                            <td colspan="4" align="center"> 
+                                                <h:selectManyCheckbox styleClass = "checkboxStyle" >
+                                                    <f:selectItem itemLabel="&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                                    <f:selectItem itemLabel="&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                                    <f:selectItem itemLabel="&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                                    <f:selectItem/>
+                                                </h:selectManyCheckbox> 
+                                            </td>
+                                        </tr> -->
+
+                    <tr>
+                        <td> 
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo2}">
+                                <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu>  
+                        </td>
+                        <td colspan="4" align="center"> 
+                            <h:selectManyCheckbox styleClass = "checkboxStyle" value="#{cSLevelSetting.assessmentList}" >
+                                <f:selectItem itemValue="1a" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="2a" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="3a" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="4a" itemLabel="11 &nbsp;"/>
+                            </h:selectManyCheckbox> 
+                        </td>
+                    </tr> 
+
+                    <!--                    <tr>
+                                            <td> 
+                                                <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo3}">
+                                                    <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
+                                                </h:selectOneMenu>  
+                                            </td>
+                                            <td colspan="4" align="center"> 
+                                                <h:selectManyCheckbox styleClass = "checkboxStyle" >
+                                                    <f:selectItem itemLabel="&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                                    <f:selectItem itemLabel="&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                                    <f:selectItem itemLabel="&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                                    <f:selectItem/>
+                                                </h:selectManyCheckbox> 
+                                            </td>
+                                        </tr> -->
+                </table> 
+
 
 
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
@@ -190,11 +371,18 @@
                     </tr>
 
                     <tr>
-                        <th colspan="3" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                        <!--<th colspan="3" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>-->
+
+                        <th colspan="2" align="left"> <h:commandButton id="btnCancel" value="Cancel" onclick="return myFunction()" styleClass="buttonStyle"/></th>
+
+                        <th align="left"> <h:commandButton id="btnCancel1" value="Cancel1" onclick="return addRow()" styleClass="buttonStyle"/></th>
+
                         <th align="right"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
-                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{cSLevelSetting.addCS()}"/></th>
+                        <!--<th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="9{cSLevelSetting.addCS()}"/></th>-->
                     </tr> 
                 </table>
+
+
 
             </h:form>
         </div>

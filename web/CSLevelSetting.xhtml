@@ -10,46 +10,69 @@
                 </f:metadata>-->
 
         <script>
-            var count = 0;
+//            var count = 0;
+//
+//            function addRow() {
+//                if (count === 0) {
+//                    var x = document.getElementById("table1a");
+//                    if (x.style.display === "none") {
+//                        x.style.display = "block";
+//                    }
+//
+//                    var x = document.getElementById("table1b");
+//                    if (x.style.display === "none") {
+//                        x.style.display = "table-cell";
+//                    }
+//
+//                    count++;
+//                } else if (count === 1) {
+//                    var x = document.getElementById("table2a");
+//                    if (x.style.display === "none") {
+//                        x.style.display = "block";
+//                    }
+//
+//                    var x = document.getElementById("table2b");
+//                    if (x.style.display === "none") {
+//                        x.style.display = "table-cell";
+//                    }
+//                    count++;
+//                } else if (count === 2) {
+//                    var x = document.getElementById("table3a");
+//                    if (x.style.display === "none") {
+//                        x.style.display = "block";
+//                    }
+//
+//                    var x = document.getElementById("table3b");
+//                    if (x.style.display === "none") {
+//                        x.style.display = "table-cell";
+//                    }
+//                }
+//                // return false;
+//
+//
+//            }
 
-            function addRow() {
+            function countRowNum() {
+                var Fname = document.forms["CSLevelSetting"]["txtRowNum"].value;
+                //  var textcontrol = document.getElementById("txtRowNum").value;
+                alert("x : " + Fname);
 
-               if (count === 0) {
-                    var x = document.getElementById("table1a");
-                    if (x.style.display === "none") {
-                        x.style.display = "block";
-                    }
-
-                    var x = document.getElementById("table1b");
-                    if (x.style.display === "none") {
-                        x.style.display = "table-cell";
-                    }
-
-                    count++;
-                } else if (count === 1) {
-                    var x = document.getElementById("table2a");
-                    if (x.style.display === "none") {
-                        x.style.display = "block";
-                    }
-
-                    var x = document.getElementById("table2b");
-                    if (x.style.display === "none") {
-                        x.style.display = "table-cell";
-                    }
-                    count++;
-                } else if (count === 2) {
-                    var x = document.getElementById("table3a");
-                    if (x.style.display === "none") {
-                        x.style.display = "block";
-                    }
-
-                    var x = document.getElementById("table3b");
-                    if (x.style.display === "none") {
-                        x.style.display = "table-cell";
-                    }
-                }
                 return false;
             }
+
+//            function addRowNum() {
+//
+//                //   var name = oForm.elements["name"].value;
+//
+//                // textcontrol.value = 'Arun';
+//                //        var x = 100;
+//                var try11 =  document.getElementById('txtRowNum').value;
+//                //       document.getElementById("txtRowNum").innerHTML = x;
+//                         alert("x : " + try11);
+//
+//                //  addRow();
+//                //return false;
+//            }
 
             function addRow1() {
 //                var y = document.getElementById("assList");
@@ -174,7 +197,8 @@
             .txtboxSmallStyle {
                 font-size: 18pt;
                 height: 35px;
-                width : 100px;
+                width : 35px;
+                text-align: center;
             }
 
             .lblStyle{
@@ -186,7 +210,7 @@
             }
         </style>
     </h:head>
-    <h:body onload="initialRow()"> <!--onload="myFunction()"-->
+    <h:body onload="addRow(); return false"> <!--onload="myFunction()"-->
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
             <h1>CS LEVEL SETTING</h1>
@@ -212,19 +236,12 @@
                                 <!--<f:selectItem itemValue="ss" />--> 
                                 <f:selectItems value="#{cSLevelSetting.get_year()}" /> 
                             </h:selectOneMenu>  
-
-
-
-                            <!-- <select id="ddlYear"> SHOULD NOT BE HARD CODE
-                                 <option value="y2018">2018</option>
-                                 <option value="y2017">2017</option>
-                                 <option value="y2016">2016</option>
-                                 <option value="y2015">2015</option>
-                             </select>-->
                         </th>
 
                         <th align="right"> 
-                            <h:commandButton id="btnAdd" value="#{cSLevelSetting.changeButtonName()}" styleClass="buttonSmallStyle" action="#{cSLevelSetting.changeButtonAction()}"/>
+                            <h:commandButton id="btnAdd" value="#{cSLevelSetting.changeButtonName()}" styleClass="buttonSmallStyle" action="#{cSLevelSetting.changeButtonAction()}">
+                                <f:ajax execute="@form" render="txtNewCSLevel btnAdd" />
+                            </h:commandButton>
                         </th> 
 
                         <th align="right"> 
@@ -253,7 +270,8 @@
                         <td align="center"><h:outputText id="lblPractical" value="Practical"  styleClass="lblStyle"/></td>
                         <td align="center"><h:outputText id="lblGroupwork" value="Groupwork"  styleClass="lblStyle"/></td>
                     </tr> 
-                    <!--<table id="table1" border="1" cellpadding="10px" cellspacing="0" width="800px" align="center">-->
+
+                    <!--add row start from here-->
 
                     <tr>
 
@@ -305,62 +323,143 @@
                             </h:selectManyCheckbox> 
                         </td>
                     </tr> 
-                </table>   
-                <!--</table>-->
-
-                <!--BELOW SHOULD NOT BE HARD CODE-->
-
-
-                <table id="table2" border="1" cellpadding="10px" cellspacing="0" width="800px" align="center" >
-                    <!--                    <tr>
-                                            <td> 
-                                                <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo1}">
-                                                    <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
-                                                </h:selectOneMenu>  
-                                            </td>
-                                            <td colspan="4" align="center"> 
-                                                <h:selectManyCheckbox styleClass = "checkboxStyle" >
-                                                    <f:selectItem itemLabel="&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
-                                                    <f:selectItem itemLabel="&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
-                                                    <f:selectItem itemLabel="&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
-                                                    <f:selectItem/>
-                                                </h:selectManyCheckbox> 
-                                            </td>
-                                        </tr> -->
 
                     <tr>
-                        <td> 
-                            <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo2}">
+
+                        <td id="table4a"> 
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo4}">
                                 <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
                             </h:selectOneMenu>  
                         </td>
-                        <td colspan="4" align="center"> 
-                            <h:selectManyCheckbox styleClass = "checkboxStyle" value="#{cSLevelSetting.assessmentList}" >
-                                <f:selectItem itemValue="1a" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
-                                <f:selectItem itemValue="2a" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
-                                <f:selectItem itemValue="3a" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
-                                <f:selectItem itemValue="4a" itemLabel="11 &nbsp;"/>
+                        <td id="table4b" colspan="4" align="center"> 
+                            <h:selectManyCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem itemValue="ProjectNo4" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="CollaborationNo4" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="PracticalNo4" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="GroupworkNo4" itemLabel=" &nbsp;"/>
                             </h:selectManyCheckbox> 
                         </td>
                     </tr> 
 
-                    <!--                    <tr>
-                                            <td> 
-                                                <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo3}">
-                                                    <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
-                                                </h:selectOneMenu>  
-                                            </td>
-                                            <td colspan="4" align="center"> 
-                                                <h:selectManyCheckbox styleClass = "checkboxStyle" >
-                                                    <f:selectItem itemLabel="&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
-                                                    <f:selectItem itemLabel="&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
-                                                    <f:selectItem itemLabel="&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
-                                                    <f:selectItem/>
-                                                </h:selectManyCheckbox> 
-                                            </td>
-                                        </tr> -->
-                </table> 
+                    <tr>
 
+                        <td id="table5a"> 
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo5}">
+                                <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu>  
+                        </td>
+                        <td id="table5b" colspan="4" align="center"> 
+                            <h:selectManyCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem itemValue="ProjectNo5" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="CollaborationNo5" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="PracticalNo5" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="GroupworkNo5" itemLabel=" &nbsp;"/>
+                            </h:selectManyCheckbox> 
+                        </td>
+                    </tr> 
+
+                    <tr>
+
+                        <td id="table6a"> 
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo6}">
+                                <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu>  
+                        </td>
+                        <td id="table6b" colspan="4" align="center"> 
+                            <h:selectManyCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem itemValue="ProjectNo6" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="CollaborationNo6" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="PracticalNo6" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="GroupworkNo6" itemLabel=" &nbsp;"/>
+                            </h:selectManyCheckbox> 
+                        </td>
+                    </tr> 
+
+                    <tr>
+
+                        <td id="table7a"> 
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo7}">
+                                <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu>  
+                        </td>
+                        <td id="table7b" colspan="4" align="center"> 
+                            <h:selectManyCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem itemValue="ProjectNo7" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="CollaborationNo7" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="PracticalNo7" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="GroupworkNo7" itemLabel=" &nbsp;"/>
+                            </h:selectManyCheckbox> 
+                        </td>
+                    </tr> 
+
+                    <tr>
+
+                        <td id="table8a"> 
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo8}">
+                                <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu>  
+                        </td>
+                        <td id="table8b" colspan="4" align="center"> 
+                            <h:selectManyCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem itemValue="ProjectNo8" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="CollaborationNo8" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="PracticalNo8" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="GroupworkNo8" itemLabel=" &nbsp;"/>
+                            </h:selectManyCheckbox> 
+                        </td>
+                    </tr> 
+
+                    <tr>
+
+                        <td id="table9a"> 
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo9}">
+                                <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu>  
+                        </td>
+                        <td id="table9b" colspan="4" align="center"> 
+                            <h:selectManyCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem itemValue="ProjectNo9" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="CollaborationNo9" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="PracticalNo9" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="GroupworkNo9" itemLabel=" &nbsp;"/>
+                            </h:selectManyCheckbox> 
+                        </td>
+                    </tr> 
+
+                    <tr>
+
+                        <td id="table10a"> 
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{cSLevelSetting.CSNo10}">
+                                <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu>  
+                        </td>
+                        <td id="table10b" colspan="4" align="center"> 
+                            <h:selectManyCheckbox styleClass = "checkboxStyle" >
+                                <f:selectItem itemValue="ProjectNo10" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="CollaborationNo10" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="PracticalNo10" itemLabel=" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;"/>
+                                <f:selectItem itemValue="GroupworkNo10" itemLabel=" &nbsp;"/>
+                            </h:selectManyCheckbox> 
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th colspan="5" align="left">
+                            <h:outputText id="lblRowNum" value="Number of Row: "  styleClass="lblStyle"/> &nbsp; &nbsp; &nbsp; &nbsp; 
+                            <h:inputText id="txtRowNum" styleClass="txtboxSmallStyle" disabled="false" size="10" value="#{cSLevelSetting.rowNum}"/>
+                            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+
+                            <h:commandButton id="btnAddRow" value="Add Row" action="#{cSLevelSetting.addRowNum()}" styleClass="buttonStyle">
+                                <f:ajax execute="@form" render="txtRowNum" />
+                            </h:commandButton>
+
+                            <h:commandButton id="btnRefresh" value="Refresh" onclick="addRow(); return false;" styleClass="buttonStyle" />
+                            <!--<input type="text" oninput="return addRow()" value="{cSLevelSetting.rowNum}"></input>-->
+
+                        </th>
+
+                    </tr> 
+                </table>   
 
 
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
@@ -373,16 +472,1251 @@
                     <tr>
                         <!--<th colspan="3" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>-->
 
-                        <th colspan="2" align="left"> <h:commandButton id="btnCancel" value="Cancel" onclick="return myFunction()" styleClass="buttonStyle"/></th>
+                        <th colspan="2" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle"/></th>
 
-                        <th align="left"> <h:commandButton id="btnCancel1" value="Cancel1" onclick="return addRow()" styleClass="buttonStyle"/></th>
+                        <th align="left"> <h:commandButton id="btnCancel1" value="Cancel1" styleClass="buttonStyle"/></th>
 
                         <th align="right"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
                         <!--<th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="9{cSLevelSetting.addCS()}"/></th>-->
                     </tr> 
                 </table>
 
+                <script>
+                    var count = 0;
 
+//------------- show or hide table row
+                    function addRow() {
+
+                        var countNowString = document.getElementById("CSLevelSetting:txtRowNum").value;
+                        alert("x : " + countNowString);
+
+                        var countNowInt = parseInt(countNowString, 10);
+
+                        count = countNowInt;
+
+                        alert("count: " + count);
+
+                        if (count === 0) {
+                            //---------------- hide   
+                            var x = document.getElementById("table1a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table1b");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table2a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table2b");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table3a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table3b");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table4a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table4b");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table5a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table5b");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table6a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table6b");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table7a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table7b");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+var x = document.getElementById("table8a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table8b");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table9a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table9b");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10b");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            } else {
+                                x.style.display = "none";
+                            }
+
+                        } 
+                        else if (count === 1) {
+                            //---------------- show              
+                            var x = document.getElementById("table1a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table1b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+                            //---------------- hide         
+                            var x = document.getElementById("table2a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table2b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table3a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table3b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table4a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table4b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table5a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table5b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+
+                            var x = document.getElementById("table6a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table6b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table7a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table7b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+                            
+                            var x = document.getElementById("table8a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table8b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+
+                            var x = document.getElementById("table9a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table9b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+                            
+
+                        } 
+                        else if (count === 2) {
+                            //---------------- show   
+                            var x = document.getElementById("table1a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table1b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table2a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table2b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+                            //---------------- hide
+
+                            var x = document.getElementById("table3a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table3b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table4a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table4b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table5a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table5b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table6a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table6b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table7a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table7b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+                            
+                            var x = document.getElementById("table8a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table8b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+
+                            var x = document.getElementById("table9a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table9b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+
+                        } 
+                        else if (count === 3) {
+                            //---------------- show                  
+
+                            var x = document.getElementById("table1a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table1b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table2a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table2b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table3a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table3b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+                            //---------------- hide                        
+                            var x = document.getElementById("table4a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table4b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table5a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table5b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table6a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table6b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table7a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table7b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+                            
+                            var x = document.getElementById("table8a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table8b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+
+                            var x = document.getElementById("table9a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table9b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+
+                        } 
+                        else if (count === 4) {
+                            //---------------- show                  
+
+                            var x = document.getElementById("table1a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table1b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table2a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table2b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table3a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table3b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table4a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table4b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            //---------------- hide 
+
+                            var x = document.getElementById("table5a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table5b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table6a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table6b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table7a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table7b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+                            
+                            var x = document.getElementById("table8a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table8b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+
+                            var x = document.getElementById("table9a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table9b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+
+                        } 
+                        else if (count === 5) {
+                            //---------------- show                  
+
+                            var x = document.getElementById("table1a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table1b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table2a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table2b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table3a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table3b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table4a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table4b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table5a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table5b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            //---------------- hide 
+
+                            var x = document.getElementById("table6a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table6b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table7a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table7b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+                            
+                            var x = document.getElementById("table8a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table8b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+
+                            var x = document.getElementById("table9a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table9b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+
+                        } 
+                        else if (count === 6) {
+                            //---------------- show                  
+
+                            var x = document.getElementById("table1a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table1b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table2a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table2b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table3a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table3b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table4a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table4b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table5a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table5b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table6a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table6b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            //---------------- hide 
+
+                            var x = document.getElementById("table7a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table7b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+                            
+                            var x = document.getElementById("table8a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table8b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+
+                            var x = document.getElementById("table9a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table9b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+                        } 
+                        else if (count === 7) {
+                            //---------------- show                  
+
+                            var x = document.getElementById("table1a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table1b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table2a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table2b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table3a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table3b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table4a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table4b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table5a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table5b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table6a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table6b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table7a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table7b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            //---------------- hide 
+                            
+                            var x = document.getElementById("table8a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table8b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+
+                            var x = document.getElementById("table9a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table9b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+
+                        } 
+                        else if (count === 8) {
+                            //---------------- show                  
+
+                            var x = document.getElementById("table1a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table1b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table2a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table2b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table3a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table3b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table4a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table4b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table5a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table5b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table6a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table6b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table7a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table7b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+                            
+                            var x = document.getElementById("table8a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table8b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            //---------------- hide 
+                            
+
+                            var x = document.getElementById("table9a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table9b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+
+                        } 
+                        else if (count === 9) {
+                            //---------------- show                  
+
+                            var x = document.getElementById("table1a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table1b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table2a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table2b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table3a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table3b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table4a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table4b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table5a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table5b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table6a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table6b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table7a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table7b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+                            
+                            var x = document.getElementById("table8a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table8b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+                            
+                             var x = document.getElementById("table9a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table9b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            //---------------- hide 
+                            
+                            var x = document.getElementById("table10a");
+                            if (x.style.display === "block") {
+                                x.style.display = "none";
+                            }
+
+                            var x = document.getElementById("table10b");
+                            if (x.style.display === "table-cell") {
+                                x.style.display = "none";
+
+                            }
+
+                        } 
+                        else if (count === 10) {
+                            //---------------- show                  
+
+                            var x = document.getElementById("table1a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table1b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table2a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table2b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table3a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table3b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table4a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table4b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table5a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table5b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table6a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table6b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            var x = document.getElementById("table7a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table7b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+                            
+                            var x = document.getElementById("table8a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table8b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+                            
+                             var x = document.getElementById("table9a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table9b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+                            
+                             var x = document.getElementById("table10a");
+                            if (x.style.display === "none") {
+                                x.style.display = "block";
+                            }
+
+                            var x = document.getElementById("table10b");
+                            if (x.style.display === "none") {
+                                x.style.display = "table-cell";
+                            }
+
+                            //---------------- hide 
+                            }
+                    } //end func
+                </script>
 
             </h:form>
         </div>

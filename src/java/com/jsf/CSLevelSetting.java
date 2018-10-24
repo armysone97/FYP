@@ -263,7 +263,7 @@ public class CSLevelSetting {
      //   setNewCSLevel("xx: " + yearNow);
         
         if (yearNow == 2018){
-            yearNow = 2017;
+            yearNow = 2016;
         }
         
         int yearCountList = get_yearCount(yearNow);

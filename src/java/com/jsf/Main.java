@@ -12,7 +12,8 @@ package com.jsf;
 public class Main {
 
     public static void main(String[] args) {
-        CSLevelSetting connect = new CSLevelSetting();
-        connect.defaultList();
+//        CSLevelSetting connect = new CSLevelSetting();
+//        connect.defaultList();
+
     }
 }

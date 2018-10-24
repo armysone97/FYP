@@ -5,6 +5,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>STEM CS Validation Programme</title>
+           <f:metadata>
+               <f:event type="preRenderView" listener="#{yearOfStudySetting.yearOfStudyCSMapList()}"/>
+                </f:metadata>
+        
         <style type="text/css"> 
 
             .buttonStyle{
@@ -38,8 +42,8 @@
             .lblStyle{
                 font-size: 20pt;
             }
-            
-              .txtboxSmallStyle {
+
+            .txtboxSmallStyle {
                 font-size: 18pt;
                 height: 35px;
                 width : 100px;
@@ -78,7 +82,7 @@
                     </tr>   
 
                     <tr>
-                         <th colspan="2" align="left">
+                        <th align="left">
                             <h:outputText id="lblYear1" value="Commerce Year of STEM CS: "  styleClass="lblStyle"/>
 
                             <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.yearComm}">
@@ -88,6 +92,9 @@
                                 <f:selectItem itemValue = "2015" itemLabel = "2015" /> 
                             </h:selectOneMenu>  
                         </th>
+
+                        <th align="right"><h:commandButton id="btnShow" value="Show" styleClass="buttonStyle" action="#{yearOfStudySetting.yearOfStudyCSMapList()}"/></th>
+
                     </tr>  
 
                     <tr>
@@ -99,50 +106,50 @@
                 <table border="1" cellpadding="10px" cellspacing="0" width="800px" align="center">
                     <tr>
                         <th><h:outputText id="lblYearOfStudy" value="Year Of Study"  styleClass="lblStyle"/></th>
-                          <th><h:outputText id="lblCSLevel" value="CS Level"  styleClass="lblStyle"/></th>
+                        <th><h:outputText id="lblCSLevel" value="CS Level"  styleClass="lblStyle"/></th>
                     </tr> 
 
                     <tr>
                         <th align="center"> <h:inputText id="txtStandard1" disabled="true" styleClass="txtboxStyle" required="required" size="10" value="Standard 1"/></th>   
                         <th align="center"> 
                             <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard1}">
-                            <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
+                                <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
                             </h:selectOneMenu> 
                         </th>
                     </tr> 
 
                     <tr>
                         <th align="center"> <h:inputText id="txtStandard2" disabled="true"  styleClass="txtboxStyle" required="required" size="10" value="Standard 2"/></th>   
-                         <th align="center"> 
-                             <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard2}">
-                            <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
+                        <th align="center"> 
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard2}">
+                                <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
                             </h:selectOneMenu> 
                         </th>
                     </tr> 
 
-                   <tr>
+                    <tr>
                         <th align="center"> <h:inputText id="txtStandard3" disabled="true" styleClass="txtboxStyle" required="required" size="10" value="Standard 3"/></th>   
                         <th align="center"> 
                             <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard3}">
-                            <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
+                                <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
                             </h:selectOneMenu> 
                         </th>
                     </tr> 
 
-                   <tr>
+                    <tr>
                         <th align="center"> <h:inputText id="txtStandard4" disabled="true" styleClass="txtboxStyle" required="required" size="10" value="Standard 4"/></th>   
-                         <th align="center"> 
-                             <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard4}">
-                            <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
+                        <th align="center"> 
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard4}">
+                                <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
                             </h:selectOneMenu> 
                         </th>
                     </tr> 
 
-                   <tr>
+                    <tr>
                         <th align="center"> <h:inputText id="txtStandard5" disabled="true" styleClass="txtboxStyle" required="required" size="10" value="Standard 5"/></th>   
                         <th align="center"> 
                             <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard5}">
-                            <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
+                                <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
                             </h:selectOneMenu> 
                         </th>
                     </tr> 
@@ -151,7 +158,7 @@
                         <th align="center"> <h:inputText id="txtStandard6" disabled="true" styleClass="txtboxStyle" required="required" size="10" value="Standard 6"/></th>   
                         <th align="center"> 
                             <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard6}">
-                            <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
+                                <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
                             </h:selectOneMenu> 
                         </th>
                     </tr> 
@@ -165,7 +172,7 @@
                         <th><label>&nbsp;</label></th> 
                     </tr>
 
-                     <tr>
+                    <tr>
                         <th align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
                         <th align="right"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
                         <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{yearOfStudySetting.addYearOfStudyCSMap()}"/></th>

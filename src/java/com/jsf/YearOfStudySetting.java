@@ -34,6 +34,8 @@ public class YearOfStudySetting {
     private int year, yearComm;
 
     public YearOfStudySetting() {
+        this.year = 2018;
+        this.yearComm = 2018;
     }
 
     public int getYear() {
@@ -129,6 +131,97 @@ public class YearOfStudySetting {
         return CSLevel_list;
     }
 
+       public String matchCSLevelID(String csid) {
+
+        String CSName = "";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT CSLevelName FROM cslevel WHERE CSLevelID = ?");
+            st.setString(1, csid);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                CSName = rs.getString("CSLevelName");
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return CSName;
+    }
+    
+    //get year of study cs map list when page onload and when button click based on year and yearComm
+    public void yearOfStudyCSMapList() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        int tmpYear = 0, tmpyearComm;
+        int numYearComm = 0;
+        
+        String csid = "", csname = "", yosid = "";
+
+        //when page onload, need to show previous(2017) record, so for year and yearComm 2018 temporaily become 2017
+        if (year == 2018) {
+            tmpYear = 2017;
+            {
+                if (yearComm == 2018) {
+                    tmpyearComm = 2017;
+                } else {
+                    tmpyearComm = yearComm;
+                }
+            }
+
+        } else {
+            tmpYear = year;
+            tmpyearComm = yearComm;
+        }
+
+        numYearComm = tmpYear - tmpyearComm;
+        context.addMessage(null, new FacesMessage(year + " : " + yearComm + " : " + tmpYear + " : " + tmpyearComm + " : " + numYearComm));
+
+        //get data from db
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT CSLevelID, yearOfStudyID FROM yearofstudycsmap WHERE year = ? and numYearComm = ?");
+            st.setInt(1, tmpYear);
+            st.setInt(2, numYearComm);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                csid = rs.getString("CSLevelID");
+                csname = matchCSLevelID(csid); //match cs id with cs name
+                
+                yosid = rs.getString("yearOfStudyID");
+                
+                switch (yosid){
+                    case "YO1": standard1 = csname; break;
+                    case "YO2": standard2 = csname; break;
+                    case "YO3": standard3 = csname; break;
+                    case "YO4": standard4 = csname; break;
+                    case "YO5": standard5 = csname; break;
+                    case "YO6": standard6 = csname; break;
+                }
+                
+                context.addMessage(null, new FacesMessage("x : " + csid + " : " + csname + " : " + yosid));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+    }
+
     //auto generate year of study cs map ID
     public int autoGenerateID() {
 
@@ -154,6 +247,8 @@ public class YearOfStudySetting {
 
         return count;
     }
+    
+  
 
     public String matchCSLevelName(String standard) {
 
@@ -162,12 +257,9 @@ public class YearOfStudySetting {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            //     Statement st = con.createStatement();
-            //    ResultSet rs = st.executeQuery("SELECT CSLevelName FROM cslevel");
             PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM cslevel WHERE CSLevelName = ?");
             st.setString(1, standard);
             ResultSet rs = st.executeQuery();
-            // ResultSet rs = st.executeQuery("SELECT CSLevelID FROM assessment WHERE year='2017'");
 
             while (rs.next()) {
                 CSID = rs.getString("CSLevelID");
@@ -215,7 +307,7 @@ public class YearOfStudySetting {
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
 
-             //insert standard 2
+            //insert standard 2
             length = autoGenerateID();
             length = length + 1;
             ycID = "YC" + Integer.toString(length);
@@ -230,8 +322,8 @@ public class YearOfStudySetting {
             statement.setInt(4, year);
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
-            
-               //insert standard 3
+
+            //insert standard 3
             length = autoGenerateID();
             length = length + 1;
             ycID = "YC" + Integer.toString(length);
@@ -246,8 +338,8 @@ public class YearOfStudySetting {
             statement.setInt(4, year);
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
-            
-               //insert standard 4
+
+            //insert standard 4
             length = autoGenerateID();
             length = length + 1;
             ycID = "YC" + Integer.toString(length);
@@ -262,8 +354,8 @@ public class YearOfStudySetting {
             statement.setInt(4, year);
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
-            
-               //insert standard 5
+
+            //insert standard 5
             length = autoGenerateID();
             length = length + 1;
             ycID = "YC" + Integer.toString(length);
@@ -278,8 +370,8 @@ public class YearOfStudySetting {
             statement.setInt(4, year);
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
-            
-               //insert standard 6
+
+            //insert standard 6
             length = autoGenerateID();
             length = length + 1;
             ycID = "YC" + Integer.toString(length);
@@ -294,7 +386,7 @@ public class YearOfStudySetting {
             statement.setInt(4, year);
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
-            
+
             statement.close();
             con.close();
 

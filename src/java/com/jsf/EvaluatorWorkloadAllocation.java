@@ -7,10 +7,10 @@ package com.jsf;
 
 import java.sql.*;
 import java.util.*;
-import javax.faces.application.FacesMessage;
+//import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
+//import javax.faces.context.FacesContext;
 
 /**
  *
@@ -27,6 +27,7 @@ public class EvaluatorWorkloadAllocation {
     private String csLevel;
     private String teacher;
     private String schoolID;
+    private String schoolName;
     private List<String> evaluator_list = new ArrayList<>();
     private List<String> school_list = new ArrayList<>();
     private List<String> cslevel_list = new ArrayList<>();
@@ -128,53 +129,61 @@ public class EvaluatorWorkloadAllocation {
         return school_list;
     }
 
+//    public void verifySchoolID(){
+//        
+//        schoolName = this.school;
+//        
+//        try {
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+//            Statement st = con.createStatement();
+//            ResultSet rs = st.executeQuery("SELECT schoolName, schoolID FROM school");
+//            //context.addMessage(null, new FacesMessage("yyy"));
+//            while (rs.next()) {
+//                if (schoolName.equals("schoolName")) {
+//                    schoolID = rs.getString("schoolID");
+////                    scID = rs.getString("schoolID");
+////                    context.addMessage(null, new FacesMessage("xxxx" + scID));
+//                   
+//                    break;
+//
+//                }
+//            }
+//
+//            rs.close();
+//            st.close();
+//            con.close();
+//
+//        } catch (Exception ex) {
+//            System.out.println("Error: " + ex);
+//        }
+//    }
+    
     public List<String> get_CSLevelList() {
 
-        FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("xxxx"));
+//        FacesContext context = FacesContext.getCurrentInstance();
+//        context.addMessage(null, new FacesMessage("xxxx"));
 
         cslevel_list.clear();
 
-        String scID = "";
+       // String scID = "";
+
+       // verifySchoolID();
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT schoolName, schoolID FROM school");
-            context.addMessage(null, new FacesMessage("yyy"));
-            while (rs.next()) {
-                if (school.equals("schoolName")) {
-                    schoolID = rs.getString("schoolID");
-                    scID = rs.getString("schoolID");
-                    context.addMessage(null, new FacesMessage("xxxx" + scID));
-                   
-                    break;
-
-                }
-            }
-
-            rs.close();
-            st.close();
-            con.close();
-
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
-        }
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            //    Statement st = con.createStatement();
-            //    ResultSet rs = st.executeQuery("SELECT CSLevelID FROM schoolcsmap WHERE schoolID = 'SH1'");
-            PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM schoolcsmap WHERE schoolID = ?");
-            st.setString(1, scID);
-            ResultSet rs = st.executeQuery();
+            //ResultSet rs = st.executeQuery("SELECT school.schoolID, school.schoolName, schoolcsmap.CSLevelID FROM school INNER JOIN schoolcsmap ON school.schoolID = schoolcsmap.schoolID");
+            //PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM schoolcsmap WHERE schoolID = ?");
+            //st.setString(1, schoolID);
+            //ResultSet rs = st.executeQuery();
+            ResultSet rs = st.executeQuery("SELECT CSLevelName FROM cslevel");
 
             while (rs.next()) {
-//               if(schoolID.equals("schoolID")){
-                cslevel_list.add(rs.getString("CSLevelID"));
-//               }
+              
+                cslevel_list.add(rs.getString("CSLevelName"));
+               
             }
 
             rs.close();

@@ -112,7 +112,7 @@
                     <tr>
                         <th align="center"> <h:inputText id="txtStandard1" disabled="true" styleClass="txtboxStyle" required="required" size="10" value="Standard 1"/></th>   
                         <th align="center"> 
-                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard1}">
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard1}" disabled="#{yearOfStudySetting.changeDDLDisabled()}">
                                 <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
                             </h:selectOneMenu> 
                         </th>
@@ -121,7 +121,7 @@
                     <tr>
                         <th align="center"> <h:inputText id="txtStandard2" disabled="true"  styleClass="txtboxStyle" required="required" size="10" value="Standard 2"/></th>   
                         <th align="center"> 
-                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard2}">
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard2}" disabled="#{yearOfStudySetting.changeDDLDisabled()}">
                                 <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
                             </h:selectOneMenu> 
                         </th>
@@ -130,7 +130,7 @@
                     <tr>
                         <th align="center"> <h:inputText id="txtStandard3" disabled="true" styleClass="txtboxStyle" required="required" size="10" value="Standard 3"/></th>   
                         <th align="center"> 
-                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard3}">
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard3}" disabled="#{yearOfStudySetting.changeDDLDisabled()}">
                                 <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
                             </h:selectOneMenu> 
                         </th>
@@ -139,7 +139,7 @@
                     <tr>
                         <th align="center"> <h:inputText id="txtStandard4" disabled="true" styleClass="txtboxStyle" required="required" size="10" value="Standard 4"/></th>   
                         <th align="center"> 
-                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard4}">
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard4}" disabled="#{yearOfStudySetting.changeDDLDisabled()}">
                                 <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
                             </h:selectOneMenu> 
                         </th>
@@ -148,7 +148,7 @@
                     <tr>
                         <th align="center"> <h:inputText id="txtStandard5" disabled="true" styleClass="txtboxStyle" required="required" size="10" value="Standard 5"/></th>   
                         <th align="center"> 
-                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard5}">
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard5}" disabled="#{yearOfStudySetting.changeDDLDisabled()}">
                                 <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
                             </h:selectOneMenu> 
                         </th>
@@ -157,7 +157,7 @@
                     <tr>
                         <th align="center"> <h:inputText id="txtStandard6" disabled="true" styleClass="txtboxStyle" required="required" size="10" value="Standard 6"/></th>   
                         <th align="center"> 
-                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard6}">
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard6}" disabled="#{yearOfStudySetting.changeDDLDisabled()}">
                                 <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
                             </h:selectOneMenu> 
                         </th>

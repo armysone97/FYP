@@ -19,12 +19,14 @@
                 column-width: 10px;
                 width: 200px;
                 height: 40px;
+                text-align: center;
             }
 
             .txtboxStyle {
                 font-size: 18pt;
                 height: 35px;
                 width : 250px;
+                text-align: center;
             }
 
             .txtboxSmallestStyle {
@@ -66,7 +68,7 @@
                         <th colspan="2" align="left">
                             <h:outputText id="lblYear" value="Year : "  styleClass="lblStyle"/>
 
-                            <h:selectOneMenu styleClass="ddlStyle">
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.year}">
                                 <f:selectItem itemValue = "2018" itemLabel = "2018" /> 
                                 <f:selectItem itemValue = "2017" itemLabel = "2017" /> 
                                 <f:selectItem itemValue = "2016" itemLabel = "2016" /> 
@@ -79,7 +81,7 @@
                          <th colspan="2" align="left">
                             <h:outputText id="lblYear1" value="Commerce Year of STEM CS: "  styleClass="lblStyle"/>
 
-                            <h:selectOneMenu styleClass="ddlStyle">
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.yearComm}">
                                 <f:selectItem itemValue = "2018" itemLabel = "2018" /> 
                                 <f:selectItem itemValue = "2017" itemLabel = "2017" /> 
                                 <f:selectItem itemValue = "2016" itemLabel = "2016" /> 
@@ -101,74 +103,56 @@
                     </tr> 
 
                     <tr>
-                        <th align="center"> <h:inputText id="txtStandard1" styleClass="txtboxStyle" required="required" size="10" value="Standard 1"/></th>   
+                        <th align="center"> <h:inputText id="txtStandard1" disabled="true" styleClass="txtboxStyle" required="required" size="10" value="Standard 1"/></th>   
                         <th align="center"> 
-                             <h:selectOneMenu styleClass="ddlStyle">
-                                <f:selectItem itemValue = "CS1" itemLabel = "CS 1" /> 
-                                <f:selectItem itemValue = "CS2" itemLabel = "CS 2" /> 
-                                <f:selectItem itemValue = "CS3" itemLabel = "CS 3" /> 
-                                <f:selectItem itemValue = "CS4" itemLabel = "CS 4" /> 
-                            </h:selectOneMenu>  
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard1}">
+                            <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu> 
                         </th>
                     </tr> 
 
                     <tr>
-                        <th align="center"> <h:inputText id="txtStandard2" styleClass="txtboxStyle" required="required" size="10" value="Standard 2"/></th>   
-                        <th align="center"> 
-                             <h:selectOneMenu styleClass="ddlStyle">
-                                <f:selectItem itemValue = "CS1" itemLabel = "CS 1" /> 
-                                <f:selectItem itemValue = "CS2" itemLabel = "CS 2" /> 
-                                <f:selectItem itemValue = "CS3" itemLabel = "CS 3" /> 
-                                <f:selectItem itemValue = "CS4" itemLabel = "CS 4" /> 
-                            </h:selectOneMenu>  
+                        <th align="center"> <h:inputText id="txtStandard2" disabled="true"  styleClass="txtboxStyle" required="required" size="10" value="Standard 2"/></th>   
+                         <th align="center"> 
+                             <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard2}">
+                            <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu> 
                         </th>
                     </tr> 
 
                    <tr>
-                        <th align="center"> <h:inputText id="txtStandard3" styleClass="txtboxStyle" required="required" size="10" value="Standard 3"/></th>   
+                        <th align="center"> <h:inputText id="txtStandard3" disabled="true" styleClass="txtboxStyle" required="required" size="10" value="Standard 3"/></th>   
                         <th align="center"> 
-                             <h:selectOneMenu styleClass="ddlStyle">
-                                <f:selectItem itemValue = "CS1" itemLabel = "CS 1" /> 
-                                <f:selectItem itemValue = "CS2" itemLabel = "CS 2" /> 
-                                <f:selectItem itemValue = "CS3" itemLabel = "CS 3" /> 
-                                <f:selectItem itemValue = "CS4" itemLabel = "CS 4" /> 
-                            </h:selectOneMenu>  
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard3}">
+                            <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu> 
                         </th>
                     </tr> 
 
                    <tr>
-                        <th align="center"> <h:inputText id="txtStandard4" styleClass="txtboxStyle" required="required" size="10" value="Standard 4"/></th>   
-                        <th align="center"> 
-                             <h:selectOneMenu styleClass="ddlStyle">
-                                <f:selectItem itemValue = "CS1" itemLabel = "CS 1" /> 
-                                <f:selectItem itemValue = "CS2" itemLabel = "CS 2" /> 
-                                <f:selectItem itemValue = "CS3" itemLabel = "CS 3" /> 
-                                <f:selectItem itemValue = "CS4" itemLabel = "CS 4" /> 
-                            </h:selectOneMenu>  
+                        <th align="center"> <h:inputText id="txtStandard4" disabled="true" styleClass="txtboxStyle" required="required" size="10" value="Standard 4"/></th>   
+                         <th align="center"> 
+                             <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard4}">
+                            <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu> 
                         </th>
                     </tr> 
 
                    <tr>
-                        <th align="center"> <h:inputText id="txtStandard5" styleClass="txtboxStyle" required="required" size="10" value="Standard 5"/></th>   
+                        <th align="center"> <h:inputText id="txtStandard5" disabled="true" styleClass="txtboxStyle" required="required" size="10" value="Standard 5"/></th>   
                         <th align="center"> 
-                             <h:selectOneMenu styleClass="ddlStyle">
-                                <f:selectItem itemValue = "CS1" itemLabel = "CS 1" /> 
-                                <f:selectItem itemValue = "CS2" itemLabel = "CS 2" /> 
-                                <f:selectItem itemValue = "CS3" itemLabel = "CS 3" /> 
-                                <f:selectItem itemValue = "CS4" itemLabel = "CS 4" /> 
-                            </h:selectOneMenu>  
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard5}">
+                            <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu> 
                         </th>
                     </tr> 
 
                     <tr>
-                        <th align="center"> <h:inputText id="txtStandard6" styleClass="txtboxStyle" required="required" size="10" value="Standard 6"/></th>   
+                        <th align="center"> <h:inputText id="txtStandard6" disabled="true" styleClass="txtboxStyle" required="required" size="10" value="Standard 6"/></th>   
                         <th align="center"> 
-                             <h:selectOneMenu styleClass="ddlStyle">
-                                <f:selectItem itemValue = "CS1" itemLabel = "CS 1" /> 
-                                <f:selectItem itemValue = "CS2" itemLabel = "CS 2" /> 
-                                <f:selectItem itemValue = "CS3" itemLabel = "CS 3" /> 
-                                <f:selectItem itemValue = "CS4" itemLabel = "CS 4" /> 
-                            </h:selectOneMenu>  
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.standard6}">
+                            <f:selectItems value="#{yearOfStudySetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu> 
                         </th>
                     </tr> 
                 </table>
@@ -184,7 +168,7 @@
                      <tr>
                         <th align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
                         <th align="right"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
-                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{yearOfStudySetting.addYearOfStudyCSMap()}"/></th>
                     </tr>  
 
                 </table>

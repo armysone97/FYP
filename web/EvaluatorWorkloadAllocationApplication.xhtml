@@ -101,7 +101,7 @@
                         <th align="right">
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/> </th>
                         <th align="left"> 
-                            <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.school}">
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.school}" onclick="#{evaluatorWorkloadAllocation.get_CSLevelList()}">
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_SchoolList()}" />
                             </h:selectOneMenu>  
                         </th>
@@ -115,10 +115,10 @@
                         <th align="right">
                             <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/> </th>
                         <th align="left">   
-                            <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.get_CSLevelList()}">
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.csLevel}">
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_CSLevelList()}" />
                             </h:selectOneMenu>  
-
+                            
 
                         </th>
                     </tr>   

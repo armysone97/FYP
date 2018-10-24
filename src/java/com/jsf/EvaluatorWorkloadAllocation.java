@@ -131,37 +131,38 @@ public class EvaluatorWorkloadAllocation {
         
         cslevel_list.clear();
         
-//        try {
-//           Class.forName("com.mysql.cj.jdbc.Driver");
-//           con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-//           Statement st = con.createStatement();
-//           ResultSet rs = st.executeQuery("SELECT schoolName, schoolID FROM school");
-//
-//           while (rs.next()) {
-//               if(school.equals("schoolName")){
-//                   schoolID = rs.getString("schoolID");
-//                   break;
-//               }
-//           }
-//
-//           rs.close();
-//           st.close();
-//           con.close();
-//
-//        } catch (Exception ex) {
-//            System.out.println("Error: " + ex);
-//        }
+        try {
+           Class.forName("com.mysql.cj.jdbc.Driver");
+           con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+           Statement st = con.createStatement();
+           ResultSet rs = st.executeQuery("SELECT schoolName, schoolID FROM school");
+
+           while (rs.next()) {
+               if(school.equals("schoolName")){
+                   schoolID = rs.getString("schoolID");
+                   break;
+               }
+           }
+
+           rs.close();
+           st.close();
+           con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
         
         try {
            Class.forName("com.mysql.cj.jdbc.Driver");
            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
            Statement st = con.createStatement();
-           ResultSet rs = st.executeQuery("SELECT CSLevelID FROM schoolcsmap WHERE schoolID = 'SH1'");
+           ResultSet rs = st.executeQuery("SELECT CSLevelID FROM schoolcsmap WHERE schoolID = ?");
+           
 
            while (rs.next()) {
-//               if(schoolID.equals("schoolID")){
+               if(schoolID.equals("schoolID")){
                    cslevel_list.add(rs.getString("CSLevelID"));
-//               }
+               }
            }
 
            rs.close();

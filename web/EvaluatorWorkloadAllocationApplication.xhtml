@@ -140,6 +140,7 @@
                             <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.teacher}">
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_TeacherList()}" />
                             </h:selectOneMenu>  
+                            <h:commandButton id="btnTry" value="Show" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.retrieveTotalStudent()}"/>
                         </th>
                     </tr> 
 
@@ -149,7 +150,7 @@
                             <h:outputText id="simbol5" value=": "  styleClass="lblStyle"/> </th>
 
                         <th align="left">
-                            <h:inputText id="txtTotalStudent" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                            <h:inputText id="txtTotalStudent" value="#{evaluatorWorkloadAllocation.totalStudent}" styleClass="txtboxSmallestStyle" required="required" size="5"/>
                         </th>
                     </tr> 
 

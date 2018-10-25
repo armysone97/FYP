@@ -10,6 +10,7 @@ import java.util.*;
 //import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 //import javax.faces.context.FacesContext;
 
 /**
@@ -17,20 +18,22 @@ import javax.faces.bean.SessionScoped;
  * @author ruenyenchin
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 
 public class EvaluatorWorkloadAllocation {
 
     private Connection con;
     private String evaluator;
+    private String takeEvaluator;
     private String school;
     private String csLevel;
     private String teacher;
-    private String schoolID;
-    private String schoolName;
+//    private String name;
+//    private String schoolName;
     private List<String> evaluator_list = new ArrayList<>();
     private List<String> school_list = new ArrayList<>();
     private List<String> cslevel_list = new ArrayList<>();
+    private List<String> teacher_list = new ArrayList<>();
 
     public EvaluatorWorkloadAllocation() {
     }
@@ -79,6 +82,10 @@ public class EvaluatorWorkloadAllocation {
         this.cslevel_list = cslevel_list;
     }
 
+    public void setTeacher_list(List<String> teacher_list) {
+        this.teacher_list = teacher_list;
+    }
+
     public List<String> get_EvaluatorList() {
 
         evaluator_list.clear();
@@ -103,7 +110,7 @@ public class EvaluatorWorkloadAllocation {
 
         return evaluator_list;
     }
-
+            
     public List<String> get_SchoolList() {
 
         school_list.clear();
@@ -175,15 +182,13 @@ public class EvaluatorWorkloadAllocation {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             //ResultSet rs = st.executeQuery("SELECT school.schoolID, school.schoolName, schoolcsmap.CSLevelID FROM school INNER JOIN schoolcsmap ON school.schoolID = schoolcsmap.schoolID");
-            //PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM schoolcsmap WHERE schoolID = ?");
+            //ResultSet rs = st.executeQuery("SELECT CSLevelID FROM schoolcsmap WHERE schoolID = ?");
             //st.setString(1, schoolID);
-            //ResultSet rs = st.executeQuery();
+//            ResultSet rs = st.executeQuery();
             ResultSet rs = st.executeQuery("SELECT CSLevelName FROM cslevel");
 
             while (rs.next()) {
-              
                 cslevel_list.add(rs.getString("CSLevelName"));
-               
             }
 
             rs.close();
@@ -193,9 +198,75 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+        
         return cslevel_list;
     }
 
+    public List<String> get_TeacherList(){
+        
+        teacher_list.clear();
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT teacherName FROM teacher");
+
+            while (rs.next()) {
+                teacher_list.add(rs.getString("teacherName"));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        return teacher_list;
+    }
+    
+//    public void addEvaluator(){
+//        
+//        try{
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+//            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO testing (school) VALUES (?)");
+//                      
+//            statement.setString(1, evaluator);
+//            
+//            statement.executeUpdate();
+//            statement.close();
+//            con.close();
+//            
+//        }catch(Exception ex){
+//            System.out.println("Error: " + ex);
+//        }
+//        
+//    }
+    
+    public void getWorkloadLimit(){
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT workloadLimit FROM workloadlimit WHERE schoolID = ?");
+  //          st.setString(1, schoolID);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                teacher_list.add(rs.getString("teacherName"));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+    }
+    
     public void main(String args[]) {
 
     }

@@ -29,8 +29,10 @@ public class EvaluatorPersonalDetails {
     private String status;
     private Integer workloadLimit;
     private String roleID;
-    private Integer count;
+    private Integer evaCount;
+    private Integer workloadLimitCount;
     private String rdID;
+    private String wlID;
 
     public EvaluatorPersonalDetails() {
     }
@@ -165,7 +167,7 @@ public class EvaluatorPersonalDetails {
             ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM evaluatorroledetails");
             
             while(rs.next()){
-              count = rs.getInt("COUNT(*)");
+              evaCount = rs.getInt("COUNT(*)");
             }
             
             rs.close();
@@ -176,14 +178,14 @@ public class EvaluatorPersonalDetails {
             System.out.println("Error: " + ex);
         }
        
-        evaluatorRole(roleID, count);
+        evaluatorRole(roleID, evaCount);
     }
     
     //save evaluator role
-    public void evaluatorRole(String roleID, Integer count){
+    public void evaluatorRole(String roleID, Integer evaCount){
         
-        count = count + 1;
-        rdID = "RD" + Integer.toString(count);
+        evaCount = evaCount + 1;
+        rdID = "RD" + Integer.toString(evaCount);
         
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -202,6 +204,53 @@ public class EvaluatorPersonalDetails {
             System.out.println("Error: " + ex);
         }
         
+        countWorkloadLimit();
+    }
+    
+    public void countWorkloadLimit(){
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM workloadlimit");
+            
+            while(rs.next()){
+              workloadLimitCount = rs.getInt("COUNT(*)");
+            }
+            
+            rs.close();
+            st.close();
+            con.close();
+            
+        }catch(Exception ex){
+            System.out.println("Error: " + ex);
+        }
+        
+        addWorkloadLimit(workloadLimitCount);
+    }
+    
+    public void addWorkloadLimit(Integer workloadLimitCount){
+        workloadLimitCount = workloadLimitCount + 1;
+        wlID = "WL" + Integer.toString(workloadLimitCount);
+        
+        try{
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO workloadlimit (WL_ID, workloadLimit, ttlWorkloadAssigned, year, staffID) VALUES (?, ?, ?, ?, ?)");
+                      
+            statement.setString(1, wlID);
+            statement.setInt(2, workloadLimit);
+            statement.setInt(3, 0);
+            statement.setInt(4, 2018);
+            statement.setString(5, staffID);
+            
+            statement.executeUpdate();
+            statement.close();
+            con.close();
+            
+        }catch(Exception ex){
+            System.out.println("Error: " + ex);
+        }
     }
     
     public void main(String args[]){

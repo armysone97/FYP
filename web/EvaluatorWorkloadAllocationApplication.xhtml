@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>STEM CS Validation Programme</title>
 
@@ -89,8 +90,9 @@
                         <th align="right">
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> </th>
                             <th align="left">   <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.evaluator}">
-                                    <f:selectItems value="#{evaluatorWorkloadAllocation.get_EvaluatorList()}" />
+                                    <f:selectItems value="#{evaluatorWorkloadAllocation.get_EvaluatorList()}"/>
                             </h:selectOneMenu>  
+                                
                         </th>
                     </tr>  
 
@@ -100,10 +102,12 @@
                         </th>
                         <th align="right">
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/> </th>
-                        <th align="left"> 
+                        <th align="left">
                             <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.school}">
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_SchoolList()}" />
+                                
                             </h:selectOneMenu>  
+                     
                             
                         </th>
                     </tr> 
@@ -132,11 +136,8 @@
                         <th align="right">
                             <h:outputText id="simbol4" value=": "  styleClass="lblStyle"/> </th>
                         <th align="left"> 
-                            <h:selectOneMenu styleClass="ddlStyle">
-                                <f:selectItem itemValue = "teacher1" itemLabel = "Lee Mei Mei" /> 
-                                <f:selectItem itemValue = "teacher2" itemLabel = "Wong Siew Siew" /> 
-                                <f:selectItem itemValue = "teacher3" itemLabel = "Teoh Ying Ying" /> 
-                                <f:selectItem itemValue = "teacher4" itemLabel = "Teh Wan Wan" /> 
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.teacher}">
+                                <f:selectItems value="#{evaluatorWorkloadAllocation.get_TeacherList()}" />
                             </h:selectOneMenu>  
                         </th>
                     </tr> 

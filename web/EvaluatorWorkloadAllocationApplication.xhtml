@@ -92,7 +92,8 @@
                             <th align="left">   <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.evaluator}">
                                     <f:selectItems value="#{evaluatorWorkloadAllocation.get_EvaluatorList()}"/>
                             </h:selectOneMenu>  
-                                
+                                <h:commandButton id="btnShow" value="Confirm" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.retrieveWorkloadLimit()}"/>
+               
                         </th>
                     </tr>  
 
@@ -166,7 +167,7 @@
                         </th>
 
                         <th align="left">
-                            <h:inputText id="txtWorkloadLimit" styleClass="txtboxSmallestStyle" required="required" size="35"/>
+                            <h:inputText id="txtWorkloadLimit" value="#{evaluatorWorkloadAllocation.workloadLimit}" styleClass="txtboxSmallestStyle" required="required" size="35"/>
                             <h:outputText id="hr1" value=" hours"  styleClass="lblStyle"/>
                         </th>
                     </tr> 

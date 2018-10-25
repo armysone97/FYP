@@ -53,11 +53,13 @@
             <h1>STEM CS VALIDATION PROGRAMME</h1>
             <h1>MAINTAIN ASSESSMENT TASK</h1>
             <h:form id="MaintainAssessmentTask">
+
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
                     <tr>
                         <th colspan="4" align="right">     
                             <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle" action="Login"/>
+                            <!--<h:commandButton id="btnLogout1" value="Log out" styleClass="buttonStyle" action="MainMenuAdmin"/>-->
                         </th>
                     </tr>
 
@@ -88,7 +90,7 @@
                         <th align="left">
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/> 
                             <h:selectOneMenu styleClass="ddlStyle" value="#{maintainAssessmentTask.school}">
-                                <f:selectItems  /> 
+                                <f:selectItems value="#{maintainAssessmentTask.get_school()}"/> 
                             </h:selectOneMenu>  
                         </th>
                     </tr> 
@@ -98,7 +100,7 @@
                             <h:outputText id="lblTeacher" value="Select Teacher"  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                            <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/> 
+                            <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/> 
                             <h:selectOneMenu styleClass="ddlStyle">
                                 <f:selectItem itemValue = "teacher1" itemLabel = "b Lee Mei Mei" /> 
                                 <f:selectItem itemValue = "teacher2" itemLabel = "Wong Siew Siew" /> 
@@ -108,11 +110,12 @@
                         </th>
                     </tr> 
                 </table>
+
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
                     <tr>
                         <th align="left"> <h:commandButton id="btnCancelxx" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
                         <th align="right"> <h:commandButton id="btnResetxx" value="Reset" styleClass="buttonStyle"/></th>
-                        <th align="right"><h:commandButton id="btnConfirmxx" immediate="false" value="Confirm" styleClass="buttonStyle" action="#{maintainAssessmentTask.abcClick()}"/></th>
+                        <th align="right"><h:commandButton id="btnConfirmxx" value="Confirm" styleClass="buttonStyle" action="#{maintainAssessmentTask.abcClick()}"/></th>
                     </tr> 
                 </table>   
 
@@ -133,10 +136,7 @@
                                 <f:selectItem itemValue = "2015" itemLabel = "2015" /> 
                             </h:selectOneMenu>  
                         </th>
-
-
-
-                        <th align="right">
+                          <th align="right">
                             <h:outputText id="lblStatus" value="Status "  styleClass="lblStyle"/>
                             <h:outputText id="simbol6" value=": "  styleClass="lblStyle"/>
                             <h:inputText id="txtStatus" value="#{maintainAssessmentTask.status}" styleClass="txtboxSmallStyle" disabled="#{maintainAssessmentTask.changeDDLDisabled()}"/>
@@ -147,9 +147,9 @@
                         <th><label>&nbsp;</label></th>
                         <th><label>&nbsp;</label></th> 
                     </tr>
-                </table>
-
-                <fieldset style="display: inline-block">
+                </table>  
+                
+                   <fieldset style="display: inline-block">
                     <legend id="cslvlList" width="800px">
                         <font size="5" align="left">CS Level List</font>
                     </legend>
@@ -169,20 +169,20 @@
                         </tr> 
 
                         <tr>
-                            <th align="center"><h:inputText id="txtCSLevel1" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
-                            <th align="center"><h:inputText id="txtEnrol1" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
-                            <th align="center"><h:inputText id="txtAss1" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
+                            <th align="center"><h:inputText id="txtCSLevel2" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
+                            <th align="center"><h:inputText id="txtEnrol2" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
+                            <th align="center"><h:inputText id="txtAss2" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
                         </tr> 
 
                         <tr>
-                            <th align="center"><h:inputText id="txtCSLevel1" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
-                            <th align="center"><h:inputText id="txtEnrol1" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
-                            <th align="center"><h:inputText id="txtAss1" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
+                            <th align="center"><h:inputText id="txtCSLevel3" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
+                            <th align="center"><h:inputText id="txtEnrol3" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
+                            <th align="center"><h:inputText id="txtAss3" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
                         </tr> 
                     </table>
                 </fieldset>
-
-                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
+                
+                  <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
                     <tr>
                         <th><label>&nbsp;</label></th>
@@ -194,7 +194,7 @@
                         <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
                     </tr>  
                 </table>   
-                <h:messages></h:messages>
+                
             </h:form>
         </div>
     </h:body>

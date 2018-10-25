@@ -84,10 +84,40 @@ public class MaintainAssessmentTask {
         return disabledDDL;
     }
 
-    public void abcClick() {
+ 
+
+    public List<String> get_school() {
+
+        school_list.clear();
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        int count = 1;
+        String tmp = "";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT schoolName FROM school");
+            // ResultSet rs = st.executeQuery("SELECT CSLevelID FROM assessment WHERE year='2017'");
+
+            while (rs.next()) {
+                school_list.add(rs.getString("schoolName"));
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        return school_list;
+    }
+    
+       public void abcClick() {
 
         //  school = "SMJK Heng Yee";
-             status = "xx";
+             status = "yy1";
 //        state = "Kuala Lumpur";
 //
 //      //  setSchool("SMJK Heng Yee");
@@ -95,34 +125,12 @@ public class MaintainAssessmentTask {
 //        setState("Kedah");
         changeDDLDisabled();
     }
-
-//    public List<String> get_school() {
-//
-//        school_list.clear();
-//
-//        FacesContext context = FacesContext.getCurrentInstance();
-//        int count = 1;
-//        String tmp = "";
-//
-//        try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-//            Statement st = con.createStatement();
-//            ResultSet rs = st.executeQuery("SELECT schoolName FROM school");
-//            // ResultSet rs = st.executeQuery("SELECT CSLevelID FROM assessment WHERE year='2017'");
-//
-//            while (rs.next()) {
-//                school_list.add(rs.getString("schoolName"));
-//            }
-//
-//            st.close();
-//            con.close();
-//
-//        } catch (Exception ex) {
-//            System.out.println("Error: " + ex);
-//        }
-//        return school_list;
-//    }
+       
+       public void hahax(){
+           school = "SMK Heng Yee";
+           status = "yy3";
+       }
+    
     public void main(String args[]) {
         //tryclick();
     }

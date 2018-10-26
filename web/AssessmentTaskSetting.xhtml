@@ -103,16 +103,16 @@
 
                     <tr>
                        <td align="left"><h:outputText id="lblProject" value="Project"  styleClass="lblStyle"/></td>
-                       <th align="left"> <h:inputText id="txtProject" value="#{assessmentTaskSetting.project}" disabled="#{assessmentTaskSetting.changeDDLDisabled()}" styleClass="txtboxStyle" required="required" size="20"/></th>
+                       <th align="left"> <h:inputText id="txtProject" value="#{assessmentTaskSetting.project}" disabled="#{assessmentTaskSetting.disabledProject}" styleClass="txtboxStyle" required="required" size="20"/></th>
                         <td align="left"><h:outputText id="lblPractical" value="Practical"  styleClass="lblStyle"/></td>
-                        <th align="left"><h:inputText id="txtPractical" value="#{assessmentTaskSetting.practical}" disabled="#{assessmentTaskSetting.changeDDLDisabled()}" styleClass="txtboxStyle" required="required" size="20"/></th>
+                        <th align="left"><h:inputText id="txtPractical" value="#{assessmentTaskSetting.practical}" disabled="#{assessmentTaskSetting.disabledPractical}" styleClass="txtboxStyle" required="required" size="20"/></th>
                     </tr> 
 
                     <tr>
                          <td align="left"><h:outputText id="lblCollaboration" value="Collaboration"  styleClass="lblStyle"/></td>
-                         <th align="left"><h:inputText id="txtCollaboration" value="#{assessmentTaskSetting.collaboration}" disabled="#{assessmentTaskSetting.changeDDLDisabled()}" styleClass="txtboxStyle" required="required" size="20"/></th>
+                         <th align="left"><h:inputText id="txtCollaboration" value="#{assessmentTaskSetting.collaboration}" disabled="#{assessmentTaskSetting.disabledCollaboration}" styleClass="txtboxStyle" required="required" size="20"/></th>
                            <td align="left"><h:outputText id="lblGroupwork" value="Groupwork"  styleClass="lblStyle"/></td>
-                           <th align="left"><h:inputText id="txtGroupwork" value="#{assessmentTaskSetting.groupwork}" disabled="#{assessmentTaskSetting.changeDDLDisabled()}" styleClass="txtboxStyle" required="required" size="20"/></th>
+                           <th align="left"><h:inputText id="txtGroupwork" value="#{assessmentTaskSetting.groupwork}" disabled="#{assessmentTaskSetting.disabledGroupwork}" styleClass="txtboxStyle" required="required" size="20"/></th>
                     </tr> 
 
                 </table>

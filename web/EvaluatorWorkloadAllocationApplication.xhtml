@@ -21,6 +21,13 @@
                 width: 200px;
                 height: 40px;
             }
+            
+             .ddlSpecialStyle{
+                font-size: 20px;
+                column-width: 10px;
+                width: 250px;
+                height: 40px;
+            }
 
             .lblStyle{
                 font-size: 20pt;
@@ -117,7 +124,7 @@
                         <th align="left"> 
 
 
-                            <h:outputText id="lblCSLevel" value="CS Level : "  styleClass="lblStyle"/></th>
+                            <h:outputText id="lblCSLevel" value="CS Level "  styleClass="lblStyle"/></th>
                         <th align="right">
                             <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/> </th>
                         <th align="left">   
@@ -153,6 +160,22 @@
                             <h:inputText id="txtTotalStudent" value="#{evaluatorWorkloadAllocation.totalStudent}" styleClass="txtboxSmallestStyle" required="required" size="5"/>
                         </th>
                     </tr> 
+                    
+                    <tr>
+                        <th align="left"> <h:outputText id="lblAssessmentType" value="Assessment Type"  styleClass="lblStyle"/></th>
+                        <th align="right">
+                            <h:outputText id="simbol51222" value=": "  styleClass="lblStyle"/> </th>
+
+                      <th align="left">
+                            <h:selectOneMenu styleClass="ddlSpecialStyle">
+                                <f:selectItem itemValue = "Pulau Pinang" itemLabel = "Formative - Collaboration" /> 
+                                <f:selectItem itemValue = "Kuala Lumpur" itemLabel = "Formative - Project" /> 
+                                <f:selectItem itemValue = "Kedah" itemLabel = "Summative - Groupwork" /> 
+                                <f:selectItem itemValue = "Johor" itemLabel = "Summative - Practical" /> 
+                            </h:selectOneMenu>  
+                           &nbsp;&nbsp;&nbsp;   <h:commandButton id="btnTest122" value="Calculate" styleClass="buttonStyle"/>
+                        </th>
+                    </tr> 
 
                 </table>   
 
@@ -186,49 +209,6 @@
                         </th>
                     </tr> 
                 </table>
-
-                <fieldset style="display: inline-block">
-                    <legend id="assessmentType" align="left"><font size="5" align="left">Assessment Type</font></legend>
-                    <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="left" >
-
-                        <tr>
-                            <th align="left" colspan="2"><h:outputText id="lblFormative" value="Formative"  styleClass="lblStyle"/></th>
-                            <th align="left" colspan="2"><h:outputText id="lblSummative" value="Summative"  styleClass="lblStyle"/></th>
-                        </tr> 
-
-
-                        <tr>
-                            <th colspan="2" align="left">
-
-                                <h:selectOneRadio layout="lineDirection" styleClass="radiobuttonStyle"> 
-                                    <f:selectItem itemValue = "collaboration" itemLabel = "Collaboration " /> 
-                                </h:selectOneRadio>
-
-                            </th>
-                            <th colspan="2" align="left"> 
-                                <h:selectOneRadio layout="lineDirection" styleClass="radiobuttonStyle"> 
-                                    <f:selectItem itemValue = "groupwork" itemLabel = "Groupwork " /> 
-                                </h:selectOneRadio>
-                            </th>
-                        </tr> 
-
-                        <tr>
-                            <th colspan="2" align="left">
-
-                                <h:selectOneRadio layout="lineDirection" styleClass="radiobuttonStyle"> 
-                                    <f:selectItem itemValue = "project" itemLabel = "Project " /> 
-                                </h:selectOneRadio>
-
-                            </th>
-                            <th colspan="2" align="left"> 
-                                <h:selectOneRadio layout="lineDirection" styleClass="radiobuttonStyle"> 
-                                    <f:selectItem itemValue = "practical" itemLabel = "Practical" /> 
-                                </h:selectOneRadio>
-                            </th>
-                        </tr> 
-
-                    </table>
-                </fieldset>
 
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">    
                     <tr>

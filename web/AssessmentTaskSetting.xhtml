@@ -62,12 +62,15 @@
                         <th colspan="4" align="left">
                           <h:outputText id="lblYear" value="Year : "  styleClass="lblStyle"/>
                             
-                               <h:selectOneMenu styleClass="ddlStyle">
+                          <h:selectOneMenu styleClass="ddlStyle" value="#{assessmentTaskSetting.year}">
                                 <f:selectItem itemValue = "2018" itemLabel = "2018" /> 
                                 <f:selectItem itemValue = "2017" itemLabel = "2017" /> 
                                 <f:selectItem itemValue = "2016" itemLabel = "2016" /> 
                                 <f:selectItem itemValue = "2015" itemLabel = "2015" /> 
                             </h:selectOneMenu>  
+                          
+                           &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList" value="Show CS Level" styleClass="buttonStyle"/>
+                    
                         </th>
                     </tr>   
 
@@ -77,14 +80,12 @@
                             
                                 <h:outputText id="lblCSLevel" value="CS Level : "  styleClass="lblStyle"/>
                             
-                               <h:selectOneMenu styleClass="ddlStyle">
-                                <f:selectItem itemValue = "CS1" itemLabel = "CS 1" /> 
-                                <f:selectItem itemValue = "CS2" itemLabel = "CS 2" /> 
-                                <f:selectItem itemValue = "CS3" itemLabel = "CS 3" /> 
-                                <f:selectItem itemValue = "CS4" itemLabel = "CS 4" /> 
+                                <h:selectOneMenu styleClass="ddlStyle" value="#{assessmentTaskSetting.cslevel}">
+                                   <f:selectItems value="#{assessmentTaskSetting.get_CSLevel()}" /> 
                             </h:selectOneMenu>  
                             
-                           
+                                &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList111" value="Confirm" action="#{assessmentTaskSetting.assessmentList()}" styleClass="buttonStyle"/>
+                    
                         </th>
                     </tr>   
 
@@ -102,16 +103,16 @@
 
                     <tr>
                        <td align="left"><h:outputText id="lblProject" value="Project"  styleClass="lblStyle"/></td>
-                         <th align="left"> <h:inputText id="txtProject" styleClass="txtboxStyle" required="required" size="20"/></th>
+                       <th align="left"> <h:inputText id="txtProject" value="#{assessmentTaskSetting.project}" disabled="#{assessmentTaskSetting.changeDDLDisabled()}" styleClass="txtboxStyle" required="required" size="20"/></th>
                         <td align="left"><h:outputText id="lblPractical" value="Practical"  styleClass="lblStyle"/></td>
-                       <th align="left"><h:inputText id="txtPractical" styleClass="txtboxStyle" required="required" size="20"/></th>
+                        <th align="left"><h:inputText id="txtPractical" value="#{assessmentTaskSetting.practical}" disabled="#{assessmentTaskSetting.changeDDLDisabled()}" styleClass="txtboxStyle" required="required" size="20"/></th>
                     </tr> 
 
                     <tr>
                          <td align="left"><h:outputText id="lblCollaboration" value="Collaboration"  styleClass="lblStyle"/></td>
-                       <th align="left"><h:inputText id="txtCollaboration" styleClass="txtboxStyle" required="required" size="20"/></th>
+                         <th align="left"><h:inputText id="txtCollaboration" value="#{assessmentTaskSetting.collaboration}" disabled="#{assessmentTaskSetting.changeDDLDisabled()}" styleClass="txtboxStyle" required="required" size="20"/></th>
                            <td align="left"><h:outputText id="lblGroupwork" value="Groupwork"  styleClass="lblStyle"/></td>
-                    <th align="left"><h:inputText id="txtGroupwork" styleClass="txtboxStyle" required="required" size="20"/></th>
+                           <th align="left"><h:inputText id="txtGroupwork" value="#{assessmentTaskSetting.groupwork}" disabled="#{assessmentTaskSetting.changeDDLDisabled()}" styleClass="txtboxStyle" required="required" size="20"/></th>
                     </tr> 
 
                 </table>
@@ -128,7 +129,7 @@
                     <tr>
                         <th colspan="2" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
                         <th align="right"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
-                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{assessmentTaskSetting.addTask()}"/></th>
                     </tr> 
 
                 </table>

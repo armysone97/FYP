@@ -80,6 +80,7 @@
                                 <f:selectItem itemValue = "Kedah" itemLabel = "Kedah" /> 
                                 <f:selectItem itemValue = "Johor" itemLabel = "Johor" /> 
                             </h:selectOneMenu>  
+                           &nbsp;&nbsp;&nbsp;   <h:commandButton id="btnTest" value="Show School" styleClass="buttonStyle"/>
                         </th>
                     </tr>   
 
@@ -92,6 +93,7 @@
                             <h:selectOneMenu styleClass="ddlStyle" value="#{maintainAssessmentTask.school}">
                                 <f:selectItems value="#{maintainAssessmentTask.get_school()}"/> 
                             </h:selectOneMenu>  
+                            &nbsp;&nbsp;&nbsp;   <h:commandButton id="btnTest1" value="Show Teacher" styleClass="buttonStyle"/>
                         </th>
                     </tr> 
 
@@ -102,10 +104,7 @@
                         <th align="left">
                             <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/> 
                             <h:selectOneMenu styleClass="ddlStyle">
-                                <f:selectItem itemValue = "teacher1" itemLabel = "b Lee Mei Mei" /> 
-                                <f:selectItem itemValue = "teacher2" itemLabel = "Wong Siew Siew" /> 
-                                <f:selectItem itemValue = "teacher3" itemLabel = "Teoh Ying Ying" /> 
-                                <f:selectItem itemValue = "teacher4" itemLabel = "Teh Wan Wan" /> 
+                                <f:selectItems value="#{maintainAssessmentTask.get_teacher()}"  /> 
                             </h:selectOneMenu>  
                         </th>
                     </tr> 

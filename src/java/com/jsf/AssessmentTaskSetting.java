@@ -32,9 +32,9 @@ public class AssessmentTaskSetting {
 
     private int year;
     private String cslevel, project, collaboration, practical, groupwork;
-    
+
     private List<String> CSLevel_list = new ArrayList<>(); //CS level list that retrieve from db
-     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
+    private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
 
     private Boolean disabledDDL, disabledProject, disabledCollaboration, disabledPractical, disabledGroupwork;
 
@@ -138,7 +138,6 @@ public class AssessmentTaskSetting {
         return disabledDDL;
     }
 
-  
     //remove duplicate element for cs level id array
     public static int removeDuplicateElementsString(String arr[], int n) {
         if (n == 0 || n == 1) {
@@ -159,7 +158,7 @@ public class AssessmentTaskSetting {
         }
         return j;
     }
-    
+
     //remove duplicate element for year array
     public static int removeDuplicateElements(int arr[], int n) {
         if (n == 0 || n == 1) {
@@ -179,8 +178,8 @@ public class AssessmentTaskSetting {
         }
         return j;
     }
-    
-     //count year in db
+
+    //count year in db
     public Integer get_yearCount() {
 
         int count = 0;
@@ -506,8 +505,8 @@ public class AssessmentTaskSetting {
 
         if (!assid.isEmpty()) {
             tasktitle = matchTaskTitle(assidP);
-        }else {
-                disabledProject = true;
+        } else {
+            disabledProject = true;
         }
 
         project = tasktitle;
@@ -521,8 +520,8 @@ public class AssessmentTaskSetting {
 
         if (!assid.isEmpty()) {
             tasktitle = matchTaskTitle(assidP);
-        }else {
-                disabledCollaboration = true;
+        } else {
+            disabledCollaboration = true;
         }
 
         collaboration = tasktitle;
@@ -536,8 +535,8 @@ public class AssessmentTaskSetting {
 
         if (!assid.isEmpty()) {
             tasktitle = matchTaskTitle(assidP);
-        }else {
-                disabledPractical = true;
+        } else {
+            disabledPractical = true;
         }
 
         practical = tasktitle;
@@ -552,7 +551,7 @@ public class AssessmentTaskSetting {
         if (!assid.isEmpty()) {
             tasktitle = matchTaskTitle(assidP);
         } else {
-                disabledGroupwork = true;
+            disabledGroupwork = true;
         }
 
         groupwork = tasktitle;
@@ -574,56 +573,64 @@ public class AssessmentTaskSetting {
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO task (taskID, taskTitle, assID) VALUES (?, ?, ?)");
 
             //insert project
-            length = autoGenerateID();
-            length = length + 1;
-            tsID = "TS" + Integer.toString(length);
-            assID = matchCSLevelName(cslevel, "AA1", year);
+            if (!project.isEmpty()) {
+                length = autoGenerateID();
+                length = length + 1;
+                tsID = "TS" + Integer.toString(length);
+                assID = matchCSLevelName(cslevel, "AA1", year);
 
-            context.addMessage(null, new FacesMessage(tsID + " : " + assID));
+                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
 
-            statement.setString(1, tsID);
-            statement.setString(2, project);
-            statement.setString(3, assID);
-            statement.executeUpdate();
+                statement.setString(1, tsID);
+                statement.setString(2, project);
+                statement.setString(3, assID);
+                statement.executeUpdate();
+            }
 
             //insert collaboration
-            length = autoGenerateID();
-            length = length + 1;
-            tsID = "TS" + Integer.toString(length);
-            assID = matchCSLevelName(cslevel, "AA2", year);
+            if (!collaboration.isEmpty()) {
+                length = autoGenerateID();
+                length = length + 1;
+                tsID = "TS" + Integer.toString(length);
+                assID = matchCSLevelName(cslevel, "AA2", year);
 
-            context.addMessage(null, new FacesMessage(tsID + " : " + assID));
+                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
 
-            statement.setString(1, tsID);
-            statement.setString(2, collaboration);
-            statement.setString(3, assID);
-            statement.executeUpdate();
+                statement.setString(1, tsID);
+                statement.setString(2, collaboration);
+                statement.setString(3, assID);
+                statement.executeUpdate();
+            }
 
             //insert practical
-            length = autoGenerateID();
-            length = length + 1;
-            tsID = "TS" + Integer.toString(length);
-            assID = matchCSLevelName(cslevel, "AA3", year);
+            if (!practical.isEmpty()) {
+                length = autoGenerateID();
+                length = length + 1;
+                tsID = "TS" + Integer.toString(length);
+                assID = matchCSLevelName(cslevel, "AA3", year);
 
-            context.addMessage(null, new FacesMessage(tsID + " : " + assID));
+                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
 
-            statement.setString(1, tsID);
-            statement.setString(2, practical);
-            statement.setString(3, assID);
-            statement.executeUpdate();
+                statement.setString(1, tsID);
+                statement.setString(2, practical);
+                statement.setString(3, assID);
+                statement.executeUpdate();
+            }
 
             //insert groupwork
-            length = autoGenerateID();
-            length = length + 1;
-            tsID = "TS" + Integer.toString(length);
-            assID = matchCSLevelName(cslevel, "AA4", year);
+            if (!groupwork.isEmpty()) {
+                length = autoGenerateID();
+                length = length + 1;
+                tsID = "TS" + Integer.toString(length);
+                assID = matchCSLevelName(cslevel, "AA4", year);
 
-            context.addMessage(null, new FacesMessage(tsID + " : " + assID));
+                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
 
-            statement.setString(1, tsID);
-            statement.setString(2, groupwork);
-            statement.setString(3, assID);
-            statement.executeUpdate();
+                statement.setString(1, tsID);
+                statement.setString(2, groupwork);
+                statement.setString(3, assID);
+                statement.executeUpdate();
+            }
 
             statement.close();
             con.close();

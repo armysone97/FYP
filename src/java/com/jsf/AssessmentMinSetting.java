@@ -33,9 +33,9 @@ public class AssessmentMinSetting {
     private int year;
     private String cslevel;
     private int project, collaboration, practical, groupwork;
-    
+
     private List<String> CSLevel_list = new ArrayList<>(); //CS level list that retrieve from db
-     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
+    private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
 
     private Boolean disabledDDL, disabledProject, disabledCollaboration, disabledPractical, disabledGroupwork;
 
@@ -128,7 +128,6 @@ public class AssessmentMinSetting {
         this.groupwork = groupwork;
     }
 
-
     //   change text box disabled when click the button
     public Boolean changeDDLDisabled() {
         if (year == 2018) {
@@ -140,7 +139,6 @@ public class AssessmentMinSetting {
         return disabledDDL;
     }
 
-  
     //remove duplicate element for cs level id array
     public static int removeDuplicateElementsString(String arr[], int n) {
         if (n == 0 || n == 1) {
@@ -161,7 +159,7 @@ public class AssessmentMinSetting {
         }
         return j;
     }
-    
+
     //remove duplicate element for year array
     public static int removeDuplicateElements(int arr[], int n) {
         if (n == 0 || n == 1) {
@@ -181,8 +179,8 @@ public class AssessmentMinSetting {
         }
         return j;
     }
-    
-     //count year in db
+
+    //count year in db
     public Integer get_yearCount() {
 
         int count = 0;
@@ -483,8 +481,8 @@ public class AssessmentMinSetting {
 
         if (!assid.isEmpty()) {
             minPerStud = matchMinPerStud(assidP);
-        }else {
-                disabledProject = true;
+        } else {
+            disabledProject = true;
         }
 
         project = minPerStud;
@@ -498,8 +496,8 @@ public class AssessmentMinSetting {
 
         if (!assid.isEmpty()) {
             minPerStud = matchMinPerStud(assidP);
-        }else {
-                disabledCollaboration = true;
+        } else {
+            disabledCollaboration = true;
         }
 
         collaboration = minPerStud;
@@ -513,8 +511,8 @@ public class AssessmentMinSetting {
 
         if (!assid.isEmpty()) {
             minPerStud = matchMinPerStud(assidP);
-        }else {
-                disabledPractical = true;
+        } else {
+            disabledPractical = true;
         }
 
         practical = minPerStud;
@@ -528,8 +526,8 @@ public class AssessmentMinSetting {
 
         if (!assid.isEmpty()) {
             minPerStud = matchMinPerStud(assidP);
-        }else {
-                disabledGroupwork = true;
+        } else {
+            disabledGroupwork = true;
         }
 
         groupwork = minPerStud;
@@ -553,30 +551,38 @@ public class AssessmentMinSetting {
             //update project
             assID = matchCSLevelName(cslevel, "AA1", year);
 
-            statement.setDouble(1, project);
-            statement.setString(2, assID);
-            statement.executeUpdate();
+            if (!assID.isEmpty()) {
+                statement.setDouble(1, project);
+                statement.setString(2, assID);
+                statement.executeUpdate();
+            }
 
             //update collaboration
             assID = matchCSLevelName(cslevel, "AA2", year);
 
-           statement.setDouble(1, collaboration);
-            statement.setString(2, assID);
-            statement.executeUpdate();
+            if (!assID.isEmpty()) {
+                statement.setDouble(1, collaboration);
+                statement.setString(2, assID);
+                statement.executeUpdate();
+            }
 
             //update practical
             assID = matchCSLevelName(cslevel, "AA3", year);
 
-            statement.setDouble(1, practical);
-            statement.setString(2, assID);
-            statement.executeUpdate();
+            if (!assID.isEmpty()) {
+                statement.setDouble(1, practical);
+                statement.setString(2, assID);
+                statement.executeUpdate();
+            }
 
             //update groupwork
             assID = matchCSLevelName(cslevel, "AA4", year);
 
-             statement.setDouble(1, groupwork);
-            statement.setString(2, assID);
-            statement.executeUpdate();
+            if (!assID.isEmpty()) {
+                statement.setDouble(1, groupwork);
+                statement.setString(2, assID);
+                statement.executeUpdate();
+            }
 
             statement.close();
             con.close();

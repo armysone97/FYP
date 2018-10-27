@@ -32,19 +32,11 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/CSLevelSetting.xhtml</from-view-id>
+        <from-view-id>/MaintainSchoolMenu.xhtml</from-view-id>
         <navigation-case>
-            <from-action>#{cSLevelSetting.addCS()}</from-action>
-            <from-outcome>refreshTable</from-outcome>
-            <to-view-id>/CSLevelSetting.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/test1.xhtml</from-view-id>
-        <navigation-case>
-            <from-action>#{cSLevelSetting.addCS()}</from-action>
-            <from-outcome>refreshTable</from-outcome>
-            <to-view-id>/test1.xhtml</to-view-id>
+            <from-action>#{maintainSchoolMenu.nextPageToSchoolDetail()}</from-action>
+            <from-outcome>MaintainSchoolDetails</from-outcome>
+            <to-view-id>/MaintainSchoolDetails.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

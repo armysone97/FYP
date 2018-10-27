@@ -75,10 +75,10 @@
                         </th>
                     </tr>   
                 </table>   
-                <fieldset>
+                <fieldset style="display: inline-block">
                     <legend id="schoolDetails" align="left"><font id="legendLeft" size="5" align="left">School Details</font></legend>
 
-                    <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center" style="float: left;">
+                    <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
                         <tr>
                             <th align="left"> <h:outputText id="lblSchoolName" value="School Name "  styleClass="lblStyle"/></th>
                             <th align="left">
@@ -102,10 +102,20 @@
                             <th align="left">
                                 <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/> 
                                 <h:selectOneMenu styleClass="ddlStyle">
-                                    <f:selectItem itemValue = "statePP" itemLabel = "Pulau Pinang" /> 
-                                    <f:selectItem itemValue = "stateKL" itemLabel = "Kuala Lumpur" /> 
-                                    <f:selectItem itemValue = "stateKD" itemLabel = "Kedah" /> 
-                                    <f:selectItem itemValue = "stateJH" itemLabel = "Johor" /> 
+                                    <f:selectItem itemValue = "Johor" itemLabel = "Johor" /> 
+                                    <f:selectItem itemValue = "Kedah" itemLabel = "Kedah" /> 
+                                    <f:selectItem itemValue = "Kelantan" itemLabel = "Kelantan" /> 
+                                    <f:selectItem itemValue = "Kuala Lumpur" itemLabel = "Kuala Lumpur" /> 
+                                    <f:selectItem itemValue = "Melaka" itemLabel = "Melaka" />
+                                    <f:selectItem itemValue = "Negeri Sembilan" itemLabel = "Negeri Sembilan" /> 
+                                    <f:selectItem itemValue = "Pahang" itemLabel = "Pahang" /> 
+                                    <f:selectItem itemValue = "Perak" itemLabel = "Perak" />
+                                    <f:selectItem itemValue = "Perlis" itemLabel = "Perlis" /> 
+                                    <f:selectItem itemValue = "Pulau Pinang" itemLabel = "Pulau Pinang" /> 
+                                    <f:selectItem itemValue = "Selangor" itemLabel = "Selangor" /> 
+                                    <f:selectItem itemValue = "Sabah" itemLabel = "Sabah" /> 
+                                    <f:selectItem itemValue = "Sarawak" itemLabel = "Sarawak" /> 
+                                    <f:selectItem itemValue = "Terengganu" itemLabel = "Terengganu" /> 
                                 </h:selectOneMenu>  
                             </th>
                         </tr>   
@@ -137,12 +147,12 @@
                     </table>
 
 
-                    <fieldset>
+                    <fieldset style="display: inline-block">
                         <legend id="enrolNo" align="left">
                             <h:outputText id="lblStatus" value="Enrolment numbers of student "  styleClass="lblStyle"/>
                         </legend>
 
-                        <table border="0" cellpadding="10px" cellspacing="0" width="400px" align="center" style="float: right;">
+                        <table border="0" cellpadding="10px" cellspacing="0" width="400px" align="center">
 
 
                             <tr>

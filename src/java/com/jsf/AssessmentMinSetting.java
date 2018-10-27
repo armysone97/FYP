@@ -27,19 +27,20 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @SessionScoped
 
-public class AssessmentTaskSetting {
+public class AssessmentMinSetting {
 
     private Connection con;
 
     private int year;
-    private String cslevel, project, collaboration, practical, groupwork;
+    private String cslevel;
+    private int project, collaboration, practical, groupwork;
     
     private List<String> CSLevel_list = new ArrayList<>(); //CS level list that retrieve from db
      private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
 
     private Boolean disabledDDL, disabledProject, disabledCollaboration, disabledPractical, disabledGroupwork;
 
-    public AssessmentTaskSetting() {
+    public AssessmentMinSetting() {
         this.year = 2018;
         this.disabledDDL = false;
         this.disabledProject = false;
@@ -96,37 +97,38 @@ public class AssessmentTaskSetting {
         this.cslevel = cslevel;
     }
 
-    public String getProject() {
+    public int getProject() {
         return project;
     }
 
-    public void setProject(String project) {
+    public void setProject(int project) {
         this.project = project;
     }
 
-    public String getCollaboration() {
+    public int getCollaboration() {
         return collaboration;
     }
 
-    public void setCollaboration(String collaboration) {
+    public void setCollaboration(int collaboration) {
         this.collaboration = collaboration;
     }
 
-    public String getPractical() {
+    public int getPractical() {
         return practical;
     }
 
-    public void setPractical(String practical) {
+    public void setPractical(int practical) {
         this.practical = practical;
     }
 
-    public String getGroupwork() {
+    public int getGroupwork() {
         return groupwork;
     }
 
-    public void setGroupwork(String groupwork) {
+    public void setGroupwork(int groupwork) {
         this.groupwork = groupwork;
     }
+
 
     //   change text box disabled when click the button
     public Boolean changeDDLDisabled() {
@@ -343,32 +345,6 @@ public class AssessmentTaskSetting {
         return CSLevel_list;
     }
 
-    //auto generate task ID
-    public int autoGenerateID() {
-
-        int count = 0;
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM task");
-
-            while (rs.next()) {
-                count = rs.getInt("COUNT(*)");
-            }
-
-            rs.close();
-            st.close();
-            con.close();
-
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
-        }
-
-        return count;
-    }
-
     public String matchAssID(String CSID, String assActivityID, int tmpYear) {
 
         String assID = "";
@@ -447,19 +423,19 @@ public class AssessmentTaskSetting {
         return CSID;
     }
 
-    public String matchTaskTitle(String assID) {
+    public int matchMinPerStud(String assID) {
 
-        String taskTitle = "";
+        int minPerStud = 0;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT taskTitle FROM task WHERE assID = ?");
+            PreparedStatement st = con.prepareStatement("SELECT minPerStud FROM assessment WHERE assID = ?");
             st.setString(1, assID);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-                taskTitle = rs.getString("taskTitle");
+                minPerStud = rs.getInt("minPerStud");
             }
 
             st.close();
@@ -469,7 +445,7 @@ public class AssessmentTaskSetting {
             System.out.println("Error: " + ex);
         }
 
-        return taskTitle;
+        return minPerStud;
     }
 
     //get assessment list when page onload and when button click based on year and cs level
@@ -480,7 +456,8 @@ public class AssessmentTaskSetting {
         int tmpYear = 0, tmpyearComm;
         int numYearComm = 0;
 
-        String csid = "", assactivityid = "", assidP = "", assid = "", tasktitle = "";
+        String csid = "", assactivityid = "", assidP = "", assid = "";
+        int minPerStud = 0;
 
         //when page onload, need to show previous(2017) record, so for year and yearComm 2018 temporaily become 2017
         if (year == 2018) {
@@ -498,71 +475,71 @@ public class AssessmentTaskSetting {
             disabledGroupwork = true;
         }
 
-        //get project tasktitle
+        //get project minPerStud
         csid = matchCSLevelID();
         assactivityid = "AA1";
         assidP = matchAssID(csid, assactivityid, tmpYear);
         assid = matchAssID(csid, assactivityid, year);
-        tasktitle = "";
+        minPerStud = 0;
 
         if (!assid.isEmpty()) {
-            tasktitle = matchTaskTitle(assidP);
+            minPerStud = matchMinPerStud(assidP);
         }else {
                 disabledProject = true;
         }
 
-        project = tasktitle;
+        project = minPerStud;
 
-        //get collaboration tasktitle
+        //get collaboration minPerStud
         csid = matchCSLevelID();
         assactivityid = "AA2";
         assidP = matchAssID(csid, assactivityid, tmpYear);
         assid = matchAssID(csid, assactivityid, year);
-        tasktitle = "";
+        minPerStud = 0;
 
         if (!assid.isEmpty()) {
-            tasktitle = matchTaskTitle(assidP);
+            minPerStud = matchMinPerStud(assidP);
         }else {
                 disabledCollaboration = true;
         }
 
-        collaboration = tasktitle;
+        collaboration = minPerStud;
 
-        //get practical tasktitle
+        //get practical minPerStud
         csid = matchCSLevelID();
         assactivityid = "AA3";
         assidP = matchAssID(csid, assactivityid, tmpYear);
         assid = matchAssID(csid, assactivityid, year);
-        tasktitle = "";
+        minPerStud = 0;
 
         if (!assid.isEmpty()) {
-            tasktitle = matchTaskTitle(assidP);
+            minPerStud = matchMinPerStud(assidP);
         }else {
                 disabledPractical = true;
         }
 
-        practical = tasktitle;
+        practical = minPerStud;
 
-        //get groupwork tasktitle
+        //get groupwork minPerStud
         csid = matchCSLevelID();
         assactivityid = "AA4";
         assidP = matchAssID(csid, assactivityid, tmpYear);
         assid = matchAssID(csid, assactivityid, year);
-        tasktitle = "";
+        minPerStud = 0;
 
         if (!assid.isEmpty()) {
-            tasktitle = matchTaskTitle(assidP);
-        } else {
+            minPerStud = matchMinPerStud(assidP);
+        }else {
                 disabledGroupwork = true;
         }
 
-        groupwork = tasktitle;
+        groupwork = minPerStud;
 
         //   practical = csid + " : " + assactivityid + " : " + assid;
     }
 
     //add year of study cs map in db
-    public void addTask() { //if need redirect to another xhtml, need change void to String and return keyword
+    public void updateMinPerStud() { //if need redirect to another xhtml, need change void to String and return keyword
 
         FacesContext context = FacesContext.getCurrentInstance();
 
@@ -572,58 +549,34 @@ public class AssessmentTaskSetting {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO task (taskID, taskTitle, assID) VALUES (?, ?, ?)");
+            PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE assessment SET minPerStud = ? WHERE assID = ?");
 
-            //insert project
-            length = autoGenerateID();
-            length = length + 1;
-            tsID = "TS" + Integer.toString(length);
+            //update project
             assID = matchCSLevelName(cslevel, "AA1", year);
 
-            context.addMessage(null, new FacesMessage(tsID + " : " + assID));
-
-            statement.setString(1, tsID);
-            statement.setString(2, project);
-            statement.setString(3, assID);
+            statement.setDouble(1, project);
+            statement.setString(2, assID);
             statement.executeUpdate();
 
-            //insert collaboration
-            length = autoGenerateID();
-            length = length + 1;
-            tsID = "TS" + Integer.toString(length);
+            //update collaboration
             assID = matchCSLevelName(cslevel, "AA2", year);
 
-            context.addMessage(null, new FacesMessage(tsID + " : " + assID));
-
-            statement.setString(1, tsID);
-            statement.setString(2, collaboration);
-            statement.setString(3, assID);
+           statement.setDouble(1, collaboration);
+            statement.setString(2, assID);
             statement.executeUpdate();
 
-            //insert practical
-            length = autoGenerateID();
-            length = length + 1;
-            tsID = "TS" + Integer.toString(length);
+            //update practical
             assID = matchCSLevelName(cslevel, "AA3", year);
 
-            context.addMessage(null, new FacesMessage(tsID + " : " + assID));
-
-            statement.setString(1, tsID);
-            statement.setString(2, practical);
-            statement.setString(3, assID);
+            statement.setDouble(1, practical);
+            statement.setString(2, assID);
             statement.executeUpdate();
 
-            //insert groupwork
-            length = autoGenerateID();
-            length = length + 1;
-            tsID = "TS" + Integer.toString(length);
+            //update groupwork
             assID = matchCSLevelName(cslevel, "AA4", year);
 
-            context.addMessage(null, new FacesMessage(tsID + " : " + assID));
-
-            statement.setString(1, tsID);
-            statement.setString(2, groupwork);
-            statement.setString(3, assID);
+             statement.setDouble(1, groupwork);
+            statement.setString(2, assID);
             statement.executeUpdate();
 
             statement.close();

@@ -5,12 +5,14 @@
  */
 package com.jsf;
 
+import static com.jsf.CSLevelSetting.removeDuplicateElements;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -29,6 +31,8 @@ public class YearOfStudySetting {
     private Connection con;
 
     private List<String> CSLevel_list = new ArrayList<>(); //CS level list that retrieve from db
+    private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
+    
     private String standard1, standard2, standard3, standard4, standard5, standard6;
 
     private int year, yearComm;
@@ -114,6 +118,97 @@ public class YearOfStudySetting {
         }
 
         return disabledDDL;
+    }
+    
+    //remove duplicate element for year array
+    public static int removeDuplicateElements(int arr[], int n) {
+        if (n == 0 || n == 1) {
+            return n;
+        }
+        int[] temp = new int[n];
+        int j = 0;
+        for (int i = 0; i < n - 1; i++) {
+            if (arr[i] != arr[i + 1]) {
+                temp[j++] = arr[i];
+            }
+        }
+        temp[j++] = arr[n - 1];
+        // Changing original array  
+        for (int i = 0; i < j; i++) {
+            arr[i] = temp[i];
+        }
+        return j;
+    }
+    
+     //count year in db
+    public Integer get_yearCount() {
+
+        int count = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT year FROM assessment");
+
+            while (rs.next()) {
+                count++;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return count;
+    }
+
+    //get year from db 
+    public List<Integer> get_year() {
+        year_list.clear();
+        int lengthYearList = get_yearCount();
+
+        int[] yearListDuplicate = new int[lengthYearList];
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        int count = 1;
+        int tmp = 0;
+
+        yearListDuplicate[0] = 2018;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT year FROM assessment");
+
+            while (rs.next()) {
+                tmp++;
+                yearListDuplicate[tmp] = rs.getInt("year");
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        for (int i = 0; i < yearListDuplicate.length; i++) {
+            System.out.println(yearListDuplicate[i]);
+        }
+
+        Arrays.sort(yearListDuplicate);//sorting array  
+        int length = yearListDuplicate.length;
+        length = removeDuplicateElements(yearListDuplicate, length);
+
+        //printing array elements  
+        for (int i = 0; i < length; i++) {
+            year_list.add(yearListDuplicate[i]);
+        }
+        return year_list;
     }
 
     //get cs level in db

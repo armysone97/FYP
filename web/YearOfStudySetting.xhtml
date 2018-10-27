@@ -73,10 +73,7 @@
                             <h:outputText id="lblYear" value="Year : "  styleClass="lblStyle"/>
 
                             <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.year}">
-                                <f:selectItem itemValue = "2018" itemLabel = "2018" /> 
-                                <f:selectItem itemValue = "2017" itemLabel = "2017" /> 
-                                <f:selectItem itemValue = "2016" itemLabel = "2016" /> 
-                                <f:selectItem itemValue = "2015" itemLabel = "2015" /> 
+                                <f:selectItems value="#{yearOfStudySetting.get_year()}" /> 
                             </h:selectOneMenu>  
                         </th>
                     </tr>   
@@ -86,10 +83,7 @@
                             <h:outputText id="lblYear1" value="Commerce Year of STEM CS: "  styleClass="lblStyle"/>
 
                             <h:selectOneMenu styleClass="ddlStyle" value="#{yearOfStudySetting.yearComm}">
-                                <f:selectItem itemValue = "2018" itemLabel = "2018" /> 
-                                <f:selectItem itemValue = "2017" itemLabel = "2017" /> 
-                                <f:selectItem itemValue = "2016" itemLabel = "2016" /> 
-                                <f:selectItem itemValue = "2015" itemLabel = "2015" /> 
+                               <f:selectItems value="#{yearOfStudySetting.get_year()}" /> 
                             </h:selectOneMenu>  
                         </th>
 

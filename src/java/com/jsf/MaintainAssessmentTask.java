@@ -5,7 +5,6 @@
  */
 package com.jsf;
 
-import static com.jsf.CSLevelSetting.removeDuplicateElementsString;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

@@ -13,6 +13,13 @@
                 height: 40px;
             }
 
+            .buttonShowStyle{
+                font-size: 25px;
+                column-width: 10px;
+                width: 80px;
+                height: 40px;
+            }
+
             .ddlStyle{
                 font-size: 20px;
                 column-width: 10px;
@@ -42,6 +49,11 @@
                 font-size: 20pt;
             }
 
+            .textAreaStyle{
+                font-size: 18pt;
+                /*height: 35px;*/
+            }
+
         </style>
     </h:head>
     <h:body>
@@ -61,37 +73,33 @@
                         <th><label>&nbsp;</label></th>
                         <th><label>&nbsp;</label></th> 
                     </tr>
-
-                    <tr>
-                        <th colspan="4" align="left">
-                            <h:outputText id="lblYear" value="Year : "  styleClass="lblStyle"/>
-
-                            <h:selectOneMenu styleClass="ddlStyle">
-                                <f:selectItem itemValue = "2018" itemLabel = "2018" /> 
-                                <f:selectItem itemValue = "2017" itemLabel = "2017" /> 
-                                <f:selectItem itemValue = "2016" itemLabel = "2016" /> 
-                                <f:selectItem itemValue = "2015" itemLabel = "2015" /> 
-                            </h:selectOneMenu>  
-                        </th>
-                    </tr>   
                 </table>   
+
                 <fieldset style="display: inline-block">
                     <legend id="schoolDetails" align="left"><font id="legendLeft" size="5" align="left">School Details</font></legend>
 
                     <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
                         <tr>
+                            <th align="left"> <h:outputText id="lblSchoolID" value="School ID "  styleClass="lblStyle"/></th>
+                            <th align="right">
+                                <h:outputText id="simbol100" value=": "  styleClass="lblStyle"/></th>
+                            <th align="left">    <h:outputText id="txtSchoolID" value="#{maintainSchoolDetails.schoolID}" styleClass="lblStyle"/>
+                            </th>
+                        </tr> 
+
+                        <tr>
                             <th align="left"> <h:outputText id="lblSchoolName" value="School Name "  styleClass="lblStyle"/></th>
-                            <th align="left">
-                                <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/>
-                                <h:inputText id="txtSchoolName" styleClass="txtboxStyle" required="required" size="35"/>
+                            <th align="right">
+                                <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/></th>
+                            <th align="left">  <h:inputText id="txtSchoolName" value="#{maintainSchoolDetails.name}" disabled="#{maintainSchoolDetails.disabledTxt}" styleClass="txtboxStyle" required="required" size="35"/>
                             </th>
                         </tr> 
 
                         <tr>
                             <th align="left"> <h:outputText id="lblSchoolAddress" value="School Address "  styleClass="lblStyle"/></th>
-                            <th align="left">
-                                <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/>
-                                <h:inputText id="txtSchoolAddress" styleClass="txtboxStyle" required="required" size="35"/>
+                            <th align="right">
+                                <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/></th>
+                            <th align="left">  <h:inputTextarea id="txtSchoolAddress" value="#{maintainSchoolDetails.address}" disabled="#{maintainSchoolDetails.disabledTxt}" rows="3" styleClass="textAreaStyle" required="required"/>
                             </th>
                         </tr> 
 
@@ -99,9 +107,9 @@
                             <th align="left"> 
                                 <h:outputText id="lblState" value="Select State"  styleClass="lblStyle"/>
                             </th>
-                            <th align="left">
-                                <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/> 
-                                <h:selectOneMenu styleClass="ddlStyle">
+                            <th align="right">
+                                <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/> </th>
+                            <th align="left">    <h:selectOneMenu value="#{maintainSchoolDetails.state}" disabled="#{maintainSchoolDetails.disabledTxt}" styleClass="ddlStyle">
                                     <f:selectItem itemValue = "Johor" itemLabel = "Johor" /> 
                                     <f:selectItem itemValue = "Kedah" itemLabel = "Kedah" /> 
                                     <f:selectItem itemValue = "Kelantan" itemLabel = "Kelantan" /> 
@@ -122,82 +130,113 @@
 
                         <tr>
                             <th align="left"> <h:outputText id="lblSchoolContactNo" value="School Contact No "  styleClass="lblStyle"/></th>
-                            <th align="left">
-                                <h:outputText id="simbol4" value=": "  styleClass="lblStyle"/>
-                                <h:inputText id="txtSchoolContactNo" styleClass="txtboxStyle" required="required" size="35"/>
+                            <th align="right">
+                                <h:outputText id="simbol4" value=": "  styleClass="lblStyle"/></th>
+                            <th align="left">  <h:inputText id="txtSchoolContactNo" value="#{maintainSchoolDetails.contactNo}" disabled="#{maintainSchoolDetails.disabledTxt}" styleClass="txtboxStyle" required="required" size="35"/>
                             </th>
                         </tr> 
 
                         <tr>
                             <th align="left"> <h:outputText id="lblCommYear" value="Commerce Year of STEM CS "  styleClass="lblStyle"/></th>
-                            <th align="left">
-                                <h:outputText id="simbol5" value=": "  styleClass="lblStyle"/>
-                                <h:inputText id="txtCommYear" styleClass="txtboxSmallStyle" required="required" size="5"/>
+                            <th align="right">
+                                <h:outputText id="simbol5" value=": "  styleClass="lblStyle"/></th>
+                            <th align="left">  <h:inputText id="txtCommYear" value="#{maintainSchoolDetails.commYear}" disabled="#{maintainSchoolDetails.disabledCommYear}" styleClass="txtboxSmallStyle" required="required" size="5"/>
                             </th>
                         </tr> 
 
                         <tr>
                             <th align="left"> <h:outputText id="lblStatus" value="Status "  styleClass="lblStyle"/></th>
-                            <th align="left">
-                                <h:outputText id="simbol6" value=": "  styleClass="lblStyle"/>
-                                <h:inputText id="txtStatus" styleClass="txtboxSmallStyle" required="required" size="10"/>
+                            <th align="right">
+                                <h:outputText id="simbol6" value=": "  styleClass="lblStyle"/></th>
+                            <th align="left">  
+                                <h:selectOneMenu value="#{maintainSchoolDetails.status}" disabled="#{maintainSchoolDetails.disabledStatus}" styleClass="ddlStyle">
+                                    <f:selectItem itemValue = "Available" itemLabel = "Available" /> 
+                                    <f:selectItem itemValue = "Not Available" itemLabel = "Not Available" /> 
+                                </h:selectOneMenu> 
                             </th>
                         </tr> 
 
+                        <tr>
+                            <th align="left"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
+                            <th align="right"><h:commandButton id="btnAdd" value="#{maintainSchoolDetails.addButtonName}" styleClass="buttonStyle" action="#{maintainSchoolDetails.changeAddButtonAction()}" disabled="#{maintainSchoolDetails.disabledAddButton}"/></th>
+                            <th align="right"><h:commandButton id="btnEdit" value="#{maintainSchoolDetails.editButtonName}" styleClass="buttonStyle" action="#{maintainSchoolDetails.changeEditButtonAction()}" disabled="#{maintainSchoolDetails.disabledEditButton}"/></th>
+                        </tr>  
+
                     </table>
 
+               
+                <fieldset style="display: inline-block">
+                    <legend id="enrolNo" align="left">
+                        <h:outputText id="lblEnrolNum" value="Enrolment numbers of student "  styleClass="lblStyle"/>
+                    </legend>
 
-                    <fieldset style="display: inline-block">
-                        <legend id="enrolNo" align="left">
-                            <h:outputText id="lblStatus" value="Enrolment numbers of student "  styleClass="lblStyle"/>
-                        </legend>
+                    <table border="0" cellpadding="10px" cellspacing="0" width="400px" align="center">
 
-                        <table border="0" cellpadding="10px" cellspacing="0" width="400px" align="center">
+                        <tr>
+                            <th colspan="4" align="left">
+                                <h:outputText id="lblYear" value="Year : "  styleClass="lblStyle"/>
 
+                                <h:selectOneMenu value="#{maintainSchoolDetails.year}" styleClass="ddlStyle">
+                                    <f:selectItems value="#{maintainSchoolDetails.get_year()}"  /> 
+                                </h:selectOneMenu> 
 
-                            <tr>
-                                <th align="left"> <h:outputText id="lblCS1" value="CS Level 1 "  styleClass="lblStyle"/></th>
-                                <th align="left">
-                                    <h:outputText id="simbol7" value=": "  styleClass="lblStyle"/>
-                                    <h:inputText id="txtCS1" styleClass="txtboxSmallStyle" required="required" size="10"/>
-                                </th>
-                            </tr> 
+                                &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList111" value="Show" styleClass="buttonShowStyle"/>
 
-                            <tr>
-                                <th align="left"> <h:outputText id="lblCS2" value="CS Level 2 "  styleClass="lblStyle"/></th>
-                                <th align="left">
-                                    <h:outputText id="simbol8" value=": "  styleClass="lblStyle"/>
-                                    <h:inputText id="txtCS2" styleClass="txtboxSmallStyle" required="required" size="10"/>
-                                </th>
-                            </tr> 
+                            </th>
+                        </tr>  
+                           <tr>
+                            <th align="left">
+                                <h:outputText id="simbol5000" value="#{maintainSchoolDetails.testing}" escape="false"  styleClass="lblStyle"/></th>
+                           </tr>
 
-                            <tr>
-                                <th align="left"> <h:outputText id="lblCS3" value="CS Level 3 "  styleClass="lblStyle"/></th>
-                                <th align="left">
-                                    <h:outputText id="simbol9" value=": "  styleClass="lblStyle"/>
-                                    <h:inputText id="txtCS3" styleClass="txtboxSmallStyle" required="required" size="10"/>
-                                </th>
-                            </tr> 
+<!--                        <tr>
+                            <th align="left"> <h:outputText id="lblCS1" value="CS Level 1 "  styleClass="lblStyle"/></th>
+                            <th align="left">
+                                <h:outputText id="simbol7" value=": "  styleClass="lblStyle"/>
+                                <h:inputText id="txtCS1" styleClass="txtboxSmallStyle" required="required" size="10"/>
+                            </th>
+                        </tr> 
 
-                            <tr>
-                                <th align="left"> <h:outputText id="lblCS4" value="CS Level 4 "  styleClass="lblStyle"/></th>
-                                <th align="left">
-                                    <h:outputText id="simbol10" value=": "  styleClass="lblStyle"/>
-                                    <h:inputText id="txtCS4" styleClass="txtboxSmallStyle" required="required" size="10"/>
-                                </th>
-                            </tr> 
+                        <tr>
+                            <th align="left"> <h:outputText id="lblCS2" value="CS Level 2 "  styleClass="lblStyle"/></th>
+                            <th align="left">
+                                <h:outputText id="simbol8" value=": "  styleClass="lblStyle"/>
+                                <h:inputText id="txtCS2" styleClass="txtboxSmallStyle" required="required" size="10"/>
+                            </th>
+                        </tr> 
 
-                            <tr>
-                                <th align="left"> <h:outputText id="lblCS5" value="CS Level 5 "  styleClass="lblStyle"/></th>
-                                <th align="left">
-                                    <h:outputText id="simbol11" value=": "  styleClass="lblStyle"/>
-                                    <h:inputText id="txtCS5" styleClass="txtboxSmallStyle" required="required" size="10"/>
-                                </th>
-                            </tr> 
+                        <tr>
+                            <th align="left"> <h:outputText id="lblCS3" value="CS Level 3 "  styleClass="lblStyle"/></th>
+                            <th align="left">
+                                <h:outputText id="simbol9" value=": "  styleClass="lblStyle"/>
+                                <h:inputText id="txtCS3" styleClass="txtboxSmallStyle" required="required" size="10"/>
+                            </th>
+                        </tr> 
 
-                        </table>
-                    </fieldset>
+                        <tr>
+                            <th align="left"> <h:outputText id="lblCS4" value="CS Level 4 "  styleClass="lblStyle"/></th>
+                            <th align="left">
+                                <h:outputText id="simbol10" value=": "  styleClass="lblStyle"/>
+                                <h:inputText id="txtCS4" styleClass="txtboxSmallStyle" required="required" size="10"/>
+                            </th>
+                        </tr> 
+
+                        <tr>
+                            <th align="left"> <h:outputText id="lblCS5" value="CS Level 5 "  styleClass="lblStyle"/></th>
+                            <th align="left">
+                                <h:outputText id="simbol11" value=": "  styleClass="lblStyle"/>
+                                <h:inputText id="txtCS5" styleClass="txtboxSmallStyle" required="required" size="10"/>
+                            </th>
+                        </tr> -->
+                        
+                        <tr>
+                            <th colspan="2" align="left"> <h:commandButton id="btnCancel100" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                           <th colspan="2" align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                        </tr>  
+
+                    </table>
                 </fieldset>
+ </fieldset>
 
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">    
                     <tr>
@@ -205,12 +244,7 @@
                         <th><label>&nbsp;</label></th> 
                     </tr>
 
-                    <tr>
-                        <th align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
-                        <th align="right"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
-                        <th align="right"><h:commandButton id="btnAdd" value="Add" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
-                        <th align="right"><h:commandButton id="btnEdit" value="Edit" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
-                    </tr>  
+
 
 
                 </table>

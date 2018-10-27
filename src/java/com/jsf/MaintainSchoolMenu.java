@@ -35,7 +35,7 @@ public class MaintainSchoolMenu {
      private List<String> state_list = new ArrayList<>();
      
      private static int globalCounter;
-     private static String globalState, globalSchool, globalAction;
+     private static String globalState, globalSchool, globalAction, globalSchoolID;
 
     public MaintainSchoolMenu() {
         this.state = "Pulau Pinang";
@@ -98,8 +98,14 @@ public class MaintainSchoolMenu {
     public static void setGlobalAction(String globalAction) {
         MaintainSchoolMenu.globalAction = globalAction;
     }
-    
-    
+
+    public static String getGlobalSchoolID() {
+        return globalSchoolID;
+    }
+
+    public static void setGlobalSchoolID(String globalSchoolID) {
+        MaintainSchoolMenu.globalSchoolID = globalSchoolID;
+    }
     
       //remove duplicate element for teacher name array
     public static int removeDuplicateElementsString(String arr[], int n) {
@@ -222,12 +228,31 @@ public class MaintainSchoolMenu {
     
     public String nextPageToSchoolDetail(){
         
-         String nextPage = "MaintainSchoolDetails";
+         String nextPage = "MaintainSchoolDetails"; //link to next page purpose
         
         globalAction = action;
         globalSchool = school;
         globalState = state;
         globalCounter = 1;
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE schoolState = ? and schoolName = ?");
+            st.setString(1, state);
+            st.setString(2, school);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                globalSchoolID = rs.getString("schoolID");
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
         
         return nextPage;
     }

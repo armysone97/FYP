@@ -325,7 +325,13 @@ public class MaintainSchoolDetails {
 
         year_list.clear();
 
+        int statusOfYearLength = 0;
+
         int lengthYearList = get_yearCount();
+        if (lengthYearList == 0) {
+            lengthYearList = 1;
+            statusOfYearLength = 1;
+        }
 
         int[] yearListDuplicate = new int[lengthYearList];
 
@@ -356,19 +362,19 @@ public class MaintainSchoolDetails {
             System.out.println(yearListDuplicate[i]);
         }
 
-        Arrays.sort(yearListDuplicate);//sorting array  
-        int length = yearListDuplicate.length;
-        length = removeDuplicateElements(yearListDuplicate, length);
+        if (statusOfYearLength == 1) {
+            yearListDuplicate[0] = 2018;
+            year_list.add(2018);
+        } else {
+            Arrays.sort(yearListDuplicate);//sorting array  
+            int length = yearListDuplicate.length;
+            length = removeDuplicateElements(yearListDuplicate, length);
 
-//        if (yearListDuplicate.length == 0) {
-//            yearListDuplicate[0] = 2018;
-//        }
-        
-        //printing array elements  
-        for (int i = 0; i < length; i++) {
-            year_list.add(yearListDuplicate[i]);
+            //printing array elements  
+            for (int i = 0; i < length; i++) {
+                year_list.add(yearListDuplicate[i]);
+            }
         }
-
 
         return year_list;
     }
@@ -494,13 +500,12 @@ public class MaintainSchoolDetails {
             int[] yearListDuplicate = new int[2];
             yearListDuplicate[0] = 2222;
             yearListDuplicate[1] = 3333;
-            
-            testing = yearListDuplicate[0] + "\n" +  yearListDuplicate[1]; //output: 2222 3333
+
+            testing = yearListDuplicate[0] + "\n" + yearListDuplicate[1]; //output: 2222 3333
 
 //            for (int i = 0; i < 2; i++) {
 //                testing = yearListDuplicate[i] + "x";
 //            }
-
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }

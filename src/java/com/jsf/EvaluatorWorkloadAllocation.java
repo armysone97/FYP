@@ -13,8 +13,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 //import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.model.ArrayDataModel;
-import javax.faces.model.DataModel;
 //import javax.faces.context.FacesContext;
 
 /**

@@ -413,6 +413,7 @@ public class MaintainSchoolDetails {
     public void addSchool() {
 
         status = "Available"; //due to ddl can't accept the value if user didn't select it
+        int numYearComm = 0;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -423,7 +424,7 @@ public class MaintainSchoolDetails {
             statement.setString(1, schoolID);
             statement.setString(2, name);
             statement.setString(3, address);
-            statement.setString(4, status);
+            statement.setString(4, state);
             statement.setString(5, contactNo);
             statement.setInt(6, commYear);
             statement.setString(7, status);
@@ -437,10 +438,211 @@ public class MaintainSchoolDetails {
             disabledEditButton = false;
 
             addButtonName = "New";
+            counterCSLevel(numYearComm);
 
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+
+    }
+    
+     //remove duplicate element for cs level id array
+    public static int removeDuplicateElementsString(String arr[], int n) {
+        if (n == 0 || n == 1) {
+            return n;
+        }
+        String[] temp = new String[n];
+        int j = 0;
+        for (int i = 0; i < n - 1; i++) {
+            if (!arr[i].equals(arr[i + 1])) {
+                temp[j++] = arr[i];
+            }
+        }
+        temp[j++] = arr[n - 1];
+
+        // Changing original array  
+        for (int i = 0; i < j; i++) {
+            arr[i] = temp[i];
+        }
+        return j;
+    }
+    
+       //count csID in db
+    public int get_csCount(int numYearComm) {
+
+        int count = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM yearofstudycsmap WHERE numYearComm = ? AND year = ?");
+            st.setInt(1, numYearComm);
+            st.setInt(2, commYear);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                count++;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return count;
+    }
+
+    public void counterCSLevel(int numYearComm) {
+
+        int lengthCSIDList = get_csCount(numYearComm);
+
+        String[] CSIDListDuplicate = new String[lengthCSIDList];
+        int tmp = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM yearofstudycsmap WHERE numYearComm = ? AND year = ?");
+            st.setInt(1, numYearComm);
+            st.setInt(2, commYear);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                CSIDListDuplicate[tmp] = rs.getString("CSLevelID");
+                tmp++;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        Arrays.sort(CSIDListDuplicate);//sorting array  
+        int length = CSIDListDuplicate.length;
+        length = removeDuplicateElementsString(CSIDListDuplicate, length);
+
+        autoAddSchoolCSMap(numYearComm, CSIDListDuplicate);
+    }
+
+//    //count schoolid in db
+//    public int get_commYearCount() {
+//
+//        int count = 0;
+//
+//        try {
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+//            PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE commYearCS = ?");
+//            st.setInt(1, commYear);
+//            ResultSet rs = st.executeQuery();
+//
+//            while (rs.next()) {
+//                count++;
+//            }
+//
+//            st.close();
+//            con.close();
+//
+//        } catch (Exception ex) {
+//            System.out.println("Error: " + ex);
+//        }
+//
+//        return count;
+//    }
+
+    //auto generate year of study cs map ID
+    public String autoGenerateSchoolCSMapID() {
+
+        int count = 0;
+        String scID = "";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM schoolcsmap");
+
+            while (rs.next()) {
+                count = rs.getInt("COUNT(*)");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        count++;
+
+        scID = "SC" + count;
+
+        return scID;
+    }
+
+    //auto add school cs map in db based on commercial year
+    public void autoAddSchoolCSMap(int numYearComm, String[] CSIDListDuplicate) { //if need redirect to another xhtml, need change void to String and return keyword
+
+        //1. find commYear (eg. 2016) from school table and compare with numYearComm
+       // int lengthCommYearList = get_commYearCount();
+
+     //   String[] schoolListDuplicate = new String[lengthCommYearList];
+        int tmp = 0;
+        String schoolID = "";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE commYearCS = ?");
+            st.setInt(1, commYear);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                schoolID = rs.getString("schoolID");
+                tmp++;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        String scID = "", shID = "", csID = "";
+        int ttlStud = 0;
+       
+            for (int j = 0; j < CSIDListDuplicate.length; j++) {
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                    PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO schoolcsmap (schoolCSMapID, ttlEnrolStud, schoolID, CSLevelID, year) VALUES (?, ?, ?, ?, ?)");
+
+                    //insert standard 1
+                    scID = autoGenerateSchoolCSMapID();
+                    ttlStud = 0;
+                    shID = schoolID;
+                    csID = CSIDListDuplicate[j];
+
+                    statement.setString(1, scID);
+                    statement.setInt(2, ttlStud);
+                    statement.setString(3, shID);
+                    statement.setString(4, csID);
+                    statement.setInt(5, commYear);
+                    statement.executeUpdate();
+
+                    statement.close();
+                    con.close();
+
+                } catch (Exception ex) {
+                    System.out.println("Error: " + ex);
+                }
+            }
 
     }
 

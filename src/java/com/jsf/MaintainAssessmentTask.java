@@ -33,6 +33,7 @@ public class MaintainAssessmentTask {
 
     private List<String> school_list = new ArrayList<>();
     private List<String> teacher_list = new ArrayList<>();
+     private List<String> state_list = new ArrayList<>();
 
     private Boolean disabledDDL;
 
@@ -85,6 +86,8 @@ public class MaintainAssessmentTask {
         return disabledDDL;
     }
 
+   
+
     //remove duplicate element for teacher name array
     public static int removeDuplicateElementsString(String arr[], int n) {
         if (n == 0 || n == 1) {
@@ -98,12 +101,80 @@ public class MaintainAssessmentTask {
             }
         }
         temp[j++] = arr[n - 1];
-        
+
         // Changing original array  
         for (int i = 0; i < j; i++) {
             arr[i] = temp[i];
         }
         return j;
+    }
+
+    //count state in db
+    public Integer get_stateCount() {
+
+        int count = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT schoolState FROM school WHERE schoolStatus = 'Available' ");
+
+            while (rs.next()) {
+                count++;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return count;
+    }
+
+    //get year from db 
+    public List<String> get_state() {
+
+        state_list.clear();
+
+        int lengthYearList = get_stateCount();
+
+        String[] stateListDuplicate = new String[lengthYearList];
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        int count = 1;
+        int tmp = 0;
+
+        // stateListDuplicate[0] = 2018;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT schoolState FROM school WHERE schoolStatus = 'Available' ");
+
+            while (rs.next()) {
+                stateListDuplicate[tmp] = rs.getString("schoolState");
+                tmp++;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        Arrays.sort(stateListDuplicate);//sorting array  
+        int length = stateListDuplicate.length;
+        length = removeDuplicateElementsString(stateListDuplicate, length);
+
+        //printing array elements  
+        for (int i = 0; i < length; i++) {
+            state_list.add(stateListDuplicate[i]);
+        }
+        return state_list;
     }
 
     //get school list and put inside ddl based on the state that is selected by user in ddl
@@ -118,7 +189,7 @@ public class MaintainAssessmentTask {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT schoolName FROM school WHERE schoolState = ?");
+            PreparedStatement st = con.prepareStatement("SELECT schoolName FROM school WHERE schoolState = ? AND schoolStatus = 'Available' ");
             st.setString(1, state);
             ResultSet rs = st.executeQuery();
 

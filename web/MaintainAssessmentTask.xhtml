@@ -75,10 +75,7 @@
                         <th align="left">
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> 
                             <h:selectOneMenu value="#{maintainAssessmentTask.state}" styleClass="ddlStyle">
-                                <f:selectItem itemValue = "Pulau Pinang" itemLabel = "Pulau Pinang" /> 
-                                <f:selectItem itemValue = "Kuala Lumpur" itemLabel = "Kuala Lumpur" /> 
-                                <f:selectItem itemValue = "Kedah" itemLabel = "Kedah" /> 
-                                <f:selectItem itemValue = "Johor" itemLabel = "Johor" /> 
+                                <f:selectItems  value="#{maintainAssessmentTask.get_state()}" /> 
                             </h:selectOneMenu>  
                            &nbsp;&nbsp;&nbsp;   <h:commandButton id="btnTest" value="Show School" styleClass="buttonStyle"/>
                         </th>

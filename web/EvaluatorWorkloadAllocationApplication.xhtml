@@ -97,6 +97,7 @@
                         <th align="right">
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> </th>
                             <th align="left">   <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.evaluator}">
+                                   
                                     <f:selectItems value="#{evaluatorWorkloadAllocation.get_EvaluatorList()}"/>
                             </h:selectOneMenu>  
                                 <h:commandButton id="btnShow" value="Confirm" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.retrieveWorkloadLimit()}"/>
@@ -167,11 +168,8 @@
                             <h:outputText id="simbol51222" value=": "  styleClass="lblStyle"/> </th>
 
                       <th align="left">
-                            <h:selectOneMenu styleClass="ddlSpecialStyle">
-                                <f:selectItem itemValue = "FC" itemLabel = "Formative - Collaboration" /> 
-                                <f:selectItem itemValue = "FP" itemLabel = "Formative - Project" /> 
-                                <f:selectItem itemValue = "SG" itemLabel = "Summative - Groupwork" /> 
-                                <f:selectItem itemValue = "SP" itemLabel = "Summative - Practical" /> 
+                          <h:selectOneMenu styleClass="ddlSpecialStyle" value="#{evaluatorWorkloadAllocation.assType}">
+                              <f:selectItems value="#{evaluatorWorkloadAllocation.get_AssessmentList()}"/>
                             </h:selectOneMenu>  
                            &nbsp;&nbsp;&nbsp;   <h:commandButton id="btnTest122" value="Calculate" styleClass="buttonStyle"/>
                         </th>

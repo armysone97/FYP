@@ -26,12 +26,15 @@ public class EvaluatorWorkloadAllocation {
 
     private Connection con;
     private String evaluator;
-    private String takeEvaluator;
+    //private String takeEvaluator;
     private String school;
     private String csLevel;
     private String teacher;
     private int workloadLimit;
     private int totalStudent;
+    private String assType;
+    private int workloadMin;
+    private double workloadAssigned;
 
 //    private String name;
 //    private String schoolName;
@@ -39,6 +42,7 @@ public class EvaluatorWorkloadAllocation {
     private List<String> school_list = new ArrayList<>();
     private List<String> cslevel_list = new ArrayList<>();
     private List<String> teacher_list = new ArrayList<>();
+    private List<String> assessment_list = new ArrayList<>();
 
     public EvaluatorWorkloadAllocation() {
         this.evaluator = "Mark Lee";
@@ -88,6 +92,14 @@ public class EvaluatorWorkloadAllocation {
         return teacher;
     }
 
+    public String getAssType() {
+        return assType;
+    }
+
+    public void setAssType(String assType) {
+        this.assType = assType;
+    }
+    
     public void setTeacher(String teacher) {
         this.teacher = teacher;
     }
@@ -106,6 +118,10 @@ public class EvaluatorWorkloadAllocation {
 
     public void setTeacher_list(List<String> teacher_list) {
         this.teacher_list = teacher_list;
+    }
+
+    public void setAssessment_list(List<String> assessment_list) {
+        this.assessment_list = assessment_list;
     }
 
     //retrieve total number of student
@@ -261,6 +277,58 @@ public class EvaluatorWorkloadAllocation {
         }
     }
 
+    public void retrieveNumSamAss(){
+        
+        String assActivityIDFromDB = "";
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT assActivityID FROM assessmentactivity WHERE assActivityName = ?");
+            st.setString(1, assType);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                assActivityIDFromDB = rs.getString("assActivityID");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT minPerStud FROM assessment WHERE assActivityID = ?");
+            st.setString(1, assActivityIDFromDB);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                workloadMin = rs.getInt("minPerStud");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        calculateWorkload(workloadMin);
+    }
+    
+    public void calculateWorkload(Integer workloadMin){
+        
+        workloadAssigned = workloadMin * totalStudent;
+        
+        
+    }
+    
     public List<String> get_EvaluatorList() {
 
         evaluator_list.clear();
@@ -418,6 +486,32 @@ public class EvaluatorWorkloadAllocation {
 //        }
 //        
 //    }
+    
+    public List<String> get_AssessmentList(){
+        
+        assessment_list.clear();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT assActivityName FROM assessmentactivity");
+
+            while (rs.next()) {
+                assessment_list.add(rs.getString("assActivityName"));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        return assessment_list;
+    }
+    
     public void main(String args[]) {
 
     }

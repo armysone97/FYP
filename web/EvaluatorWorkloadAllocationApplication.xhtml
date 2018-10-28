@@ -171,7 +171,7 @@
                           <h:selectOneMenu styleClass="ddlSpecialStyle" value="#{evaluatorWorkloadAllocation.assType}">
                               <f:selectItems value="#{evaluatorWorkloadAllocation.get_AssessmentList()}"/>
                             </h:selectOneMenu>  
-                           &nbsp;&nbsp;&nbsp;   <h:commandButton id="btnTest122" value="Calculate" styleClass="buttonStyle"/>
+                          &nbsp;&nbsp;&nbsp;   <h:commandButton id="btnTest122" value="Calculate" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.retrieveNumSamAss()}"/>
                         </th>
                     </tr> 
                     
@@ -183,7 +183,7 @@
                         </th>
 
                         <th align="left">
-                            <h:inputText id="txtWorkloadAssigned" styleClass="txtboxSmallestStyle" required="required" size="35"/>
+                            <h:inputText id="txtWorkloadAssigned" styleClass="txtboxSmallestStyle" required="required" size="35" value="#{evaluatorWorkloadAllocation.result}"/>
                             <h:outputText id="hr2" value=" hours"  styleClass="lblStyle"/>
                         </th>
                     </tr> 
@@ -223,7 +223,7 @@
 
                     <tr>
                         <th colspan="3" align="left"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
-                        <th align="right"><h:commandButton id="btnAdd" value="Add" styleClass="buttonStyle"/></th>
+                        <th align="right"><h:commandButton id="btnAdd" value="Add" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.get_WorkloadList()}"/></th>
                     </tr> 
 
                     <!--  <tr>
@@ -251,7 +251,7 @@
                 </tr> -->
 
             </table>
-
+ 
             <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">    
                 <tr>
                     <th><label>&nbsp;</label></th>

@@ -13,6 +13,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 //import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.ArrayDataModel;
+import javax.faces.model.DataModel;
 //import javax.faces.context.FacesContext;
 
 /**
@@ -35,6 +37,8 @@ public class EvaluatorWorkloadAllocation {
     private String assType;
     private int workloadMin;
     private double workloadAssigned;
+    private int year = 2018;
+    private String result;
 
 //    private String name;
 //    private String schoolName;
@@ -43,11 +47,17 @@ public class EvaluatorWorkloadAllocation {
     private List<String> cslevel_list = new ArrayList<>();
     private List<String> teacher_list = new ArrayList<>();
     private List<String> assessment_list = new ArrayList<>();
-
-    public EvaluatorWorkloadAllocation() {
-        this.evaluator = "Mark Lee";
+    
+    public EvaluatorWorkloadAllocation(String evaluator, String school) {
+        super();
+        this.evaluator = evaluator;
+        this.school = school;
     }
 
+    public EvaluatorWorkloadAllocation() {
+        super();
+    }
+    
     public int getWorkloadLimit() {
         return workloadLimit;
     }
@@ -104,6 +114,22 @@ public class EvaluatorWorkloadAllocation {
         this.teacher = teacher;
     }
 
+    public double getWorkloadAssigned() {
+        return workloadAssigned;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
+    
+    public void setWorkloadAssigned(double workloadAssigned) {
+        this.workloadAssigned = workloadAssigned;
+    }
+
     public void setEvaluator_list(List<String> evaluator_list) {
         this.evaluator_list = evaluator_list;
     }
@@ -123,7 +149,13 @@ public class EvaluatorWorkloadAllocation {
     public void setAssessment_list(List<String> assessment_list) {
         this.assessment_list = assessment_list;
     }
-
+    
+    public List<EvaluatorWorkloadAllocation> findAll(){
+        List<EvaluatorWorkloadAllocation> listWorkload = new ArrayList<EvaluatorWorkloadAllocation>();
+        
+        return listWorkload;
+    }
+    
     //retrieve total number of student
     public void retrieveTotalStudent() {
 
@@ -303,8 +335,9 @@ public class EvaluatorWorkloadAllocation {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT minPerStud FROM assessment WHERE assActivityID = ?");
+            PreparedStatement st = con.prepareStatement("SELECT minPerStud FROM assessment WHERE assActivityID = ? AND year = ?");
             st.setString(1, assActivityIDFromDB);
+            st.setInt(2, year);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -319,14 +352,14 @@ public class EvaluatorWorkloadAllocation {
             System.out.println("Error: " + ex);
         }
         
-        calculateWorkload(workloadMin);
+        calculateWorkload();
     }
     
-    public void calculateWorkload(Integer workloadMin){
+    public void calculateWorkload(){
         
         workloadAssigned = workloadMin * totalStudent;
         
-        
+        result = String.format("%.2f", (workloadAssigned/60));
     }
     
     public List<String> get_EvaluatorList() {
@@ -511,7 +544,7 @@ public class EvaluatorWorkloadAllocation {
         
         return assessment_list;
     }
-    
+
     public void main(String args[]) {
 
     }

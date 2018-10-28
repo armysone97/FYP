@@ -46,6 +46,11 @@ public class MaintainTeacher {
 
     private String temp;
 
+    private String newTeacherID, newTeacherName, newTeacherStatus, newTeacherCSLevel, newTeacherSchoolState, newTeacherSchoolName;
+    private int newTeacherYear, newTeacherStudNum;
+
+    private Boolean disabledButton, disabledNewTeacher;
+
     public MaintainTeacher() {
         this.state = "Pulau Pinang";
         this.school = "SMJK Heng Yee";
@@ -54,6 +59,88 @@ public class MaintainTeacher {
         this.teacher = "Teoh Kok Xing";
         this.disabledTxt = true;
         this.disabledDdl = true;
+        this.disabledButton = false;
+        this.disabledNewTeacher = true;
+    }
+
+    public Boolean getDisabledButton() {
+        return disabledButton;
+    }
+
+    public void setDisabledButton(Boolean disabledButton) {
+        this.disabledButton = disabledButton;
+    }
+
+    public Boolean getDisabledNewTeacher() {
+        return disabledNewTeacher;
+    }
+
+    public void setDisabledNewTeacher(Boolean disabledNewTeacher) {
+        this.disabledNewTeacher = disabledNewTeacher;
+    }
+
+    public String getNewTeacherCSLevel() {
+        return newTeacherCSLevel;
+    }
+
+    public void setNewTeacherCSLevel(String newTeacherCSLevel) {
+        this.newTeacherCSLevel = newTeacherCSLevel;
+    }
+
+    public String getNewTeacherSchoolState() {
+        return newTeacherSchoolState;
+    }
+
+    public void setNewTeacherSchoolState(String newTeacherSchoolState) {
+        this.newTeacherSchoolState = newTeacherSchoolState;
+    }
+
+    public String getNewTeacherSchoolName() {
+        return newTeacherSchoolName;
+    }
+
+    public void setNewTeacherSchoolName(String newTeacherSchoolName) {
+        this.newTeacherSchoolName = newTeacherSchoolName;
+    }
+
+    public int getNewTeacherStudNum() {
+        return newTeacherStudNum;
+    }
+
+    public void setNewTeacherStudNum(int newTeacherStudNum) {
+        this.newTeacherStudNum = newTeacherStudNum;
+    }
+
+    public String getNewTeacherID() {
+        return newTeacherID;
+    }
+
+    public void setNewTeacherID(String newTeacherID) {
+        this.newTeacherID = newTeacherID;
+    }
+
+    public String getNewTeacherName() {
+        return newTeacherName;
+    }
+
+    public void setNewTeacherName(String newTeacherName) {
+        this.newTeacherName = newTeacherName;
+    }
+
+    public String getNewTeacherStatus() {
+        return newTeacherStatus;
+    }
+
+    public void setNewTeacherStatus(String newTeacherStatus) {
+        this.newTeacherStatus = newTeacherStatus;
+    }
+
+    public int getNewTeacherYear() {
+        return newTeacherYear;
+    }
+
+    public void setNewTeacherYear(int newTeacherYear) {
+        this.newTeacherYear = newTeacherYear;
     }
 
     public String getTemp() {
@@ -880,7 +967,7 @@ public class MaintainTeacher {
 
             }
 
-        //    temp = "studNum: " + studNum + " status: " + status + " csID: " + csID + " cslevel: " + cslevel;
+            //    temp = "studNum: " + studNum + " status: " + status + " csID: " + csID + " cslevel: " + cslevel;
         } else {
 
             //disabledTxt = false;
@@ -1190,8 +1277,117 @@ public class MaintainTeacher {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
-         // temp = "lateststud: " + latestStud + " studNum: " + studNum + " originalStud: " + originalStud + " scID: " + scID;
+
+        // temp = "lateststud: " + latestStud + " studNum: " + studNum + " originalStud: " + originalStud + " scID: " + scID;
+    }
+
+    //auto generate teacher ID
+    public String autoGenerateTeacherID() {
+
+        int count = 0;
+        String thID = "";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM teacher");
+
+            while (rs.next()) {
+                count = rs.getInt("COUNT(*)");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        count++;
+
+        thID = "TH" + count;
+
+        return thID;
+    }
+
+    public void addNewTeacher() {
+
+        newTeacherID = autoGenerateTeacherID();
+
+        newTeacherStatus = "Available";
+        newTeacherYear = year;
+        newTeacherSchoolState = state;
+        newTeacherSchoolName = school;
+        newTeacherCSLevel = cslevel;
+
+        disabledButton = true;
+        disabledNewTeacher = false;
+        disabledTxt = true;
+        disabledDdl = true;
+    }
+
+    public void addTeacher() {
+
+        String ttt = "";
+
+        ttt = newTeacherName;
+
+        //   newTeacherName = "newTeacherID: " + newTeacherID + " newTeacherName: " + ttt + " newTeacherStatus: " + newTeacherStatus + " newTeacherYear: " + newTeacherYear;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO teacher (teacherID, teacherName, teacherStatus, year) VALUES (?, ?, ?, ?)");
+
+            statement.setString(1, newTeacherID);
+            statement.setString(2, newTeacherName);
+            statement.setString(3, newTeacherStatus);
+            statement.setInt(4, newTeacherYear);
+            statement.executeUpdate();
+
+            statement.close();
+            con.close();
+
+            
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        String tcID = "", scID = "", thID = "";
+        int numSampleAss = 0;
+
+        tcID = autoGenerateTeacherCSMapID();
+        scID = matchSchoolCSMapID();
+        //   thID = matchTeacherID();
+        numSampleAss = matchNumSampleAss();
+
+        //   tmp = "tcID : " + tcID + " scID : " + scID + " thID : " + thID + " numSampleAss : " + numSampleAss;
+        //insert teachercsmap
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO teachercsmap (teacherCSMapID, enrolStudNum, numSampleAss, schoolCSMapID, teacherID) VALUES (?, ?, ?, ?, ?)");
+
+            statement.setString(1, tcID);
+            statement.setInt(2, newTeacherStudNum);
+            statement.setInt(3, numSampleAss);
+            statement.setString(4, scID);
+            statement.setString(5, newTeacherID);
+            statement.executeUpdate();
+
+            statement.close();
+            con.close();
+            
+            disabledButton = false;
+            disabledNewTeacher = true;
+            disabledTxt = false;
+            disabledDdl = false;
+
+            
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
 
     }
 

@@ -38,6 +38,9 @@ public class CSLevelSetting {
     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
 
     private Boolean disabledDDL, disabledProject, disabledCollaboration, disabledPractical, disabledGroupwork;
+    private Boolean disabledNewCS, disabledButton;
+
+    private String newcslevelname, newcslevelid;
 
     public CSLevelSetting() {
         this.year = 2018;
@@ -46,8 +49,40 @@ public class CSLevelSetting {
         this.disabledCollaboration = false;
         this.disabledPractical = false;
         this.disabledGroupwork = false;
+        this.disabledNewCS = true;
+        this.disabledButton = false;
+    }
 
-        // this.collaboration = true;
+    public Boolean getDisabledNewCS() {
+        return disabledNewCS;
+    }
+
+    public void setDisabledNewCS(Boolean disabledNewCS) {
+        this.disabledNewCS = disabledNewCS;
+    }
+
+    public Boolean getDisabledButton() {
+        return disabledButton;
+    }
+
+    public void setDisabledButton(Boolean disabledButton) {
+        this.disabledButton = disabledButton;
+    }
+
+    public String getNewcslevelname() {
+        return newcslevelname;
+    }
+
+    public void setNewcslevelname(String newcslevelname) {
+        this.newcslevelname = newcslevelname;
+    }
+
+    public String getNewcslevelid() {
+        return newcslevelid;
+    }
+
+    public void setNewcslevelid(String newcslevelid) {
+        this.newcslevelid = newcslevelid;
     }
 
     public int getYear() {
@@ -616,9 +651,9 @@ public class CSLevelSetting {
                 statement.setInt(5, minPerStud);
                 statement.executeUpdate();
             }
-            
-             //insert collaboration
-             if (collaboration == true) {
+
+            //insert collaboration
+            if (collaboration == true) {
                 length = autoGenerateID();
                 length = length + 1;
                 asID = "AS" + Integer.toString(length);
@@ -634,8 +669,8 @@ public class CSLevelSetting {
                 statement.executeUpdate();
             }
 
-           //insert practical
-             if (practical == true) {
+            //insert practical
+            if (practical == true) {
                 length = autoGenerateID();
                 length = length + 1;
                 asID = "AS" + Integer.toString(length);
@@ -651,8 +686,8 @@ public class CSLevelSetting {
                 statement.executeUpdate();
             }
 
-           //insert groupwork
-             if (groupwork == true) {
+            //insert groupwork
+            if (groupwork == true) {
                 length = autoGenerateID();
                 length = length + 1;
                 asID = "AS" + Integer.toString(length);
@@ -667,13 +702,82 @@ public class CSLevelSetting {
                 statement.setInt(5, minPerStud);
                 statement.executeUpdate();
             }
-             
+
             statement.close();
             con.close();
 
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+    }
+
+    //auto generate cs level ID
+    public String autoGenerateCSLevelID() {
+
+        int count = 0;
+        String csID = "";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM cslevel");
+
+            while (rs.next()) {
+                count = rs.getInt("COUNT(*)");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        count++;
+
+        csID = "CS" + count;
+
+        return csID;
+    }
+
+    public void addNewCS() {
+        newcslevelid = autoGenerateCSLevelID();
+
+        disabledNewCS = false;
+        disabledCollaboration = true;
+        disabledProject = true;
+        disabledPractical = true;
+        disabledGroupwork = true;
+        disabledButton = true;
+    }
+
+    public void addCSLevel() {
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO cslevel (CSLevelID, CSLevelName) VALUES (?, ?)");
+
+            statement.setString(1, newcslevelid);
+            statement.setString(2, newcslevelname);
+            statement.executeUpdate();
+
+            statement.close();
+            con.close();
+
+            disabledNewCS = true;
+            disabledCollaboration = false;
+            disabledProject = false;
+            disabledPractical = false;
+            disabledGroupwork = false;
+            disabledButton = false;
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
     }
 
 }

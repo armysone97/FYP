@@ -31,11 +31,11 @@ public class YearOfStudySetting {
 
     private List<String> CSLevel_list = new ArrayList<>(); //CS level list that retrieve from db
     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
-    
+
     private String standard1, standard2, standard3, standard4, standard5, standard6;
 
     private int year, yearComm;
-    
+
     private Boolean disabledDDL;
 
     public YearOfStudySetting() {
@@ -107,8 +107,8 @@ public class YearOfStudySetting {
     public void setStandard6(String standard6) {
         this.standard6 = standard6;
     }
-    
- //   change text box disabled when click the button
+
+    //   change text box disabled when click the button
     public Boolean changeDDLDisabled() {
         if (year == 2018) {
             disabledDDL = false;
@@ -118,7 +118,7 @@ public class YearOfStudySetting {
 
         return disabledDDL;
     }
-    
+
     //remove duplicate element for year array
     public static int removeDuplicateElements(int arr[], int n) {
         if (n == 0 || n == 1) {
@@ -138,8 +138,8 @@ public class YearOfStudySetting {
         }
         return j;
     }
-    
-     //count year in db
+
+    //count year in db
     public Integer get_yearCount() {
 
         int count = 0;
@@ -239,7 +239,7 @@ public class YearOfStudySetting {
         return CSLevel_list;
     }
 
-       public String matchCSLevelID(String csid) {
+    public String matchCSLevelID(String csid) {
 
         String CSName = "";
 
@@ -263,7 +263,7 @@ public class YearOfStudySetting {
 
         return CSName;
     }
-    
+
     //get year of study cs map list when page onload and when button click based on year and yearComm
     public void yearOfStudyCSMapList() {
 
@@ -271,7 +271,7 @@ public class YearOfStudySetting {
 
         int tmpYear = 0, tmpyearComm;
         int numYearComm = 0;
-        
+
         String csid = "", csname = "", yosid = "";
 
         //when page onload, need to show previous(2017) record, so for year and yearComm 2018 temporaily become 2017
@@ -305,18 +305,30 @@ public class YearOfStudySetting {
             while (rs.next()) {
                 csid = rs.getString("CSLevelID");
                 csname = matchCSLevelID(csid); //match cs id with cs name
-                
+
                 yosid = rs.getString("yearOfStudyID");
-                
-                switch (yosid){
-                    case "YO1": standard1 = csname; break;
-                    case "YO2": standard2 = csname; break;
-                    case "YO3": standard3 = csname; break;
-                    case "YO4": standard4 = csname; break;
-                    case "YO5": standard5 = csname; break;
-                    case "YO6": standard6 = csname; break;
+
+                switch (yosid) {
+                    case "YO1":
+                        standard1 = csname;
+                        break;
+                    case "YO2":
+                        standard2 = csname;
+                        break;
+                    case "YO3":
+                        standard3 = csname;
+                        break;
+                    case "YO4":
+                        standard4 = csname;
+                        break;
+                    case "YO5":
+                        standard5 = csname;
+                        break;
+                    case "YO6":
+                        standard6 = csname;
+                        break;
                 }
-                
+
                 context.addMessage(null, new FacesMessage("x : " + csid + " : " + csname + " : " + yosid));
             }
 
@@ -327,7 +339,7 @@ public class YearOfStudySetting {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         changeDDLDisabled();
 
     }
@@ -357,8 +369,6 @@ public class YearOfStudySetting {
 
         return count;
     }
-    
-  
 
     public String matchCSLevelName(String standard) {
 
@@ -417,6 +427,7 @@ public class YearOfStudySetting {
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
 
+            //   autoAddSchoolCSMap(numYearComm, cslevelid);
             //insert standard 2
             length = autoGenerateID();
             length = length + 1;
@@ -433,6 +444,7 @@ public class YearOfStudySetting {
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
 
+            //   autoAddSchoolCSMap(numYearComm, cslevelid);
             //insert standard 3
             length = autoGenerateID();
             length = length + 1;
@@ -449,6 +461,7 @@ public class YearOfStudySetting {
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
 
+            //   autoAddSchoolCSMap(numYearComm, cslevelid);
             //insert standard 4
             length = autoGenerateID();
             length = length + 1;
@@ -465,6 +478,7 @@ public class YearOfStudySetting {
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
 
+            // autoAddSchoolCSMap(numYearComm, cslevelid);
             //insert standard 5
             length = autoGenerateID();
             length = length + 1;
@@ -481,6 +495,7 @@ public class YearOfStudySetting {
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
 
+            // autoAddSchoolCSMap(numYearComm, cslevelid);
             //insert standard 6
             length = autoGenerateID();
             length = length + 1;
@@ -500,9 +515,214 @@ public class YearOfStudySetting {
             statement.close();
             con.close();
 
+            counterCSLevel(numYearComm);
+
+            // autoAddSchoolCSMap(numYearComm, cslevelid);
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+    }
+
+    //remove duplicate element for cs level id array
+    public static int removeDuplicateElementsString(String arr[], int n) {
+        if (n == 0 || n == 1) {
+            return n;
+        }
+        String[] temp = new String[n];
+        int j = 0;
+        for (int i = 0; i < n - 1; i++) {
+            if (!arr[i].equals(arr[i + 1])) {
+                temp[j++] = arr[i];
+            }
+        }
+        temp[j++] = arr[n - 1];
+
+        // Changing original array  
+        for (int i = 0; i < j; i++) {
+            arr[i] = temp[i];
+        }
+        return j;
+    }
+
+    //count csID in db
+    public int get_csCount(int numYearComm) {
+
+        int count = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM yearofstudycsmap WHERE numYearComm = ? AND year = ?");
+            st.setInt(1, numYearComm);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                count++;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return count;
+    }
+
+    public void counterCSLevel(int numYearComm) {
+
+        int lengthCSIDList = get_csCount(numYearComm);
+
+        String[] CSIDListDuplicate = new String[lengthCSIDList];
+        int tmp = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM yearofstudycsmap WHERE numYearComm = ? AND year = ?");
+            st.setInt(1, numYearComm);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                CSIDListDuplicate[tmp] = rs.getString("CSLevelID");
+                tmp++;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        Arrays.sort(CSIDListDuplicate);//sorting array  
+        int length = CSIDListDuplicate.length;
+        length = removeDuplicateElementsString(CSIDListDuplicate, length);
+
+        autoAddSchoolCSMap(numYearComm, CSIDListDuplicate);
+    }
+
+    //count schoolid in db
+    public int get_commYearCount() {
+
+        int count = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE commYearCS = ?");
+            st.setInt(1, yearComm);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                count++;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return count;
+    }
+
+    //auto generate year of study cs map ID
+    public String autoGenerateSchoolCSMapID() {
+
+        int count = 0;
+        String scID = "";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM schoolcsmap");
+
+            while (rs.next()) {
+                count = rs.getInt("COUNT(*)");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        count++;
+
+        scID = "SC" + count;
+
+        return scID;
+    }
+
+    //auto add school cs map in db based on commercial year
+    public void autoAddSchoolCSMap(int numYearComm, String[] CSIDListDuplicate) { //if need redirect to another xhtml, need change void to String and return keyword
+
+        //1. find commYear (eg. 2016) from school table and compare with numYearComm
+        int lengthCommYearList = get_commYearCount();
+
+        String[] schoolListDuplicate = new String[lengthCommYearList];
+        int tmp = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE commYearCS = ?");
+            st.setInt(1, yearComm);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                schoolListDuplicate[tmp] = rs.getString("schoolID");
+                tmp++;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        String scID = "", shID = "", csID = "";
+        int ttlStud = 0;
+
+        for (int i = 0; i < schoolListDuplicate.length; i++) {
+            for (int j = 0; j < CSIDListDuplicate.length; j++) {
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                    PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO schoolcsmap (schoolCSMapID, ttlEnrolStud, schoolID, CSLevelID, year) VALUES (?, ?, ?, ?, ?)");
+
+                    //insert standard 1
+                    scID = autoGenerateSchoolCSMapID();
+                    ttlStud = 0;
+                    shID = schoolListDuplicate[i];
+                    csID = CSIDListDuplicate[j];
+
+                    statement.setString(1, scID);
+                    statement.setInt(2, ttlStud);
+                    statement.setString(3, shID);
+                    statement.setString(4, csID);
+                    statement.setInt(5, year);
+                    statement.executeUpdate();
+
+                    statement.close();
+                    con.close();
+
+                } catch (Exception ex) {
+                    System.out.println("Error: " + ex);
+                }
+            }
+
+        }
+
     }
 
     public void main(String args[]) {

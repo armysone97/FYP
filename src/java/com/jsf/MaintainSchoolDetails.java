@@ -528,32 +528,6 @@ public class MaintainSchoolDetails {
         autoAddSchoolCSMap(numYearComm, CSIDListDuplicate);
     }
 
-//    //count schoolid in db
-//    public int get_commYearCount() {
-//
-//        int count = 0;
-//
-//        try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-//            PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE commYearCS = ?");
-//            st.setInt(1, commYear);
-//            ResultSet rs = st.executeQuery();
-//
-//            while (rs.next()) {
-//                count++;
-//            }
-//
-//            st.close();
-//            con.close();
-//
-//        } catch (Exception ex) {
-//            System.out.println("Error: " + ex);
-//        }
-//
-//        return count;
-//    }
-
     //auto generate year of study cs map ID
     public String autoGenerateSchoolCSMapID() {
 
@@ -663,7 +637,7 @@ public class MaintainSchoolDetails {
         //reset page
         disabledTxt = false;
         disabledCommYear = true;
-        disabledStatus = true;
+        disabledStatus = false;
         editButtonName = "Update";
         disabledAddButton = true;
     }
@@ -678,14 +652,15 @@ public class MaintainSchoolDetails {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE school SET schoolName = ?, schoolAddress = ?, schoolState = ?, schoolContactNo = ?  WHERE schoolID = ?");
+            PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE school SET schoolName = ?, schoolAddress = ?, schoolState = ?, schoolContactNo = ?, schoolStatus = ? WHERE schoolID = ?");
 
             //update school
             statement.setString(1, name);
             statement.setString(2, address);
             statement.setString(3, state);
             statement.setString(4, contactNo);
-            statement.setString(5, schoolID);
+            statement.setString(5, status);
+            statement.setString(6, schoolID);
             statement.executeUpdate();
 
             statement.close();
@@ -695,6 +670,7 @@ public class MaintainSchoolDetails {
             disabledEditButton = false;
             editButtonName = "Edit";
             disabledTxt = true;
+            disabledStatus = true;
 
             disabledAddButton = false;
             disabledEditButton = false;

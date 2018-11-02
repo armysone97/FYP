@@ -401,7 +401,7 @@ public class MaintainSchoolDetails {
         address = null;
         contactNo = null;
         state = "Johor";
-        status = "Available";
+        status = "Active";
         disabledTxt = false;
         disabledCommYear = true;
         disabledStatus = true;
@@ -412,7 +412,7 @@ public class MaintainSchoolDetails {
 
     public void addSchool() {
 
-        status = "Available"; //due to ddl can't accept the value if user didn't select it
+        status = "Active"; //due to ddl can't accept the value if user didn't select it
         int numYearComm = 0;
 
         try {

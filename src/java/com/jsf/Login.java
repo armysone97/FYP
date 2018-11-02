@@ -35,7 +35,7 @@ public class Login {
     private String role;
 
     public Login() {
-        role = "1";
+        role = "Admin";
     }
 
     public String getUsername() {
@@ -62,6 +62,58 @@ public class Login {
         this.role = role;
     }
 
+    //count role in db
+    public int get_roleCount(String staffID) {
+
+        int count = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT roleID FROM evaluatorroledetails WHERE staffID = ?");
+            st.setString(1, staffID);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                count++;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return count;
+    }
+    
+     public String matchRoleID() {
+
+        String roleID = "";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT roleID FROM roles WHERE roleType = ?");
+            st.setString(1, role);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                roleID = rs.getString("roleID");
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return roleID;
+
+    }
+
     public String verifyRole(String staffID) {
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -71,6 +123,11 @@ public class Login {
         Boolean verify1 = false;
         String roleTypes = "";
         String nextPage = "";
+
+        int lengthRoleList = get_roleCount(staffID);
+
+        String[] roleList = new String[lengthRoleList];
+        int tmp = 0;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -84,59 +141,26 @@ public class Login {
                 count += 1;
                 context.addMessage(null, new FacesMessage("success1"));
 
+                roleList[tmp] = rs.getString("roleID");
+                tmp++;
+
                 verify1 = true;
+                
             }
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        if (!verify1) {
-            context.addMessage(null, new FacesMessage("Invalid role, please try again!"));
-        } else {
-            if (count == 3) {
-                roleType = "Admin";
-                //  context.addMessage(null, new FacesMessage("success login admin"));
-                if (role.equals("")) {
-                    context.addMessage(null, new FacesMessage("Role must be selected, please try again!"));
-                } else {
-                    switch (role) {
-                        case "1":
-                            roleTypes = "Admin";
-                            nextPage = "loginAdmin";
-                            break;
-                        case "2":
-                            roleTypes = "Evaluator";
-                            nextPage = "loginEvaluator";
-                            break;
-                    }
-
-                }
-            } else {
-                roleType = "Evaluator";
-                if (role.equals("")) {
-                    context.addMessage(null, new FacesMessage("Role must be selected, please try again!"));
-                } else {
-                    switch (role) {
-                        case "1":
-                            roleTypes = "Admin";
-                            break;
-                        case "2":
-                            roleTypes = "Evaluator";
-                            break;
-                    }
-
-                }
-
-                if (roleTypes.equals(roleType)) {
-                    context.addMessage(null, new FacesMessage("success login evaluator"));
-                    nextPage = "loginEvaluator";
-
-                } else {
-                    context.addMessage(null, new FacesMessage("Invalid role, username or password, please try again!"));
-
+        
+        String roleIDFromDB = matchRoleID();
+       
+            for (int i = 0; i < roleList.length; i++) {
+                
+                if(roleList[i].equals(roleIDFromDB)){
+                     roleTypes = role;
+                     nextPage = "login"+role;
+                     break;
                 }
             }
-
-        }
 
         return nextPage;
 
@@ -144,23 +168,6 @@ public class Login {
 
     public String verifyUser() {
 
-//         RequestContext.getCurrentInstance().execute("alert('peek-a-boo');");
-//         PrimeFaces.current().executeScript("alert('peek-a-boo');");
-//         
-//        UIComponent source = event.getCOmponent();
-//        
-//        FacesMessage message = com.corejsf.util.Messages.getMessage("com.corejsf.messages", "invalidDate", null);
-//        message.setSeverity(FacesMessage.SEVERITY_ERROR);
-//        
-//        UIComponent container = event.getComponent().getNamingContainer();
-//        String name = (String) ((UIInput) container.findComponent("form:lblUsername")).getValue();
-//        
-//
-//        FacesContext context = FacesContext.getCurrentInstance();
-//        context.addMessage(source.getClientId());
-//        context.renderResponse();
-//        JOptionPane.showMessageDialog(null, "My Goodness, this is so concise");
-//        showMessageDialog(null, "This is even shorter");     
         FacesContext context = FacesContext.getCurrentInstance();
         Boolean verify = false;
         String staffID = "";
@@ -176,9 +183,6 @@ public class Login {
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery("SELECT staffID, username, password FROM evaluatorpersonaldetails");
 
-//                PreparedStatement st = con.prepareStatement("SELECT username, password FROM evaluatorpersonaldetails WHERE staffID = ?");
-//                st.setString(1, staffID);
-//                ResultSet rs = st.executeQuery();
                 while (rs.next()) {
                     if (username.equals(rs.getString("username")) && password.equals(rs.getString("password"))) {
                         staffID = rs.getString("staffID");
@@ -203,29 +207,11 @@ public class Login {
         }
 
         return nextPage;
-
-//   int input = JOptionPane.showConfirmDialog(null, 
-//                "Click ok if you are ok", "Be ok!", JOptionPane.DEFAULT_OPTION);
-//        // 0=ok
-//        System.out.println(input);
     }
 
-//    public String try1() {
-//        String nextPage = "";
-//        setUsername("ABC");
-//       nextPage =  try2();
-//       return nextPage;
-//    }
-//    
-//     public String try2() {
-//       setUsername("ABCDD");
-//       return "loginAdmin";
-//    }
     public void main(String args[]) {
 
         verifyUser();
-        // try1();
-        // try2();
     }
 
 }

@@ -137,7 +137,7 @@ public class MaintainSchoolMenu {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT schoolState FROM school WHERE schoolStatus = 'Available' ");
+            ResultSet rs = st.executeQuery("SELECT schoolState FROM school");
 
             while (rs.next()) {
                 count++;
@@ -172,7 +172,7 @@ public class MaintainSchoolMenu {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT schoolState FROM school WHERE schoolStatus = 'Available' ");
+            ResultSet rs = st.executeQuery("SELECT schoolState FROM school");
 
             while (rs.next()) {
                 stateListDuplicate[tmp] = rs.getString("schoolState");
@@ -209,7 +209,7 @@ public class MaintainSchoolMenu {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT schoolName FROM school WHERE schoolState = ? AND schoolStatus = 'Available' ");
+            PreparedStatement st = con.prepareStatement("SELECT schoolName FROM school WHERE schoolState = ?");
             st.setString(1, state);
             ResultSet rs = st.executeQuery();
 
@@ -238,7 +238,7 @@ public class MaintainSchoolMenu {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE schoolState = ? AND schoolName = ? AND schoolStatus = 'Available'");
+            PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE schoolState = ? AND schoolName = ?");
             st.setString(1, state);
             st.setString(2, school);
             ResultSet rs = st.executeQuery();

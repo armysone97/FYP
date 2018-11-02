@@ -165,7 +165,7 @@
 
                     <tr>
                         <th colspan="2" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin" disabled="#{cSLevelSetting.disabledButton}"/></th>
-                        <th align="right"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle" disabled="#{cSLevelSetting.disabledButton}"/></th>
+                        <th align="right"> <h:commandButton id="btnReset" value="Reset" action="#{cSLevelSetting.reset()}" styleClass="buttonStyle" disabled="#{cSLevelSetting.disabledButton}"/></th>
                         <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{cSLevelSetting.addAssessment()}" disabled="#{cSLevelSetting.disabledButton}"/></th>
                     </tr> 
 
@@ -203,7 +203,7 @@
 
                         <tr>
                             <th colspan="2" align="left"> <h:commandButton id="btnCancel1" value="Cancel" styleClass="buttonStyle" disabled="#{cSLevelSetting.disabledNewCS}"/></th>
-                            <th align="right"> <h:commandButton id="btnReset1" value="Reset" styleClass="buttonStyle" disabled="#{cSLevelSetting.disabledNewCS}"/></th>
+                            <th align="right"> <h:commandButton id="btnReset1" value="Reset" action="#{cSLevelSetting.reset()}" styleClass="buttonStyle" disabled="#{cSLevelSetting.disabledNewCS}"/></th>
                             <th align="right"><h:commandButton id="btnConfirm1" value="Confirm" styleClass="buttonStyle" action="#{cSLevelSetting.addCSLevel()}" disabled="#{cSLevelSetting.disabledNewCS}"/></th>
                         </tr>   
 

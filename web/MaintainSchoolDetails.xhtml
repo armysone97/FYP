@@ -157,7 +157,7 @@
                         </tr> 
 
                         <tr>
-                            <th align="left"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
+                            <th align="left"> <h:commandButton id="btnReset" value="Reset" action="#{maintainSchoolDetails.reset()}" disabled="#{maintainSchoolDetails.disabledResetButton}" styleClass="buttonStyle"/></th>
                             <th align="right"><h:commandButton id="btnAdd" value="#{maintainSchoolDetails.addButtonName}" styleClass="buttonStyle" action="#{maintainSchoolDetails.changeAddButtonAction()}" disabled="#{maintainSchoolDetails.disabledAddButton}"/></th>
                             <th align="right"><h:commandButton id="btnEdit" value="#{maintainSchoolDetails.editButtonName}" styleClass="buttonStyle" action="#{maintainSchoolDetails.changeEditButtonAction()}" disabled="#{maintainSchoolDetails.disabledEditButton}"/></th>
                         </tr>  

@@ -725,6 +725,24 @@ public class YearOfStudySetting {
 
     }
 
+    //reset page
+    public void reset() {
+
+        //set default value
+        this.year = 2018;
+        this.yearComm = 2018;
+        standard1 = "CS Level 1";
+        standard2 = "CS Level 1";
+        standard3 = "CS Level 1";
+        standard4 = "CS Level 1";
+        standard5 = "CS Level 1";
+        standard6 = "CS Level 1";
+
+        //set default disabled
+        this.disabledDDL = false;
+
+    }
+
     public void main(String args[]) {
 
     }

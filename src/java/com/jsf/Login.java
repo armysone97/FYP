@@ -208,6 +208,14 @@ public class Login {
 
         return nextPage;
     }
+    
+    //reset page
+    public void reset(){
+         //set default value
+        username = null;
+        password = null;
+        role = "Admin";
+    }
 
     public void main(String args[]) {
 

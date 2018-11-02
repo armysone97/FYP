@@ -1349,7 +1349,6 @@ public class MaintainTeacher {
             statement.close();
             con.close();
 
-            
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
@@ -1378,17 +1377,45 @@ public class MaintainTeacher {
 
             statement.close();
             con.close();
-            
+
             disabledButton = false;
             disabledNewTeacher = true;
             disabledTxt = false;
             disabledDdl = false;
 
-            
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
 
+    }
+
+    //reset page
+    public void reset() {
+
+        //set default value
+        state = "Pulau Pinang";
+        school = "SMJK Heng Yee";
+        year = 2018;
+        commYear = 0;
+        teacher = "Teoh Kok Xing";
+        studNum = 0;
+        cslevel = "CS Level 1";
+        status = "Available";
+
+        newTeacherID = null;
+        newTeacherName = null;
+        newTeacherStatus = null;
+        newTeacherCSLevel = null;
+        newTeacherSchoolState = null;
+        newTeacherSchoolName = null;
+        newTeacherYear = 0;
+        newTeacherStudNum = 0;
+
+        //set default disabled
+        disabledTxt = true;
+        disabledDdl = true;
+        disabledButton = false;
+        disabledNewTeacher = true;
     }
 
 }

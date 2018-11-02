@@ -34,7 +34,7 @@ public class MaintainSchoolDetails {
     private List<String> CSLevel_list = new ArrayList<>(); //CS level list that retrieve from db
     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
 
-    private Boolean disabledTxt, disabledCommYear, disabledStatus, disabledAddButton, disabledEditButton;
+    private Boolean disabledTxt, disabledCommYear, disabledStatus, disabledAddButton, disabledEditButton, disabledResetButton;
 
     private String addButtonName, editButtonName;
 
@@ -56,6 +56,7 @@ public class MaintainSchoolDetails {
                 this.disabledEditButton = true;
                 this.addButtonName = "Confirm";
                 this.editButtonName = "Edit";
+                this.disabledResetButton = false;
                 break;
             case 1: //view or update
                 this.state = MaintainSchoolMenu.getGlobalState();
@@ -63,6 +64,7 @@ public class MaintainSchoolDetails {
                 this.schoolID = MaintainSchoolMenu.getGlobalSchoolID();
                 this.disabledEditButton = false;
                 this.addButtonName = "New";
+                this.disabledResetButton = true;
 
                 MaintainSchoolMenu.setGlobalCounter(0);
 
@@ -71,6 +73,14 @@ public class MaintainSchoolDetails {
                 this.disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
                 break;
         }
+    }
+
+    public Boolean getDisabledResetButton() {
+        return disabledResetButton;
+    }
+
+    public void setDisabledResetButton(Boolean disabledResetButton) {
+        this.disabledResetButton = disabledResetButton;
     }
 
     public String getTesting() {
@@ -251,6 +261,7 @@ public class MaintainSchoolDetails {
         return shID;
     }
 
+    //show school details by default when user select view or update in maintainschoolmenu page
     public void schoolDetailsList(String schoolID) {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -408,6 +419,7 @@ public class MaintainSchoolDetails {
 
         addButtonName = "Confirm";
         disabledEditButton = true;
+        disabledResetButton = false;
     }
 
     public void addSchool() {
@@ -436,6 +448,7 @@ public class MaintainSchoolDetails {
             disabledTxt = true;
             disabledAddButton = false;
             disabledEditButton = false;
+            disabledResetButton = true;
 
             addButtonName = "New";
             counterCSLevel(numYearComm);
@@ -445,8 +458,8 @@ public class MaintainSchoolDetails {
         }
 
     }
-    
-     //remove duplicate element for cs level id array
+
+    //remove duplicate element for cs level id array
     public static int removeDuplicateElementsString(String arr[], int n) {
         if (n == 0 || n == 1) {
             return n;
@@ -466,8 +479,8 @@ public class MaintainSchoolDetails {
         }
         return j;
     }
-    
-       //count csID in db
+
+    //count csID in db
     public int get_csCount(int numYearComm) {
 
         int count = 0;
@@ -563,9 +576,8 @@ public class MaintainSchoolDetails {
     public void autoAddSchoolCSMap(int numYearComm, String[] CSIDListDuplicate) { //if need redirect to another xhtml, need change void to String and return keyword
 
         //1. find commYear (eg. 2016) from school table and compare with numYearComm
-       // int lengthCommYearList = get_commYearCount();
-
-     //   String[] schoolListDuplicate = new String[lengthCommYearList];
+        // int lengthCommYearList = get_commYearCount();
+        //   String[] schoolListDuplicate = new String[lengthCommYearList];
         int tmp = 0;
         String schoolID = "";
 
@@ -590,33 +602,33 @@ public class MaintainSchoolDetails {
 
         String scID = "", shID = "", csID = "";
         int ttlStud = 0;
-       
-            for (int j = 0; j < CSIDListDuplicate.length; j++) {
-                try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-                    PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO schoolcsmap (schoolCSMapID, ttlEnrolStud, schoolID, CSLevelID, year) VALUES (?, ?, ?, ?, ?)");
 
-                    //insert standard 1
-                    scID = autoGenerateSchoolCSMapID();
-                    ttlStud = 0;
-                    shID = schoolID;
-                    csID = CSIDListDuplicate[j];
+        for (int j = 0; j < CSIDListDuplicate.length; j++) {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO schoolcsmap (schoolCSMapID, ttlEnrolStud, schoolID, CSLevelID, year) VALUES (?, ?, ?, ?, ?)");
 
-                    statement.setString(1, scID);
-                    statement.setInt(2, ttlStud);
-                    statement.setString(3, shID);
-                    statement.setString(4, csID);
-                    statement.setInt(5, commYear);
-                    statement.executeUpdate();
+                //insert standard 1
+                scID = autoGenerateSchoolCSMapID();
+                ttlStud = 0;
+                shID = schoolID;
+                csID = CSIDListDuplicate[j];
 
-                    statement.close();
-                    con.close();
+                statement.setString(1, scID);
+                statement.setInt(2, ttlStud);
+                statement.setString(3, shID);
+                statement.setString(4, csID);
+                statement.setInt(5, commYear);
+                statement.executeUpdate();
 
-                } catch (Exception ex) {
-                    System.out.println("Error: " + ex);
-                }
+                statement.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
             }
+        }
 
     }
 
@@ -687,5 +699,60 @@ public class MaintainSchoolDetails {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+    }
+
+    //reset page
+    public void reset() {
+
+        //set default value
+        //set default disabled
+        disabledStatus = true;
+        disabledCommYear = true;
+        year = 2018;
+
+        //    if (addButtonName.equals("Confirm") && editButtonName.equals("Edit")){ //when add
+        state = "Johor";
+        disabledTxt = false;
+        schoolID = autoGenerateID();
+        commYear = 2018;
+        disabledAddButton = false;
+        disabledEditButton = true;
+        addButtonName = "Confirm";
+        editButtonName = "Edit";
+        name = null;
+        address = null;
+        contactNo = null;
+        status = "Active";
+
+//
+//        switch (MaintainSchoolMenu.getGlobalCounter()) {
+//            case 0: //add
+//                state = "Johor";
+//                disabledTxt = false;
+//                schoolID = autoGenerateID();
+//                commYear = 2018;
+//                disabledAddButton = false;
+//                disabledEditButton = true;
+//                addButtonName = "Confirm";
+//                editButtonName = "Edit";
+//                name = null;
+//                address = null;
+//                contactNo = null;
+//                status = "Active";
+//                break;
+//            case 1: //view or update
+//                state = MaintainSchoolMenu.getGlobalState();
+//                name = MaintainSchoolMenu.getGlobalSchool();
+//                schoolID = MaintainSchoolMenu.getGlobalSchoolID();
+//                disabledEditButton = false;
+//                addButtonName = "New";
+//
+//                MaintainSchoolMenu.setGlobalCounter(0);
+//
+//                schoolDetailsList(schoolID);
+//
+//                disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
+//                break;
+//        }
     }
 }

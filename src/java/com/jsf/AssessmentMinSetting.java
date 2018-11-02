@@ -37,15 +37,14 @@ public class AssessmentMinSetting {
     private List<String> CSLevel_list = new ArrayList<>(); //CS level list that retrieve from db
     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
 
-    private Boolean disabledDDL, disabledProject, disabledCollaboration, disabledPractical, disabledGroupwork;
+    private Boolean disabledProject, disabledCollaboration, disabledPractical, disabledGroupwork;
 
     public AssessmentMinSetting() {
         this.year = 2018;
-        this.disabledDDL = false;
-        this.disabledProject = false;
-        this.disabledCollaboration = false;
-        this.disabledPractical = false;
-        this.disabledGroupwork = false;
+        this.disabledProject = true;
+        this.disabledCollaboration = true;
+        this.disabledPractical = true;
+        this.disabledGroupwork = true;
     }
 
     public Boolean getDisabledProject() {
@@ -126,17 +125,6 @@ public class AssessmentMinSetting {
 
     public void setGroupwork(int groupwork) {
         this.groupwork = groupwork;
-    }
-
-    //   change text box disabled when click the button
-    public Boolean changeDDLDisabled() {
-        if (year == 2018) {
-            disabledDDL = false;
-        } else {
-            disabledDDL = true;
-        }
-
-        return disabledDDL;
     }
 
     //remove duplicate element for cs level id array
@@ -590,6 +578,24 @@ public class AssessmentMinSetting {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+    }
+
+    //reset page
+    public void reset() {
+
+        //set default value
+        year = 2018;
+        cslevel = "CS Level 1";
+        project = 0;
+        collaboration = 0;
+        practical = 0;
+        groupwork = 0;
+
+        //set default disabled
+        disabledProject = true;
+        disabledCollaboration = true;
+        disabledPractical = true;
+        disabledGroupwork = true;
     }
 
 }

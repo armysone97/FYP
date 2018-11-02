@@ -114,7 +114,7 @@
 
                     <tr>
                         <th align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
-                        <th align="right"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
+                        <th align="right"> <h:commandButton id="btnReset" value="Reset" action="#{maintainSchoolMenu.reset()}" styleClass="buttonStyle"/></th>
                         <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{maintainSchoolMenu.nextPageToSchoolDetail()}"/></th>
                     </tr>  
                 </table>

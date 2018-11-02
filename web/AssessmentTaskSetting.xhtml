@@ -125,7 +125,7 @@
                     
                     <tr>
                         <th colspan="2" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
-                        <th align="right"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
+                        <th align="right"> <h:commandButton id="btnReset" action="#{assessmentTaskSetting.reset()}" value="Reset" styleClass="buttonStyle"/></th>
                         <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{assessmentTaskSetting.addTask()}"/></th>
                     </tr> 
 

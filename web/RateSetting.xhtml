@@ -89,7 +89,7 @@
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                            <h:inputText id="txtMaxNumSampleAss" value="#{rateSetting.numSampleAss}" disabled="#{rateSetting.changeDDLDisabled()}" styleClass="txtboxSmallestStyle" required="required" size="3"/>
+                            <h:inputText id="txtMaxNumSampleAss" value="#{rateSetting.numSampleAss}" disabled="#{rateSetting.disabledTxt}" styleClass="txtboxSmallestStyle" required="required" size="3"/>
                         </th>
                     </tr> 
 
@@ -104,7 +104,7 @@
                         <th align="left">
                             <h:outputText id="lblMasterTrainer" value="Master Trainer"  styleClass="lblStyle"/>
                         </th>
-                        <th align="left">   <h:inputText id="txtHourlyRateM" value="#{rateSetting.mtHourlyRate}" disabled="#{rateSetting.changeDDLDisabled()}"  styleClass="txtboxSmallestStyle" required="required" size="3"/>
+                        <th align="left">   <h:inputText id="txtHourlyRateM" value="#{rateSetting.mtHourlyRate}" disabled="#{rateSetting.disabledTxt}"  styleClass="txtboxSmallestStyle" required="required" size="3"/>
                         </th>
                         <th align="left">
                             <h:outputText id="hr1" value=" /hr"  styleClass="lblStyle"/>
@@ -115,7 +115,7 @@
                             <h:outputText id="lblEvaluator" value="Evaluator"  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                            <h:inputText id="txtHourlyRateE" value="#{rateSetting.evHourlyRate}" disabled="#{rateSetting.changeDDLDisabled()}"  styleClass="txtboxSmallestStyle" required="required" size="3"/>
+                            <h:inputText id="txtHourlyRateE" value="#{rateSetting.evHourlyRate}" disabled="#{rateSetting.disabledTxt}"  styleClass="txtboxSmallestStyle" required="required" size="3"/>
                         </th>
                         <th align="left">
                             <h:outputText id="hr2" value=" /hr"  styleClass="lblStyle"/>
@@ -131,67 +131,15 @@
                             <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                            <h:inputText id="txtRateOfMileage" value="#{rateSetting.mileageRate}" disabled="#{rateSetting.changeDDLDisabled()}"  styleClass="txtboxSmallestStyle" required="required" size="3"/>
+                            <h:inputText id="txtRateOfMileage" value="#{rateSetting.mileageRate}" disabled="#{rateSetting.disabledTxt}"  styleClass="txtboxSmallestStyle" required="required" size="3"/>
                         </th>
                         <th align="left">
                             <h:outputText id="km" value=" /km"  styleClass="lblStyle"/>
                         </th>
 
                     </tr> 
-
-                    <tr>
-                        <th colspan="4" align="left">
-                            <h:outputText id="lblSetAssessmentMin" value="Set assessment minutes (per student)"  styleClass="lblStyle"/>
-                        </th>
-                    </tr> 
-
+                    
                 </table>
-
-
-
-                <table border="1" cellpadding="10px" cellspacing="0" width="800px" align="center">
-                    <tr>
-                        <th rowspan="2"><h:outputText id="lblCSLevel" value="CS Level"  styleClass="lblStyle"/></th>
-                        <th colspan="2"><h:outputText id="lblFormative" value="Formative"  styleClass="lblStyle"/></th>
-                        <th colspan="2"><h:outputText id="lblSummative" value="Summative"  styleClass="lblStyle"/></th>
-                    </tr> 
-
-                    <tr>
-                        <td align="center"><h:outputText id="lblProject" value="Project"  styleClass="lblStyle"/></td>
-                        <td align="center"><h:outputText id="lblCollaboration" value="Collaboration"  styleClass="lblStyle"/></td>
-                        <td align="center"><h:outputText id="lblPractical" value="Practical"  styleClass="lblStyle"/></td>
-                        <td align="center"><h:outputText id="lblGroupwork" value="Groupwork"  styleClass="lblStyle"/></td>
-                    </tr> 
-
-                    <!--BELOW SHOULD NOT BE HARD CODE-->
-
-                    <tr>
-                        <td align="center"> <h:inputText id="txtCSLevel1" styleClass="txtboxSmallestStyle" required="required" size="10" value="CS1"/></td>   
-                        <td align="center"> <h:inputText id="txtProject1" styleClass="txtboxSmallestStyle" required="required" size="3"/></td>
-                        <td align="center"> <h:inputText id="txtCollaboration1" styleClass="txtboxSmallestStyle" required="required" size="3"/></td>
-                        <td align="center"> <h:inputText id="txtPratical1" styleClass="txtboxSmallestStyle" required="required" size="3"/></td>
-                        <td align="center"> <h:inputText id="txtGroupwork1" styleClass="txtboxSmallestStyle" required="required" size="3"/></td>
-                    </tr> 
-
-                    <tr>
-                        <td align="center"> <h:inputText id="txtCSLevel2" styleClass="txtboxSmallestStyle" required="required" size="10" value="CS2"/></td>   
-                        <td align="center"> <h:inputText id="txtProject2" styleClass="txtboxSmallestStyle" required="required" size="3"/></td>
-                        <td align="center"> <h:inputText id="txtCollaboration2" styleClass="txtboxSmallestStyle" required="required" size="3"/></td>
-                        <td align="center"> <h:inputText id="txtPratical2" styleClass="txtboxSmallestStyle" required="required" size="3"/></td>
-                        <td align="center"> <h:inputText id="txtGroupwork2" styleClass="txtboxSmallestStyle" required="required" size="3"/></td>
-                    </tr> 
-
-                    <tr>
-                        <td align="center"> <h:inputText id="txtCSLevel3" styleClass="txtboxSmallestStyle" required="required" size="10" value="CS3"/></td>   
-                        <td align="center"> <h:inputText id="txtProject3" styleClass="txtboxSmallestStyle" required="required" size="3"/></td>
-                        <td align="center"> <h:inputText id="txtCollaboration3" styleClass="txtboxSmallestStyle" required="required" size="3"/></td>
-                        <td align="center"> <h:inputText id="txtPratical3" styleClass="txtboxSmallestStyle" required="required" size="3"/></td>
-                        <td align="center"> <h:inputText id="txtGroupwork3" styleClass="txtboxSmallestStyle" required="required" size="3"/></td>
-                    </tr> 
-
-
-                </table>  
-
 
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
@@ -202,7 +150,7 @@
 
                     <tr>
                         <th colspan="2" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
-                        <th align="right"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
+                        <th align="right"> <h:commandButton id="btnReset" value="Reset" action="#{rateSetting.reset()}" styleClass="buttonStyle"/></th>
                         <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{rateSetting.addSetting()}"/></th>
                     </tr> 
 

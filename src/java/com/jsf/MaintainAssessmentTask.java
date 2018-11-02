@@ -40,10 +40,9 @@ public class MaintainAssessmentTask {
     private List<String> CSLevel_list = new ArrayList<>(); //CS level list that retrieve from db
     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
 
-    private Boolean disabledDDL, disabledtxt, disabledNumSampleAss;
+    private Boolean disabledtxt, disabledNumSampleAss;
 
     public MaintainAssessmentTask() {
-        disabledDDL = false;
         this.state = "Pulau Pinang";
         this.school = "SMJK Heng Yee";
         this.year = 2018;
@@ -132,17 +131,6 @@ public class MaintainAssessmentTask {
 
     public void setNumSampleAss(int numSampleAss) {
         this.numSampleAss = numSampleAss;
-    }
-
-    public Boolean changeDDLDisabled() {
-
-        if (disabledDDL) {
-            disabledDDL = false;
-        } else {
-            disabledDDL = true;
-        }
-
-        return disabledDDL;
     }
 
     //remove duplicate element for teacher name array
@@ -859,7 +847,7 @@ public class MaintainAssessmentTask {
 
         //   scList = matchSchoolCSMapID1(thID, scListLength); //4. find school cs map id based on teacher id
         //    if (verify && year != 2018) {
-          status = matchStatus(thID);
+        status = matchStatus(thID);
         //  disabledTxt = true;
         //  disabledDdl = true;
         //1. use school cs map id array and year go find cs id
@@ -903,19 +891,71 @@ public class MaintainAssessmentTask {
             CSLevel_list.add(csList[i]);
         }
 
+        int numSampleAssConstant = 0;
+
         String scID = matchSchoolCSMapID();
         studEnrol = matchStudNum(thID, scID);
-        numSampleAss = matchAssNum(thID, scID);
+        numSampleAssConstant = matchAssNum(thID, scID);
+
+        if (studEnrol < numSampleAssConstant) {
+            numSampleAss = studEnrol;
+        } else {
+            numSampleAss = numSampleAssConstant;
+        }
 
         return CSLevel_list;
     }
-    
-    public void disabledOrEnable(){
-          if (year == 2018) {
+
+    public void disabledOrEnable() {
+        if (year == 2018) {
             disabledNumSampleAss = false;
         } else {
             disabledNumSampleAss = true;
         }
+    }
+
+    //update numSampleAss in teachercsmap table
+    public void updateNumSampleAss() {
+
+        String thID = matchTeacherID();
+        String scID = matchSchoolCSMapID();
+
+        //then update latest ttlstud inside schoolcsmap table
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE teachercsmap SET numSampleAss = ? WHERE teacherID = ? AND schoolCSMapID = ?");
+
+            statement.setInt(1, numSampleAss);
+            statement.setString(2, thID);
+            statement.setString(3, scID);
+            statement.executeUpdate();
+
+            statement.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+    }
+
+    //reset page
+    public void reset() {
+
+        //set default value
+        state = "Pulau Pinang";
+        school = "SMJK Heng Yee";
+        year = 2018;
+        teacher = "Teoh Kok Xing";
+        studEnrol = 0;
+        numSampleAss = 0;
+        status = "Available";
+        cslevel = "CS Level 1";
+
+        //set default disabled
+        disabledtxt = true;
+        disabledNumSampleAss = true;
+
     }
 
     public void abcClick() {

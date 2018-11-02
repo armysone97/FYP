@@ -40,11 +40,11 @@ public class AssessmentTaskSetting {
 
     public AssessmentTaskSetting() {
         this.year = 2018;
-        this.disabledDDL = false;
-        this.disabledProject = false;
-        this.disabledCollaboration = false;
-        this.disabledPractical = false;
-        this.disabledGroupwork = false;
+        //  this.disabledDDL = false;
+        this.disabledProject = true;
+        this.disabledCollaboration = true;
+        this.disabledPractical = true;
+        this.disabledGroupwork = true;
     }
 
     public Boolean getDisabledProject() {
@@ -638,6 +638,24 @@ public class AssessmentTaskSetting {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+    }
+
+    //reset page
+    public void reset() {
+
+        //set default value
+        year = 2018;
+        cslevel = "CS Level 1";
+        project = null;
+        collaboration = null;
+        practical = null;
+        groupwork = null;
+
+        //set default disabled
+        disabledProject = true;
+        disabledCollaboration = true;
+        disabledPractical = true;
+        disabledGroupwork = true;
     }
 
 }

@@ -111,7 +111,7 @@
                             <h:selectOneMenu styleClass="ddlStyle" value="#{maintainAssessmentTask.teacher}">
                                 <f:selectItems value="#{maintainAssessmentTask.get_teacher()}"  /> 
                             </h:selectOneMenu>  
-                                &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList444" value="Showx" styleClass="buttonShowStyle"/>
+                                &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList444" value="Show CS Level" styleClass="buttonStyle"/>
                         
                         </th>
                     </tr> 
@@ -119,9 +119,8 @@
 
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
                     <tr>
-                        <th align="left"> <h:commandButton id="btnCancelxx" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
-                        <th align="right"> <h:commandButton id="btnResetxx" value="Reset" styleClass="buttonStyle"/></th>
-                        <th align="right"><h:commandButton id="btnConfirmxx" value="Confirm" styleClass="buttonStyle"/></th>
+                        <th colspan="2" align="left"> <h:commandButton id="btnCancelxx" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                         <th align="right"><h:commandButton id="btnConfirmxx" value="Confirm" styleClass="buttonStyle"/></th>
                     </tr> 
                 </table>   
 
@@ -165,10 +164,10 @@
                     </tr>
                 </table>  
                 
-                   <fieldset style="display: inline-block">
+<!--                   <fieldset style="display: inline-block">
                     <legend id="cslvlList" width="800px">
                         <font size="5" align="left">CS Level List</font>
-                    </legend>
+                    </legend>-->
 
                     <table border="1" cellpadding="10px" cellspacing="0" width="800px" align="center">
                         <tr>
@@ -183,22 +182,8 @@
                             <th align="center"><h:inputText id="txtEnrol1" disabled="#{maintainAssessmentTask.disabledtxt}"  value="#{maintainAssessmentTask.studEnrol}" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
                             <th align="center"><h:inputText id="txtAss1" disabled="#{maintainAssessmentTask.disabledNumSampleAss}" value="#{maintainAssessmentTask.numSampleAss}" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
                         </tr> 
-                        
-                        <!--
-
-                        <tr>
-                            <th align="center"><h:inputText id="txtCSLevel2" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
-                            <th align="center"><h:inputText id="txtEnrol2" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
-                            <th align="center"><h:inputText id="txtAss2" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
-                        </tr> 
-
-                        <tr>
-                            <th align="center"><h:inputText id="txtCSLevel3" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
-                            <th align="center"><h:inputText id="txtEnrol3" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
-                            <th align="center"><h:inputText id="txtAss3" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
-                        </tr> -->
                     </table>
-                </fieldset>
+                <!--</fieldset>-->
                 
                   <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
@@ -209,7 +194,8 @@
 
                     <tr>
                         <th align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
-                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                          <th align="right"> <h:commandButton id="btnResetxx" value="Reset" action="#{maintainAssessmentTask.reset()}" styleClass="buttonStyle"/></th>
+                       <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{maintainAssessmentTask.updateNumSampleAss()}"/></th>
                     </tr>  
                 </table>   
                 

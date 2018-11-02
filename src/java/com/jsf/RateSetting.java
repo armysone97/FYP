@@ -31,14 +31,22 @@ public class RateSetting {
 
     private int numSampleAss, year;
     private double mtHourlyRate, evHourlyRate, mileageRate;
-    
-     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
 
-    private Boolean disabledDDL;
-    
+    private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
+
+    private Boolean disabledTxt;
+
     public RateSetting() {
         this.year = 2018;
-        this.disabledDDL = false;
+        this.disabledTxt = true;
+    }
+
+    public Boolean getDisabledTxt() {
+        return disabledTxt;
+    }
+
+    public void setDisabledTxt(Boolean disabledTxt) {
+        this.disabledTxt = disabledTxt;
     }
 
     public int getNumSampleAss() {
@@ -80,8 +88,8 @@ public class RateSetting {
     public void setMileageRate(double mileageRate) {
         this.mileageRate = mileageRate;
     }
-    
-     //count year in db
+
+    //count year in db
     public Integer get_yearCount() {
 
         int count = 0;
@@ -93,7 +101,7 @@ public class RateSetting {
             ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM rate");
 
             while (rs.next()) {
-                 count = rs.getInt("COUNT(*)");
+                count = rs.getInt("COUNT(*)");
             }
 
             st.close();
@@ -105,7 +113,7 @@ public class RateSetting {
 
         return count;
     }
-    
+
     //get year from db 
     public List<Integer> get_year() {
         year_list.clear();
@@ -143,26 +151,27 @@ public class RateSetting {
         }
         return year_list;
     }
-    
-     //   change text box disabled when click the button
-    public Boolean changeDDLDisabled() {
-        if (year == 2018) {
-            disabledDDL = false;
-        } else {
-            disabledDDL = true;
-        }
 
-        return disabledDDL;
-    }
-
+    //   change text box disabled when click the button
+//    public Boolean changeDDLDisabled() {
+//        if (year == 2018) {
+//            disabledTxt = false;
+//        } else {
+//            disabledTxt = true;
+//        }
+//
+//        return disabledTxt;
+//    }
     public void settingList() {
         int tmpYear = 0;
 
         //when page onload, need to show previous(2017) record, so for year and yearComm 2018 temporaily become 2017
         if (year == 2018) {
             tmpYear = 2017;
+            disabledTxt = false;
         } else {
             tmpYear = year;
+            disabledTxt = true;
         }
 
         //get data from db
@@ -187,9 +196,8 @@ public class RateSetting {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
-         changeDDLDisabled();
 
+        // changeDDLDisabled();
     }
 
     //auto generate rate ID
@@ -247,6 +255,19 @@ public class RateSetting {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+    }
+
+    //reset page
+    public void reset() {
+        //set default value
+        year = 2018;
+        numSampleAss = 0;
+        mtHourlyRate = 0;
+        evHourlyRate = 0;
+        mileageRate = 0;
+
+        //set default disabled
+        disabledTxt = true;
     }
 
 }

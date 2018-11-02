@@ -102,7 +102,7 @@
                     </tr>
 
                     <tr>
-                        <th> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
+                        <th> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle" action="#{login.reset()}"/></th>
                         <!--<th><input type="submit" id="submit" value="Login" class="button" onclick="LoginFunction()" /><br /></th>
                         -->
                         <th><h:commandButton id="btnLogin" value="Login" styleClass="buttonStyle" action="#{login.verifyUser()}"/></th>

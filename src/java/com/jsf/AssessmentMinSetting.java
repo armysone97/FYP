@@ -433,6 +433,32 @@ public class AssessmentMinSetting {
         return minPerStud;
     }
 
+    public int verifyRecord(String CSID) {
+
+        int minPerStud = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT minPerStud FROM assessment WHERE year = ? AND CSLevelID = ?");
+            st.setInt(1, year);
+            st.setString(2, CSID);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                // CSLevel_list.add(rs.getString("CSLevelID"));
+                minPerStud = rs.getInt("minPerStud");
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return minPerStud;
+    }
+
     //get assessment list when page onload and when button click based on year and cs level
     public void assessmentList() {
 
@@ -444,14 +470,28 @@ public class AssessmentMinSetting {
         String csid = "", assactivityid = "", assidP = "", assid = "";
         int minPerStud = 0;
 
+        String csid1 = "";
+        int minPerStud1 = 0;
+
         //when page onload, need to show previous(2017) record, so for year and yearComm 2018 temporaily become 2017
         if (year == 2018) {
-            tmpYear = 2017;
-            disabledProject = false;
-            disabledCollaboration = false;
-            disabledPractical = false;
-            disabledGroupwork = false;
 
+            csid1 = matchCSLevelID();
+            minPerStud1 = verifyRecord(csid1);
+
+            if (minPerStud1 > 0) { //means got record
+                tmpYear = year;
+                disabledProject = true;
+                disabledCollaboration = true;
+                disabledPractical = true;
+                disabledGroupwork = true;
+            } else {
+                tmpYear = 2017;
+                disabledProject = false;
+                disabledCollaboration = false;
+                disabledPractical = false;
+                disabledGroupwork = false;
+            }
         } else {
             tmpYear = year;
             disabledProject = true;
@@ -523,7 +563,7 @@ public class AssessmentMinSetting {
         //   practical = csid + " : " + assactivityid + " : " + assid;
     }
 
-    //add year of study cs map in db
+//add year of study cs map in db
     public void updateMinPerStud() { //if need redirect to another xhtml, need change void to String and return keyword
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -571,6 +611,11 @@ public class AssessmentMinSetting {
                 statement.setString(2, assID);
                 statement.executeUpdate();
             }
+
+            disabledProject = true;
+            disabledCollaboration = true;
+            disabledPractical = true;
+            disabledGroupwork = true;
 
             statement.close();
             con.close();

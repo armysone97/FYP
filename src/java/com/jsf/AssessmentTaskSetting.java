@@ -621,7 +621,7 @@ public class AssessmentTaskSetting {
 
         groupwork = tasktitle;
         
-        groupwork = tmpYear + "x";
+      //  groupwork = tmpYear + "x";
 
         //   practical = csid + " : " + assactivityid + " : " + assid;
     }

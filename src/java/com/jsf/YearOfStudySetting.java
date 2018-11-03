@@ -41,7 +41,7 @@ public class YearOfStudySetting {
     public YearOfStudySetting() {
         this.year = 2018;
         this.yearComm = 2018;
-        this.disabledDDL = false;
+        this.disabledDDL = true;
     }
 
     public Boolean getDisabledDDL() {

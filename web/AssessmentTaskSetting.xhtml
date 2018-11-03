@@ -31,6 +31,12 @@
                 font-size: 20pt;
             }
             
+            .textAreaStyle{
+                font-size: 18pt;
+                text-align: center;
+                /*height: 35px;*/
+            }
+            
             
       /*      #txtbox {
                 font-size: 18pt;
@@ -100,16 +106,16 @@
 
                     <tr>
                        <td align="left"><h:outputText id="lblProject" value="Project"  styleClass="lblStyle"/></td>
-                       <th align="left"> <h:inputText id="txtProject" title="Enter project task" value="#{assessmentTaskSetting.project}" disabled="#{assessmentTaskSetting.disabledProject}" styleClass="txtboxStyle" required="required" size="20"/></th>
+                       <th align="left"> <h:inputTextarea id="txtProject" title="Enter project task" value="#{assessmentTaskSetting.project}" disabled="#{assessmentTaskSetting.disabledProject}" styleClass="textAreaStyle" required="required" rows="2" /></th>
                         <td align="left"><h:outputText id="lblPractical" value="Practical"  styleClass="lblStyle"/></td>
-                        <th align="left"><h:inputText id="txtPractical" title="Enter practical task" value="#{assessmentTaskSetting.practical}" disabled="#{assessmentTaskSetting.disabledPractical}" styleClass="txtboxStyle" required="required" size="20"/></th>
+                        <th align="left"><h:inputTextarea id="txtPractical" title="Enter practical task" value="#{assessmentTaskSetting.practical}" disabled="#{assessmentTaskSetting.disabledPractical}" styleClass="textAreaStyle" required="required" rows="2" /></th>
                     </tr> 
 
                     <tr>
                          <td align="left"><h:outputText id="lblCollaboration" value="Collaboration"  styleClass="lblStyle"/></td>
-                         <th align="left"><h:inputText id="txtCollaboration" title="Enter collaboration task"  value="#{assessmentTaskSetting.collaboration}" disabled="#{assessmentTaskSetting.disabledCollaboration}" styleClass="txtboxStyle" required="required" size="20"/></th>
+                         <th align="left"><h:inputTextarea id="txtCollaboration" title="Enter collaboration task"  value="#{assessmentTaskSetting.collaboration}" disabled="#{assessmentTaskSetting.disabledCollaboration}" styleClass="textAreaStyle" required="required" rows="2" /></th>
                            <td align="left"><h:outputText id="lblGroupwork" value="Groupwork"  styleClass="lblStyle"/></td>
-                           <th align="left"><h:inputText id="txtGroupwork" title="Enter groupwork task" value="#{assessmentTaskSetting.groupwork}" disabled="#{assessmentTaskSetting.disabledGroupwork}" styleClass="txtboxStyle" required="required" size="20"/></th>
+                           <th align="left"><h:inputTextarea id="txtGroupwork" title="Enter groupwork task" value="#{assessmentTaskSetting.groupwork}" disabled="#{assessmentTaskSetting.disabledGroupwork}" styleClass="textAreaStyle" required="required" rows="2" /></th>
                     </tr> 
 
                 </table>

@@ -17,7 +17,7 @@
             .buttonSpecialStyle{
                 font-size: 25px;
                 column-width: 10px;
-                width: 220px;
+                width: 250px;
                 height: 40px;
             }
 
@@ -25,6 +25,13 @@
                 font-size: 20px;
                 column-width: 10px;
                 width: 200px;
+                height: 40px;
+            }
+
+            .ddlSpecialStyle{
+                font-size: 20px;
+                column-width: 10px;
+                width: 100px;
                 height: 40px;
             }
 
@@ -121,7 +128,7 @@
 
                     <tr>
                         <th colspan="3" align="left"> <h:commandButton id="btnCancel" title="Click to cancel"  value="Cancel" disabled="#{maintainTeacher.disabledButton}" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
-                        <th align="right"><h:commandButton id="btnConfirm" title="Click to show year" value="Confirm" disabled="#{maintainTeacher.disabledButton}" styleClass="buttonStyle" /></th>
+                        <th align="right"><h:commandButton id="btnConfirm" title="Click to show year" value="Confirm" action="#{maintainTeacher.controlDisabledStatus()}" disabled="#{maintainTeacher.disabledButton}" styleClass="buttonStyle" /></th>
                     </tr> 
 
                     <tr>
@@ -156,14 +163,14 @@
                                     <f:selectItems value="#{maintainTeacher.get_teacher()}"  /> 
                                 </h:selectOneMenu> 
 
-                                &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList333" title="Click to show CS level"  value="Show" styleClass="buttonShowStyle" disabled="#{maintainTeacher.disabledButton}"/>
+                                &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList333" title="Click to show CS level"  value="Show" styleClass="buttonShowStyle" action="#{maintainTeacher.callStatus()}" disabled="#{maintainTeacher.disabledButton}"/>
 
                             </th>
 
                             <th colspan="2" align="left">
                                 <h:outputText id="lblStatus" value="Status : "  styleClass="lblStyle"/>
 
-                                <h:selectOneMenu title="Select teacher status" value="#{maintainTeacher.status}" disabled="#{maintainTeacher.disabledDdl}" styleClass="ddlStyle">
+                                <h:selectOneMenu title="Select teacher status" value="#{maintainTeacher.status}" disabled="#{maintainTeacher.disabledStatus}" styleClass="ddlStyle">
                                     <f:selectItem itemValue = "Available" itemLabel = "Available" /> 
                                     <f:selectItem itemValue = "Resigned" itemLabel = "Resigned" /> 
                                     <f:selectItem itemValue = "Retired" itemLabel = "Retired" /> 
@@ -181,6 +188,8 @@
                                 <h:selectOneMenu title="Select CS level" styleClass="ddlStyle" value="#{maintainTeacher.cslevel}">
                                     <f:selectItems value="#{maintainTeacher.get_CSLevel()}" /> 
                                 </h:selectOneMenu>  
+                                               <!--&nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList666" title="Click to show number of student"  value="Show" styleClass="buttonShowStyle" disabled="#{maintainTeacher.disabledButton}"/>-->
+
                             </th>
 
                             <th colspan="2" align="left"> 
@@ -193,7 +202,10 @@
                             </th>
                         </tr>   
                         <tr>
-                            <th colspan="4" align="right"> 
+                            <th colspan="2" align="left"> 
+                                <h:commandButton title="Click to select new teacher" id="btnAddNewTeacher1" value="Select New Teacher" action="#{maintainTeacher.selectNewTeacher()}" disabled="#{maintainTeacher.disabledButton}" styleClass="buttonSpecialStyle"/>
+                            </th>
+                            <th colspan="2" align="right"> 
                                 <h:commandButton title="Click to add new teacher" id="btnAddNewTeacher" value="Add New Teacher" action="#{maintainTeacher.addNewTeacher()}" disabled="#{maintainTeacher.disabledButton}" styleClass="buttonSpecialStyle"/>
                             </th>
                         </tr>
@@ -271,7 +283,11 @@
                             </th>
 
                             <th align="left">
-                                <h:outputText id="txtNewTeacherID" title="New teacher ID" value="#{maintainTeacher.newTeacherID}" styleClass="txtboxSmallStyle"/>
+                                <!--<h:outputText id="txtNewTeacherID" title="New teacher ID" value="{maintainTeacher.newTeacherID}" styleClass="txtboxSmallStyle"/>-->
+                                <h:selectOneMenu title="Select Teacher ID" styleClass="ddlSpecialStyle" disabled="#{maintainTeacher.disabledNewTeacherID}" value="#{maintainTeacher.newTeacherID}">
+                                    <f:selectItems value="#{maintainTeacher.get_newTeacherID()}" /> 
+                                </h:selectOneMenu>  
+
                             </th>  
 
                             <th align="right">
@@ -279,10 +295,18 @@
                             </th>
 
                             <th align="left">
-                                <h:inputText id="txtNewTeacherName" title="Enter new teacher name" value="#{maintainTeacher.newTeacherName}" disabled="#{maintainTeacher.disabledNewTeacher}" styleClass="txtboxSpecialStyle" required="required" size="10"/>
+                                <h:inputText id="txtNewTeacherName" title="Enter new teacher name" value="#{maintainTeacher.newTeacherName}" disabled="#{maintainTeacher.disabledNewTeacherName}" styleClass="txtboxSpecialStyle" required="required" size="10"/>
                             </th>  
                         </tr>   
 
+                        <tr>
+                            <th></th>
+                            <th align="left">
+
+                                <h:commandButton id="btnShowList88" title="Click to show teacher name" action="#{maintainTeacher.showTeacherName()}"  value="Show" styleClass="buttonShowStyle" disabled="#{maintainTeacher.disabledNewTeacherID}"/>
+
+                            </th> 
+                        </tr>  
                         <tr>
 
                             <th align="right">

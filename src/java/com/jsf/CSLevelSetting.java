@@ -514,6 +514,10 @@ public class CSLevelSetting {
 
             if (verifyRecord > 0) {
                 tmpYear = year;
+                disabledProject = true;
+                disabledCollaboration = true;
+                disabledPractical = true;
+                disabledGroupwork = true;
             } else {
                 tmpYear = 2017;
                 disabledProject = false;
@@ -529,9 +533,8 @@ public class CSLevelSetting {
             disabledPractical = true;
             disabledGroupwork = true;
         }
-        
-        //newcslevelname = tmpYear + "x";
 
+        //newcslevelname = tmpYear + "x";
         //get project checked
         csid = matchCSLevelID();
         assactivityid = "AA1";
@@ -782,11 +785,13 @@ public class CSLevelSetting {
             con.close();
 
             disabledNewCS = true;
-            disabledCollaboration = false;
-            disabledProject = false;
-            disabledPractical = false;
-            disabledGroupwork = false;
+            disabledCollaboration = true;
+            disabledProject = true;
+            disabledPractical = true;
+            disabledGroupwork = true;
             disabledButton = false;
+            
+            newcslevelname = null;
 
         } catch (Exception ex) {
             System.out.println("Error: " + ex);

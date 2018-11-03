@@ -114,18 +114,60 @@ public class RateSetting {
         return count;
     }
 
+    public Boolean verifyYear() {
+
+        Boolean verify = false;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT rateID FROM rate WHERE year = '2018'");
+
+            while (rs.next()) {
+
+                verify = true;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return verify;
+
+    }
+
     //get year from db 
     public List<Integer> get_year() {
         year_list.clear();
         int lengthYearList = get_yearCount();
+        int lengthYearListEnhance = 0;
 
-        int[] yearListDuplicate = new int[lengthYearList];
+        Boolean verifyYear = verifyYear();
 
-        int count = 1;
+        if (verifyYear) { //2018 got inside
+            lengthYearListEnhance = lengthYearList;
+        } else {
+            lengthYearListEnhance = lengthYearList + 1;
+        }
+
+        int[] yearListDuplicate = new int[lengthYearListEnhance];
         int tmp = 0;
 
-        yearListDuplicate[0] = 2018;
+        if (verifyYear) { //2018 got inside
+            //    lengthYearListEnhance = lengthYearList;
+        } else {
+            yearListDuplicate[0] = 2018;
+            tmp++;
+        }
 
+        int count = 1;
+        
+
+//        yearListDuplicate[0] = 2018;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -133,8 +175,8 @@ public class RateSetting {
             ResultSet rs = st.executeQuery("SELECT year FROM rate");
 
             while (rs.next()) {
-                tmp++;
                 yearListDuplicate[tmp] = rs.getInt("year");
+                 tmp++;
             }
 
             st.close();
@@ -152,23 +194,49 @@ public class RateSetting {
         return year_list;
     }
 
-    //   change text box disabled when click the button
-//    public Boolean changeDDLDisabled() {
-//        if (year == 2018) {
-//            disabledTxt = false;
-//        } else {
-//            disabledTxt = true;
-//        }
-//
-//        return disabledTxt;
-//    }
+    public int verifyRecord() {
+
+        int count = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT numSampleAss, mtHourlyRate, evHourlyRate, mileageRate FROM rate WHERE year = ?");
+            st.setInt(1, year);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                count++;
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return count;
+    }
+
     public void settingList() {
         int tmpYear = 0;
 
+        int verifyRecord = 0;
+
         //when page onload, need to show previous(2017) record, so for year and yearComm 2018 temporaily become 2017
         if (year == 2018) {
-            tmpYear = 2017;
-            disabledTxt = false;
+
+            verifyRecord = verifyRecord();
+
+            if (verifyRecord > 0) { //means got data inside
+                tmpYear = year;
+                disabledTxt = true;
+            } else {
+                tmpYear = 2017;
+                disabledTxt = false;
+            }
         } else {
             tmpYear = year;
             disabledTxt = true;
@@ -251,6 +319,8 @@ public class RateSetting {
             statement.executeUpdate();
             statement.close();
             con.close();
+            
+            disabledTxt = true;
 
         } catch (Exception ex) {
             System.out.println("Error: " + ex);

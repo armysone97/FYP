@@ -48,12 +48,12 @@
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
             <h1>MAINTAIN SCHOOL MENU</h1>
-            <h:form id="MaintainSchoolMenu">
+            <h:form id="MaintainSchoolMenu" title="Maintain school menu page">
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
                     <tr>
                         <th colspan="3" align="right">     
-                            <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle" action="Login"/>
+                            <h:commandButton id="btnLogout" title="Click to logout" value="Log out" styleClass="buttonStyle" action="Login"/>
                         </th>
                     </tr> 
 
@@ -71,10 +71,10 @@
                         <th align="right">
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> </th>
                         <th align="left">  
-                            <h:selectOneMenu value="#{maintainSchoolMenu.state}" styleClass="ddlStyle">
+                            <h:selectOneMenu title="Select state" value="#{maintainSchoolMenu.state}" styleClass="ddlStyle">
                                 <f:selectItems value="#{maintainSchoolMenu.get_state()}" />
                             </h:selectOneMenu>
-                            &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList111" value="Show" styleClass="buttonShowStyle"/>
+                            &nbsp;&nbsp;&nbsp;    <h:commandButton title="Click to show school" id="btnShowList111" value="Show" styleClass="buttonShowStyle"/>
                         </th>
                     </tr>   
 
@@ -84,7 +84,7 @@
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                            <h:selectOneMenu styleClass="ddlStyle" value="#{maintainSchoolMenu.school}">
+                            <h:selectOneMenu title="Select school" styleClass="ddlStyle" value="#{maintainSchoolMenu.school}">
                                 <f:selectItems value="#{maintainSchoolMenu.get_school()}"/> 
                             </h:selectOneMenu>  
                         </th>
@@ -100,7 +100,7 @@
                         </th>
 
                         <th align="left">
-                            <h:selectOneRadio layout="lineDirection" value="#{maintainSchoolMenu.action}" styleClass="radiobuttonStyle"> 
+                            <h:selectOneRadio title="Select action"  layout="lineDirection" value="#{maintainSchoolMenu.action}" styleClass="radiobuttonStyle"> 
                                 <f:selectItem itemValue = "View" itemLabel = "View " /> 
                                 <f:selectItem itemValue = "Update" itemLabel = "Update" />
                             </h:selectOneRadio>
@@ -113,9 +113,9 @@
                     </tr>
 
                     <tr>
-                        <th align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
-                        <th align="right"> <h:commandButton id="btnReset" value="Reset" action="#{maintainSchoolMenu.reset()}" styleClass="buttonStyle"/></th>
-                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{maintainSchoolMenu.nextPageToSchoolDetail()}"/></th>
+                        <th align="left"> <h:commandButton id="btnCancel" title="Click to cancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                        <th align="right"> <h:commandButton id="btnReset" title="Click to reset" value="Reset" action="#{maintainSchoolMenu.reset()}" styleClass="buttonStyle"/></th>
+                        <th align="right"><h:commandButton id="btnConfirm" title="Click to confirm" value="Confirm" styleClass="buttonStyle" action="#{maintainSchoolMenu.nextPageToSchoolDetail()}"/></th>
                     </tr>  
                 </table>
             </h:form>

@@ -44,6 +44,14 @@ public class YearOfStudySetting {
         this.disabledDDL = false;
     }
 
+    public Boolean getDisabledDDL() {
+        return disabledDDL;
+    }
+
+    public void setDisabledDDL(Boolean disabledDDL) {
+        this.disabledDDL = disabledDDL;
+    }
+
     public int getYear() {
         return year;
     }
@@ -108,17 +116,6 @@ public class YearOfStudySetting {
         this.standard6 = standard6;
     }
 
-    //   change text box disabled when click the button
-    public Boolean changeDDLDisabled() {
-        if (year == 2018) {
-            disabledDDL = false;
-        } else {
-            disabledDDL = true;
-        }
-
-        return disabledDDL;
-    }
-
     //remove duplicate element for year array
     public static int removeDuplicateElements(int arr[], int n) {
         if (n == 0 || n == 1) {
@@ -146,7 +143,7 @@ public class YearOfStudySetting {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT year FROM assessment");
 
@@ -179,7 +176,7 @@ public class YearOfStudySetting {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT year FROM assessment");
 
@@ -221,7 +218,7 @@ public class YearOfStudySetting {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT CSLevelName FROM cslevel");
             // ResultSet rs = st.executeQuery("SELECT CSLevelID FROM assessment WHERE year='2017'");
@@ -245,7 +242,7 @@ public class YearOfStudySetting {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT CSLevelName FROM cslevel WHERE CSLevelID = ?");
             st.setString(1, csid);
             ResultSet rs = st.executeQuery();
@@ -264,6 +261,31 @@ public class YearOfStudySetting {
         return CSName;
     }
 
+    public int verifyRecord() {
+
+        int count = 0;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT CSLevelID, yearOfStudyID FROM yearofstudycsmap WHERE year = ? and numYearComm = 0");
+            st.setInt(1, year);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                count++;
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return count;
+    }
+
     //get year of study cs map list when page onload and when button click based on year and yearComm
     public void yearOfStudyCSMapList() {
 
@@ -271,23 +293,28 @@ public class YearOfStudySetting {
 
         int tmpYear = 0, tmpyearComm;
         int numYearComm = 0;
+        int verifyRecord = 0;
 
         String csid = "", csname = "", yosid = "";
 
-        //when page onload, need to show previous(2017) record, so for year and yearComm 2018 temporaily become 2017
-        if (year == 2018) {
-            tmpYear = 2017;
-            {
-                if (yearComm == 2018) {
-                    tmpyearComm = 2017;
-                } else {
-                    tmpyearComm = yearComm;
-                }
-            }
+        //when page onload, need to show previous(2017) record, 
+        //so for year and yearComm 2018 which have not record in db temporaily become 2017
+        if (year == 2018 && yearComm == 2018) {
+            verifyRecord = verifyRecord();
 
+            if (verifyRecord > 0) {
+                tmpYear = year;
+                tmpyearComm = yearComm;
+                disabledDDL = true;
+            } else {
+                tmpYear = 2017;
+                tmpyearComm = 2017;
+                disabledDDL = false;
+            }
         } else {
             tmpYear = year;
             tmpyearComm = yearComm;
+            disabledDDL = true;
         }
 
         numYearComm = tmpYear - tmpyearComm;
@@ -296,7 +323,7 @@ public class YearOfStudySetting {
         //get data from db
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT CSLevelID, yearOfStudyID FROM yearofstudycsmap WHERE year = ? and numYearComm = ?");
             st.setInt(1, tmpYear);
             st.setInt(2, numYearComm);
@@ -340,8 +367,6 @@ public class YearOfStudySetting {
             System.out.println("Error: " + ex);
         }
 
-        changeDDLDisabled();
-
     }
 
     //auto generate year of study cs map ID
@@ -351,7 +376,7 @@ public class YearOfStudySetting {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM yearofstudycsmap");
 
@@ -376,7 +401,7 @@ public class YearOfStudySetting {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM cslevel WHERE CSLevelName = ?");
             st.setString(1, standard);
             ResultSet rs = st.executeQuery();
@@ -408,7 +433,7 @@ public class YearOfStudySetting {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO yearofstudycsmap (yearOfStudyCSMapID, CSLevelID, yearOfStudyID, year, numYearComm) VALUES (?, ?, ?, ?, ?)");
 
             //insert standard 1
@@ -551,7 +576,7 @@ public class YearOfStudySetting {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM yearofstudycsmap WHERE numYearComm = ? AND year = ?");
             st.setInt(1, numYearComm);
             st.setInt(2, year);
@@ -580,7 +605,7 @@ public class YearOfStudySetting {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM yearofstudycsmap WHERE numYearComm = ? AND year = ?");
             st.setInt(1, numYearComm);
             st.setInt(2, year);
@@ -612,7 +637,7 @@ public class YearOfStudySetting {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE commYearCS = ?");
             st.setInt(1, yearComm);
             ResultSet rs = st.executeQuery();
@@ -639,7 +664,7 @@ public class YearOfStudySetting {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM schoolcsmap");
 
@@ -673,7 +698,7 @@ public class YearOfStudySetting {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE commYearCS = ?");
             st.setInt(1, yearComm);
             ResultSet rs = st.executeQuery();
@@ -697,7 +722,7 @@ public class YearOfStudySetting {
             for (int j = 0; j < CSIDListDuplicate.length; j++) {
                 try {
                     Class.forName("com.mysql.cj.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcstmp1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
                     PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO schoolcsmap (schoolCSMapID, ttlEnrolStud, schoolID, CSLevelID, year) VALUES (?, ?, ?, ?, ?)");
 
                     //insert standard 1

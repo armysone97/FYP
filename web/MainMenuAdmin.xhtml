@@ -19,11 +19,132 @@
                 width: 200px;
                 height: 40px;
             }
+
+
+            /* Top Navigation Bar Style*/
+            #topNav {    margin-left:-15px;	}
+
+            .topNav {
+                list-style-type: none;
+                margin:0;
+                padding: 0;
+                overflow: hidden;
+                background-color: #333;
+                width: 800px; 
+            }
+            
+            .topNav>li {
+                float: left;
+                margin-left:30px;
+                height: 47px;
+                border:medium;    
+            }
+
+            .topNav li>a , .dropbtn {
+                display: inline-block;
+                color: white;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+            }
+
+            .topNav li a:hover, .dropdown:hover .dropbtn {
+                background-color: red;
+            }
+
+            .topNav li.dropdown {
+                display: inline-block;
+            }
+
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index:200;
+
+            }
+
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+                text-align: left;
+            }
+
+            .dropdown-content a:hover {background-color: #f1f1f1}
+
+            .dropdown:hover .dropdown-content {
+                display: block;
+                float:none;float:left;
+            }
         </style>
     </h:head>
     <h:body>
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
+
+<!--            <h:commandLink action = "{navigationController.processPage1}"
+                           value = "Page1" />
+
+            <h:commandLink action = "{navigationController.processPage2}"
+                           value = "Page2" />-->
+
+            <ul class="topNav">
+                
+                <li>  <a href="CSLevelSetting.xhtml">HOME</a></li>     <!--can use-->
+            
+                <li>
+                  
+                    <h:commandLink action = "#{navigationController.processCSLevelSettingPage()}" 
+                           value = "CS Level Setting" /> <!--cannot use-->
+                </li>
+
+                <li class="dropdown">
+                    <a href="AboutUs/AboutUs.htm">ABOUT US</a>
+                    <div class="dropdown-content fading">
+                        <a href="AboutUs/AboutUs.htm#CompanyBackground">Company Background</a>
+                    </div>
+
+                </li>
+
+                <li class="dropdown">
+                    <a href="Product/prod_home.html" class="dropbtn">OUR PRODUCTS</a>
+                    <div class="dropdown-content fading">
+                        <a href="Product/Living Room/prod_LRslide.html">Living Room</a>
+                        <a href="Product/Kitchen/prod_Kslide.html">Kitchen</a>
+                        <a href="Product/Bedroom/prod_BRslide.html">Bedroom</a>
+                        <a href="Product/Outdoor/prod_Otdslide.html">Outdoor</a>
+                    </div>
+                </li>
+
+                <li class="dropdown"><a href="events and activities/event.htm">NEWS</a>
+
+                    <div class="dropdown-content fading">
+                        <a href="events and activities/event.htm">Events and Activities</a>
+                        <a href="promotion/promotion.htm">Promotion</a>
+                    </div>
+                </li>
+
+                <li class="dropdown"><a href="Membership/Customer Log In.html">MEMBERSHIP</a>
+                    <div class="dropdown-content fading">
+                        <a href="Membership/Customer Log In.html">Log In</a>
+                        <a href="Membership/Customer Sign up.html">Sign Up</a>
+                    </div>
+                </li>
+
+                <li class="dropdown" style="float:left;"><a href="Customer Service/contactUs.htm">CUSTOMER SERVICES</a>
+                    <div class="dropdown-content fading">
+                        <a href="Customer Service/contactUs.htm">Contact Us</a>
+                        <a href="Customer Service/faq.htm">FAQ</a>
+                    </div>
+                </li>
+            </ul>
+
+
+
             <h1>MAIN MENU - ADMIN</h1>
             <h:form id="mainMenuAdmin">
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
@@ -31,6 +152,7 @@
                     <tr>
                         <th colspan="2" align="right">
                             <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle" action="Login"/>
+                             <h:commandLink action = "#{navigationController.processCSLevelSettingPage()}" value = "CS Level Setting" />
                         </th>
                     </tr> 
 
@@ -41,16 +163,16 @@
 
                     <tr>
                         <th><h:commandButton id="btnSTEMCSManagament" value="STEM CS Management" styleClass="buttonBigStyle" action="STEMCSManagementMainMenu"/></th> 
-                         <th><h:commandButton id="btnSchoolManagament" value="School Management" styleClass="buttonBigStyle" action="SchoolManagementMainMenu"/></th> 
-                   </tr> 
+                        <th><h:commandButton id="btnSchoolManagament" value="School Management" styleClass="buttonBigStyle" action="SchoolManagementMainMenu"/></th> 
+                    </tr> 
 
                     <tr>
                         <th><h:commandButton id="btnEvaluatorManagement" value="Evaluator Management" styleClass="buttonBigStyle" action="EvaluatorPersonalDetails"/></th> 
                         <th><h:commandButton id="btnWorkloadAllocation" value="Workload Allocation" styleClass="buttonBigStyle" action="EvaluatorWorkloadAllocationApplication"/></th> 
                     </tr> 
-                    
+
                     <tr>
-                       <th><h:commandButton id="btnGenerateReport" value="Generate Report" styleClass="buttonBigStyle" action="GenerateReport"/></th> 
+                        <th><h:commandButton id="btnGenerateReport" value="Generate Report" styleClass="buttonBigStyle" action="GenerateReport"/></th> 
                     </tr> 
                 </table>
             </h:form>

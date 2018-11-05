@@ -5,7 +5,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>STEM CS Validation Programme</title>
-        <style type="text/css"> 
+        <h:outputStylesheet name="css/style.css" />
+<!--        <style type="text/css"> 
 
             .buttonStyle{
                 font-size: 25px;
@@ -49,25 +50,69 @@
                       width : 200px;
                   } */
 
-        </style>
+        </style>-->
     </h:head>
     <h:body>
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
+             <!--Top Navigation Bar-->
+            <ul class="topNav">
+                <li class="dropdown">
+                    <a href="CSLevelSetting.xhtml">CS MANAGEMENT</a>
+                    <div class="dropdown-content fading">
+                        <a href="CSLevelSetting.xhtml">CS Level Setting</a>
+                        <a href="YearOfStudySetting.xhtml">Year Of Study Setting</a>
+                        <a href="AssessmentTaskSetting.xhtml">Assessment Task Setting</a>
+                        <a href="RateSetting.xhtml">Rate Setting</a>
+                        <a href="AssessmentMinSetting.xhtml">Assessment Minutes Setting</a>
+                    </div>
+                </li>
+
+                <li class="dropdown">
+                    <a href="MaintainSchoolDetails.xhtml">SCHOOL MANAGEMENT</a>
+                    <div class="dropdown-content fading">
+                        <a href="MaintainSchoolDetails.xhtml">Maintain School - Add</a>
+                        <a href="MaintainSchoolMenu.xhtml">Maintain School - View/Update</a>
+                        <a href="MaintainTeacher.xhtml">Maintain Teacher</a>
+                        <a href="MaintainAssessmentTask.xhtml">Maintain Assessment Task</a>
+                    </div>
+                </li>
+
+                <li> 
+                    <a href="EvaluatorPersonalDetails.xhtml">EVALUATOR MANAGEMENT</a>
+                </li>     <!--can use-->
+
+                <li> 
+                    <a href="EvaluatorWorkloadAllocationApplication.xhtml">WORKLOAD ALLOCATION</a>
+                </li>  
+
+                <li> 
+                    <a href="GenerateReport.xhtml">GENERATE REPORT</a>
+                </li>
+
+                <li> 
+                    <a href="Login.xhtml">LOG OUT</a>
+                </li>
+            </ul>
+             
+             <br />
+             <br />
+        
+             
             <h1>ASSESSMENT MINUTES SETTING</h1>
             <h:form id="AssessmentMinSetting" title="Assessment minutes setting page">
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
-                    <tr>
+<!--                    <tr>
                         <th colspan="4" align="right">         
                             <h:commandButton id="btnLogout" title="Click to logout" value="Log out" styleClass="buttonStyle" action="Login"/>
                         </th>
-                    </tr> 
+                    </tr> -->
 
-                    <tr>
+<!--                    <tr>
                         <th><label>&nbsp;</label></th>
                         <th><label>&nbsp;</label></th> 
-                    </tr>
+                    </tr>-->
 
                     <tr>
                         <th colspan="4" align="left">
@@ -77,7 +122,7 @@
                                 <f:selectItems value="#{assessmentMinSetting.get_year()}" /> 
                             </h:selectOneMenu>  
 
-                            &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList" title="Click to show CS level" value="Show CS Level" styleClass="buttonStyle"/>
+                            &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList" title="Click to show CS level" value="Show CS Level" styleClass="buttonSpecialStyle"/>
 
                         </th>
                     </tr>   
@@ -111,29 +156,29 @@
 
                     <tr>
                         <td align="left"><h:outputText id="lblProject" value="Project"  styleClass="lblStyle"/></td>
-                        <th align="left"> 
+                        <td align="left"> 
                             <h:inputText id="txtProject" title="Enter minutes for project" value="#{assessmentMinSetting.project}" disabled="#{assessmentMinSetting.disabledProject}" styleClass="txtboxSmallestStyle" required="required" size="20"/>
-                            <h:outputText id="minStud1" value=" min/student"  styleClass="lblSpecialStyle"/>
+                            <h:outputText id="minStud1" value=" min/student"  styleClass="lblStyle"/>
 
-                        </th>
+                        </td>
                         <td align="left"><h:outputText id="lblPractical" value="Practical"  styleClass="lblStyle"/></td>
-                        <th align="left">
+                        <td align="left">
                             <h:inputText id="txtPractical" title="Enter minutes for practical" value="#{assessmentMinSetting.practical}" disabled="#{assessmentMinSetting.disabledPractical}" styleClass="txtboxSmallestStyle" required="required" size="20"/>
-                            <h:outputText id="minStud2" value=" min/student"  styleClass="lblSpecialStyle"/>
-                        </th>
+                            <h:outputText id="minStud2" value=" min/student"  styleClass="lblStyle"/>
+                        </td>
                     </tr> 
 
                     <tr>
                         <td align="left"><h:outputText id="lblCollaboration" value="Collaboration"  styleClass="lblStyle"/></td>
-                        <th align="left">
+                        <td align="left">
                             <h:inputText id="txtCollaboration" title="Enter minutes for collaboration" value="#{assessmentMinSetting.collaboration}" disabled="#{assessmentMinSetting.disabledCollaboration}" styleClass="txtboxSmallestStyle" required="required" size="20"/>
-                            <h:outputText id="minStud3" value=" min/student"  styleClass="lblSpecialStyle"/>
-                        </th>
+                            <h:outputText id="minStud3" value=" min/student"  styleClass="lblStyle"/>
+                        </td>
                         <td align="left"><h:outputText id="lblGroupwork" value="Groupwork"  styleClass="lblStyle"/></td>
-                        <th align="left">
+                        <td align="left">
                             <h:inputText id="txtGroupwork" title="Enter minutes for groupwork" value="#{assessmentMinSetting.groupwork}" disabled="#{assessmentMinSetting.disabledGroupwork}" styleClass="txtboxSmallestStyle" required="required" size="20"/>
-                            <h:outputText id="minStud4" value=" min/student"  styleClass="lblSpecialStyle"/>
-                        </th>
+                            <h:outputText id="minStud4" value=" min/student"  styleClass="lblStyle"/>
+                        </td>
                     </tr> 
 
                 </table>
@@ -148,8 +193,8 @@
                     </tr>
 
                     <tr>
-                        <th colspan="2" align="left"> <h:commandButton id="btnCancel" title="Click to cancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
-                        <th align="right"> <h:commandButton id="btnReset" title="Click to reset" value="Reset" action="#{assessmentMinSetting.reset()}" styleClass="buttonStyle"/></th>
+                        <!--<th colspan="2" align="left"> <h:commandButton id="btnCancel" title="Click to cancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>-->
+                        <th colspan="3"  align="left"> <h:commandButton id="btnReset" title="Click to reset" value="Reset" action="#{assessmentMinSetting.reset()}" styleClass="buttonStyle"/></th>
                         <th align="right"><h:commandButton id="btnConfirm" title="Click to confirm" value="Confirm" styleClass="buttonStyle" action="#{assessmentMinSetting.updateMinPerStud()}"/></th>
                     </tr> 
 

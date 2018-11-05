@@ -5,8 +5,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
          <title>STEM CS Validation Programme</title>
-         
-       <style type="text/css"> 
+         <h:outputStylesheet name="css/style.css" />
+<!--       <style type="text/css"> 
          .buttonStyle{
                 font-size: 25px;
                 column-width: 10px;
@@ -46,16 +46,42 @@
             .radiobuttonStyle{ 
                 font-size: 18pt;
             }
-        </style>
+        </style>-->
     </h:head>
     <h:body>
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
+               <!--Top Navigation Bar-->
+            <ul class="topNav">
+                 <li> 
+                    <a href="EvaluatorPersonalDetails.xhtml">PROFILE MANAGEMENT</a>
+                </li> 
+                
+                <li class="dropdown">
+                    <a href="WorkloadClaimApplication.xhtml">CLAIM PROCESSING</a>
+                    <div class="dropdown-content fading">
+                        <a href="WorkloadClaimApplication.xhtml">Workload Claim</a>
+                        <a href="MileageClaimApplication.xhtml">Mileage Claim</a>
+                    </div>
+                </li>
+                
+                  <li></li> <li></li><li></li> <li></li><li></li> <li></li><li></li> <li></li><li></li> <li></li><li></li> <li></li>
+                 <li></li><li></li> <li></li><li></li> <li></li><li></li> <li></li><li></li> <li></li><li></li> <li></li><li></li>
+                 
+
+                <li> 
+                    <a href="Login.xhtml">LOG OUT</a>
+                </li>
+            </ul>
+             
+             <br />
+             <br />
+        
             <h1>MILEAGE CLAIM APPLICATION</h1>
             <h:form id="MileageClaimApplication">
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
-                     <tr>
+<!--                     <tr>
                         <th colspan="3" align="right">     
                             <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle" action="Login"/>
                         </th>
@@ -64,7 +90,7 @@
                     <tr>
                         <th><label>&nbsp;</label></th>
                         <th><label>&nbsp;</label></th> 
-                    </tr>
+                    </tr>-->
 
                    <tr>
                         <th align="left"> <h:outputText id="lblStaffID" value="Staff ID"  styleClass="lblStyle"/></th>
@@ -185,8 +211,8 @@
                     </tr> 
 
                      <tr>
-                        <th colspan="2" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuEvaluator"/></th>
-                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuEvaluator"/></th>
+                        <!--<th colspan="2" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuEvaluator"/></th>-->
+                        <th colspan="3" align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuEvaluator"/></th>
                     </tr> 
                 </table>   
             </h:form>

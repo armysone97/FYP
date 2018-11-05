@@ -7,6 +7,7 @@
 
     <h:head>
         <title>STEM CS Validation Programme</title>
+        <h:outputStylesheet name="css/style.css" />
 <!--        <f:metadata>
             <f:event type="preRenderView" listener="{login.main(args)}"/> #login.xxx
       </f:metadata>-->
@@ -22,15 +23,15 @@
             }
         </script>-->
 
-        <style type="text/css">
-            .radiobuttonStyle table tbody td { 
+<!--        <style type="text/css">
+/*            .radiobuttonStyle { 
                 font-size: 20pt;
-                /*    width: 2em; 
-                    height: 2em; */
-                /* padding-left:100px;*/
+                    width: 2em; 
+                    height: 2em; 
+                 padding-left:100px;
             }
 
-            /* .radioButtonSpace { padding-right: 50px; margin-right:50px; } */
+             .radioButtonSpace { padding-right: 50px; margin-right:50px; } 
 
 
             .buttonStyle{
@@ -48,8 +49,8 @@
 
             .lblStyle{
                 font-size: 25pt;
-            }
-        </style>    
+            }*/
+        </style>    -->
 
     </h:head>
     <h:body>
@@ -70,7 +71,7 @@
                     <tr>
                         <th colspan="2" align="center">  <h:panelGroup styleClass="radiobuttonStyle" id="search-options" layout="block">
                                 <h:selectOneRadio title="Select role" required="true" layout="lineDirection" styleClass="radiobuttonStyle" value="#{login.role}"> 
-                                    <f:selectItem itemValue = "Admin" itemLabel = "Admin &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; " /> 
+                                    <f:selectItem itemValue = "Admin" itemLabel = "Admin &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;" /> 
                                     <f:selectItem itemValue = "Evaluator" itemLabel = "Evaluator/Master Trainer" />
                                 </h:selectOneRadio></h:panelGroup></th>
                     </tr>
@@ -88,12 +89,12 @@
 
                     <tr>
                         <th> <h:outputText id="lblUsername" value="Username:"  styleClass="lblStyle"/></th>
-                        <th><h:inputText id="txtUsername" title="Enter username" styleClass="txtboxStyle" value="#{login.username}" required="true" size="35"/></th>
+                        <th align="left"><h:inputText id="txtUsername" title="Enter username" styleClass="txtboxStyle" value="#{login.username}" required="true" size="35"/></th>
                     </tr>
 
                     <tr>
                         <th><h:outputText id="lblPassword" value="Password:" styleClass="lblStyle"/></th>
-                        <th><h:inputSecret id="txtPswd" title="Enter password" styleClass="txtboxStyle" value="#{login.password}" required="true" size="35" /></th>
+                        <th align="left"><h:inputSecret id="txtPswd" title="Enter password" styleClass="txtboxStyle" value="#{login.password}" required="true" size="35" /></th>
                     </tr>
 
                     <tr>

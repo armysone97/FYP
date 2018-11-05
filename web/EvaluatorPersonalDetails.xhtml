@@ -5,8 +5,9 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>STEM CS Validation Programme</title>
+        <h:outputStylesheet name="css/style.css" />
         <style type="text/css"> 
-            .buttonStyle{
+/*            .buttonStyle{
                 font-size: 25px;
                 column-width: 10px;
                 width: 200px;
@@ -26,21 +27,15 @@
                 width : 250px;
             }
 
-            .txtboxSmallStyle {
+            .txtboxSmallestStyle {
                 font-size: 18pt;
                 height: 35px;
                 width : 100px;
             }
 
-            .txtboxSmallestStyle {
-                font-size: 18pt;
-                height: 35px;
-                width : 80px;
-            }
-
             .lblStyle{
                 font-size: 20pt;
-            }
+            }*/
             
            /*  .lblStyleSpecial{
                 font-size: 20pt;
@@ -56,11 +51,54 @@
     <h:body>
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
+               <!--Top Navigation Bar-->
+            <ul class="topNav">
+                <li class="dropdown">
+                    <a href="CSLevelSetting.xhtml">CS MANAGEMENT</a>
+                    <div class="dropdown-content fading">
+                        <a href="CSLevelSetting.xhtml">CS Level Setting</a>
+                        <a href="YearOfStudySetting.xhtml">Year Of Study Setting</a>
+                        <a href="AssessmentTaskSetting.xhtml">Assessment Task Setting</a>
+                        <a href="RateSetting.xhtml">Rate Setting</a>
+                        <a href="AssessmentMinSetting.xhtml">Assessment Minutes Setting</a>
+                    </div>
+                </li>
+
+                <li class="dropdown">
+                    <a href="MaintainSchoolDetails.xhtml">SCHOOL MANAGEMENT</a>
+                    <div class="dropdown-content fading">
+                        <a href="MaintainSchoolDetails.xhtml">Maintain School - Add</a>
+                        <a href="MaintainSchoolMenu.xhtml">Maintain School - View/Update</a>
+                        <a href="MaintainTeacher.xhtml">Maintain Teacher</a>
+                        <a href="MaintainAssessmentTask.xhtml">Maintain Assessment Task</a>
+                    </div>
+                </li>
+
+                <li> 
+                    <a href="EvaluatorPersonalDetails.xhtml">EVALUATOR MANAGEMENT</a>
+                </li>     <!--can use-->
+
+                <li> 
+                    <a href="EvaluatorWorkloadAllocationApplication.xhtml">WORKLOAD ALLOCATION</a>
+                </li>  
+
+                <li> 
+                    <a href="GenerateReport.xhtml">GENERATE REPORT</a>
+                </li>
+
+                <li> 
+                    <a href="Login.xhtml">LOG OUT</a>
+                </li>
+            </ul>
+             
+             <br />
+             <br />
+        
             <h1>EVALUATOR PERSONAL DETAILS</h1>
             <h:form id="EvaluatorPersonalDetails">
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
-                    <tr>
+<!--                    <tr>
                         <th colspan="3" align="right">     
                             <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle"/>
                         </th>
@@ -69,7 +107,7 @@
                     <tr>
                         <th><label>&nbsp;</label></th>
                         <th><label>&nbsp;</label></th> 
-                    </tr>
+                    </tr>-->
 
                     <tr>
                         <th align="left"> <h:outputText id="lblName" value="Name"  styleClass="lblStyle"/></th>
@@ -88,7 +126,7 @@
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                            <h:inputText id="txtStaffID" value="#{evaluatorPersonalDetails.staffID}" styleClass="txtboxSmallStyle" required="required" size="35"/>
+                            <h:inputText id="txtStaffID" value="#{evaluatorPersonalDetails.staffID}" styleClass="txtboxSmallestStyle" required="required" size="35"/>
                         </th>
                     </tr> 
 
@@ -110,7 +148,7 @@
                         </th>
                         
                         <th align="left">
-                            <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorPersonalDetails.branch}">
+                            <h:selectOneMenu styleClass="ddlSpecialStyle" value="#{evaluatorPersonalDetails.branch}">
                                 <f:selectItem itemValue = "Kuala Lumpur Main Campus" itemLabel = "Kuala Lumpur Main Campus" /> 
                                 <f:selectItem itemValue = "Perak Branch Campus" itemLabel = "Perak Branch Campus" /> 
                                 <f:selectItem itemValue = "Penang Branch Campus" itemLabel = "Penang Branch Campus" /> 
@@ -208,16 +246,16 @@
                         </th>
                         
                         <th align="left">
-                            <h:inputText id="txtWorkloadLimit" value="#{evaluatorPersonalDetails.workloadLimit}" styleClass="txtboxSmallStyle" required="required" size="35"/>
+                            <h:inputText id="txtWorkloadLimit" value="#{evaluatorPersonalDetails.workloadLimit}" styleClass="txtboxSmallestStyle" required="required" size="35"/>
                             <h:outputText id="hr1" value=" hour(s)"  styleClass="lblStyle"/>
                         </th>
                     </tr> 
 
                     <tr>
-                        <th colspan="2" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" /></th>
+                        <!--<th colspan="2" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" /></th>-->
                         <!--<th><input type="submit" id="submit" value="Login" class="button" onclick="LoginFunction()" /><br /></th>
                         -->
-                        <th align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{evaluatorPersonalDetails.main(args)}" /></th>
+                        <th colspan="3" align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{evaluatorPersonalDetails.main(args)}" /></th>
                     </tr>    
                 </table>   
             </h:form>

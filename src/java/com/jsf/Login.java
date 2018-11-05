@@ -36,6 +36,7 @@ public class Login {
 
     public Login() {
         role = "Admin";
+        username = null;
     }
 
     public String getUsername() {

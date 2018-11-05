@@ -5,7 +5,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>STEM CS Validation Programme</title>
-        <style type="text/css"> 
+        <h:outputStylesheet name="css/style.css" />
+<!--        <style type="text/css"> 
             .buttonStyle{
                 font-size: 25px;
                 column-width: 10px;
@@ -54,14 +55,57 @@
                 /*height: 35px;*/
             }
 
-        </style>
+        </style>-->
     </h:head>
     <h:body>
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
+               <!--Top Navigation Bar-->
+            <ul class="topNav">
+                <li class="dropdown">
+                    <a href="CSLevelSetting.xhtml">CS MANAGEMENT</a>
+                    <div class="dropdown-content fading">
+                        <a href="CSLevelSetting.xhtml">CS Level Setting</a>
+                        <a href="YearOfStudySetting.xhtml">Year Of Study Setting</a>
+                        <a href="AssessmentTaskSetting.xhtml">Assessment Task Setting</a>
+                        <a href="RateSetting.xhtml">Rate Setting</a>
+                        <a href="AssessmentMinSetting.xhtml">Assessment Minutes Setting</a>
+                    </div>
+                </li>
+
+                <li class="dropdown">
+                    <a href="MaintainSchoolDetails.xhtml">SCHOOL MANAGEMENT</a>
+                    <div class="dropdown-content fading">
+                        <a href="MaintainSchoolDetails.xhtml">Maintain School - Add</a>
+                        <a href="MaintainSchoolMenu.xhtml">Maintain School - View/Update</a>
+                        <a href="MaintainTeacher.xhtml">Maintain Teacher</a>
+                        <a href="MaintainAssessmentTask.xhtml">Maintain Assessment Task</a>
+                    </div>
+                </li>
+
+                <li> 
+                    <a href="EvaluatorPersonalDetails.xhtml">EVALUATOR MANAGEMENT</a>
+                </li>     <!--can use-->
+
+                <li> 
+                    <a href="EvaluatorWorkloadAllocationApplication.xhtml">WORKLOAD ALLOCATION</a>
+                </li>  
+
+                <li> 
+                    <a href="GenerateReport.xhtml">GENERATE REPORT</a>
+                </li>
+
+                <li> 
+                    <a href="Login.xhtml">LOG OUT</a>
+                </li>
+            </ul>
+             
+             <br />
+             <br />
+        
             <h1>MAINTAIN SCHOOL DETAILS</h1>
             <h:form id="MaintainSchoolDetails" title="Maintain school details page">
-                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
+<!--                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
                     <tr>
                         <th colspan="4" align="right">     
@@ -73,10 +117,12 @@
                         <th><label>&nbsp;</label></th>
                         <th><label>&nbsp;</label></th> 
                     </tr>
-                </table>   
+                </table>   -->
 
                 <fieldset style="display: inline-block">
-                    <legend id="schoolDetails" align="left"><font id="legendLeft" size="5" align="left">School Details</font></legend>
+                    <legend id="schoolDetails" align="left">
+                             <h:outputText id="lblEnrolNum" value="School Details"  styleClass="lblStyle"/>
+                    </legend>
 
                     <table title="School details" border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
                         <tr>
@@ -99,7 +145,7 @@
                             <th align="left"> <h:outputText id="lblSchoolAddress" value="School Address "  styleClass="lblStyle"/></th>
                             <th align="right">
                                 <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/></th>
-                            <th align="left">  <h:inputTextarea title="Enter school address" id="txtSchoolAddress" value="#{maintainSchoolDetails.address}" disabled="#{maintainSchoolDetails.disabledTxt}" rows="3" styleClass="textAreaStyle" required="required"/>
+                            <th align="left">  <h:inputTextarea title="Enter school address" id="txtSchoolAddress" value="#{maintainSchoolDetails.address}" disabled="#{maintainSchoolDetails.disabledTxt}" rows="3" styleClass="textAreaSpecialStyle" required="required"/>
                             </th>
                         </tr> 
 
@@ -140,7 +186,7 @@
                             <th align="left"> <h:outputText id="lblCommYear" value="Commerce Year of STEM CS "  styleClass="lblStyle"/></th>
                             <th align="right">
                                 <h:outputText id="simbol5" value=": "  styleClass="lblStyle"/></th>
-                            <th align="left">  <h:inputText title="Enter school commercial year"  id="txtCommYear" value="#{maintainSchoolDetails.commYear}" disabled="#{maintainSchoolDetails.disabledCommYear}" styleClass="txtboxSmallStyle" required="required" size="5"/>
+                            <th align="left">  <h:inputText title="Enter school commercial year"  id="txtCommYear" value="#{maintainSchoolDetails.commYear}" disabled="#{maintainSchoolDetails.disabledCommYear}" styleClass="txtboxSmallestStyle" required="required" size="5"/>
                             </th>
                         </tr> 
 
@@ -166,7 +212,7 @@
 
                
                 <fieldset style="display: inline-block">
-                    <legend id="enrolNo" align="left">
+                    <legend id="enrolNo" align="left" styleClass="lblStyle"> 
                         <h:outputText id="lblEnrolNum" value="Enrolment numbers of student "  styleClass="lblStyle"/>
                     </legend>
 
@@ -230,8 +276,8 @@
                         </tr> -->
                         
                         <tr>
-                            <th colspan="2" align="left"> <h:commandButton title="Click to cancel"  id="btnCancel100" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
-                           <th colspan="2" align="right"><h:commandButton title="Click to confirm"  id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                            <!--<th colspan="2" align="left"> <h:commandButton title="Click to cancel"  id="btnCancel100" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>-->
+                           <th colspan="4" align="right"><h:commandButton title="Click to confirm"  id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
                         </tr>  
 
                     </table>

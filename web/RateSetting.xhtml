@@ -5,7 +5,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>STEM CS Validation Programme</title>
-        <style type="text/css"> 
+        <h:outputStylesheet name="css/style.css" />
+<!--        <style type="text/css"> 
 
             .buttonStyle{
                 font-size: 25px;
@@ -41,17 +42,60 @@
             .checkboxStyle{
                 font-size: 20pt;
             }
-        </style>
+        </style>-->
     </h:head>
 
     <h:body>
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
+               <!--Top Navigation Bar-->
+            <ul class="topNav">
+                <li class="dropdown">
+                    <a href="CSLevelSetting.xhtml">CS MANAGEMENT</a>
+                    <div class="dropdown-content fading">
+                        <a href="CSLevelSetting.xhtml">CS Level Setting</a>
+                        <a href="YearOfStudySetting.xhtml">Year Of Study Setting</a>
+                        <a href="AssessmentTaskSetting.xhtml">Assessment Task Setting</a>
+                        <a href="RateSetting.xhtml">Rate Setting</a>
+                        <a href="AssessmentMinSetting.xhtml">Assessment Minutes Setting</a>
+                    </div>
+                </li>
+
+                <li class="dropdown">
+                    <a href="MaintainSchoolDetails.xhtml">SCHOOL MANAGEMENT</a>
+                    <div class="dropdown-content fading">
+                        <a href="MaintainSchoolDetails.xhtml">Maintain School - Add</a>
+                        <a href="MaintainSchoolMenu.xhtml">Maintain School - View/Update</a>
+                        <a href="MaintainTeacher.xhtml">Maintain Teacher</a>
+                        <a href="MaintainAssessmentTask.xhtml">Maintain Assessment Task</a>
+                    </div>
+                </li>
+
+                <li> 
+                    <a href="EvaluatorPersonalDetails.xhtml">EVALUATOR MANAGEMENT</a>
+                </li>     <!--can use-->
+
+                <li> 
+                    <a href="EvaluatorWorkloadAllocationApplication.xhtml">WORKLOAD ALLOCATION</a>
+                </li>  
+
+                <li> 
+                    <a href="GenerateReport.xhtml">GENERATE REPORT</a>
+                </li>
+
+                <li> 
+                    <a href="Login.xhtml">LOG OUT</a>
+                </li>
+            </ul>
+             
+             <br />
+             <br />
+        
             <h1>RATE SETTING</h1>
             <h:form id="RateSetting" title="Rate setting page">
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
-                    <tr>
+<!--                    <tr>
                         <th colspan="4" align="right">    
                             <h:commandButton id="btnLogout" title="Click to logout" value="Log out" styleClass="buttonStyle" action="Login"/>
                         </th>
@@ -60,7 +104,7 @@
                     <tr>
                         <th><label>&nbsp;</label></th>
                         <th><label>&nbsp;</label></th> 
-                    </tr>
+                    </tr>-->
 
                     <tr>
                         <th colspan="4" align="left">
@@ -149,8 +193,8 @@
                     </tr>
 
                     <tr>
-                        <th colspan="2" align="left"> <h:commandButton id="btnCancel" title="Click to cancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
-                        <th align="right"> <h:commandButton id="btnReset" title="Click to reset" value="Reset" action="#{rateSetting.reset()}" styleClass="buttonStyle"/></th>
+                        <!--<th colspan="2" align="left"> <h:commandButton id="btnCancel" title="Click to cancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>-->
+                        <th colspan="3" align="left"> <h:commandButton id="btnReset" title="Click to reset" value="Reset" action="#{rateSetting.reset()}" styleClass="buttonStyle"/></th>
                         <th align="right"><h:commandButton id="btnConfirm" title="Click to confirm" value="Confirm" styleClass="buttonStyle" action="#{rateSetting.addSetting()}"/></th>
                     </tr> 
 

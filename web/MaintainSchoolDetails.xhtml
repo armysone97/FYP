@@ -6,6 +6,7 @@
     <h:head>
         <title>STEM CS Validation Programme</title>
         <h:outputStylesheet name="css/style.css" />
+         <!--<h:outputStylesheet name="js/script.js" />-->
 <!--        <style type="text/css"> 
             .buttonStyle{
                 font-size: 25px;
@@ -60,7 +61,7 @@
     <h:body>
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
-               <!--Top Navigation Bar-->
+                <!--Top Navigation Bar-->
             <ul class="topNav">
                 <li class="dropdown">
                     <a href="CSLevelSetting.xhtml">CS MANAGEMENT</a>
@@ -103,9 +104,81 @@
              <br />
              <br />
         
+        
             <h1>MAINTAIN SCHOOL DETAILS</h1>
             <h:form id="MaintainSchoolDetails" title="Maintain school details page">
-<!--                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
+<!--                
+                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
+
+                                        <tr>
+                                            <th colspan="3" align="right">     
+                                                <h:commandButton id="btnLogout" title="Click to logout" value="Log out" styleClass="buttonStyle" action="Login"/>
+                                            </th>
+                                        </tr> 
+                    
+                                        <tr>
+                                            <th><label>&nbsp;</label></th>
+                                            <th><label>&nbsp;</label></th> 
+                                        </tr>
+
+                    <tr>
+                        <th align="left"> 
+                            <h:outputText id="lblStateV" value="Select State"  styleClass="lblStyle"/>
+                        </th>
+
+                        <th align="right">
+                            <h:outputText id="simbol1V" value=": "  styleClass="lblStyle"/> </th>
+                        <th align="left">  
+                            <h:selectOneMenu title="Select state" value="{maintainSchoolDetails.stateV}" styleClass="ddlStyle">
+                                <f:selectItems value="{maintainSchoolDetails.get_state()}" />
+                            </h:selectOneMenu>
+                            &nbsp;&nbsp;&nbsp;    <h:commandButton title="Click to show school" id="btnShowList111V" value="Show" action="{maintainSchoolDetails.try11()}" styleClass="buttonShowStyle"/>
+                        </th>
+                    </tr>   
+
+                    <tr>
+                        <th align="left"> <h:outputText id="lblSchoolNameV" value="Enter School Name"  styleClass="lblStyle"/></th>
+                        <th align="right">
+                            <h:outputText id="simbol2V" value=": "  styleClass="lblStyle"/>
+                        </th>
+                        <th align="left">
+                            <h:selectOneMenu title="Select school" styleClass="ddlStyle" value="{maintainSchoolDetails.school}">
+                                <f:selectItems value="{maintainSchoolDetails.get_school()}"/> 
+                            </h:selectOneMenu>  
+                        </th>
+
+                    </tr> 
+
+
+
+                    <tr>
+                        <th align="left"> <h:outputText id="lblActionV" value="Select Action "  styleClass="lblStyle"/></th>
+                        <th align="right">
+                            <h:outputText id="simbol3V" value=": "  styleClass="lblStyle"/>
+                        </th>
+
+                        <th align="left">
+                            <h:selectOneRadio title="Select action"  layout="lineDirection" value="{maintainSchoolDetails.action}" styleClass="radiobuttonStyle"> 
+                                <f:selectItem itemValue = "View" itemLabel = "View " /> 
+                                <f:selectItem itemValue = "Update" itemLabel = "Update" />
+                            </h:selectOneRadio>
+                        </th>
+                    </tr> 
+
+                    <tr>
+                        <th><label>&nbsp;</label></th>
+                        <th><label>&nbsp;</label></th> 
+                    </tr>
+
+                    <tr>
+                        <th align="left"> <h:commandButton id="btnCancel" title="Click to cancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                        <th colspan="2" align="left"> <h:commandButton id="btnResetV" title="Click to reset" value="Reset" action="#{maintainSchoolDetails.resetV()}" styleClass="buttonStyle"/></th>
+                        <th align="right"><h:commandButton id="btnConfirmV" title="Click to confirm" value="Confirm" styleClass="buttonStyle" action="#{maintainSchoolDetails.nextPageToSchoolDetailV()}"/></th>
+                    </tr>  
+                </table>-->
+                
+<!--                
+                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
                     <tr>
                         <th colspan="4" align="right">     
@@ -277,7 +350,7 @@
                         
                         <tr>
                             <!--<th colspan="2" align="left"> <h:commandButton title="Click to cancel"  id="btnCancel100" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>-->
-                           <th colspan="4" align="right"><h:commandButton title="Click to confirm"  id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                           <th colspan="4" align="right"><h:commandButton title="Click to confirm"  id="btnConfirmL" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
                         </tr>  
 
                     </table>

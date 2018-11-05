@@ -24,6 +24,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
+//@ViewScoped
 
 public class MaintainSchoolMenu {
 

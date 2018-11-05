@@ -6,105 +6,111 @@
     <h:head>
         <title>STEM CS Validation Programme</title>
         <h:outputStylesheet name="css/style.css" />
-<!--        <style type="text/css"> 
-
-            .buttonStyle{
-                font-size: 25px;
-                column-width: 10px;
-                width: 200px;
-                height: 40px;
-            }
-
-            .buttonShowStyle{
-                font-size: 25px;
-                column-width: 10px;
-                width: 80px;
-                height: 40px;
-            }
-
-            .ddlStyle{
-                font-size: 20px;
-                column-width: 10px;
-                width: 200px;
-                height: 40px;
-            }
-
-            .txtboxStyle {
-                font-size: 18pt;
-                height: 35px;
-                width : 250px;
-            }
-
-            .lblStyle{
-                font-size: 20pt;
-            }
-
-            .radiobuttonStyle{ 
-                font-size: 20pt;
-            }
-
-        </style>-->
+        <h:outputStylesheet name="js/script.js" />
+        <!--        <style type="text/css"> 
+        
+                    .buttonStyle{
+                        font-size: 25px;
+                        column-width: 10px;
+                        width: 200px;
+                        height: 40px;
+                    }
+        
+                    .buttonShowStyle{
+                        font-size: 25px;
+                        column-width: 10px;
+                        width: 80px;
+                        height: 40px;
+                    }
+        
+                    .ddlStyle{
+                        font-size: 20px;
+                        column-width: 10px;
+                        width: 200px;
+                        height: 40px;
+                    }
+        
+                    .txtboxStyle {
+                        font-size: 18pt;
+                        height: 35px;
+                        width : 250px;
+                    }
+        
+                    .lblStyle{
+                        font-size: 20pt;
+                    }
+        
+                    .radiobuttonStyle{ 
+                        font-size: 20pt;
+                    }
+        
+                </style>-->
     </h:head>
     <h:body>
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
-               <!--Top Navigation Bar-->
+            <!--Top Navigation Bar-->
             <ul class="topNav">
                 <li class="dropdown">
-                    <a href="CSLevelSetting.xhtml">CS MANAGEMENT</a>
+                    <a href="CSLevelSetting.xhtml" onclick="reloadFunc()">CS MANAGEMENT</a>
                     <div class="dropdown-content fading">
-                        <a href="CSLevelSetting.xhtml">CS Level Setting</a>
-                        <a href="YearOfStudySetting.xhtml">Year Of Study Setting</a>
-                        <a href="AssessmentTaskSetting.xhtml">Assessment Task Setting</a>
-                        <a href="RateSetting.xhtml">Rate Setting</a>
-                        <a href="AssessmentMinSetting.xhtml">Assessment Minutes Setting</a>
+                        <a href="CSLevelSetting.xhtml" onclick="reloadFunc()">CS Level Setting</a>
+                        <a href="YearOfStudySetting.xhtml" onclick="reloadFunc()">Year Of Study Setting</a>
+                        <a href="AssessmentTaskSetting.xhtml" onclick="reloadFunc()">Assessment Task Setting</a>
+                        <a href="RateSetting.xhtml" onclick="reloadFunc()">Rate Setting</a>
+                        <a href="AssessmentMinSetting.xhtml" onclick="reloadFunc()">Assessment Minutes Setting</a>
                     </div>
                 </li>
 
                 <li class="dropdown">
-                    <a href="MaintainSchoolDetails.xhtml">SCHOOL MANAGEMENT</a>
+                    <a href="MaintainSchoolDetails.xhtml" onclick="reloadFunc()">SCHOOL MANAGEMENT</a>
                     <div class="dropdown-content fading">
-                        <a href="MaintainSchoolDetails.xhtml">Maintain School - Add</a>
-                        <a href="MaintainSchoolMenu.xhtml">Maintain School - View/Update</a>
-                        <a href="MaintainTeacher.xhtml">Maintain Teacher</a>
-                        <a href="MaintainAssessmentTask.xhtml">Maintain Assessment Task</a>
+                        <a href="MaintainSchoolDetails.xhtml" onclick="reloadFunc()">Maintain School - Add</a>
+                        <a href="MaintainSchoolMenu.xhtml" onclick="reloadFunc()">Maintain School - View/Update</a>
+                        <a href="MaintainTeacher.xhtml" onclick="reloadFunc()">Maintain Teacher</a>
+                        <a href="MaintainAssessmentTask.xhtml" onclick="reloadFunc()">Maintain Assessment Task</a>
                     </div>
                 </li>
 
                 <li> 
-                    <a href="EvaluatorPersonalDetails.xhtml">EVALUATOR MANAGEMENT</a>
+                    <a href="EvaluatorPersonalDetails.xhtml" onclick="reloadFunc()">EVALUATOR MANAGEMENT</a>
                 </li>     <!--can use-->
 
+<!--
                 <li> 
-                    <a href="EvaluatorWorkloadAllocationApplication.xhtml">WORKLOAD ALLOCATION</a>
+                    <h:commandLink class="commandLink" action = "#{navigationController.processCSLevelSettingPage()}" value = "Page2" />
+                </li> -->
+                
+                <li> 
+                    <a href="EvaluatorWorkloadAllocationApplication.xhtml" onclick="reloadFunc()">WORKLOAD ALLOCATION</a>
                 </li>  
 
                 <li> 
-                    <a href="GenerateReport.xhtml">GENERATE REPORT</a>
+                    <a href="GenerateReport.xhtml" onclick="reloadFunc()">GENERATE REPORT</a>
                 </li>
 
                 <li> 
-                    <a href="Login.xhtml">LOG OUT</a>
+                    <a href="Login.xhtml" onclick="reloadFunc()">LOG OUT</a>
                 </li>
             </ul>
-             
-             <br />
-             <br />
-        
+
+            <br />
+            <br />
+
             <h1>MAINTAIN SCHOOL MENU</h1>
             <h:form id="MaintainSchoolMenu" title="Maintain school menu page">
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
-<!--                    <tr>
-                        <th colspan="3" align="right">     
-                            <h:commandButton id="btnLogout" title="Click to logout" value="Log out" styleClass="buttonStyle" action="Login"/>
-                        </th>
-                    </tr> 
-
-                    <tr>
-                        <th><label>&nbsp;</label></th>
-                        <th><label>&nbsp;</label></th> 
-                    </tr>-->
+                    <!--                    <tr>
+                                            <th colspan="3" align="right">     
+                                                <h:commandButton id="btnLogout" title="Click to logout" value="Log out" styleClass="buttonStyle" action="Login"/>
+                                            </th>
+                                        </tr> 
+                    
+                                        <tr>
+                                            <th><label>&nbsp;</label></th>
+                                            <th><label>&nbsp;</label></th> 
+                                        </tr>-->
 
                     <tr>
                         <th align="left"> 

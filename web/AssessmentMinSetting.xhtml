@@ -106,33 +106,34 @@
                  
                  <br />
 
-                <p:menubar styleClass="NavigationBar">
+                 <p:menubar styleClass="NavigationBar">
+
                     <p:submenu label="STEM CS MANAGEMENT">
 
-                        <p:menuitem value="CS Level Setting" action="#{cSLevelSetting.goToNextPage()}" />
+                        <p:menuitem title="Click to redirect to CS Level Setting page" value="CS Level Setting" action="#{cSLevelSetting.goToNextPage()}" />
                         <!--<p:separator />-->
-                        <p:menuitem value="Year Of Study Setting" action="#{yearOfStudySetting.goToNextPage()}" />
-                        <p:menuitem value="Assessment Task Setting" action="#{assessmentTaskSetting.goToNextPage()}" />
+                        <p:menuitem title="Click to redirect to Year Of Study Setting page"  value="Year Of Study Setting" action="#{yearOfStudySetting.goToNextPage()}" />
+                        <p:menuitem  title="Click to redirect to Assessment Task Setting page" value="Assessment Task Setting" action="#{assessmentTaskSetting.goToNextPage()}" />
                         <p:submenu label="Rate Setting">
-                            <p:menuitem value="Overall Rate Setting" action="#{rateSetting.goToNextPage()}" />
-                            <p:menuitem value="Assessment Minutes Setting" action="#{assessmentMinSetting.goToNextPage()}" />
+                            <p:menuitem  title="Click to redirect to Overall Rate Setting page" value="Overall Rate Setting" action="#{rateSetting.goToNextPage()}" />
+                            <p:menuitem  title="Click to redirect to Assessment Minutes Setting page" value="Assessment Minutes Setting" action="#{assessmentMinSetting.goToNextPage()}" />
                         </p:submenu>
                     </p:submenu>
 
                     <p:submenu label="SCHOOL MANAGEMENT">
                         <p:submenu label="Maintain School">
-                            <p:menuitem value="Add New School" action="#{maintainSchoolDetails.goToNextPage()}" />
-                            <p:menuitem value="Edit/Update School" action="#{maintainSchoolMenu.goToNextPage()}" />
+                            <p:menuitem title="Click to redirect to Add New School page" value="Add New School" action="#{maintainSchoolDetails.goToNextPage()}" />
+                            <p:menuitem title="Click to redirect to Edit or Update School page" value="Edit/Update School" action="#{maintainSchoolMenu.goToNextPage()}" />
                         </p:submenu>
-                        <p:menuitem value="Maintain Teacher" action="#{maintainTeacher.goToNextPage()}" />
-                        <p:menuitem value="Maintain Assessment Task" action="#{maintainAssessmentTask.goToNextPage()}" />
+                        <p:menuitem title="Click to redirect to Maintain Teacher page" value="Maintain Teacher" action="#{maintainTeacher.goToNextPage()}" />
+                        <p:menuitem title="Click to redirect to Maintain Assessment Task page" value="Maintain Assessment Task" action="#{maintainAssessmentTask.goToNextPage()}" />
 
                     </p:submenu>
 
-                    <p:menuitem value="EVALUATOR MANAGEMENT" url="EvaluatorPersonalDetails.xhtml" />
-                    <p:menuitem value="WORKLOAD ALLOCATION" action="EvaluatorWorkloadAllocationApplication.xhtml?faces-redirect=true" />
-                    <p:menuitem value="REPORT" action="GenerateReport.xhtml?faces-redirect=true" />
-                    <p:menuitem style="position: absolute; right: 12px;"  value="LOG OUT" action="#{login.goToNextPage()}" />
+                    <p:menuitem title="Click to redirect to Evaluator Personal Details page" value="EVALUATOR MANAGEMENT" action="#{evaluatorPersonalDetails.goToNextPage()}" />
+                    <p:menuitem title="Click to redirect to Workload Allocation page" value="WORKLOAD ALLOCATION" action="#{evaluatorWorkloadAllocation.goToNextPage()}" />
+                    <p:menuitem title="Click to redirect to Generate Report page" value="REPORT" action="GenerateReport.xhtml?faces-redirect=true" />
+                    <p:menuitem title="Click to Log Out" style="position: absolute; right: 12px;" value="LOG OUT" action="#{login.goToNextPage()}" />
                 </p:menubar>
                  
                     <h1>ASSESSMENT MINUTES SETTING</h1>

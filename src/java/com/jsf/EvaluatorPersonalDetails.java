@@ -13,7 +13,6 @@ import javax.faces.bean.SessionScoped;
  *
  * @author ruenyenchin
  */
-
 @ManagedBean
 @SessionScoped
 
@@ -100,14 +99,14 @@ public class EvaluatorPersonalDetails {
     public void setWorkloadLimit(Integer workloadLimit) {
         this.workloadLimit = workloadLimit;
     }
-    
+
     //save evaluator personal details
-    public void evaluatorData(){
-        try{
+    public void evaluatorData() {
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO evaluatorpersonaldetails (staffID, name, campus, faculty, contactNo, status, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-                      
+
             statement.setString(1, staffID);
             statement.setString(2, evaName);
             statement.setString(3, branch);
@@ -116,144 +115,162 @@ public class EvaluatorPersonalDetails {
             statement.setString(6, status);
             statement.setString(7, staffID);
             statement.setString(8, contactNum);
-            
+
             statement.executeUpdate();
             statement.close();
             con.close();
-            
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         verifyRole();
     }
-    
-    //verify role type
-    public void verifyRole(){
 
-        try{
+    //verify role type
+    public void verifyRole() {
+
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM roles");
-            
-            while(rs.next()){
-              String rID = rs.getString("roleID");
-              String rType = rs.getString("roleType");
-                
-                if(role.equals(rType)){
+
+            while (rs.next()) {
+                String rID = rs.getString("roleID");
+                String rType = rs.getString("roleType");
+
+                if (role.equals(rType)) {
                     roleID = rID;
                     break;
                 }
             }
-            
+
             st.close();
             con.close();
-            
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         countRole(roleID);
     }
-    
+
     //count role to auto-generate id
-    public void countRole(String roleID){
-        
-        try{
+    public void countRole(String roleID) {
+
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM evaluatorroledetails");
-            
-            while(rs.next()){
-              evaCount = rs.getInt("COUNT(*)");
+
+            while (rs.next()) {
+                evaCount = rs.getInt("COUNT(*)");
             }
-            
+
             rs.close();
             st.close();
             con.close();
-            
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-       
+
         evaluatorRole(roleID, evaCount);
     }
-    
+
     //save evaluator role
-    public void evaluatorRole(String roleID, Integer evaCount){
-        
+    public void evaluatorRole(String roleID, Integer evaCount) {
+
         evaCount = evaCount + 1;
         rdID = "RD" + Integer.toString(evaCount);
-        
-        try{
+
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO evaluatorroledetails (RD_ID, roleID, staffID) VALUES (?, ?, ?)");
-                      
+
             statement.setString(1, rdID);
             statement.setString(2, roleID);
             statement.setString(3, staffID);
-            
+
             statement.executeUpdate();
             statement.close();
             con.close();
-            
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         countWorkloadLimit();
     }
-    
-    public void countWorkloadLimit(){
-        try{
+
+    public void countWorkloadLimit() {
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM workloadlimit");
-            
-            while(rs.next()){
-              workloadLimitCount = rs.getInt("COUNT(*)");
+
+            while (rs.next()) {
+                workloadLimitCount = rs.getInt("COUNT(*)");
             }
-            
+
             rs.close();
             st.close();
             con.close();
-            
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         addWorkloadLimit(workloadLimitCount);
     }
-    
-    public void addWorkloadLimit(Integer workloadLimitCount){
+
+    public void addWorkloadLimit(Integer workloadLimitCount) {
         workloadLimitCount = workloadLimitCount + 1;
         wlID = "WL" + Integer.toString(workloadLimitCount);
-        
-        try{
+
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO workloadlimit (WL_ID, workloadLimit, ttlWorkloadAssigned, year, staffID) VALUES (?, ?, ?, ?, ?)");
-                      
+
             statement.setString(1, wlID);
             statement.setInt(2, workloadLimit);
             statement.setInt(3, 0);
             statement.setInt(4, 2018);
             statement.setString(5, staffID);
-            
+
             statement.executeUpdate();
             statement.close();
             con.close();
-            
-        }catch(Exception ex){
+
+        } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
     }
     
-    public void main(String args[]){
+      //navigation bar purpose
+    public String goToNextPage(){
+        reset();
+        return "EvaluatorPersonalDetails";
+    }
+    
+    //reset page
+    public void reset() {
+        evaName = null;
+        staffID = null;
+        contactNum = null;
+        branch = "Kuala Lumpur Main Campus";
+        faculty = "FOCS";
+        role = null;
+        status = "Available";
+        workloadLimit = 0;
+    }
+
+    public void main(String args[]) {
         evaluatorData();
     }
 }

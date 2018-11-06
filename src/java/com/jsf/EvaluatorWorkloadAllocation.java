@@ -45,7 +45,7 @@ public class EvaluatorWorkloadAllocation {
     private List<String> cslevel_list = new ArrayList<>();
     private List<String> teacher_list = new ArrayList<>();
     private List<String> assessment_list = new ArrayList<>();
-    
+
     public EvaluatorWorkloadAllocation(String evaluator, String school) {
         super();
         this.evaluator = evaluator;
@@ -55,7 +55,7 @@ public class EvaluatorWorkloadAllocation {
     public EvaluatorWorkloadAllocation() {
         super();
     }
-    
+
     public int getWorkloadLimit() {
         return workloadLimit;
     }
@@ -107,7 +107,7 @@ public class EvaluatorWorkloadAllocation {
     public void setAssType(String assType) {
         this.assType = assType;
     }
-    
+
     public void setTeacher(String teacher) {
         this.teacher = teacher;
     }
@@ -123,7 +123,7 @@ public class EvaluatorWorkloadAllocation {
     public void setResult(String result) {
         this.result = result;
     }
-    
+
     public void setWorkloadAssigned(double workloadAssigned) {
         this.workloadAssigned = workloadAssigned;
     }
@@ -147,13 +147,13 @@ public class EvaluatorWorkloadAllocation {
     public void setAssessment_list(List<String> assessment_list) {
         this.assessment_list = assessment_list;
     }
-    
-    public List<EvaluatorWorkloadAllocation> findAll(){
+
+    public List<EvaluatorWorkloadAllocation> findAll() {
         List<EvaluatorWorkloadAllocation> listWorkload = new ArrayList<EvaluatorWorkloadAllocation>();
-        
+
         return listWorkload;
     }
-    
+
     //retrieve total number of student
     public void retrieveTotalStudent() {
 
@@ -307,10 +307,10 @@ public class EvaluatorWorkloadAllocation {
         }
     }
 
-    public void retrieveNumSamAss(){
-        
+    public void retrieveNumSamAss() {
+
         String assActivityIDFromDB = "";
-        
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -329,7 +329,7 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -349,17 +349,17 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         calculateWorkload();
     }
-    
-    public void calculateWorkload(){
-        
+
+    public void calculateWorkload() {
+
         workloadAssigned = workloadMin * totalStudent;
-        
-        result = String.format("%.2f", (workloadAssigned/60));
+
+        result = String.format("%.2f", (workloadAssigned / 60));
     }
-    
+
     public List<String> get_EvaluatorList() {
 
         evaluator_list.clear();
@@ -517,9 +517,8 @@ public class EvaluatorWorkloadAllocation {
 //        }
 //        
 //    }
-    
-    public List<String> get_AssessmentList(){
-        
+    public List<String> get_AssessmentList() {
+
         assessment_list.clear();
 
         try {
@@ -539,8 +538,27 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         return assessment_list;
+    }
+
+    //navigation bar purpose
+    public String goToNextPage() {
+        reset();
+        return "EvaluatorWorkloadAllocationApplication";
+    }
+
+    //reset page
+    public void reset() {
+        school = null;
+        csLevel = null;
+        teacher = null;
+        workloadLimit = 0;
+        totalStudent = 0;
+        assType = null;
+        workloadMin = 0;
+        workloadAssigned = 0;
+        year = 2018;
     }
 
     public void main(String args[]) {

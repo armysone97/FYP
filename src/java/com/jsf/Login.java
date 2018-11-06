@@ -34,10 +34,12 @@ public class Login {
     private String password;
     private String role;
     private String nextPage;
+    private int counterReset;
 
     public Login() {
         role = "Admin";
 //        username = null;
+        counterReset = 0;
     }
 
     public String getNextPage() {
@@ -149,7 +151,7 @@ public class Login {
 
             while (rs.next()) {
                 count += 1;
-                context.addMessage(null, new FacesMessage("success1"));
+                //  context.addMessage(null, new FacesMessage("success1"));
 
                 roleList[tmp] = rs.getString("roleID");
                 tmp++;
@@ -162,21 +164,33 @@ public class Login {
         }
 
         String roleIDFromDB = matchRoleID();
+        int counter = 0;
 
         for (int i = 0; i < roleList.length; i++) {
 
             if (roleList[i].equals(roleIDFromDB)) {
                 roleTypes = role;
-                
-                if (role.equals("Admin")){
+                counter = 1;
+
+                if (role.equals("Admin")) {
                     nextPage = "CSLevelSetting";
-                }else if(role.equals("Evaluator")){
-                     nextPage = "WorkloadClaimApplication";
+
+                    context.addMessage(null, new FacesMessage("Login Successful!"));
+
+                } else if (role.equals("Evaluator")) {
+                    nextPage = "WorkloadClaimApplication";
+
+                    context.addMessage(null, new FacesMessage("Login Successful!"));
+
                 }
 //                nextPage = "login" + role;
 
                 break;
             }
+        }
+
+        if (counter == 0) {
+            context.addMessage(null, new FacesMessage("Invalid role, please try again!"));
         }
 
         return nextPage;
@@ -189,9 +203,6 @@ public class Login {
         Boolean verify = false;
         String staffID = "";
 //        String nextPage = "";
-
-      context.addMessage(null, new FacesMessage("xxxx"));
-           
 
         if (username.equals("") || password.equals("")) {
             context.addMessage(null, new FacesMessage("Username or password cannot be empty, please try again!"));
@@ -207,8 +218,6 @@ public class Login {
                     if (username.equals(rs.getString("username")) && password.equals(rs.getString("password"))) {
                         staffID = rs.getString("staffID");
 
-                        context.addMessage(null, new FacesMessage("success"));
-
                         verify = true;
                         nextPage = verifyRole(staffID);
                         break;
@@ -221,6 +230,7 @@ public class Login {
             } catch (Exception ex) {
                 System.out.println("Error: " + ex);
             }
+
             if (!verify) {
                 context.addMessage(null, new FacesMessage("Invalid username or password, please try again!"));
             }
@@ -231,22 +241,38 @@ public class Login {
 
     //navigation bar purpose
     public String goToNextPage() {
+        
+//        FacesContext context = FacesContext.getCurrentInstance();
+//        context.addMessage(null, new FacesMessage("Logout successful!"));
+
+        counterReset = 1;
+
         reset();
+               
         return "Login";
     }
 
     //reset page
     public void reset() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        switch (counterReset) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Reset successful!"));
+                break;
+        }
+
         //set default value
         username = null;
         password = null;
         nextPage = null;
         role = "Admin";
+        counterReset = 0;
     }
 
 //    public void main(String args[]) {
 //
 //        verifyUser();
 //    }
-
 }

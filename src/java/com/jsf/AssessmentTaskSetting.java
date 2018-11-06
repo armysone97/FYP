@@ -709,6 +709,7 @@ public class AssessmentTaskSetting {
     
      //navigation bar purpose
     public String goToNextPage() {
+//          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ajax Update"));
         reset();
         return "AssessmentTaskSetting";
     }

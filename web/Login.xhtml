@@ -61,7 +61,7 @@
             <h1>LOGIN</h1>
             <h:form id="login" title="Login page">
                 
-                <p:growl id="errorMessage" />
+                <p:growl id="messages" />
  
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
                     
@@ -92,14 +92,14 @@
 
                     <tr>
                         <th> <h:outputText id="lblUsername" value="Username:"  styleClass="lblStyle"/></th>
-                        <th align="left"><h:inputText id="txtUsername" title="Enter username" styleClass="txtboxStyle" value="#{login.username}" required="true" size="35"/>
+                        <th align="left"><h:inputText id="txtUsername" title="Enter username" styleClass="txtboxStyle" value="#{login.username}" size="35"/>
                     <!--<p:message id="message" for="txtUsername"></p:message>-->
                     </th>
                     </tr>
 
                     <tr>
                         <th><h:outputText id="lblPassword" value="Password:" styleClass="lblStyle"/></th>
-                        <th align="left"><h:inputSecret id="txtPswd" title="Enter password" styleClass="txtboxStyle" value="#{login.password}" required="true" size="35" /></th>
+                        <th align="left"><h:inputSecret id="txtPswd" title="Enter password" styleClass="txtboxStyle" value="#{login.password}" size="35" /></th>
                     </tr>
 
                     <tr>

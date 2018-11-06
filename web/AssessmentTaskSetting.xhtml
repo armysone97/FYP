@@ -104,10 +104,10 @@
 
                     <p:submenu label="STEM CS MANAGEMENT">
 
-                        <p:menuitem title="Click to redirect to CS Level Setting page" value="CS Level Setting" action="#{cSLevelSetting.goToNextPage()}" />
+                        <p:menuitem title="Click to redirect to CS Level Setting page" value="CS Level Setting" action="#{cSLevelSetting.goToNextPage()}" update="messages" />
                         <!--<p:separator />-->
                         <p:menuitem title="Click to redirect to Year Of Study Setting page"  value="Year Of Study Setting" action="#{yearOfStudySetting.goToNextPage()}" />
-                        <p:menuitem  title="Click to redirect to Assessment Task Setting page" value="Assessment Task Setting" action="#{assessmentTaskSetting.goToNextPage()}" />
+                        <p:menuitem  title="Click to redirect to Assessment Task Setting page" value="Assessment Task Setting" action="#{assessmentTaskSetting.goToNextPage()}" update="messages" />
                         <p:submenu label="Rate Setting">
                             <p:menuitem  title="Click to redirect to Overall Rate Setting page" value="Overall Rate Setting" action="#{rateSetting.goToNextPage()}" />
                             <p:menuitem  title="Click to redirect to Assessment Minutes Setting page" value="Assessment Minutes Setting" action="#{assessmentMinSetting.goToNextPage()}" />

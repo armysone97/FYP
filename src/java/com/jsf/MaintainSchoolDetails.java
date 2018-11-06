@@ -40,55 +40,42 @@ public class MaintainSchoolDetails {
 
     private String testing;
 
-    private String action, stateV, school;
-
-    private List<String> school_list = new ArrayList<>();
-    private List<String> state_list = new ArrayList<>();
-
     public MaintainSchoolDetails() {
-
-//        this.stateV = "Pulau Pinang";
-////        this.globalCounter = 0;
-//        this.action = "View";
 
         this.disabledStatus = true;
         this.disabledCommYear = true;
         this.year = 2018;
 
-        this.state = "Johor";
-        this.disabledTxt = false;
-        this.schoolID = autoGenerateID();
-        this.commYear = 2018;
-        this.disabledAddButton = false;
-        this.disabledEditButton = true;
-        this.addButtonName = "Confirm";
-        this.editButtonName = "Edit";
-        this.disabledResetButton = false;
+        switch (MaintainSchoolMenu.getGlobalCounter()) {
+            case 0: //add
+                this.state = "Johor";
+                this.disabledTxt = false;
+                this.schoolID = autoGenerateID();
+                this.commYear = 2018;
+                this.disabledAddButton = false;
+                this.disabledEditButton = true;
+                this.addButtonName = "Confirm";
+                this.editButtonName = "Edit";
+                this.disabledResetButton = false;
+                
+                 MaintainSchoolMenu.setGlobalCounter(0);
+                
+                break;
+            case 1: //view or update
+                this.state = MaintainSchoolMenu.getGlobalState();
+                this.name = MaintainSchoolMenu.getGlobalSchool();
+                this.schoolID = MaintainSchoolMenu.getGlobalSchoolID();
+                this.disabledEditButton = false;
+                this.addButtonName = "New";
+                this.disabledResetButton = true;
 
-    }
+                MaintainSchoolMenu.setGlobalCounter(0);
 
-    public String getAction() {
-        return action;
-    }
+                schoolDetailsList(schoolID);
 
-    public void setAction(String action) {
-        this.action = action;
-    }
-
-    public String getStateV() {
-        return stateV;
-    }
-
-    public void setStateV(String stateV) {
-        this.stateV = stateV;
-    }
-
-    public String getSchool() {
-        return school;
-    }
-
-    public void setSchool(String school) {
-        this.school = school;
+                this.disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
+                break;
+        }
     }
 
     public Boolean getDisabledResetButton() {
@@ -225,186 +212,6 @@ public class MaintainSchoolDetails {
 
     public void setDisabledEditButton(Boolean disabledEditButton) {
         this.disabledEditButton = disabledEditButton;
-    }
-
-    //remove duplicate element for teacher name array
-    public static int removeDuplicateElementsString(String arr[], int n) {
-        if (n == 0 || n == 1) {
-            return n;
-        }
-        String[] temp = new String[n];
-        int j = 0;
-        for (int i = 0; i < n - 1; i++) {
-            if (!arr[i].equals(arr[i + 1])) {
-                temp[j++] = arr[i];
-            }
-        }
-        temp[j++] = arr[n - 1];
-
-        // Changing original array  
-        for (int i = 0; i < j; i++) {
-            arr[i] = temp[i];
-        }
-        return j;
-    }
-
-    //count state in db
-    public Integer get_stateCount() {
-
-        int count = 0;
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT schoolState FROM school");
-
-            while (rs.next()) {
-                count++;
-            }
-
-            st.close();
-            con.close();
-
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
-        }
-
-        return count;
-    }
-
-    //get year from db 
-    public List<String> get_state() {
-
-        state_list.clear();
-
-        int lengthYearList = get_stateCount();
-
-        String[] stateListDuplicate = new String[lengthYearList];
-
-        FacesContext context = FacesContext.getCurrentInstance();
-        int count = 1;
-        int tmp = 0;
-
-        // stateListDuplicate[0] = 2018;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT schoolState FROM school");
-
-            while (rs.next()) {
-                stateListDuplicate[tmp] = rs.getString("schoolState");
-                tmp++;
-            }
-
-            st.close();
-            con.close();
-
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
-        }
-
-        Arrays.sort(stateListDuplicate);//sorting array  
-        int length = stateListDuplicate.length;
-        length = removeDuplicateElementsString(stateListDuplicate, length);
-
-        //printing array elements  
-        for (int i = 0; i < length; i++) {
-            state_list.add(stateListDuplicate[i]);
-        }
-        return state_list;
-    }
-
-    //get school list and put inside ddl based on the state that is selected by user in ddl
-    public List<String> get_school() {
-
-        school_list.clear();
-
-        FacesContext context = FacesContext.getCurrentInstance();
-        int count = 1;
-        String tmp = "";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT schoolName FROM school WHERE schoolState = ?");
-            st.setString(1, stateV);
-            ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                school_list.add(rs.getString("schoolName"));
-            }
-
-            st.close();
-            con.close();
-
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
-        }
-        return school_list;
-    }
-
-    public void nextPageToSchoolDetailV() {
-
-//        String nextPage = "MaintainSchoolDetails"; //link to next page purpose
-//        globalAction = action;
-//        globalSchool = school;
-//        globalState = state;
-//        globalCounter = 1;
-        int counter = 1;
-        String schoolIDV = "";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE schoolState = ? AND schoolName = ?");
-            st.setString(1, stateV);
-            st.setString(2, school);
-            ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                schoolIDV = rs.getString("schoolID");
-            }
-
-            st.close();
-            con.close();
-
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
-        }
-
-//        return nextPage;
-        viewUpdate(schoolIDV, counter);
-    }
-    
-    public void try11(){
-        name = "xxxyyy";
-    }
-
-    public void viewUpdate(String schoolIDV, int counter) {
-        state = stateV;
-        name = school;
-        schoolID = schoolIDV;
-        disabledEditButton = false;
-        addButtonName = "New";
-        disabledResetButton = true;
-
-//        MaintainSchoolMenu.setGlobalCounter(0);
-
-        schoolDetailsList(schoolID);
-
-        this.disabledTxt = actionSelectionDisable(action);
-
-    }
-    
-      //reset page
-    public void resetV() {
-
-        //set default value
-        stateV = "Pulau Pinang";
-//        globalCounter = 0;
-        action = "View";
     }
 
     public Boolean actionSelectionDisable(String action) {
@@ -655,6 +462,26 @@ public class MaintainSchoolDetails {
 
     }
 
+    //remove duplicate element for cs level id array
+    public static int removeDuplicateElementsString(String arr[], int n) {
+        if (n == 0 || n == 1) {
+            return n;
+        }
+        String[] temp = new String[n];
+        int j = 0;
+        for (int i = 0; i < n - 1; i++) {
+            if (!arr[i].equals(arr[i + 1])) {
+                temp[j++] = arr[i];
+            }
+        }
+        temp[j++] = arr[n - 1];
+
+        // Changing original array  
+        for (int i = 0; i < j; i++) {
+            arr[i] = temp[i];
+        }
+        return j;
+    }
 
     //count csID in db
     public int get_csCount(int numYearComm) {

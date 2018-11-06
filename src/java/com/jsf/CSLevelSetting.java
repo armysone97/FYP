@@ -798,6 +798,11 @@ public class CSLevelSetting {
         }
 
     }
+    
+    public String goToNextPage(){
+        reset();
+        return "CSLevelSetting";
+    }
 
     //reset page
     public void reset() {

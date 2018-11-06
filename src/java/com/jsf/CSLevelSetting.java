@@ -799,6 +799,7 @@ public class CSLevelSetting {
 
     }
     
+    //navigation bar purpose
     public String goToNextPage(){
         reset();
         return "CSLevelSetting";

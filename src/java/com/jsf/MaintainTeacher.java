@@ -1762,6 +1762,12 @@ public class MaintainTeacher {
         }
 
     }
+    
+     //navigation bar purpose
+    public String goToNextPage() {
+        reset();
+        return "MaintainTeacher";
+    }
 
     //reset page
     public void reset() {

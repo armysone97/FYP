@@ -256,6 +256,12 @@ public class MaintainSchoolMenu {
 
         return nextPage;
     }
+    
+     //navigation bar purpose
+    public String goToNextPage() {
+        reset();
+        return "MaintainSchoolMenu";
+    }
 
     //reset page
     public void reset() {

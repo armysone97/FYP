@@ -326,6 +326,12 @@ public class RateSetting {
             System.out.println("Error: " + ex);
         }
     }
+    
+     //navigation bar purpose
+    public String goToNextPage() {
+        reset();
+        return "RateSetting";
+    }
 
     //reset page
     public void reset() {

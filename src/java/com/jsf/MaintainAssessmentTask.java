@@ -938,6 +938,12 @@ public class MaintainAssessmentTask {
             System.out.println("Error: " + ex);
         }
     }
+    
+     //navigation bar purpose
+    public String goToNextPage() {
+        reset();
+        return "MaintainAssessmentTask";
+    }
 
     //reset page
     public void reset() {

@@ -624,6 +624,12 @@ public class AssessmentMinSetting {
             System.out.println("Error: " + ex);
         }
     }
+    
+     //navigation bar purpose
+    public String goToNextPage() {
+        reset();
+        return "AssessmentMinSetting";
+    }
 
     //reset page
     public void reset() {

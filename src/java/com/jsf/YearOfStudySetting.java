@@ -749,6 +749,12 @@ public class YearOfStudySetting {
         }
 
     }
+    
+     //navigation bar purpose
+    public String goToNextPage() {
+        reset();
+        return "YearOfStudySetting";
+    }
 
     //reset page
     public void reset() {

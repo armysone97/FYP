@@ -33,10 +33,19 @@ public class Login {
     private String username;
     private String password;
     private String role;
+    private String nextPage;
 
     public Login() {
         role = "Admin";
-        username = null;
+//        username = null;
+    }
+
+    public String getNextPage() {
+        return nextPage;
+    }
+
+    public void setNextPage(String nextPage) {
+        this.nextPage = nextPage;
     }
 
     public String getUsername() {
@@ -88,8 +97,8 @@ public class Login {
 
         return count;
     }
-    
-     public String matchRoleID() {
+
+    public String matchRoleID() {
 
         String roleID = "";
 
@@ -123,7 +132,7 @@ public class Login {
         Boolean verify = false;
         Boolean verify1 = false;
         String roleTypes = "";
-        String nextPage = "";
+//        String nextPage = "";
 
         int lengthRoleList = get_roleCount(staffID);
 
@@ -146,22 +155,29 @@ public class Login {
                 tmp++;
 
                 verify1 = true;
-                
+
             }
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         String roleIDFromDB = matchRoleID();
-       
-            for (int i = 0; i < roleList.length; i++) {
+
+        for (int i = 0; i < roleList.length; i++) {
+
+            if (roleList[i].equals(roleIDFromDB)) {
+                roleTypes = role;
                 
-                if(roleList[i].equals(roleIDFromDB)){
-                     roleTypes = role;
-                     nextPage = "login"+role;
-                     break;
+                if (role.equals("Admin")){
+                    nextPage = "CSLevelSetting";
+                }else if(role.equals("Evaluator")){
+                     nextPage = "WorkloadClaimApplication";
                 }
+//                nextPage = "login" + role;
+
+                break;
             }
+        }
 
         return nextPage;
 
@@ -172,7 +188,10 @@ public class Login {
         FacesContext context = FacesContext.getCurrentInstance();
         Boolean verify = false;
         String staffID = "";
-        String nextPage = "";
+//        String nextPage = "";
+
+      context.addMessage(null, new FacesMessage("xxxx"));
+           
 
         if (username.equals("") || password.equals("")) {
             context.addMessage(null, new FacesMessage("Username or password cannot be empty, please try again!"));
@@ -209,18 +228,25 @@ public class Login {
 
         return nextPage;
     }
-    
+
+    //navigation bar purpose
+    public String goToNextPage() {
+        reset();
+        return "Login";
+    }
+
     //reset page
-    public void reset(){
-         //set default value
+    public void reset() {
+        //set default value
         username = null;
         password = null;
+        nextPage = null;
         role = "Admin";
     }
 
-    public void main(String args[]) {
-
-        verifyUser();
-    }
+//    public void main(String args[]) {
+//
+//        verifyUser();
+//    }
 
 }

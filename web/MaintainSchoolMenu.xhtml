@@ -94,39 +94,45 @@
              <br />-->
         
 
-            <h1>MAINTAIN SCHOOL MENU</h1>
             <h:form id="MaintainSchoolMenu" title="Maintain school menu page">
                 
-                  <p:growl id="messages"/>
+                <p:growl id="messages"/>
+                
+                <br />
 
-                <p:menubar>
+                <p:menubar styleClass="NavigationBar">
                     <p:submenu label="STEM CS MANAGEMENT">
 
-                        <p:menuitem value="CS Level Setting" url="CSLevelSetting.xhtml" />
+                        <p:menuitem value="CS Level Setting" action="#{cSLevelSetting.goToNextPage()}" />
                         <!--<p:separator />-->
-                        <p:menuitem value="Year Of Study Setting" action="YearOfStudySetting.xhtml?faces-redirect=true" />
-                        <p:menuitem value="Assessment Task Setting" action="AssessmentTaskSetting.xhtml?faces-redirect=true" />
+                        <p:menuitem value="Year Of Study Setting" action="#{yearOfStudySetting.goToNextPage()}" />
+                        <p:menuitem value="Assessment Task Setting" action="#{assessmentTaskSetting.goToNextPage()}" />
                         <p:submenu label="Rate Setting">
-                            <p:menuitem value="Overall Rate Setting" url="RateSetting.xhtml" />
-                            <p:menuitem value="Assessment Minutes Setting" action="AssessmentMinSetting.xhtml?faces-redirect=true" />
+                            <p:menuitem value="Overall Rate Setting" action="#{rateSetting.goToNextPage()}" />
+                            <p:menuitem value="Assessment Minutes Setting" action="#{assessmentMinSetting.goToNextPage()}" />
                         </p:submenu>
                     </p:submenu>
 
                     <p:submenu label="SCHOOL MANAGEMENT">
                         <p:submenu label="Maintain School">
-                            <p:menuitem value="Add New School" action="MaintainSchoolDetails.xhtml?faces-redirect=true" />
-                            <p:menuitem value="Edit/Update School" url="MaintainSchoolMenu.xhtml" />
+                            <p:menuitem value="Add New School" action="#{maintainSchoolDetails.goToNextPage()}" />
+                            <p:menuitem value="Edit/Update School" action="#{maintainSchoolMenu.goToNextPage()}" />
                         </p:submenu>
-                        <p:menuitem value="Maintain Teacher" action="MaintainTeacher.xhtml?faces-redirect=true" />
-                        <p:menuitem value="Maintain Assessment Task" action="MaintainAssessmentTask.xhtml?faces-redirect=true" />
+                        <p:menuitem value="Maintain Teacher" action="#{maintainTeacher.goToNextPage()}" />
+                        <p:menuitem value="Maintain Assessment Task" action="#{maintainAssessmentTask.goToNextPage()}" />
 
                     </p:submenu>
 
                     <p:menuitem value="EVALUATOR MANAGEMENT" url="EvaluatorPersonalDetails.xhtml" />
                     <p:menuitem value="WORKLOAD ALLOCATION" action="EvaluatorWorkloadAllocationApplication.xhtml?faces-redirect=true" />
                     <p:menuitem value="REPORT" action="GenerateReport.xhtml?faces-redirect=true" />
-                    <p:menuitem value="LOG OUT" action="Login.xhtml?faces-redirect=true" />
+                    <p:menuitem style="position: absolute; right: 12px;" value="LOG OUT" action="#{login.goToNextPage()}" />
                 </p:menubar>
+                
+                <h1>MAINTAIN SCHOOL MENU</h1>
+                
+                <br />
+                <br />
                 
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 

@@ -706,6 +706,12 @@ public class AssessmentTaskSetting {
             System.out.println("Error: " + ex);
         }
     }
+    
+     //navigation bar purpose
+    public String goToNextPage() {
+        reset();
+        return "AssessmentTaskSetting";
+    }
 
     //reset page
     public void reset() {

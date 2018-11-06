@@ -7,7 +7,7 @@
     <h:head>
         <title>STEM CS Validation Programme</title>
         <h:outputStylesheet name="css/style.css" />
-         <h:outputStylesheet name="js/script.js" />
+         <!--<h:outputStylesheet name="js/script.js" />-->
 <!--        <style type="text/css"> 
             .buttonStyle{
                 font-size: 25px;
@@ -105,39 +105,46 @@
              <br />
              <br />-->
         
-            <h1>MAINTAIN SCHOOL DETAILS</h1>
-            <h:form id="MaintainSchoolDetails" title="Maintain school details page">
+           <h:form id="MaintainSchoolDetails" title="Maintain school details page">
                 
-                 <p:growl id="messages"/>
+               <p:growl id="messages"/>
+               
+               <br />
 
-                <p:menubar>
+               <p:menubar styleClass="NavigationBar">
                     <p:submenu label="STEM CS MANAGEMENT">
 
-                        <p:menuitem value="CS Level Setting" action="CSLevelSetting.xhtml?faces-redirect=true" />
+                        <p:menuitem value="CS Level Setting" action="#{cSLevelSetting.goToNextPage()}" />
                         <!--<p:separator />-->
-                        <p:menuitem value="Year Of Study Setting" action="YearOfStudySetting.xhtml?faces-redirect=true" />
-                        <p:menuitem value="Assessment Task Setting" action="AssessmentTaskSetting.xhtml?faces-redirect=true" />
+                        <p:menuitem value="Year Of Study Setting" action="#{yearOfStudySetting.goToNextPage()}" />
+                        <p:menuitem value="Assessment Task Setting" action="#{assessmentTaskSetting.goToNextPage()}" />
                         <p:submenu label="Rate Setting">
-                            <p:menuitem value="Overall Rate Setting" action="RateSetting.xhtml?faces-redirect=true" />
-                            <p:menuitem value="Assessment Minutes Setting" action="AssessmentMinSetting.xhtml?faces-redirect=true" />
+                            <p:menuitem value="Overall Rate Setting" action="#{rateSetting.goToNextPage()}" />
+                            <p:menuitem value="Assessment Minutes Setting" action="#{assessmentMinSetting.goToNextPage()}" />
                         </p:submenu>
                     </p:submenu>
 
                     <p:submenu label="SCHOOL MANAGEMENT">
                         <p:submenu label="Maintain School">
-                            <p:menuitem value="Add New School" action="MaintainSchoolDetails.xhtml?faces-redirect=true" />
-                            <p:menuitem value="Edit/Update School" action="MaintainSchoolMenu.xhtml?faces-redirect=true" />
+                            <p:menuitem value="Add New School" action="#{maintainSchoolDetails.goToNextPage()}" />
+                            <p:menuitem value="Edit/Update School" action="#{maintainSchoolMenu.goToNextPage()}" />
                         </p:submenu>
-                        <p:menuitem value="Maintain Teacher" action="MaintainTeacher.xhtml?faces-redirect=true" />
-                        <p:menuitem value="Maintain Assessment Task" action="MaintainAssessmentTask.xhtml?faces-redirect=true" />
+                        <p:menuitem value="Maintain Teacher" action="#{maintainTeacher.goToNextPage()}" />
+                        <p:menuitem value="Maintain Assessment Task" action="#{maintainAssessmentTask.goToNextPage()}" />
 
                     </p:submenu>
 
-                    <p:menuitem value="EVALUATOR MANAGEMENT" action="EvaluatorPersonalDetails.xhtml?faces-redirect=true" />
+                    <p:menuitem value="EVALUATOR MANAGEMENT" url="EvaluatorPersonalDetails.xhtml" />
                     <p:menuitem value="WORKLOAD ALLOCATION" action="EvaluatorWorkloadAllocationApplication.xhtml?faces-redirect=true" />
                     <p:menuitem value="REPORT" action="GenerateReport.xhtml?faces-redirect=true" />
-                    <p:menuitem value="LOG OUT" action="Login.xhtml?faces-redirect=true" />
+                    <p:menuitem style="position: absolute; right: 12px;" value="LOG OUT" action="#{login.goToNextPage()}" />
                 </p:menubar>
+               
+                  <h1>MAINTAIN SCHOOL DETAILS</h1>
+          
+               
+               <br />
+               <br />
                 
 <!--                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
@@ -155,7 +162,7 @@
 
                 <fieldset style="display: inline-block">
                     <legend id="schoolDetails" align="left">
-                             <h:outputText id="lblEnrolNum" value="School Details"  styleClass="lblStyle"/>
+                             <h:outputText id="lblSchoolDetails" value="School Details"  styleClass="lblStyle"/>
                     </legend>
 
                     <table title="School details" border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">

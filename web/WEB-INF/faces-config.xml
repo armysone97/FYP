@@ -22,12 +22,12 @@
 
         <navigation-case>
             <from-action>#{login.verifyUser()}</from-action>
-            <from-outcome>loginEvaluator</from-outcome>
+            <from-outcome>WorkloadClaimApplication</from-outcome>
             <to-view-id>/WorkloadClaimApplication.xhtml</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-action>#{login.verifyUser()}</from-action>
-            <from-outcome>loginAdmin</from-outcome>
+            <from-outcome>CSLevelSetting</from-outcome>
             <to-view-id>/CSLevelSetting.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
@@ -120,14 +120,34 @@
             <to-view-id>/MaintainAssessmentTask.xhtml</to-view-id>
         </navigation-case>
         
-        <navigation-case>
+<!--        <navigation-case>
             <from-action>#{evaluatorPersonalDetails.goToNextPage()}</from-action>
             <from-outcome>EvaluatorPersonalDetails</from-outcome>
             <to-view-id>/EvaluatorPersonalDetails.xhtml</to-view-id>
         </navigation-case>
         
+          <navigation-case>
+            <from-action>#{evaluatorWorkloadAllocation.goToNextPage()}</from-action>
+            <from-outcome>EvaluatorWorkloadAllocationApplication</from-outcome>
+            <to-view-id>/EvaluatorWorkloadAllocationApplication.xhtml</to-view-id>
+        </navigation-case>-->
         
+<!--         <navigation-case>
+            <from-action>#{workloadClaimApplication.goToNextPage()}</from-action>
+            <from-outcome>WorkloadClaimApplication</from-outcome>
+            <to-view-id>/WorkloadClaimApplication.xhtml</to-view-id>
+        </navigation-case>
         
-    
+          <navigation-case>
+            <from-action>#{mileageClaimApplication.goToNextPage()}</from-action>
+            <from-outcome>MileageClaimApplication</from-outcome>
+            <to-view-id>/MileageClaimApplication.xhtml</to-view-id>
+        </navigation-case>
+        
+         <navigation-case>
+            <from-action>#{generateReport.goToNextPage()}</from-action>
+            <from-outcome>GenerateReport</from-outcome>
+            <to-view-id>/GenerateReport.xhtml</to-view-id>
+        </navigation-case>-->
 </faces-config>
 

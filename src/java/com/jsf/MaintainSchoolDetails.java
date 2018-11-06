@@ -703,6 +703,12 @@ public class MaintainSchoolDetails {
             System.out.println("Error: " + ex);
         }
     }
+    
+     //navigation bar purpose
+    public String goToNextPage() {
+        reset();
+        return "MaintainSchoolDetails";
+    }
 
     //reset page
     public void reset() {

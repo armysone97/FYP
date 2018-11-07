@@ -1574,6 +1574,9 @@ public class MaintainTeacher {
     //update ttlenrolstud in schoolcsmap table
     public void updateTtlEnrolStud(String scID) {
 
+        FacesContext context = FacesContext.getCurrentInstance();
+        int verifyCounter = 0;
+
         int originalStud = 0, latestStud = 0;
 
         //get the original ttlenrolstud num first
@@ -1611,8 +1614,21 @@ public class MaintainTeacher {
             statement.close();
             con.close();
 
+            verifyCounter = 1;
+
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
+        }
+
+        switch (verifyCounter) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Add New Teacher CS Map of teacher name " + teacher + " for school " + school + " not successful!"));
+                break;
+            case 1:
+                context.addMessage(null, new FacesMessage("Add New Teacher CS Map of teacher name " + teacher + " for school " + school + " successful!"));
+                disabledTxt = true;
+                disabledStatus = true;
+                break;
         }
 
         // temp = "lateststud: " + latestStud + " studNum: " + studNum + " originalStud: " + originalStud + " scID: " + scID;
@@ -1689,35 +1705,47 @@ public class MaintainTeacher {
 
     public void addTeacher() {
 
-        newCount = 0;
+        FacesContext context = FacesContext.getCurrentInstance();
 
-        String ttt = "";
+        int verifyCounter = 0;
 
-        ttt = newTeacherName;
-
-        newTeacherID = autoGenerateTeacherID();
+       // newCount = 0;
+        
 
         //   newTeacherName = "newTeacherID: " + newTeacherID + " newTeacherName: " + ttt + " newTeacherStatus: " + newTeacherStatus + " newTeacherYear: " + newTeacherYear;
-        newTeacherStudNum = 65412;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO teacher (teacherID, teacherName, teacherStatus, year) VALUES (?, ?, ?, ?)");
+//        newTeacherStudNum = 65412;
+        switch (newCount) {
+            case 1: //select
+                break;
+            case 2: //add
+                newTeacherID = autoGenerateTeacherID();
+                
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                    PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO teacher (teacherID, teacherName, teacherStatus, year) VALUES (?, ?, ?, ?)");
 
-            statement.setString(1, newTeacherID);
-            statement.setString(2, newTeacherName);
-            statement.setString(3, newTeacherStatus);
-            statement.setInt(4, newTeacherYear);
-            statement.executeUpdate();
+                    statement.setString(1, newTeacherID);
+                    statement.setString(2, newTeacherName);
+                    statement.setString(3, newTeacherStatus);
+                    statement.setInt(4, newTeacherYear);
+                    statement.executeUpdate();
 
-            //newTeacher 
-            newTeacherStudNum = 12345;
+                    verifyCounter = 1;
+                    statement.close();
+                    con.close();
 
-            statement.close();
-            con.close();
-
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
+                } catch (Exception ex) {
+                    System.out.println("Error: " + ex);
+                }
+                break;
+        }
+        
+         switch (verifyCounter) {
+            case 0:
+                break;
+            case 1:
+                context.addMessage(null, new FacesMessage("Add New Teacher name " + newTeacherName + " for school " + newTeacherSchoolName + " successful!"));
         }
 
         String tcID = "", scID = "", thID = "";
@@ -1745,24 +1773,35 @@ public class MaintainTeacher {
             statement.close();
             con.close();
 
-            disabledButton = false;
-            disabledNewTeacher = true;
-            disabledTxt = false;
-            disabledDdl = false;
-            disabledNewTeacherID = true;
-            disabledNewTeacherName = true;
-
-            newTeacherID = null;
-            newTeacherName = null;
-            newTeacherStatus = null;
-            newTeacherCSLevel = null;
-            newTeacherSchoolState = null;
-            newTeacherSchoolName = null;
-            newTeacherYear = 0;
-            newTeacherStudNum = 0;
+            verifyCounter = 1;
 
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
+        }
+
+        switch (verifyCounter) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Add New Teacher CS Map for school " + newTeacherSchoolName + " not successful!"));
+                break;
+            case 1:
+                context.addMessage(null, new FacesMessage("Add New Teacher CS Map for school " + newTeacherSchoolName + " successful!"));
+
+                disabledButton = false;
+                disabledNewTeacher = true;
+                disabledTxt = false;
+                disabledDdl = false;
+                disabledNewTeacherID = true;
+                disabledNewTeacherName = true;
+
+                newTeacherID = null;
+                newTeacherName = null;
+                newTeacherStatus = null;
+                newTeacherCSLevel = null;
+                newTeacherSchoolState = null;
+                newTeacherSchoolName = null;
+                newTeacherYear = 0;
+                newTeacherStudNum = 0;
+                break;
         }
 
     }

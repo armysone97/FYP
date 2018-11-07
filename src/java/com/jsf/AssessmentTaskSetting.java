@@ -632,9 +632,10 @@ public class AssessmentTaskSetting {
     public void addTask() { //if need redirect to another xhtml, need change void to String and return keyword
 
         FacesContext context = FacesContext.getCurrentInstance();
-
+        
         int length = 0;
         String tsID = "", assID = "", csID = "", assActivityID = "", assTypeID = "";
+        int verifyCounter = 0;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -648,12 +649,12 @@ public class AssessmentTaskSetting {
                 tsID = "TS" + Integer.toString(length);
                 assID = matchCSLevelName(cslevel, "AA1", year);
 
-                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
-
                 statement.setString(1, tsID);
                 statement.setString(2, project);
                 statement.setString(3, assID);
                 statement.executeUpdate();
+
+                verifyCounter = 1;
             }
 
             //insert collaboration
@@ -663,12 +664,13 @@ public class AssessmentTaskSetting {
                 tsID = "TS" + Integer.toString(length);
                 assID = matchCSLevelName(cslevel, "AA2", year);
 
-                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
-
+//                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
                 statement.setString(1, tsID);
                 statement.setString(2, collaboration);
                 statement.setString(3, assID);
                 statement.executeUpdate();
+
+                verifyCounter = 1;
             }
 
             //insert practical
@@ -678,12 +680,13 @@ public class AssessmentTaskSetting {
                 tsID = "TS" + Integer.toString(length);
                 assID = matchCSLevelName(cslevel, "AA3", year);
 
-                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
-
+//                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
                 statement.setString(1, tsID);
                 statement.setString(2, practical);
                 statement.setString(3, assID);
                 statement.executeUpdate();
+
+                verifyCounter = 1;
             }
 
             //insert groupwork
@@ -693,12 +696,13 @@ public class AssessmentTaskSetting {
                 tsID = "TS" + Integer.toString(length);
                 assID = matchCSLevelName(cslevel, "AA4", year);
 
-                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
-
+//                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
                 statement.setString(1, tsID);
                 statement.setString(2, groupwork);
                 statement.setString(3, assID);
                 statement.executeUpdate();
+
+                verifyCounter = 1;
             }
 
             statement.close();
@@ -706,6 +710,19 @@ public class AssessmentTaskSetting {
 
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
+        }
+
+        switch (verifyCounter) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " not successful!"));
+                break;
+            case 1:
+                context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " successful!"));
+                disabledProject = true;
+                disabledCollaboration = true;
+                disabledPractical = true;
+                disabledGroupwork = true;
+                break;
         }
     }
 

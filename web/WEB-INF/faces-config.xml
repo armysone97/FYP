@@ -32,14 +32,14 @@
         </navigation-case>
     </navigation-rule>
     
-<!--    <navigation-rule>
+    <navigation-rule>
         <from-view-id>/MaintainSchoolMenu.xhtml</from-view-id>
         <navigation-case>
             <from-action>#{maintainSchoolMenu.nextPageToSchoolDetail()}</from-action>
             <from-outcome>MaintainSchoolDetails</from-outcome>
             <to-view-id>/MaintainSchoolDetails.xhtml</to-view-id>
         </navigation-case>
-    </navigation-rule>-->
+    </navigation-rule>
     
 <!--    <navigation-rule>
         <from-view-id>/MaintainSchoolMenu.xhtml</from-view-id>

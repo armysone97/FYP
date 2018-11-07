@@ -35,7 +35,7 @@ public class RateSetting {
     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
 
     private Boolean disabledTxt;
-    
+
     private int counterReset; //growl purpose
 
     public RateSetting() {
@@ -168,7 +168,6 @@ public class RateSetting {
         }
 
         int count = 1;
-        
 
 //        yearListDuplicate[0] = 2018;
         try {
@@ -179,7 +178,7 @@ public class RateSetting {
 
             while (rs.next()) {
                 yearListDuplicate[tmp] = rs.getInt("year");
-                 tmp++;
+                tmp++;
             }
 
             st.close();
@@ -299,8 +298,12 @@ public class RateSetting {
 
     public void addSetting() {
 
+        FacesContext context = FacesContext.getCurrentInstance();
+
         int length = 0;
         String rtID = "";
+
+        int verifyCounter = 0;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -322,26 +325,37 @@ public class RateSetting {
             statement.executeUpdate();
             statement.close();
             con.close();
-            
-            disabledTxt = true;
+
+            verifyCounter = 1;
 
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+
+        switch (verifyCounter) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Add Rate Setting for year " + year + " not successful!"));
+                break;
+            case 1:
+                context.addMessage(null, new FacesMessage("Add Rate Setting for year " + year + " successful!"));
+                disabledTxt = true;
+                break;
+        }
+
     }
-    
-     //navigation bar purpose
+
+    //navigation bar purpose
     public String goToNextPage() {
-        
+
         counterReset = 1;
-        
+
         reset();
         return "RateSetting";
     }
 
     //reset page
     public void reset() {
-        
+
         FacesContext context = FacesContext.getCurrentInstance();
 
         switch (counterReset) {
@@ -349,14 +363,14 @@ public class RateSetting {
                 context.addMessage(null, new FacesMessage("Reset successful!"));
                 break;
         }
-        
+
         //set default value
         year = 2018;
         numSampleAss = 0;
         mtHourlyRate = 0;
         evHourlyRate = 0;
         mileageRate = 0;
-        
+
         counterReset = 0;
 
         //set default disabled

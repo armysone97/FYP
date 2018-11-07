@@ -919,6 +919,9 @@ public class MaintainAssessmentTask {
 
     //update numSampleAss in teachercsmap table
     public void updateNumSampleAss() {
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        int verifyCounter = 0;
 
         String thID = matchTeacherID();
         String scID = matchSchoolCSMapID();
@@ -936,9 +939,22 @@ public class MaintainAssessmentTask {
 
             statement.close();
             con.close();
+            
+            verifyCounter = 1;
 
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
+        }
+        
+        
+        switch (verifyCounter) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Update Number Samples Assessment for teacher " + teacher + " in year " + year + " not successful!"));
+                break;
+            case 1:
+                context.addMessage(null, new FacesMessage("Update Number Samples Assessment for teacher " + teacher + " in year " + year + " successful!"));
+                 disabledNumSampleAss = true;
+                break;
         }
     }
 

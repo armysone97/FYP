@@ -341,6 +341,8 @@ public class MaintainSchoolDetails {
     //get year from db 
     public List<Integer> get_year() {
 
+        FacesContext context = FacesContext.getCurrentInstance();
+
         year_list.clear();
 
         int statusOfYearLength = 0;
@@ -353,7 +355,6 @@ public class MaintainSchoolDetails {
 
         int[] yearListDuplicate = new int[lengthYearList];
 
-        FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         int tmp = 0;
 
@@ -725,29 +726,68 @@ public class MaintainSchoolDetails {
         switch (counterReset) {
             case 0:
                 context.addMessage(null, new FacesMessage("Reset successful!"));
+                context.addMessage(null, new FacesMessage("x: " + MaintainSchoolMenu.getGlobalCounter()));
                 break;
         }
 
         //set default value
-        year = 2018;
-        state = "Johor";
-        disabledTxt = false;
-        schoolID = autoGenerateID();
-        commYear = 2018;
-        addButtonName = "Confirm";
-        editButtonName = "Edit";
-        name = null;
-        address = null;
-        contactNo = null;
-        status = "Active";
+        switch (MaintainSchoolMenu.getGlobalCounter()) {
+            case 0: //add
+                year = 2018;
+                state = "Johor";
+                disabledTxt = false;
+                schoolID = autoGenerateID();
+                commYear = 2018;
+                addButtonName = "Confirm";
+                editButtonName = "Edit";
+                name = null;
+                address = null;
+                contactNo = null;
+                status = "Active";
 
-        counterReset = 0;
+                MaintainSchoolMenu.setGlobalCounter(0);
 
-        //set default disabled
-        disabledStatus = true;
-        disabledCommYear = true;
-        disabledAddButton = false;
-        disabledEditButton = true;
+                counterReset = 0;
+
+                //set default disabled
+                disabledStatus = true;
+                disabledCommYear = true;
+                disabledAddButton = false;
+                disabledEditButton = true;
+                 context.addMessage(null, new FacesMessage("yy"));
+                break;
+            case 1:
+                context.addMessage(null, new FacesMessage("zz"));
+                break;
+
+        }
 
     }
+    
+    public static void tryaa(){
+//           this.year = 2018;
+//                state = "Johor";
+//                disabledTxt = false;
+//                schoolID = autoGenerateID();
+//                commYear = 2018;
+//                addButtonName = "Confirm";
+//                editButtonName = "Edit";
+//                name = null;
+//                address = null;
+//                contactNo = null;
+//                status = "Active";
+//
+//                MaintainSchoolMenu.setGlobalCounter(0);
+//
+//                counterReset = 0;
+//
+//                //set default disabled
+//                disabledStatus = true;
+//                disabledCommYear = true;
+//                disabledAddButton = false;
+//                disabledEditButton = true;
+//                
+//                reset();
+    }
+
 }

@@ -38,7 +38,7 @@ public class AssessmentMinSetting {
     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
 
     private Boolean disabledProject, disabledCollaboration, disabledPractical, disabledGroupwork;
-    
+
     private int counterReset; //growl purpose
 
     public AssessmentMinSetting() {
@@ -574,6 +574,8 @@ public class AssessmentMinSetting {
         int length = 0;
         String tsID = "", assID = "", csID = "", assActivityID = "", assTypeID = "";
 
+        int verifyCounter = 0;
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -586,6 +588,8 @@ public class AssessmentMinSetting {
                 statement.setDouble(1, project);
                 statement.setString(2, assID);
                 statement.executeUpdate();
+
+                verifyCounter = 1;
             }
 
             //update collaboration
@@ -595,6 +599,8 @@ public class AssessmentMinSetting {
                 statement.setDouble(1, collaboration);
                 statement.setString(2, assID);
                 statement.executeUpdate();
+
+                verifyCounter = 1;
             }
 
             //update practical
@@ -604,6 +610,8 @@ public class AssessmentMinSetting {
                 statement.setDouble(1, practical);
                 statement.setString(2, assID);
                 statement.executeUpdate();
+
+                verifyCounter = 1;
             }
 
             //update groupwork
@@ -613,12 +621,9 @@ public class AssessmentMinSetting {
                 statement.setDouble(1, groupwork);
                 statement.setString(2, assID);
                 statement.executeUpdate();
-            }
 
-            disabledProject = true;
-            disabledCollaboration = true;
-            disabledPractical = true;
-            disabledGroupwork = true;
+                verifyCounter = 1;
+            }
 
             statement.close();
             con.close();
@@ -626,21 +631,34 @@ public class AssessmentMinSetting {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+
+        switch (verifyCounter) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting for year " + year + " not successful!"));
+                break;
+            case 1:
+                context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting " + year + " successful!"));
+                disabledProject = true;
+                disabledCollaboration = true;
+                disabledPractical = true;
+                disabledGroupwork = true;
+                break;
+        }
     }
-    
-     //navigation bar purpose
+
+    //navigation bar purpose
     public String goToNextPage() {
-        
-         counterReset = 1;
-        
+
+        counterReset = 1;
+
         reset();
         return "AssessmentMinSetting";
     }
 
     //reset page
     public void reset() {
-        
-         FacesContext context = FacesContext.getCurrentInstance();
+
+        FacesContext context = FacesContext.getCurrentInstance();
 
         switch (counterReset) {
             case 0:
@@ -655,8 +673,8 @@ public class AssessmentMinSetting {
         collaboration = 0;
         practical = 0;
         groupwork = 0;
-        
-         counterReset = 0;
+
+        counterReset = 0;
 
         //set default disabled
         disabledProject = true;

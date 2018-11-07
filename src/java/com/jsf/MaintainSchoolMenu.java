@@ -232,6 +232,10 @@ public class MaintainSchoolMenu {
 
     public String nextPageToSchoolDetail() {
 
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        int verifyCounter = 0;
+
         String nextPage = "MaintainSchoolDetails"; //link to next page purpose
 
         globalAction = action;
@@ -249,6 +253,7 @@ public class MaintainSchoolMenu {
 
             while (rs.next()) {
                 globalSchoolID = rs.getString("schoolID");
+                verifyCounter = 1;
             }
 
             st.close();
@@ -256,6 +261,26 @@ public class MaintainSchoolMenu {
 
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
+        }
+
+        if (action.equals("View")) {
+            switch (verifyCounter) {
+                case 0:
+                    context.addMessage(null, new FacesMessage("Redirect to view school " + school + " page not successful!"));
+                    break;
+                case 1:
+                    context.addMessage(null, new FacesMessage("Redirect to view school " + school + " page successful!"));
+                    break;
+            }
+        } else if (action.equals("Update")) {
+            switch (verifyCounter) {
+                case 0:
+                    context.addMessage(null, new FacesMessage("Redirect to update school " + school + " not successful!"));
+                    break;
+                case 1:
+                    context.addMessage(null, new FacesMessage("Redirect to update school " + school + " successful!"));
+                    break;
+            }
         }
 
         return nextPage;
@@ -285,8 +310,15 @@ public class MaintainSchoolMenu {
         state = "Pulau Pinang";
         globalCounter = 0;
         action = "View";
+        globalAction = null;
+        globalSchool = null;
+        globalState = null;
+        globalCounter = 0;
 
         counterReset = 0;
+        
+        MaintainSchoolDetails.tryaa();
+        
     }
 
 }

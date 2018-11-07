@@ -432,6 +432,7 @@ public class YearOfStudySetting {
 
         int numYearComm = year - yearComm;
         String ycID = "", cslevelid = "", yosID = "";
+        int verifyCounter = 0;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -536,11 +537,22 @@ public class YearOfStudySetting {
             statement.close();
             con.close();
 
+            verifyCounter = 1;
+
             counterCSLevel(numYearComm);
 
             // autoAddSchoolCSMap(numYearComm, cslevelid);
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
+        }
+
+        switch (verifyCounter) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Add Year Of Study CS Map Setting for year " + year + " with commercial year " + yearComm + " not successful!"));
+                break;
+            case 1:
+                context.addMessage(null, new FacesMessage("Add Year Of Study CS Map Setting for year " + year + " with commercial year " + yearComm + " successful!"));
+                break;
         }
     }
 
@@ -691,6 +703,7 @@ public class YearOfStudySetting {
 
         String[] schoolListDuplicate = new String[lengthCommYearList];
         int tmp = 0;
+        int verifyCounter = 0;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -734,6 +747,8 @@ public class YearOfStudySetting {
                     statement.setInt(5, year);
                     statement.executeUpdate();
 
+                    verifyCounter = 1;
+
                     statement.close();
                     con.close();
 
@@ -742,6 +757,17 @@ public class YearOfStudySetting {
                 }
             }
 
+        }
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+         switch (verifyCounter) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Add School CS Map Setting for year " + year + " with commercial year " + yearComm + " not successful!"));
+                break;
+            case 1:
+                context.addMessage(null, new FacesMessage("Add School CS Map Setting for year " + year + " with commercial year " + yearComm + " successful!"));
+                break;
         }
 
     }

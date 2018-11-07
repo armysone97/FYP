@@ -7,123 +7,22 @@
     <h:head>
         <title>STEM CS Validation Programme</title>
         <h:outputStylesheet name="css/style.css" />
-        <!--        <style type="text/css"> 
-        
-                    .buttonStyle{
-                        font-size: 25px;
-                        column-width: 10px;
-                        width: 200px;
-                        height: 40px;
-                    }
-        
-                    .buttonSpecialStyle{
-                        font-size: 25px;
-                        column-width: 10px;
-                        width: 220px;
-                        height: 40px;
-                    }
-        
-                    .ddlStyle{
-                        font-size: 20px;
-                        column-width: 10px;
-                        width: 200px;
-                        height: 40px;
-                    }
-        
-                    .txtboxStyle {
-                        font-size: 18pt;
-                        height: 35px;
-                        width : 200px;
-                    }
-        
-                    .txtboxSmallStyle {
-                        font-size: 18pt;
-                        height: 35px;
-                        width : 100px;
-                    }
-        
-                    .buttonShowStyle{
-                        font-size: 25px;
-                        column-width: 10px;
-                        width: 80px;
-                        height: 40px;
-                    }
-        
-                    .lblStyle{
-                        font-size: 20pt;
-                    }
-        
-                    .checkboxStyle{
-                        font-size: 20pt;
-                    }
-        
-        
-                    /*      #txtbox {
-                              font-size: 18pt;
-                              height: 35px;
-                              width : 200px;
-                          } */
-        
-                </style>-->
     </h:head>
     <h:body>
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
-            <!--Top Navigation Bar-->
-            <!--            <ul class="topNav">
-                            <li class="dropdown">
-                                <a href="CSLevelSetting.xhtml">CS MANAGEMENT</a>
-                                <div class="dropdown-content fading">
-                                    <a href="CSLevelSetting.xhtml">CS Level Setting</a>
-                                    <a href="YearOfStudySetting.xhtml">Year Of Study Setting</a>
-                                    <a href="AssessmentTaskSetting.xhtml">Assessment Task Setting</a>
-                                    <a href="RateSetting.xhtml">Rate Setting</a>
-                                    <a href="AssessmentMinSetting.xhtml">Assessment Minutes Setting</a>
-                                </div>
-                            </li>
-            
-                            <li class="dropdown">
-                                <a href="MaintainSchoolDetails.xhtml">SCHOOL MANAGEMENT</a>
-                                <div class="dropdown-content fading">
-                                    <a href="MaintainSchoolDetails.xhtml">Maintain School - Add</a>
-                                    <a href="MaintainSchoolMenu.xhtml">Maintain School - View/Update</a>
-                                    <a href="MaintainTeacher.xhtml">Maintain Teacher</a>
-                                    <a href="MaintainAssessmentTask.xhtml">Maintain Assessment Task</a>
-                                </div>
-                            </li>
-            
-                            <li> 
-                                <a href="EvaluatorPersonalDetails.xhtml">EVALUATOR MANAGEMENT</a>
-                            </li>     can use
-            
-                            <li> 
-                                <a href="EvaluatorWorkloadAllocationApplication.xhtml">WORKLOAD ALLOCATION</a>
-                            </li>  
-            
-                            <li> 
-                                <a href="GenerateReport.xhtml">GENERATE REPORT</a>
-                            </li>
-            
-                            <li> 
-                                <a href="Login.xhtml">LOG OUT</a>
-                            </li>
-                        </ul>
-            
-                        <br />
-                        <br />-->
+
 
             <h:form id="CSLevelSetting" title="CS Level Setting Page">
 
-                <p:growl id="messages"/>
-                
+                <p:growl id="messages"/> <!--Error message purpose-->
+
                 <br />
 
+                <!--Top Navigation Bar-->
                 <p:menubar styleClass="NavigationBar">
-
                     <p:submenu label="STEM CS MANAGEMENT">
-
                         <p:menuitem title="Click to redirect to CS Level Setting page" value="CS Level Setting" action="#{cSLevelSetting.goToNextPage()}" update="messages" />
-                        <!--<p:separator />-->
                         <p:menuitem title="Click to redirect to Year Of Study Setting page"  value="Year Of Study Setting" action="#{yearOfStudySetting.goToNextPage()}" />
                         <p:menuitem  title="Click to redirect to Assessment Task Setting page" value="Assessment Task Setting" action="#{assessmentTaskSetting.goToNextPage()}" update="messages"/>
                         <p:submenu label="Rate Setting">
@@ -139,7 +38,6 @@
                         </p:submenu>
                         <p:menuitem title="Click to redirect to Maintain Teacher page" value="Maintain Teacher" action="#{maintainTeacher.goToNextPage()}" />
                         <p:menuitem title="Click to redirect to Maintain Assessment Task page" value="Maintain Assessment Task" action="#{maintainAssessmentTask.goToNextPage()}" />
-
                     </p:submenu>
 
                     <p:menuitem title="Click to redirect to Evaluator Personal Details page" value="EVALUATOR MANAGEMENT" action="#{evaluatorPersonalDetails.goToNextPage()}" />
@@ -147,26 +45,13 @@
                     <p:menuitem title="Click to redirect to Generate Report page" value="REPORT" action="GenerateReport.xhtml?faces-redirect=true" />
                     <p:menuitem title="Click to Log Out" style="position: absolute; right: 12px;" value="LOG OUT" action="#{login.goToNextPage()}" />
                 </p:menubar>
+
+                <h1>CS LEVEL SETTING</h1>
+
+                <br />
+                <br />
                 
-                      <h1>CS LEVEL SETTING</h1>
-                      
-                      <br />
-                      <br />
-      
-
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
-
-                    <!--                    <tr>
-                                            <th colspan="4" align="right">         
-                                                <h:commandButton title="Click to logout" id="btnLogout" value="Log out" styleClass="buttonStyle" action="Login"/>
-                                            </th>
-                                        </tr> 
-                    
-                                        <tr>
-                                            <th><label>&nbsp;</label></th>
-                                            <th><label>&nbsp;</label></th> 
-                                        </tr>-->
-
                     <tr>
                         <th colspan="4" align="left">
                             <h:outputText id="lblYear" value="Year : "  styleClass="lblStyle"/>
@@ -182,8 +67,6 @@
 
                     <tr>
                         <th colspan="4" align="left"> 
-
-
                             <h:outputText id="lblCSLevel" value="CS Level : "  styleClass="lblStyle"/>
 
                             <h:selectOneMenu title="Select CS Level" styleClass="ddlStyle" value="#{cSLevelSetting.cslevel}">
@@ -249,7 +132,6 @@
                     </tr>
 
                     <tr>
-                        <!--<th colspan="2" align="left"> <h:commandButton title="Click to cancel" id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin" disabled="#{cSLevelSetting.disabledButton}"/></th>-->
                         <th colspan="3" align="left"> <h:commandButton title="Click to reset" id="btnReset" value="Reset" action="#{cSLevelSetting.reset()}" styleClass="buttonStyle" disabled="#{cSLevelSetting.disabledButton}"/></th>
                         <th align="right"><h:commandButton title="Click to confirm" id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{cSLevelSetting.addAssessment()}" disabled="#{cSLevelSetting.disabledButton}"/></th>
                     </tr> 
@@ -268,8 +150,6 @@
                     </legend>
 
                     <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
-
-
                         <tr>
                             <th align="right">
                                 <h:outputText id="lblNewCSLevelID" value="CS Level ID : "  styleClass="lblStyle"/>

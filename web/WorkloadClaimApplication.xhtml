@@ -12,37 +12,14 @@
     <h:body>
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
-<!--             <ul class="topNav">
-                 <li> 
-                    <a href="EvaluatorPersonalDetails.xhtml">PROFILE MANAGEMENT</a>
-                </li> 
-                
-                <li class="dropdown">
-                    <a href="WorkloadClaimApplication.xhtml">CLAIM PROCESSING</a>
-                    <div class="dropdown-content fading">
-                        <a href="WorkloadClaimApplication.xhtml">Workload Claim</a>
-                        <a href="MileageClaimApplication.xhtml">Mileage Claim</a>
-                    </div>
-                </li>
-                 
-                 <li></li> <li></li><li></li> <li></li><li></li> <li></li><li></li> <li></li><li></li> <li></li><li></li> <li></li>
-                 <li></li><li></li> <li></li><li></li> <li></li><li></li> <li></li><li></li> <li></li><li></li> <li></li><li></li>
-                 
-                 
-                <li> 
-                    <a href="Login.xhtml">LOG OUT</a>
-                </li>
-            </ul>
-            <br />
-             <br />-->
-             
+
             <h:form id="WorkloadClaimApplication">
-                   <p:growl id="messages"/>
+                <p:growl id="messages"/> <!--Error message purpose-->
 
                 <br />
 
+                <!--Top Navigation Bar-->
                 <p:menubar styleClass="NavigationBar">
-
                     <p:menuitem title="Click to redirect to View Profile page" value="PROFILE MANAGEMENT" action="#{evaluatorPersonalDetails.goToNextPage()}" />
 
                     <p:submenu label="CLAIM PROCESSING">
@@ -53,25 +30,12 @@
                     <p:menuitem title="Click to Log Out" style="position: absolute; right: 12px;"  value="LOG OUT" action="#{login.goToNextPage()}" />
                 </p:menubar>
 
-               <h1>WORKLOAD CLAIM APPLICATION</h1>
-           
+                <h1>WORKLOAD CLAIM APPLICATION</h1>
+
                 <br />
                 <br />
+                
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
-
-<!--                    <tr>
-                        <th colspan="3" align="right">     
-                            <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle" action="Login"/>
-                        </th>
-                    </tr>
-
-                    <tr>
-                        <th><label>&nbsp;</label></th>
-                        <th><label>&nbsp;</label></th> 
-                    </tr>-->
-
-
-
                     <tr>
                         <th align="left"> <h:outputText id="lblStaffID" value="Staff ID"  styleClass="lblStyle"/></th>
                         <th align="right">
@@ -100,11 +64,9 @@
                             <h:outputText id="simbol4" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                        <h:inputText id="txtBranch" styleClass="txtboxStyle" required="required" size="35"/>
-
-                        
-
-                        </th></tr> 
+                            <h:inputText id="txtBranch" styleClass="txtboxStyle" required="required" size="35"/>
+                        </th>
+                    </tr> 
 
                     <tr>
                         <th align="left"> <h:outputText id="lblFaculty" value="Faculty/Centre"  styleClass="lblStyle"/></th>
@@ -113,11 +75,9 @@
                             <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                        <h:inputText id="txtFaculty" styleClass="txtboxStyle" required="required" size="35"/>
-
-                        
-
-                        </th></tr> 
+                            <h:inputText id="txtFaculty" styleClass="txtboxStyle" required="required" size="35"/>
+                        </th>
+                    </tr> 
 
                     <tr>
                         <th align="left"> <h:outputText id="lblRoles" value="Roles"  styleClass="lblStyle"/></th>
@@ -127,7 +87,6 @@
                         </th>
 
                         <th align="left"> 
-
                             <h:selectOneRadio layout="lineDirection" styleClass="radiobuttonStyle"> 
                                 <f:selectItem itemValue = "EV" itemLabel = "Evaluator " /> 
                                 <f:selectItem itemValue = "MT" itemLabel = "Master Trainer" /> 
@@ -135,48 +94,47 @@
 
                         </th>
                     </tr> 
-                    
-                       <tr>
+
+                    <tr>
                         <th align="left"> <h:outputText id="lblHourlyRate" value="Hourly Rate"  styleClass="lblStyle"/></th>
-                    
-                          <th align="right">
+
+                        <th align="right">
                             <h:outputText id="simbol5" value=": "  styleClass="lblStyle"/>
                         </th>
-                        
+
                         <th align="left">
-                             <h:outputText id="simbol10" value="RM "  styleClass="lblStyle"/>
-                             <h:inputText id="txtHourlyRate" styleClass="txtboxSmallestStyle" required="required" size="5"/>
-                        </th>
-                    </tr> 
-                    
-                       <tr>
-                        <th align="left"> <h:outputText id="lblTotalWorkload" value="Total Workload"  styleClass="lblStyle"/></th>
-                    
-                          <th align="right">
-                            <h:outputText id="simbol7" value=": "  styleClass="lblStyle"/>
-                        </th>
-                        
-                        <th align="left">
-                             <h:inputText id="txtTotalWorkload" styleClass="txtboxSmallestStyle" required="required" size="5"/>
-                            <h:outputText id="hr1" value=" hours"  styleClass="lblStyle"/>
-                        </th>
-                    </tr> 
-                    
-                      <tr>
-                        <th align="left"> <h:outputText id="lblTotal" value="Total"  styleClass="lblStyle"/></th>
-                    
-                          <th align="right">
-                            <h:outputText id="simbol8" value=": "  styleClass="lblStyle"/>
-                        </th>
-                        
-                        <th align="left">
-                            <h:outputText id="simbol9" value="RM "  styleClass="lblStyle"/>
-                             <h:inputText id="txtTotal" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                            <h:outputText id="simbol10" value="RM "  styleClass="lblStyle"/>
+                            <h:inputText id="txtHourlyRate" styleClass="txtboxSmallestStyle" required="required" size="5"/>
                         </th>
                     </tr> 
 
                     <tr>
-                        <!--<th colspan="2" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuEvaluator"/></th>-->
+                        <th align="left"> <h:outputText id="lblTotalWorkload" value="Total Workload"  styleClass="lblStyle"/></th>
+
+                        <th align="right">
+                            <h:outputText id="simbol7" value=": "  styleClass="lblStyle"/>
+                        </th>
+
+                        <th align="left">
+                            <h:inputText id="txtTotalWorkload" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                            <h:outputText id="hr1" value=" hours"  styleClass="lblStyle"/>
+                        </th>
+                    </tr> 
+
+                    <tr>
+                        <th align="left"> <h:outputText id="lblTotal" value="Total"  styleClass="lblStyle"/></th>
+
+                        <th align="right">
+                            <h:outputText id="simbol8" value=": "  styleClass="lblStyle"/>
+                        </th>
+
+                        <th align="left">
+                            <h:outputText id="simbol9" value="RM "  styleClass="lblStyle"/>
+                            <h:inputText id="txtTotal" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                        </th>
+                    </tr> 
+
+                    <tr>
                         <th colspan="3" align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuEvaluator"/></th>
                     </tr>    
                 </table>   

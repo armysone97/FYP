@@ -7,137 +7,22 @@
     <h:head>
         <title>STEM CS Validation Programme</title>
         <h:outputStylesheet name="css/style.css" />
-        <!--        <style type="text/css"> 
-                    .buttonStyle{
-                        font-size: 25px;
-                        column-width: 10px;
-                        width: 200px;
-                        height: 40px;
-                    }
-        
-                    .buttonSpecialStyle{
-                        font-size: 25px;
-                        column-width: 10px;
-                        width: 250px;
-                        height: 40px;
-                    }
-        
-                    .ddlStyle{
-                        font-size: 20px;
-                        column-width: 10px;
-                        width: 200px;
-                        height: 40px;
-                    }
-        
-                    .ddlSpecialStyle{
-                        font-size: 20px;
-                        column-width: 10px;
-                        width: 100px;
-                        height: 40px;
-                    }
-        
-                    .txtboxStyle {
-                        font-size: 18pt;
-                        height: 35px;
-                        width : 250px;
-                    }
-        
-                    .txtboxSpecialStyle {
-                        font-size: 18pt;
-                        height: 35px;
-                        width : 150px;
-                    }
-        
-                    .txtboxSmallStyle {
-                        font-size: 18pt;
-                        height: 35px;
-                        width : 100px;
-                    }
-        
-                    .txtboxSmallestStyle {
-                        font-size: 18pt;
-                        height: 35px;
-                        width : 80px;
-                    }
-        
-                    .lblStyle{
-                        font-size: 20pt;
-                    }
-        
-                    .checkboxStyle{
-                        font-size: 20pt;
-                    }
-        
-                    .buttonShowStyle{
-                        font-size: 25px;
-                        column-width: 10px;
-                        width: 80px;
-                        height: 40px;
-                    }
-                </style>-->
     </h:head>
     <h:body>
-
-
         <!--<p:dialog></p:dialog>-->
 
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
-            <!--Top Navigation Bar-->
-<!--            <ul class="topNav">
-                <li class="dropdown">
-                    <a href="CSLevelSetting.xhtml">CS MANAGEMENT</a>
-                    <div class="dropdown-content fading">
-                        <a href="CSLevelSetting.xhtml">CS Level Setting</a>
-                        <a href="YearOfStudySetting.xhtml">Year Of Study Setting</a>
-                        <a href="AssessmentTaskSetting.xhtml">Assessment Task Setting</a>
-                        <a href="RateSetting.xhtml">Rate Setting</a>
-                        <a href="AssessmentMinSetting.xhtml">Assessment Minutes Setting</a>
-                    </div>
-                </li>
-
-                <li class="dropdown">
-                    <a href="MaintainSchoolDetails.xhtml">SCHOOL MANAGEMENT</a>
-                    <div class="dropdown-content fading">
-                        <a href="MaintainSchoolDetails.xhtml">Maintain School - Add</a>
-                        <a href="MaintainSchoolMenu.xhtml">Maintain School - View/Update</a>
-                        <a href="MaintainTeacher.xhtml">Maintain Teacher</a>
-                        <a href="MaintainAssessmentTask.xhtml">Maintain Assessment Task</a>
-                    </div>
-                </li>
-
-                <li> 
-                    <a href="EvaluatorPersonalDetails.xhtml">EVALUATOR MANAGEMENT</a>
-                </li>     can use
-
-                <li> 
-                    <a href="EvaluatorWorkloadAllocationApplication.xhtml">WORKLOAD ALLOCATION</a>
-                </li>  
-
-                <li> 
-                    <a href="GenerateReport.xhtml">GENERATE REPORT</a>
-                </li>
-
-                <li> 
-                    <a href="Login.xhtml">LOG OUT</a>
-                </li>
-            </ul>
-
-            <br />
-            <br />-->
-
             <h:form id="MaintainTeacher" title="Maintain teacher page">
-                
-                 <p:growl id="messages"/>
-                 
-                  <br />
 
-              <p:menubar styleClass="NavigationBar">
+                <p:growl id="messages"/> <!--Error message purpose-->
 
+                <br />
+
+                <!--Top Navigation Bar-->
+                <p:menubar styleClass="NavigationBar">
                     <p:submenu label="STEM CS MANAGEMENT">
-
                         <p:menuitem title="Click to redirect to CS Level Setting page" value="CS Level Setting" action="#{cSLevelSetting.goToNextPage()}" />
-                        <!--<p:separator />-->
                         <p:menuitem title="Click to redirect to Year Of Study Setting page"  value="Year Of Study Setting" action="#{yearOfStudySetting.goToNextPage()}" />
                         <p:menuitem  title="Click to redirect to Assessment Task Setting page" value="Assessment Task Setting" action="#{assessmentTaskSetting.goToNextPage()}" />
                         <p:submenu label="Rate Setting">
@@ -161,24 +46,12 @@
                     <p:menuitem title="Click to redirect to Generate Report page" value="REPORT" action="GenerateReport.xhtml?faces-redirect=true" />
                     <p:menuitem title="Click to Log Out" style="position: absolute; right: 12px;" value="LOG OUT" action="#{login.goToNextPage()}" />
                 </p:menubar>
-                 
-            <h1>MAINTAIN TEACHER</h1>
-                  <br />
-                   <br />
-                
+
+                <h1>MAINTAIN TEACHER</h1>
+                <br />
+                <br />
+
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
-
-                    <!--                    <tr>
-                                            <th colspan="4" align="right">     
-                                                <h:commandButton id="btnLogout" title="Click to logout" value="Log out" styleClass="buttonStyle" action="Login"/>
-                                            </th>
-                                        </tr>
-                    
-                                        <tr>
-                                            <th><label>&nbsp;</label></th>
-                                            <th><label>&nbsp;</label></th> 
-                                        </tr>-->
-
                     <tr>
                         <th colspan="2" align="left"> 
                             <h:outputText id="lblState" value="Please Select State"  styleClass="lblStyle"/>
@@ -205,9 +78,7 @@
                         </th>
                     </tr> 
 
-
                     <tr>
-                        <!--<th colspan="3" align="left"> <h:commandButton id="btnCancel" title="Click to cancel"  value="Cancel" disabled="#{maintainTeacher.disabledButton}" styleClass="buttonStyle" action="MainMenuAdmin"/></th>-->
                         <th colspan="4" align="right"><h:commandButton id="btnConfirm" title="Click to show year" value="Confirm" action="#{maintainTeacher.controlDisabledStatus()}" disabled="#{maintainTeacher.disabledButton}" styleClass="buttonStyle" /></th>
                     </tr> 
 
@@ -236,8 +107,6 @@
                     </legend>
 
                     <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
-
-
                         <tr>
                             <th colspan="2" align="left">
                                 <h:outputText id="lblTeacher" value="Teacher : "  styleClass="lblStyle"/>
@@ -264,8 +133,6 @@
 
                         <tr>
                             <th colspan="2" align="left"> 
-
-
                                 <h:outputText id="lblCSLevel" value="CS Level : "  styleClass="lblStyle"/>
 
                                 <h:selectOneMenu title="Select CS level" styleClass="ddlStyle" value="#{maintainTeacher.cslevel}">
@@ -276,12 +143,8 @@
                             </th>
 
                             <th colspan="2" align="left"> 
-
-
                                 <h:outputText  id="lblStudNum" value="Number of Student: "  styleClass="lblStyle"/>
                                 <h:inputText title="Enter student enrolment number" id="txtStudNum" value="#{maintainTeacher.studNum}" disabled="#{maintainTeacher.disabledTxt}" styleClass="txtboxSmallestStyle" required="required" size="10"/>
-                                <!--<h:inputText id="txtStudNumxxx" value="{maintainTeacher.temp}" styleClass="txtboxSmallStyle" required="required" size="10"/>-->
-
                             </th>
                         </tr>   
                         <tr>
@@ -292,8 +155,6 @@
                                 <h:commandButton title="Click to add new teacher" id="btnAddNewTeacher" value="Add New Teacher" action="#{maintainTeacher.addNewTeacher()}" disabled="#{maintainTeacher.disabledButton}" styleClass="buttonSpecialStyle"/>
                             </th>
                         </tr>
-
-
                     </table>
                 </fieldset>
 
@@ -305,8 +166,7 @@
                     </tr>
 
                     <tr>
-                        <!--<th align="left"> <h:commandButton title="Click to cancel" id="btnCancel1" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin" disabled="#{maintainTeacher.disabledButton}"/></th>-->
-                        <th colspan="2" align="left"> <h:commandButton title="Click to reset" id="btnReset" value="Reset" action="#{maintainTeacher.reset()}" disabled="#{maintainTeacher.disabledButton}" styleClass="buttonStyle"/></th>
+                       <th colspan="2" align="left"> <h:commandButton title="Click to reset" id="btnReset" value="Reset" action="#{maintainTeacher.reset()}" disabled="#{maintainTeacher.disabledButton}" styleClass="buttonStyle"/></th>
                         <th align="right"><h:commandButton title="Click to confirm" id="btnConfirm1" value="Confirm" styleClass="buttonStyle" action="#{maintainTeacher.addSchoolCSMap()}" disabled="#{maintainTeacher.disabledButton}"/></th>
                     </tr>  
 
@@ -360,15 +220,12 @@
                             </td>  
                         </tr>   
 
-
-
                         <tr>
                             <th align="right">
                                 <h:outputText id="lblNewTeacherID" value="Teacher ID : "  styleClass="lblStyle"/>
                             </th>
 
                             <td align="left">
-                                <!--<h:outputText id="txtNewTeacherID" title="New teacher ID" value="{maintainTeacher.newTeacherID}" styleClass="txtboxSmallStyle"/>-->
                                 <h:selectOneMenu title="Select Teacher ID" styleClass="ddlSmallSpecialStyle" disabled="#{maintainTeacher.disabledNewTeacherID}" value="#{maintainTeacher.newTeacherID}">
                                     <f:selectItems value="#{maintainTeacher.get_newTeacherID()}" /> 
                                 </h:selectOneMenu>  
@@ -387,9 +244,7 @@
                         <tr>
                             <th></th>
                             <th align="left">
-
                                 <h:commandButton id="btnShowList88" title="Click to show teacher name" action="#{maintainTeacher.showTeacherName()}"  value="Show" styleClass="buttonShowStyle" disabled="#{maintainTeacher.disabledNewTeacherID}"/>
-
                             </th> 
                         </tr>  
                         <tr>
@@ -416,7 +271,6 @@
                             <th align="left"> <h:commandButton id="btnReset2" title="Click to reset" value="Reset" action="#{maintainTeacher.newReset()}" styleClass="buttonStyle" disabled="#{maintainTeacher.disabledNewTeacher}"/></th>
                             <th align="right"><h:commandButton id="btnConfirm2" title="Click to confirm" value="Confirm" styleClass="buttonStyle" disabled="#{maintainTeacher.disabledNewTeacher}" action="#{maintainTeacher.addTeacher()}"/></th>
                         </tr>   
-
                     </table>
                 </fieldset>
             </h:form>

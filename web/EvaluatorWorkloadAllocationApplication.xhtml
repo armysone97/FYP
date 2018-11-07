@@ -6,123 +6,20 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>STEM CS Validation Programme</title>
-<h:outputStylesheet name="css/style.css" />
-<!--        <style type="text/css"> 
-            .buttonStyle{
-                font-size: 25px;
-                column-width: 10px;
-                width: 200px;
-                height: 40px;
-            }
-
-            .ddlStyle{
-                font-size: 20px;
-                column-width: 10px;
-                width: 200px;
-                height: 40px;
-            }
-            
-             .ddlSpecialStyle{
-                font-size: 20px;
-                column-width: 10px;
-                width: 250px;
-                height: 40px;
-            }
-
-            .lblStyle{
-                font-size: 20pt;
-            }
-
-            .txtboxStyle {
-                font-size: 18pt;
-                height: 35px;
-                width : 250px;
-            }
-
-            .txtboxSmallStyle {
-                font-size: 18pt;
-                height: 35px;
-                width : 100px;
-            }
-
-            .txtboxSmallestStyle {
-                font-size: 18pt;
-                height: 35px;
-                width : 80px;
-            }
-
-            .radiobuttonStyle{ 
-                font-size: 18pt;
-            }
-            
-              .ddlListViewStyle{
-                font-size: 20px;
-                column-width: 10px;
-                width: 800px;
-                height: 200px;
-            }
-
-          
-
-        </style>-->
+        <h:outputStylesheet name="css/style.css" />
     </h:head>
     <h:body>
         <div align="center">
             <h1>STEM CS VALIDATION PROGRAMME</h1>
-               <!--Top Navigation Bar-->
-<!--            <ul class="topNav">
-                <li class="dropdown">
-                    <a href="CSLevelSetting.xhtml">CS MANAGEMENT</a>
-                    <div class="dropdown-content fading">
-                        <a href="CSLevelSetting.xhtml">CS Level Setting</a>
-                        <a href="YearOfStudySetting.xhtml">Year Of Study Setting</a>
-                        <a href="AssessmentTaskSetting.xhtml">Assessment Task Setting</a>
-                        <a href="RateSetting.xhtml">Rate Setting</a>
-                        <a href="AssessmentMinSetting.xhtml">Assessment Minutes Setting</a>
-                    </div>
-                </li>
-
-                <li class="dropdown">
-                    <a href="MaintainSchoolDetails.xhtml">SCHOOL MANAGEMENT</a>
-                    <div class="dropdown-content fading">
-                        <a href="MaintainSchoolDetails.xhtml">Maintain School - Add</a>
-                        <a href="MaintainSchoolMenu.xhtml">Maintain School - View/Update</a>
-                        <a href="MaintainTeacher.xhtml">Maintain Teacher</a>
-                        <a href="MaintainAssessmentTask.xhtml">Maintain Assessment Task</a>
-                    </div>
-                </li>
-
-                <li> 
-                    <a href="EvaluatorPersonalDetails.xhtml">EVALUATOR MANAGEMENT</a>
-                </li>     can use
-
-                <li> 
-                    <a href="EvaluatorWorkloadAllocationApplication.xhtml">WORKLOAD ALLOCATION</a>
-                </li>  
-
-                <li> 
-                    <a href="GenerateReport.xhtml">GENERATE REPORT</a>
-                </li>
-
-                <li> 
-                    <a href="Login.xhtml">LOG OUT</a>
-                </li>
-            </ul>
-             
-             <br />
-             <br />-->
-        
             <h:form id="EvaluatorWorkloadAllocationApplication">
-                    <p:growl id="messages"/>
-                 
-                 <br />
+                <p:growl id="messages"/> <!--Error message purpose-->
 
+                <br />
+                
+                <!--Top Navigation Bar-->
                 <p:menubar styleClass="NavigationBar">
-
                     <p:submenu label="STEM CS MANAGEMENT">
-
                         <p:menuitem title="Click to redirect to CS Level Setting page" value="CS Level Setting" action="#{cSLevelSetting.goToNextPage()}" />
-                        <!--<p:separator />-->
                         <p:menuitem title="Click to redirect to Year Of Study Setting page"  value="Year Of Study Setting" action="#{yearOfStudySetting.goToNextPage()}" />
                         <p:menuitem  title="Click to redirect to Assessment Task Setting page" value="Assessment Task Setting" action="#{assessmentTaskSetting.goToNextPage()}" />
                         <p:submenu label="Rate Setting">
@@ -138,7 +35,6 @@
                         </p:submenu>
                         <p:menuitem title="Click to redirect to Maintain Teacher page" value="Maintain Teacher" action="#{maintainTeacher.goToNextPage()}" />
                         <p:menuitem title="Click to redirect to Maintain Assessment Task page" value="Maintain Assessment Task" action="#{maintainAssessmentTask.goToNextPage()}" />
-
                     </p:submenu>
 
                     <p:menuitem title="Click to redirect to Evaluator Personal Details page" value="EVALUATOR MANAGEMENT" action="#{evaluatorPersonalDetails.goToNextPage()}" />
@@ -146,28 +42,13 @@
                     <p:menuitem title="Click to redirect to Generate Report page" value="REPORT" action="GenerateReport.xhtml?faces-redirect=true" />
                     <p:menuitem title="Click to Log Out" style="position: absolute; right: 12px;" value="LOG OUT" action="#{login.goToNextPage()}" />
                 </p:menubar>
-                 
-            <h1>EVALUATOR WORKLOAD ALLOCATION APPLICATION</h1>
-           
-                    <br />
-                    <br />
-<!--                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
-                    <tr>
-                        <th colspan="4" align="right">     
-                            <h:commandButton id="btnLogout" value="Log out" styleClass="buttonStyle"/>
-                        </th>
-                    </tr> 
+                <h1>EVALUATOR WORKLOAD ALLOCATION APPLICATION</h1>
 
-                    <tr>
-                        <th><label>&nbsp;</label></th>
-                        <th><label>&nbsp;</label></th> 
-                    </tr>
-                </table> -->
-
+                <br />
+                <br />
+               
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center" style="float: left;">
-
-
                     <tr>
                         <th align="left"> 
                             <h:outputText id="lblEvaluator" value="Evaluator"  styleClass="lblStyle"/>
@@ -176,12 +57,12 @@
 
                         <th align="right">
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> </th>
-                            <th align="left">   <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.evaluator}">
-                                   
-                                    <f:selectItems value="#{evaluatorWorkloadAllocation.get_EvaluatorList()}"/>
+                        <th align="left">   <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.evaluator}">
+
+                                <f:selectItems value="#{evaluatorWorkloadAllocation.get_EvaluatorList()}"/>
                             </h:selectOneMenu>  
-                          &nbsp;&nbsp;&nbsp;         <h:commandButton id="btnShow" value="Confirm" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.retrieveWorkloadLimit()}"/>
-               
+                            &nbsp;&nbsp;&nbsp;         <h:commandButton id="btnShow" value="Confirm" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.retrieveWorkloadLimit()}"/>
+
                         </th>
                     </tr>  
 
@@ -194,17 +75,13 @@
                         <th align="left">
                             <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.school}">
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_SchoolList()}" />
-                                
                             </h:selectOneMenu>  
-                     
-                            
+
                         </th>
                     </tr> 
 
                     <tr>
                         <th align="left"> 
-
-
                             <h:outputText id="lblCSLevel" value="CS Level "  styleClass="lblStyle"/></th>
                         <th align="right">
                             <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/> </th>
@@ -212,8 +89,6 @@
                             <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.csLevel}">
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_CSLevelList()}" />
                             </h:selectOneMenu>  
-                            
-                         
                         </th>
                     </tr>   
 
@@ -228,7 +103,7 @@
                             <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.teacher}">
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_TeacherList()}" />
                             </h:selectOneMenu>  
-                         &nbsp;&nbsp;&nbsp;      <h:commandButton id="btnTry" value="Show" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.retrieveTotalStudent()}"/>
+                            &nbsp;&nbsp;&nbsp;      <h:commandButton id="btnTry" value="Show" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.retrieveTotalStudent()}"/>
                         </th>
                     </tr> 
 
@@ -241,27 +116,27 @@
                             <h:inputText id="txtTotalStudent" value="#{evaluatorWorkloadAllocation.totalStudent}" styleClass="txtboxSmallestStyle" required="required" size="5"/>
                         </th>
                     </tr> 
-                    
+
                     <tr>
                         <th align="left"> <h:outputText id="lblAssessmentType" value="Assessment Type"  styleClass="lblStyle"/></th>
                         <th align="right">
                             <h:outputText id="simbol51222" value=": "  styleClass="lblStyle"/> </th>
 
-                      <th align="left">
-                          <h:selectOneMenu styleClass="ddlSpecialStyle" value="#{evaluatorWorkloadAllocation.assType}">
-                              <f:selectItems value="#{evaluatorWorkloadAllocation.get_AssessmentList()}"/>
+                        <th align="left">
+                            <h:selectOneMenu styleClass="ddlSpecialStyle" value="#{evaluatorWorkloadAllocation.assType}">
+                                <f:selectItems value="#{evaluatorWorkloadAllocation.get_AssessmentList()}"/>
                             </h:selectOneMenu>  
                           <!--&nbsp;&nbsp;&nbsp;   <h:commandButton id="btnTest122" value="Calculate" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.retrieveNumSamAss()}"/>-->
                         </th>
                     </tr> 
-                    
+
                     <tr>
                         <th></th>
                         <th colspan="2" align="left">
-                      &nbsp;&nbsp;&nbsp;    &nbsp;&nbsp;&nbsp;      <h:commandButton id="btnTest122" value="Calculate" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.retrieveNumSamAss()}"/>
+                            &nbsp;&nbsp;&nbsp;    &nbsp;&nbsp;&nbsp;      <h:commandButton id="btnTest122" value="Calculate" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.retrieveNumSamAss()}"/>
                         </th>
                     </tr> 
-                    
+
                     <tr>
                         <th align="left"> <h:outputText id="lblWorkloadAssigned" value="Workload Assigned"  styleClass="lblStyle"/></th>
 
@@ -279,13 +154,11 @@
 
 
                 <table border="0" cellpadding="10px" cellspacing="0" width="500px" align="center" style="float: right;">
-
-
                     <tr>
                         <th align="left"> 
                             <h:outputText id="lblWorkloadLimit" value="Workload Limit"  styleClass="lblStyle"/>
                             <h:outputText id="simbol6" value=": "  styleClass="lblStyle"/>
-                            
+
                         </th>
 
                         <th align="left">
@@ -297,12 +170,12 @@
                     <tr>
                         <th align="left"> 
                             <h:outputText id="lblTtlWorkloadAssigned" value="Total Workload Assigned"  styleClass="lblStyle"/>
-                              <h:outputText id="simbol227" value=": "  styleClass="lblStyle"/>
-                           
+                            <h:outputText id="simbol227" value=": "  styleClass="lblStyle"/>
+
                         </th>
 
                         <th align="left">
-                           <h:inputText id="txtTtlWorkloadAssigned" styleClass="txtboxSmallestStyle" required="required" size="35"/>
+                            <h:inputText id="txtTtlWorkloadAssigned" styleClass="txtboxSmallestStyle" required="required" size="35"/>
                             <h:outputText id="hr222" value=" hours"  styleClass="lblStyle"/>
                         </th>
                     </tr> 
@@ -332,19 +205,19 @@
             <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
                 <tr>
-                     <th align="left"><h:outputText id="lblWorkloadList" value="Workload List"  styleClass="lblStyle"/></th>
+                    <th align="left"><h:outputText id="lblWorkloadList" value="Workload List"  styleClass="lblStyle"/></th>
                 </tr> 
-<!--                <tr>
-                    <th align="left">
-                    <h:selectOneListbox styleClass="ddlListViewStyle"> 
-                        <f:selectItem itemValue = "1" itemLabel = "" /> 
-                        <f:selectItem itemValue = "2" itemLabel = "" /> 
-                    </h:selectOneListbox>   
-                    </th>
-                </tr> -->
+                <!--                <tr>
+                                    <th align="left">
+                                    <h:selectOneListbox styleClass="ddlListViewStyle"> 
+                                        <f:selectItem itemValue = "1" itemLabel = "" /> 
+                                        <f:selectItem itemValue = "2" itemLabel = "" /> 
+                                    </h:selectOneListbox>   
+                                    </th>
+                                </tr> -->
 
             </table>
- 
+
             <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">    
                 <tr>
                     <th><label>&nbsp;</label></th>
@@ -352,8 +225,7 @@
                 </tr>
 
                 <tr>
-                    <!--<th colspan="3" align="left"> <h:commandButton id="btnCancel" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>-->
-                    <th colspan="4" align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                     <th colspan="4" align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
                 </tr> 
             </table>
         </h:form>

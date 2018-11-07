@@ -9,50 +9,6 @@
     <h:head>
         <title>STEM CS Validation Programme</title>
         <h:outputStylesheet name="css/style.css" />
-<!--        <f:metadata>
-            <f:event type="preRenderView" listener="{login.main(args)}"/> #login.xxx
-      </f:metadata>-->
-
-<!--        <script type="text/javascript">
-            function Submit() {
-
-                var Fname = document.getElementById('login:txtUsername');
-
-                alert(Fname.value + " a");
-                return false;
-
-            }
-        </script>-->
-
-<!--        <style type="text/css">
-/*            .radiobuttonStyle { 
-                font-size: 20pt;
-                    width: 2em; 
-                    height: 2em; 
-                 padding-left:100px;
-            }
-
-             .radioButtonSpace { padding-right: 50px; margin-right:50px; } 
-
-
-            .buttonStyle{
-                font-size: 25px;
-                column-width: 10px;
-                width: 200px;
-                height: 40px;
-            }
-
-            .txtboxStyle {
-                font-size: 18pt;
-                height: 35px;
-                width : 250px;
-            }
-
-            .lblStyle{
-                font-size: 25pt;
-            }*/
-        </style>    -->
-
     </h:head>
     <h:body>
 
@@ -61,7 +17,7 @@
             <h1>LOGIN</h1>
             <h:form id="login" title="Login page">
                 
-                <p:growl id="messages" />
+                <p:growl id="messages" /> <!--Error message purpose-->
  
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
                     
@@ -78,22 +34,14 @@
                                     <f:selectItem itemValue = "Evaluator" itemLabel = "Evaluator/Master Trainer" />
                                 </h:selectOneRadio></h:panelGroup></th>
                     </tr>
-
-                    <!--  <tr>
-                          <th><input id="radiobutton" type="radio" name="logintype" value="admin" size="30px" /><font size="5">Admin</font></th>
-                          <th><input id="radiobutton" type="radio" name="logintype" value="ev/ma"/><font size="5">Evaluator/Master Trainer</font></th> 
-                      </tr> -->
                     <tr>
                         <th><label>&nbsp;</label></th>
                         <th><label>&nbsp;</label></th> 
                     </tr>
 
-                    <!-- <font size="7"> -->
-
                     <tr>
                         <th> <h:outputText id="lblUsername" value="Username:"  styleClass="lblStyle"/></th>
                         <th align="left"><h:inputText id="txtUsername" title="Enter username" styleClass="txtboxStyle" value="#{login.username}" size="35"/>
-                    <!--<p:message id="message" for="txtUsername"></p:message>-->
                     </th>
                     </tr>
 
@@ -109,14 +57,11 @@
 
                     <tr>
                         <th> <p:commandButton id="btnReset" value="Reset" title="Click to reset" styleClass="buttonLoginStyle" ajax="false" action="#{login.reset()}"/></th>
-                        <!--<th><input type="submit" id="submit" value="Login" class="button" onclick="LoginFunction()" /><br /></th>
-                        -->
                         <th><p:commandButton id="btnLogin" value="Login" title="Click to login" styleClass="buttonLoginStyle" ajax="false" action="#{login.verifyUser()}"/></th>
                     </tr>    
                 </table>
             </h:form>
         </div>
-
     </h:body>
 </html>
 

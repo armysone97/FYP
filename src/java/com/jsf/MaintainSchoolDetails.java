@@ -435,36 +435,60 @@ public class MaintainSchoolDetails {
         status = "Active"; //due to ddl can't accept the value if user didn't select it
         int numYearComm = 0;
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO school (schoolID, schoolName, schoolAddress, schoolState, schoolContactNo, commYearCS, schoolStatus) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        FacesContext context = FacesContext.getCurrentInstance();
+        int verifyCounter = 0;
 
-            //insert school
-            statement.setString(1, schoolID);
-            statement.setString(2, name);
-            statement.setString(3, address);
-            statement.setString(4, state);
-            statement.setString(5, contactNo);
-            statement.setInt(6, commYear);
-            statement.setString(7, status);
-            statement.executeUpdate();
+        if (name.isEmpty() || address.isEmpty() || contactNo.isEmpty()) {
+            context.addMessage(null, new FacesMessage("Please fill in whole form!"));
+        } else {
 
-            statement.close();
-            con.close();
+            String pattern = "-?\\d+";
 
-            disabledTxt = true;
-            disabledAddButton = false;
-            disabledEditButton = false;
-            disabledResetButton = true;
+            if (!contactNo.matches("-?\\d+")) { // any positive or negetive integer or not!
+                context.addMessage(null, new FacesMessage("Contact Number must be in integer only! Please try again!"));
+            } else {
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                    PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO school (schoolID, schoolName, schoolAddress, schoolState, schoolContactNo, commYearCS, schoolStatus) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
-            addButtonName = "New";
-            counterCSLevel(numYearComm);
+                    //insert school
+                    statement.setString(1, schoolID);
+                    statement.setString(2, name);
+                    statement.setString(3, address);
+                    statement.setString(4, state);
+                    statement.setString(5, contactNo);
+                    statement.setInt(6, commYear);
+                    statement.setString(7, status);
+                    statement.executeUpdate();
 
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
+                    statement.close();
+                    con.close();
+
+                    verifyCounter = 1;
+
+                    disabledTxt = true;
+                    disabledAddButton = false;
+                    disabledEditButton = false;
+                    disabledResetButton = true;
+
+                    addButtonName = "New";
+                    counterCSLevel(numYearComm);
+
+                } catch (Exception ex) {
+                    System.out.println("Error: " + ex);
+                }
+
+                switch (verifyCounter) {
+                    case 0:
+                        context.addMessage(null, new FacesMessage("New school " + name + " added not successful!"));
+                        break;
+                    case 1:
+                        context.addMessage(null, new FacesMessage("New school " + name + " added successful!"));
+                        break;
+                }
+            }
         }
-
     }
 
     //remove duplicate element for cs level id array
@@ -587,29 +611,12 @@ public class MaintainSchoolDetails {
         // int lengthCommYearList = get_commYearCount();
         //   String[] schoolListDuplicate = new String[lengthCommYearList];
         int tmp = 0;
-        String schoolID = "";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE commYearCS = ?");
-            st.setInt(1, commYear);
-            ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                schoolID = rs.getString("schoolID");
-                tmp++;
-            }
-
-            st.close();
-            con.close();
-
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
-        }
 
         String scID = "", shID = "", csID = "";
         int ttlStud = 0;
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        int verifyCounter = 0;
 
         for (int j = 0; j < CSIDListDuplicate.length; j++) {
             try {
@@ -633,11 +640,21 @@ public class MaintainSchoolDetails {
                 statement.close();
                 con.close();
 
+                verifyCounter = 1;
+
             } catch (Exception ex) {
                 System.out.println("Error: " + ex);
             }
         }
 
+        switch (verifyCounter) {
+            case 0:
+                context.addMessage(null, new FacesMessage("School CS Map for school " + name + " automatic added not successful!"));
+                break;
+            case 1:
+                context.addMessage(null, new FacesMessage("School CS Map for school " + name + " automatic added successful!"));
+                break;
+        }
     }
 
     //change button action when click the button
@@ -665,47 +682,71 @@ public class MaintainSchoolDetails {
     public void updateSchool() {
 
         FacesContext context = FacesContext.getCurrentInstance();
+        int verifyCounter = 0;
 
         int length = 0;
         String tsID = "", assID = "", csID = "", assActivityID = "", assTypeID = "";
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE school SET schoolName = ?, schoolAddress = ?, schoolState = ?, schoolContactNo = ?, schoolStatus = ? WHERE schoolID = ?");
+        if (name.isEmpty() || address.isEmpty() || contactNo.isEmpty()) {
+            context.addMessage(null, new FacesMessage("Please fill in whole form!"));
+        } else {
 
-            //update school
-            statement.setString(1, name);
-            statement.setString(2, address);
-            statement.setString(3, state);
-            statement.setString(4, contactNo);
-            statement.setString(5, status);
-            statement.setString(6, schoolID);
-            statement.executeUpdate();
+            String pattern = "-?\\d+";
 
-            statement.close();
-            con.close();
+            if (!contactNo.matches("-?\\d+")) { // any positive or negetive integer or not!
+                context.addMessage(null, new FacesMessage("Contact Number must be in integer only! Please try again!"));
+            } else {
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                    PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE school SET schoolName = ?, schoolAddress = ?, schoolState = ?, schoolContactNo = ?, schoolStatus = ? WHERE schoolID = ?");
 
-            disabledAddButton = false;
-            disabledEditButton = false;
-            editButtonName = "Edit";
-            disabledTxt = true;
-            disabledStatus = true;
+                    //update school
+                    statement.setString(1, name);
+                    statement.setString(2, address);
+                    statement.setString(3, state);
+                    statement.setString(4, contactNo);
+                    statement.setString(5, status);
+                    statement.setString(6, schoolID);
+                    statement.executeUpdate();
 
-            disabledAddButton = false;
-            disabledEditButton = false;
+                    statement.close();
+                    con.close();
 
-            int[] yearListDuplicate = new int[2];
-            yearListDuplicate[0] = 2222;
-            yearListDuplicate[1] = 3333;
+                    verifyCounter = 1;
 
-            testing = yearListDuplicate[0] + "\n" + yearListDuplicate[1]; //output: 2222 3333
+                    int[] yearListDuplicate = new int[2];
+                    yearListDuplicate[0] = 2222;
+                    yearListDuplicate[1] = 3333;
+
+                    testing = yearListDuplicate[0] + "\n" + yearListDuplicate[1]; //output: 2222 3333
 
 //            for (int i = 0; i < 2; i++) {
 //                testing = yearListDuplicate[i] + "x";
 //            }
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
+                } catch (Exception ex) {
+                    System.out.println("Error: " + ex);
+                }
+
+                switch (verifyCounter) {
+                    case 0:
+                        context.addMessage(null, new FacesMessage("Update school name " + name + " not successful!"));
+                        break;
+                    case 1:
+                        context.addMessage(null, new FacesMessage("Update school name " + name + " successful!"));
+
+                        disabledAddButton = false;
+                        disabledEditButton = false;
+                        editButtonName = "Edit";
+                        disabledTxt = true;
+                        disabledStatus = true;
+
+                        disabledAddButton = false;
+                        disabledEditButton = false;
+
+                        break;
+                }
+            }
         }
     }
 
@@ -754,7 +795,7 @@ public class MaintainSchoolDetails {
                 disabledCommYear = true;
                 disabledAddButton = false;
                 disabledEditButton = true;
-                 context.addMessage(null, new FacesMessage("yy"));
+                context.addMessage(null, new FacesMessage("yy"));
                 break;
             case 1:
                 context.addMessage(null, new FacesMessage("zz"));
@@ -763,8 +804,8 @@ public class MaintainSchoolDetails {
         }
 
     }
-    
-    public static void tryaa(){
+
+    public static void tryaa() {
 //           this.year = 2018;
 //                state = "Johor";
 //                disabledTxt = false;

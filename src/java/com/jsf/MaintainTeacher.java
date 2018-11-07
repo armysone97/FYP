@@ -1709,44 +1709,61 @@ public class MaintainTeacher {
 
         int verifyCounter = 0;
 
-       // newCount = 0;
-        
-
+        // newCount = 0;
         //   newTeacherName = "newTeacherID: " + newTeacherID + " newTeacherName: " + ttt + " newTeacherStatus: " + newTeacherStatus + " newTeacherYear: " + newTeacherYear;
 //        newTeacherStudNum = 65412;
         switch (newCount) {
             case 1: //select
+                 if (newTeacherName.isEmpty() || newTeacherStudNum == 0) {
+                    context.addMessage(null, new FacesMessage("Please fill in whole form!"));
+                } else {
+                     addTeacherCSMap();
+                 }
                 break;
             case 2: //add
-                newTeacherID = autoGenerateTeacherID();
-                
-                try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-                    PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO teacher (teacherID, teacherName, teacherStatus, year) VALUES (?, ?, ?, ?)");
 
-                    statement.setString(1, newTeacherID);
-                    statement.setString(2, newTeacherName);
-                    statement.setString(3, newTeacherStatus);
-                    statement.setInt(4, newTeacherYear);
-                    statement.executeUpdate();
+                if (newTeacherName.isEmpty() || newTeacherStudNum == 0) {
+                    context.addMessage(null, new FacesMessage("Please fill in whole form!"));
+                } else {
+                    newTeacherID = autoGenerateTeacherID();
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                        PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO teacher (teacherID, teacherName, teacherStatus, year) VALUES (?, ?, ?, ?)");
 
-                    verifyCounter = 1;
-                    statement.close();
-                    con.close();
+                        statement.setString(1, newTeacherID);
+                        statement.setString(2, newTeacherName);
+                        statement.setString(3, newTeacherStatus);
+                        statement.setInt(4, newTeacherYear);
+                        statement.executeUpdate();
 
-                } catch (Exception ex) {
-                    System.out.println("Error: " + ex);
+                        verifyCounter = 1;
+                        statement.close();
+                        con.close();
+
+                    } catch (Exception ex) {
+                        System.out.println("Error: " + ex);
+                    }
+                    
+                    switch (verifyCounter) {
+                        case 0:
+                            break;
+                        case 1:
+                            context.addMessage(null, new FacesMessage("Add New Teacher name " + newTeacherName + " for school " + newTeacherSchoolName + " successful!"));
+                            addTeacherCSMap();
+                    }
+                    break;
                 }
-                break;
+
         }
-        
-         switch (verifyCounter) {
-            case 0:
-                break;
-            case 1:
-                context.addMessage(null, new FacesMessage("Add New Teacher name " + newTeacherName + " for school " + newTeacherSchoolName + " successful!"));
-        }
+
+    }
+
+    public void addTeacherCSMap() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        int verifyCounter = 0;
 
         String tcID = "", scID = "", thID = "";
         int numSampleAss = 0;
@@ -1803,7 +1820,6 @@ public class MaintainTeacher {
                 newTeacherStudNum = 0;
                 break;
         }
-
     }
 
     //cancel insert newTeacher

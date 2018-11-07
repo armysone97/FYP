@@ -636,8 +636,11 @@ public class AssessmentTaskSetting {
         int length = 0;
         String tsID = "", assID = "", csID = "", assActivityID = "", assTypeID = "";
         int verifyCounter = 0;
-
-        try {
+        
+        if (project.isEmpty() && collaboration.isEmpty() && practical.isEmpty() && groupwork.isEmpty()){
+               context.addMessage(null, new FacesMessage("At least one of the assessment must be fill in! Please try again!"));
+        }else{
+            try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO task (taskID, taskTitle, assID) VALUES (?, ?, ?)");
@@ -724,6 +727,9 @@ public class AssessmentTaskSetting {
                 disabledGroupwork = true;
                 break;
         }
+        }
+
+        
     }
 
     //navigation bar purpose

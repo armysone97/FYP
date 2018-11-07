@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -297,49 +298,53 @@ public class RateSetting {
     }
 
     public void addSetting() {
-
         FacesContext context = FacesContext.getCurrentInstance();
 
         int length = 0;
         String rtID = "";
 
         int verifyCounter = 0;
+        
+        if (numSampleAss == 0 || mtHourlyRate == 0 || evHourlyRate == 0 || mileageRate == 0) {
+            context.addMessage(null, new FacesMessage("Please fill in whole form!"));
+        } else {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO rate (rateID, numSampleAss, mtHourlyRate, evHourlyRate, mileageRate, year) VALUES (?, ?, ?, ?, ?, ?)");
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO rate (rateID, numSampleAss, mtHourlyRate, evHourlyRate, mileageRate, year) VALUES (?, ?, ?, ?, ?, ?)");
+                //insert rate setting
+                length = autoGenerateID();
+                length = length + 1;
+                rtID = "RT" + Integer.toString(length);
 
-            //insert rate setting
-            length = autoGenerateID();
-            length = length + 1;
-            rtID = "RT" + Integer.toString(length);
+                statement.setString(1, rtID);
+                statement.setInt(2, numSampleAss);
+                statement.setDouble(3, mtHourlyRate);
+                statement.setDouble(4, evHourlyRate);
+                statement.setDouble(5, mileageRate);
+                statement.setInt(6, year);
 
-            statement.setString(1, rtID);
-            statement.setInt(2, numSampleAss);
-            statement.setDouble(3, mtHourlyRate);
-            statement.setDouble(4, evHourlyRate);
-            statement.setDouble(5, mileageRate);
-            statement.setInt(6, year);
+                statement.executeUpdate();
+                statement.close();
+                con.close();
 
-            statement.executeUpdate();
-            statement.close();
-            con.close();
+                verifyCounter = 1;
 
-            verifyCounter = 1;
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
 
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
-        }
+            switch (verifyCounter) {
+                case 0:
+                    context.addMessage(null, new FacesMessage("Add Rate Setting for year " + year + " not successful!"));
+                    break;
+                case 1:
+                    context.addMessage(null, new FacesMessage("Add Rate Setting for year " + year + " successful!"));
+                    disabledTxt = true;
+                    break;
+            }
 
-        switch (verifyCounter) {
-            case 0:
-                context.addMessage(null, new FacesMessage("Add Rate Setting for year " + year + " not successful!"));
-                break;
-            case 1:
-                context.addMessage(null, new FacesMessage("Add Rate Setting for year " + year + " successful!"));
-                disabledTxt = true;
-                break;
         }
 
     }

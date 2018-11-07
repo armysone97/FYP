@@ -919,43 +919,82 @@ public class MaintainAssessmentTask {
 
     //update numSampleAss in teachercsmap table
     public void updateNumSampleAss() {
-        
+
         FacesContext context = FacesContext.getCurrentInstance();
         int verifyCounter = 0;
+
+        int numSampleAssConstant = 0;
 
         String thID = matchTeacherID();
         String scID = matchSchoolCSMapID();
 
-        //then update latest ttlstud inside schoolcsmap table
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE teachercsmap SET numSampleAss = ? WHERE teacherID = ? AND schoolCSMapID = ?");
+        studEnrol = matchStudNum(thID, scID);
+        numSampleAssConstant = matchAssNum(thID, scID);
 
-            statement.setInt(1, numSampleAss);
-            statement.setString(2, thID);
-            statement.setString(3, scID);
-            statement.executeUpdate();
+        Boolean verifyNum = false;
+        int verifyNum1 = 0;
 
-            statement.close();
-            con.close();
-            
-            verifyCounter = 1;
+        if (numSampleAss == 0) {
+            context.addMessage(null, new FacesMessage("Number Sample Assessment cannot be 0! Please try again!"));
 
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
+        } else {
+
+            if (studEnrol < numSampleAssConstant) {
+                if (numSampleAss == studEnrol) {
+                    verifyNum = true;
+                }else{
+                    verifyNum1 = 1;
+                }
+            } else {
+                if (numSampleAss == numSampleAssConstant) {
+                    verifyNum = true;
+                }else{
+                    verifyNum1 = 2;
+                }
+            }
+
+            if (!verifyNum) {
+                switch (verifyNum1) {
+                    case 1:
+                        context.addMessage(null, new FacesMessage("Number Sample Assessment must be same with Student Enrol number (" + studEnrol + ")! Please try again!"));
+                        break;
+                    case 2:
+                        context.addMessage(null, new FacesMessage("Number Sample Assessment must be same with the Rate of Number Sample Assessment number (" + numSampleAssConstant + ")! Please try again!"));
+                        break;
+                }
+            } else {
+                //then update latest ttlstud inside schoolcsmap table
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                    PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE teachercsmap SET numSampleAss = ? WHERE teacherID = ? AND schoolCSMapID = ?");
+
+                    statement.setInt(1, numSampleAss);
+                    statement.setString(2, thID);
+                    statement.setString(3, scID);
+                    statement.executeUpdate();
+
+                    statement.close();
+                    con.close();
+
+                    verifyCounter = 1;
+
+                } catch (Exception ex) {
+                    System.out.println("Error: " + ex);
+                }
+
+                switch (verifyCounter) {
+                    case 0:
+                        context.addMessage(null, new FacesMessage("Update Number Samples Assessment for teacher " + teacher + " in year " + year + " not successful!"));
+                        break;
+                    case 1:
+                        context.addMessage(null, new FacesMessage("Update Number Samples Assessment for teacher " + teacher + " in year " + year + " successful!"));
+                        disabledNumSampleAss = true;
+                        break;
+                }
+            }
         }
-        
-        
-        switch (verifyCounter) {
-            case 0:
-                context.addMessage(null, new FacesMessage("Update Number Samples Assessment for teacher " + teacher + " in year " + year + " not successful!"));
-                break;
-            case 1:
-                context.addMessage(null, new FacesMessage("Update Number Samples Assessment for teacher " + teacher + " in year " + year + " successful!"));
-                 disabledNumSampleAss = true;
-                break;
-        }
+
     }
 
     //navigation bar purpose

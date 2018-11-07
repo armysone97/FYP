@@ -642,7 +642,6 @@ public class CSLevelSetting {
     //add assessment in db
     public void addAssessment() { //if need redirect to another xhtml, need change void to String and return keyword
 
-        //  
         FacesContext context = FacesContext.getCurrentInstance();
 
         int length = 0;
@@ -651,101 +650,106 @@ public class CSLevelSetting {
         int minPerStud = 0;
         int verifyCounter = 0;
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO assessment (assID, CSLevelID, assActivityID, year, minPerStud) VALUES (?, ?, ?, ?, ?)");
+        if (project == false && collaboration == false && practical == false && groupwork == false) {
+            context.addMessage(null, new FacesMessage("At least one of the assessment must be checked! Please try again!"));
+        } else {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO assessment (assID, CSLevelID, assActivityID, year, minPerStud) VALUES (?, ?, ?, ?, ?)");
 
-            //insert project
-            if (project == true) {
-                length = autoGenerateID();
-                length = length + 1;
-                asID = "AS" + Integer.toString(length);
-                csID = matchCSLevelName(cslevel);
-                assActivityID = "AA1";
-                minPerStud = 0;
+                //insert project
+                if (project == true) {
+                    length = autoGenerateID();
+                    length = length + 1;
+                    asID = "AS" + Integer.toString(length);
+                    csID = matchCSLevelName(cslevel);
+                    assActivityID = "AA1";
+                    minPerStud = 0;
 
-                statement.setString(1, asID);
-                statement.setString(2, csID);
-                statement.setString(3, assActivityID);
-                statement.setInt(4, year);
-                statement.setInt(5, minPerStud);
-                statement.executeUpdate();
+                    statement.setString(1, asID);
+                    statement.setString(2, csID);
+                    statement.setString(3, assActivityID);
+                    statement.setInt(4, year);
+                    statement.setInt(5, minPerStud);
+                    statement.executeUpdate();
+                }
+
+                //insert collaboration
+                if (collaboration == true) {
+                    length = autoGenerateID();
+                    length = length + 1;
+                    asID = "AS" + Integer.toString(length);
+                    csID = matchCSLevelName(cslevel);
+                    assActivityID = "AA2";
+                    minPerStud = 0;
+
+                    statement.setString(1, asID);
+                    statement.setString(2, csID);
+                    statement.setString(3, assActivityID);
+                    statement.setInt(4, year);
+                    statement.setInt(5, minPerStud);
+                    statement.executeUpdate();
+                }
+
+                //insert practical
+                if (practical == true) {
+                    length = autoGenerateID();
+                    length = length + 1;
+                    asID = "AS" + Integer.toString(length);
+                    csID = matchCSLevelName(cslevel);
+                    assActivityID = "AA3";
+                    minPerStud = 0;
+
+                    statement.setString(1, asID);
+                    statement.setString(2, csID);
+                    statement.setString(3, assActivityID);
+                    statement.setInt(4, year);
+                    statement.setInt(5, minPerStud);
+                    statement.executeUpdate();
+                }
+
+                //insert groupwork
+                if (groupwork == true) {
+                    length = autoGenerateID();
+                    length = length + 1;
+                    asID = "AS" + Integer.toString(length);
+                    csID = matchCSLevelName(cslevel);
+                    assActivityID = "AA4";
+                    minPerStud = 0;
+
+                    statement.setString(1, asID);
+                    statement.setString(2, csID);
+                    statement.setString(3, assActivityID);
+                    statement.setInt(4, year);
+                    statement.setInt(5, minPerStud);
+                    statement.executeUpdate();
+                }
+
+                disabledCollaboration = true;
+                disabledProject = true;
+                disabledPractical = true;
+                disabledGroupwork = true;
+
+                verifyCounter = 1;
+
+                statement.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
             }
 
-            //insert collaboration
-            if (collaboration == true) {
-                length = autoGenerateID();
-                length = length + 1;
-                asID = "AS" + Integer.toString(length);
-                csID = matchCSLevelName(cslevel);
-                assActivityID = "AA2";
-                minPerStud = 0;
-
-                statement.setString(1, asID);
-                statement.setString(2, csID);
-                statement.setString(3, assActivityID);
-                statement.setInt(4, year);
-                statement.setInt(5, minPerStud);
-                statement.executeUpdate();
+            switch (verifyCounter) {
+                case 0:
+                    context.addMessage(null, new FacesMessage("CS Level Setting for " + cslevel + " in year " + year + " not successful!"));
+                    break;
+                case 1:
+                    context.addMessage(null, new FacesMessage("CS Level Setting for " + cslevel + " in year " + year + " successful!"));
+                    break;
             }
-
-            //insert practical
-            if (practical == true) {
-                length = autoGenerateID();
-                length = length + 1;
-                asID = "AS" + Integer.toString(length);
-                csID = matchCSLevelName(cslevel);
-                assActivityID = "AA3";
-                minPerStud = 0;
-
-                statement.setString(1, asID);
-                statement.setString(2, csID);
-                statement.setString(3, assActivityID);
-                statement.setInt(4, year);
-                statement.setInt(5, minPerStud);
-                statement.executeUpdate();
-            }
-
-            //insert groupwork
-            if (groupwork == true) {
-                length = autoGenerateID();
-                length = length + 1;
-                asID = "AS" + Integer.toString(length);
-                csID = matchCSLevelName(cslevel);
-                assActivityID = "AA4";
-                minPerStud = 0;
-
-                statement.setString(1, asID);
-                statement.setString(2, csID);
-                statement.setString(3, assActivityID);
-                statement.setInt(4, year);
-                statement.setInt(5, minPerStud);
-                statement.executeUpdate();
-            }
-
-            disabledCollaboration = true;
-            disabledProject = true;
-            disabledPractical = true;
-            disabledGroupwork = true;
-
-            verifyCounter = 1;
-
-            statement.close();
-            con.close();
-
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
         }
 
-        switch (verifyCounter) {
-            case 0:
-                context.addMessage(null, new FacesMessage("CS Level Setting for " + cslevel + " in year " + year + " not successful!"));
-                break;
-            case 1:
-                context.addMessage(null, new FacesMessage("CS Level Setting for " + cslevel + " in year " + year + " successful!"));
-                break;
-        }
     }
 
     //auto generate cs level ID
@@ -797,43 +801,47 @@ public class CSLevelSetting {
         int verifyCounter = 0;
         String tmpCSName = "";
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO cslevel (CSLevelID, CSLevelName) VALUES (?, ?)");
+        if (newcslevelname.isEmpty()) {
+            context.addMessage(null, new FacesMessage("CS Level Name cannot be empty! Please try again!"));
+        } else {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO cslevel (CSLevelID, CSLevelName) VALUES (?, ?)");
 
-            statement.setString(1, newcslevelid);
-            statement.setString(2, newcslevelname);
-            statement.executeUpdate();
+                statement.setString(1, newcslevelid);
+                statement.setString(2, newcslevelname);
+                statement.executeUpdate();
 
-            statement.close();
-            con.close();
+                statement.close();
+                con.close();
 
-            tmpCSName = newcslevelname; //growl purpose
+                tmpCSName = newcslevelname; //growl purpose
 
-            disabledNewCS = true;
-            disabledCollaboration = true;
-            disabledProject = true;
-            disabledPractical = true;
-            disabledGroupwork = true;
-            disabledButton = false;
+                verifyCounter = 1;
 
-            newcslevelname = null;
-            newcslevelid = null;
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
 
-            verifyCounter = 1;
+            switch (verifyCounter) {
+                case 0:
+                    context.addMessage(null, new FacesMessage("Add New CS Level " + tmpCSName + " not successful!"));
+                    break;
+                case 1:
+                    context.addMessage(null, new FacesMessage("Add New CS Level " + tmpCSName + " successful!"));
 
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
-        }
+                    disabledNewCS = true;
+                    disabledCollaboration = true;
+                    disabledProject = true;
+                    disabledPractical = true;
+                    disabledGroupwork = true;
+                    disabledButton = false;
 
-        switch (verifyCounter) {
-            case 0:
-                context.addMessage(null, new FacesMessage("Add New CS Level " + tmpCSName + " not successful!"));
-                break;
-            case 1:
-                context.addMessage(null, new FacesMessage("Add New CS Level " + tmpCSName + " successful!"));
-                break;
+                    newcslevelname = null;
+                    newcslevelid = null;
+                    break;
+            }
         }
 
     }

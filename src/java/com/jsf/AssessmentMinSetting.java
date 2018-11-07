@@ -576,73 +576,77 @@ public class AssessmentMinSetting {
 
         int verifyCounter = 0;
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE assessment SET minPerStud = ? WHERE assID = ?");
+        if (project == 0 && collaboration == 0 && practical == 0 && groupwork == 0) {
+            context.addMessage(null, new FacesMessage("At least one of the assessment minutes must be fill in! Please try again!"));
+        } else {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE assessment SET minPerStud = ? WHERE assID = ?");
 
-            //update project
-            assID = matchCSLevelName(cslevel, "AA1", year);
+                //update project
+                assID = matchCSLevelName(cslevel, "AA1", year);
 
-            if (!assID.isEmpty()) {
-                statement.setDouble(1, project);
-                statement.setString(2, assID);
-                statement.executeUpdate();
+                if (!assID.isEmpty()) {
+                    statement.setDouble(1, project);
+                    statement.setString(2, assID);
+                    statement.executeUpdate();
 
-                verifyCounter = 1;
+                    verifyCounter = 1;
+                }
+
+                //update collaboration
+                assID = matchCSLevelName(cslevel, "AA2", year);
+
+                if (!assID.isEmpty()) {
+                    statement.setDouble(1, collaboration);
+                    statement.setString(2, assID);
+                    statement.executeUpdate();
+
+                    verifyCounter = 1;
+                }
+
+                //update practical
+                assID = matchCSLevelName(cslevel, "AA3", year);
+
+                if (!assID.isEmpty()) {
+                    statement.setDouble(1, practical);
+                    statement.setString(2, assID);
+                    statement.executeUpdate();
+
+                    verifyCounter = 1;
+                }
+
+                //update groupwork
+                assID = matchCSLevelName(cslevel, "AA4", year);
+
+                if (!assID.isEmpty()) {
+                    statement.setDouble(1, groupwork);
+                    statement.setString(2, assID);
+                    statement.executeUpdate();
+
+                    verifyCounter = 1;
+                }
+
+                statement.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
             }
 
-            //update collaboration
-            assID = matchCSLevelName(cslevel, "AA2", year);
-
-            if (!assID.isEmpty()) {
-                statement.setDouble(1, collaboration);
-                statement.setString(2, assID);
-                statement.executeUpdate();
-
-                verifyCounter = 1;
+            switch (verifyCounter) {
+                case 0:
+                    context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting for year " + year + " not successful!"));
+                    break;
+                case 1:
+                    context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting " + year + " successful!"));
+                    disabledProject = true;
+                    disabledCollaboration = true;
+                    disabledPractical = true;
+                    disabledGroupwork = true;
+                    break;
             }
-
-            //update practical
-            assID = matchCSLevelName(cslevel, "AA3", year);
-
-            if (!assID.isEmpty()) {
-                statement.setDouble(1, practical);
-                statement.setString(2, assID);
-                statement.executeUpdate();
-
-                verifyCounter = 1;
-            }
-
-            //update groupwork
-            assID = matchCSLevelName(cslevel, "AA4", year);
-
-            if (!assID.isEmpty()) {
-                statement.setDouble(1, groupwork);
-                statement.setString(2, assID);
-                statement.executeUpdate();
-
-                verifyCounter = 1;
-            }
-
-            statement.close();
-            con.close();
-
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
-        }
-
-        switch (verifyCounter) {
-            case 0:
-                context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting for year " + year + " not successful!"));
-                break;
-            case 1:
-                context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting " + year + " successful!"));
-                disabledProject = true;
-                disabledCollaboration = true;
-                disabledPractical = true;
-                disabledGroupwork = true;
-                break;
         }
     }
 

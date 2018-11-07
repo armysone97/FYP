@@ -109,7 +109,7 @@
                             <th align="left"> <h:outputText id="lblSchoolContactNo" value="School Contact No "  styleClass="lblStyle"/></th>
                             <th align="right">
                                 <h:outputText id="simbol4" value=": "  styleClass="lblStyle"/></th>
-                            <th align="left">  <h:inputText title="Enter school contact no."  id="txtSchoolContactNo" value="#{maintainSchoolDetails.contactNo}" disabled="#{maintainSchoolDetails.disabledTxt}" styleClass="txtboxStyle" required="required" size="35"/>
+                            <th align="left">  <h:inputText title="Enter school contact no."  id="txtSchoolContactNo" maxlength="10" value="#{maintainSchoolDetails.contactNo}" disabled="#{maintainSchoolDetails.disabledTxt}" styleClass="txtboxStyle" required="required" size="35"/>
                             </th>
                         </tr> 
 
@@ -166,8 +166,8 @@
                                     <h:outputText id="simbol5000" value="#{maintainSchoolDetails.testing}" escape="false"  styleClass="lblStyle"/></th>
                             </tr>
                             <tr>
-                                <th colspan="2" align="left"> <h:commandButton title="Click to cancel"  id="btnCancel100" value="Cancel" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
-                                <th colspan="4" align="right"><h:commandButton title="Click to confirm"  id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                                <th colspan="2" align="left"> <h:commandButton title="Click to cancel"  id="btnCancel100" value="Cancel" styleClass="buttonStyle"/></th>
+                                <th colspan="4" align="right"><h:commandButton title="Click to confirm"  id="btnConfirm" value="Confirm" styleClass="buttonStyle"/></th>
                             </tr>  
 
                         </table>

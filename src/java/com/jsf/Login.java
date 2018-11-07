@@ -34,12 +34,12 @@ public class Login {
     private String password;
     private String role;
     private String nextPage;
-    private int counterReset;
+    private int counterReset; //growl purpose
 
     public Login() {
-        role = "Admin";
+        this.role = "Admin";
 //        username = null;
-        counterReset = 0;
+        this.counterReset = 0;
     }
 
     public String getNextPage() {

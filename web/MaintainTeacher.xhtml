@@ -380,7 +380,7 @@
                             </th>
 
                             <td align="left">
-                                <h:inputText id="txtNewTeacherName" title="Enter new teacher name" value="#{maintainTeacher.newTeacherName}" disabled="#{maintainTeacher.disabledNewTeacherName}" styleClass="txtboxSpecialStyle" required="required" size="10"/>
+                                <h:inputText id="txtNewTeacherName" title="Enter new teacher name" value="#{maintainTeacher.newTeacherName}" disabled="#{maintainTeacher.disabledNewTeacherName}" styleClass="txtboxSmallStyle" required="required" size="10"/>
                             </td>  
                         </tr>   
 
@@ -412,8 +412,8 @@
                         </tr>   
 
                         <tr>
-                            <!--<th colspan="2" align="left"> <h:commandButton id="btnCancel2" title="Click to cancel" value="Cancel" styleClass="buttonStyle" disabled="#{maintainTeacher.disabledNewTeacher}"/></th>-->
-                            <th colspan="3" align="left"> <h:commandButton id="btnReset2" title="Click to reset" value="Reset" action="#{maintainTeacher.reset()}" styleClass="buttonStyle" disabled="#{maintainTeacher.disabledNewTeacher}"/></th>
+                            <th colspan="2" align="left"> <h:commandButton id="btnCancel2" title="Click to cancel" value="Cancel" styleClass="buttonStyle" disabled="#{maintainTeacher.disabledNewTeacher}" action="#{maintainTeacher.cancel()}"/></th>
+                            <th align="left"> <h:commandButton id="btnReset2" title="Click to reset" value="Reset" action="#{maintainTeacher.newReset()}" styleClass="buttonStyle" disabled="#{maintainTeacher.disabledNewTeacher}"/></th>
                             <th align="right"><h:commandButton id="btnConfirm2" title="Click to confirm" value="Confirm" styleClass="buttonStyle" disabled="#{maintainTeacher.disabledNewTeacher}" action="#{maintainTeacher.addTeacher()}"/></th>
                         </tr>   
 

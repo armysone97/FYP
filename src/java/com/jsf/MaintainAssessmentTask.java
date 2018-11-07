@@ -42,6 +42,8 @@ public class MaintainAssessmentTask {
 
     private Boolean disabledtxt, disabledNumSampleAss;
 
+    private int counterReset; //growl purpose
+
     public MaintainAssessmentTask() {
         this.state = "Pulau Pinang";
         this.school = "SMJK Heng Yee";
@@ -51,6 +53,7 @@ public class MaintainAssessmentTask {
         this.numSampleAss = 0;
         this.disabledtxt = true;
         this.disabledNumSampleAss = true;
+        this.counterReset = 0;
     }
 
     public Boolean getDisabledNumSampleAss() {
@@ -938,15 +941,26 @@ public class MaintainAssessmentTask {
             System.out.println("Error: " + ex);
         }
     }
-    
-     //navigation bar purpose
+
+    //navigation bar purpose
     public String goToNextPage() {
+
+        counterReset = 1;
+
         reset();
         return "MaintainAssessmentTask";
     }
 
     //reset page
     public void reset() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        switch (counterReset) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Reset successful!"));
+                break;
+        }
 
         //set default value
         state = "Pulau Pinang";
@@ -957,6 +971,8 @@ public class MaintainAssessmentTask {
         numSampleAss = 0;
         status = "Available";
         cslevel = "CS Level 1";
+
+        counterReset = 0;
 
         //set default disabled
         disabledtxt = true;

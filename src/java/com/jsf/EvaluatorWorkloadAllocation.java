@@ -46,6 +46,8 @@ public class EvaluatorWorkloadAllocation {
     private List<String> teacher_list = new ArrayList<>();
     private List<String> assessment_list = new ArrayList<>();
 
+    private int counterReset; //growl purpose
+
     public EvaluatorWorkloadAllocation(String evaluator, String school) {
         super();
         this.evaluator = evaluator;
@@ -54,6 +56,7 @@ public class EvaluatorWorkloadAllocation {
 
     public EvaluatorWorkloadAllocation() {
         super();
+        this.counterReset = 0;
     }
 
     public int getWorkloadLimit() {
@@ -544,12 +547,25 @@ public class EvaluatorWorkloadAllocation {
 
     //navigation bar purpose
     public String goToNextPage() {
+
+        counterReset = 1;
+
         reset();
         return "EvaluatorWorkloadAllocationApplication";
     }
 
     //reset page
     public void reset() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        switch (counterReset) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Reset successful!"));
+                break;
+        }
+
+        //set default value
         school = null;
         csLevel = null;
         teacher = null;
@@ -559,6 +575,8 @@ public class EvaluatorWorkloadAllocation {
         workloadMin = 0;
         workloadAssigned = 0;
         year = 2018;
+        
+        counterReset = 0;
     }
 
     public void main(String args[]) {

@@ -38,6 +38,8 @@ public class AssessmentTaskSetting {
 
     private Boolean disabledDDL, disabledProject, disabledCollaboration, disabledPractical, disabledGroupwork;
 
+    private int counterReset; //growl purpose
+
     public AssessmentTaskSetting() {
         this.year = 2018;
         //  this.disabledDDL = false;
@@ -45,6 +47,7 @@ public class AssessmentTaskSetting {
         this.disabledCollaboration = true;
         this.disabledPractical = true;
         this.disabledGroupwork = true;
+        this.counterReset = 0;
     }
 
     public Boolean getDisabledProject() {
@@ -620,9 +623,8 @@ public class AssessmentTaskSetting {
         }
 
         groupwork = tasktitle;
-        
-      //  groupwork = tmpYear + "x";
 
+        //  groupwork = tmpYear + "x";
         //   practical = csid + " : " + assactivityid + " : " + assid;
     }
 
@@ -706,16 +708,27 @@ public class AssessmentTaskSetting {
             System.out.println("Error: " + ex);
         }
     }
-    
-     //navigation bar purpose
+
+    //navigation bar purpose
     public String goToNextPage() {
 //          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ajax Update"));
+
+        counterReset = 1;
+
         reset();
         return "AssessmentTaskSetting";
     }
 
     //reset page
     public void reset() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        switch (counterReset) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Reset successful!"));
+                break;
+        }
 
         //set default value
         year = 2018;
@@ -724,6 +737,8 @@ public class AssessmentTaskSetting {
         collaboration = null;
         practical = null;
         groupwork = null;
+
+        counterReset = 0;
 
         //set default disabled
         disabledProject = true;

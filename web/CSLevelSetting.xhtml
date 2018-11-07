@@ -289,8 +289,8 @@
                         </tr>   
 
                         <tr>
-                            <th colspan="2" align="left"> <h:commandButton title="Click to cancel" id="btnCancel1" value="Cancel" styleClass="buttonStyle" action="STEMCSManagementMainMenu" /></th>
-                            <th colspan="3" align="left"> <h:commandButton title="Click to reset" id="btnReset1" value="Reset" action="#{cSLevelSetting.reset()}" styleClass="buttonStyle" disabled="#{cSLevelSetting.disabledNewCS}"/></th>
+                            <th colspan="2" align="left"> <h:commandButton title="Click to cancel" id="btnCancel1" value="Cancel" styleClass="buttonStyle" action="#{cSLevelSetting.cancel()}" disabled="#{cSLevelSetting.disabledNewCS}"/></th>
+                            <th align="left"> <h:commandButton title="Click to reset" id="btnReset1" value="Reset" action="#{cSLevelSetting.resetNew()}" styleClass="buttonStyle" disabled="#{cSLevelSetting.disabledNewCS}"/></th>
                             <th align="right"><h:commandButton title="Click to confirm" id="btnConfirm1" value="Confirm" styleClass="buttonStyle" action="#{cSLevelSetting.addCSLevel()}" disabled="#{cSLevelSetting.disabledNewCS}"/></th>
                         </tr>   
 

@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -38,10 +39,13 @@ public class MaintainSchoolMenu {
     private static int globalCounter;
     private static String globalState, globalSchool, globalAction, globalSchoolID;
 
+    private int counterReset; //growl purpose
+
     public MaintainSchoolMenu() {
         this.state = "Pulau Pinang";
         this.globalCounter = 0;
         this.action = "View";
+        this.counterReset = 0;
     }
 
     public String getAction() {
@@ -256,9 +260,12 @@ public class MaintainSchoolMenu {
 
         return nextPage;
     }
-    
-     //navigation bar purpose
+
+    //navigation bar purpose
     public String goToNextPage() {
+
+        counterReset = 1;
+
         reset();
         return "MaintainSchoolMenu";
     }
@@ -266,10 +273,20 @@ public class MaintainSchoolMenu {
     //reset page
     public void reset() {
 
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        switch (counterReset) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Reset successful!"));
+                break;
+        }
+
         //set default value
         state = "Pulau Pinang";
         globalCounter = 0;
         action = "View";
+
+        counterReset = 0;
     }
 
 }

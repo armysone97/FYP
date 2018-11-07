@@ -6,8 +6,10 @@
 package com.jsf;
 
 import java.sql.*;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -32,8 +34,10 @@ public class EvaluatorPersonalDetails {
     private Integer workloadLimitCount;
     private String rdID;
     private String wlID;
+    private int counterReset; //growl purpose
 
     public EvaluatorPersonalDetails() {
+        this.counterReset = 0;
     }
 
     public String getEvaName() {
@@ -251,15 +255,28 @@ public class EvaluatorPersonalDetails {
             System.out.println("Error: " + ex);
         }
     }
-    
-      //navigation bar purpose
-    public String goToNextPage(){
+
+    //navigation bar purpose
+    public String goToNextPage() {
+
+        counterReset = 1;
+
         reset();
         return "EvaluatorPersonalDetails";
     }
-    
+
     //reset page
     public void reset() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        switch (counterReset) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Reset successful!"));
+                break;
+        }
+
+        //set default value
         evaName = null;
         staffID = null;
         contactNum = null;
@@ -268,6 +285,8 @@ public class EvaluatorPersonalDetails {
         role = null;
         status = "Available";
         workloadLimit = 0;
+
+        counterReset = 0;
     }
 
     public void main(String args[]) {

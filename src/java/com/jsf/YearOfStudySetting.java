@@ -38,10 +38,13 @@ public class YearOfStudySetting {
 
     private Boolean disabledDDL;
 
+    private int counterReset; //growl purpose
+
     public YearOfStudySetting() {
         this.year = 2018;
         this.yearComm = 2018;
         this.disabledDDL = true;
+        this.counterReset = 0;
     }
 
     public Boolean getDisabledDDL() {
@@ -168,7 +171,7 @@ public class YearOfStudySetting {
 
         int[] yearListDuplicate = new int[lengthYearList];
 
-        FacesContext context = FacesContext.getCurrentInstance();
+//        FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         int tmp = 0;
 
@@ -212,7 +215,7 @@ public class YearOfStudySetting {
 
         CSLevel_list.clear();
 
-        FacesContext context = FacesContext.getCurrentInstance();
+//        FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         String tmp = "";
 
@@ -289,8 +292,7 @@ public class YearOfStudySetting {
     //get year of study cs map list when page onload and when button click based on year and yearComm
     public void yearOfStudyCSMapList() {
 
-        FacesContext context = FacesContext.getCurrentInstance();
-
+//        FacesContext context = FacesContext.getCurrentInstance();
         int tmpYear = 0, tmpyearComm;
         int numYearComm = 0;
         int verifyRecord = 0;
@@ -318,7 +320,7 @@ public class YearOfStudySetting {
         }
 
         numYearComm = tmpYear - tmpyearComm;
-        context.addMessage(null, new FacesMessage(year + " : " + yearComm + " : " + tmpYear + " : " + tmpyearComm + " : " + numYearComm));
+//        context.addMessage(null, new FacesMessage(year + " : " + yearComm + " : " + tmpYear + " : " + tmpyearComm + " : " + numYearComm));
 
         //get data from db
         try {
@@ -356,7 +358,7 @@ public class YearOfStudySetting {
                         break;
                 }
 
-                context.addMessage(null, new FacesMessage("x : " + csid + " : " + csname + " : " + yosid));
+//                context.addMessage(null, new FacesMessage("x : " + csid + " : " + csname + " : " + yosid));
             }
 
             rs.close();
@@ -443,8 +445,7 @@ public class YearOfStudySetting {
             cslevelid = matchCSLevelName(standard1);
             yosID = "YO1";
 
-            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
-
+//            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
             statement.setString(1, ycID);
             statement.setString(2, cslevelid);
             statement.setString(3, yosID);
@@ -460,8 +461,7 @@ public class YearOfStudySetting {
             cslevelid = matchCSLevelName(standard2);
             yosID = "YO2";
 
-            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
-
+//            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
             statement.setString(1, ycID);
             statement.setString(2, cslevelid);
             statement.setString(3, yosID);
@@ -477,8 +477,7 @@ public class YearOfStudySetting {
             cslevelid = matchCSLevelName(standard3);
             yosID = "YO3";
 
-            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
-
+//            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
             statement.setString(1, ycID);
             statement.setString(2, cslevelid);
             statement.setString(3, yosID);
@@ -494,8 +493,7 @@ public class YearOfStudySetting {
             cslevelid = matchCSLevelName(standard4);
             yosID = "YO4";
 
-            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
-
+//            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
             statement.setString(1, ycID);
             statement.setString(2, cslevelid);
             statement.setString(3, yosID);
@@ -511,8 +509,7 @@ public class YearOfStudySetting {
             cslevelid = matchCSLevelName(standard5);
             yosID = "YO5";
 
-            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
-
+//            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
             statement.setString(1, ycID);
             statement.setString(2, cslevelid);
             statement.setString(3, yosID);
@@ -528,8 +525,7 @@ public class YearOfStudySetting {
             cslevelid = matchCSLevelName(standard6);
             yosID = "YO6";
 
-            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
-
+//            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
             statement.setString(1, ycID);
             statement.setString(2, cslevelid);
             statement.setString(3, yosID);
@@ -749,9 +745,12 @@ public class YearOfStudySetting {
         }
 
     }
-    
-     //navigation bar purpose
+
+    //navigation bar purpose
     public String goToNextPage() {
+
+        counterReset = 1;
+
         reset();
         return "YearOfStudySetting";
     }
@@ -759,15 +758,25 @@ public class YearOfStudySetting {
     //reset page
     public void reset() {
 
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        switch (counterReset) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Reset successful!"));
+                break;
+        }
+
         //set default value
-        this.year = 2018;
-        this.yearComm = 2018;
+        year = 2018;
+        yearComm = 2018;
         standard1 = "CS Level 1";
         standard2 = "CS Level 1";
         standard3 = "CS Level 1";
         standard4 = "CS Level 1";
         standard5 = "CS Level 1";
         standard6 = "CS Level 1";
+
+        counterReset = 0;
 
         //set default disabled
         this.disabledDDL = false;

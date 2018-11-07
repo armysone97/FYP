@@ -42,6 +42,8 @@ public class CSLevelSetting {
 
     private String newcslevelname, newcslevelid;
 
+    private int counterReset; //growl purpose
+
     public CSLevelSetting() {
         this.year = 2018;
         this.disabledDDL = false;
@@ -51,6 +53,7 @@ public class CSLevelSetting {
         this.disabledGroupwork = true;
         this.disabledNewCS = true;
         this.disabledButton = false;
+        this.counterReset = 0;
     }
 
     public Boolean getDisabledNewCS() {
@@ -646,6 +649,7 @@ public class CSLevelSetting {
         String asID = "", assID = "", csID = "", assActivityID = "";
 
         int minPerStud = 0;
+        int verifyCounter = 0;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -720,11 +724,27 @@ public class CSLevelSetting {
                 statement.executeUpdate();
             }
 
+            disabledCollaboration = true;
+            disabledProject = true;
+            disabledPractical = true;
+            disabledGroupwork = true;
+
+            verifyCounter = 1;
+
             statement.close();
             con.close();
 
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
+        }
+
+        switch (verifyCounter) {
+            case 0:
+                context.addMessage(null, new FacesMessage("CS Level Setting for " + cslevel + " in year " + year + " not successful!"));
+                break;
+            case 1:
+                context.addMessage(null, new FacesMessage("CS Level Setting for " + cslevel + " in year " + year + " successful!"));
+                break;
         }
     }
 
@@ -772,6 +792,11 @@ public class CSLevelSetting {
 
     public void addCSLevel() {
 
+        //growl purpose
+        FacesContext context = FacesContext.getCurrentInstance();
+        int verifyCounter = 0;
+        String tmpCSName = "";
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -784,25 +809,47 @@ public class CSLevelSetting {
             statement.close();
             con.close();
 
+            tmpCSName = newcslevelname; //growl purpose
+
             disabledNewCS = true;
             disabledCollaboration = true;
             disabledProject = true;
             disabledPractical = true;
             disabledGroupwork = true;
             disabledButton = false;
-            
+
             newcslevelname = null;
+            newcslevelid = null;
+
+            verifyCounter = 1;
 
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
 
+        switch (verifyCounter) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Add New CS Level " + tmpCSName + " not successful!"));
+                break;
+            case 1:
+                context.addMessage(null, new FacesMessage("Add New CS Level " + tmpCSName + " successful!"));
+                break;
+        }
+
     }
-    
+
+    //cancel insert newCSLevel
+    public void cancel() {
+        counterReset = 1;
+
+        reset();
+    }
+
     //navigation bar purpose
-    public String goToNextPage(){
-        
+    public String goToNextPage() {
+
 //        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ajax Update"));
+        counterReset = 1;
 
         reset();
         return "CSLevelSetting";
@@ -810,6 +857,14 @@ public class CSLevelSetting {
 
     //reset page
     public void reset() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        switch (counterReset) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Reset successful!"));
+                break;
+        }
 
         //set default value
         year = 2018;
@@ -821,6 +876,8 @@ public class CSLevelSetting {
         newcslevelname = null;
         newcslevelid = null;
 
+        counterReset = 0;
+
         //set default disabled
         disabledProject = true;
         disabledCollaboration = true;
@@ -828,6 +885,15 @@ public class CSLevelSetting {
         disabledGroupwork = true;
         disabledNewCS = true;
         disabledButton = false;
+    }
+
+    //reset newCSLevel
+    public void resetNew() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Reset successful!"));
+
+        newcslevelname = null;
     }
 
 }

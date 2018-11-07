@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -40,11 +41,14 @@ public class MaintainSchoolDetails {
 
     private String testing;
 
+    private int counterReset; //growl purpose
+
     public MaintainSchoolDetails() {
 
         this.disabledStatus = true;
         this.disabledCommYear = true;
         this.year = 2018;
+        this.counterReset = 0;
 
         switch (MaintainSchoolMenu.getGlobalCounter()) {
             case 0: //add
@@ -57,9 +61,9 @@ public class MaintainSchoolDetails {
                 this.addButtonName = "Confirm";
                 this.editButtonName = "Edit";
                 this.disabledResetButton = false;
-                
-                 MaintainSchoolMenu.setGlobalCounter(0);
-                
+
+                MaintainSchoolMenu.setGlobalCounter(0);
+
                 break;
             case 1: //view or update
                 this.state = MaintainSchoolMenu.getGlobalState();
@@ -703,9 +707,12 @@ public class MaintainSchoolDetails {
             System.out.println("Error: " + ex);
         }
     }
-    
-     //navigation bar purpose
+
+    //navigation bar purpose
     public String goToNextPage() {
+
+        counterReset = 1;
+
         reset();
         return "MaintainSchoolDetails";
     }
@@ -713,19 +720,20 @@ public class MaintainSchoolDetails {
     //reset page
     public void reset() {
 
-        //set default value
-        //set default disabled
-        disabledStatus = true;
-        disabledCommYear = true;
-        year = 2018;
+        FacesContext context = FacesContext.getCurrentInstance();
 
-        //    if (addButtonName.equals("Confirm") && editButtonName.equals("Edit")){ //when add
+        switch (counterReset) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Reset successful!"));
+                break;
+        }
+
+        //set default value
+        year = 2018;
         state = "Johor";
         disabledTxt = false;
         schoolID = autoGenerateID();
         commYear = 2018;
-        disabledAddButton = false;
-        disabledEditButton = true;
         addButtonName = "Confirm";
         editButtonName = "Edit";
         name = null;
@@ -733,35 +741,13 @@ public class MaintainSchoolDetails {
         contactNo = null;
         status = "Active";
 
-//
-//        switch (MaintainSchoolMenu.getGlobalCounter()) {
-//            case 0: //add
-//                state = "Johor";
-//                disabledTxt = false;
-//                schoolID = autoGenerateID();
-//                commYear = 2018;
-//                disabledAddButton = false;
-//                disabledEditButton = true;
-//                addButtonName = "Confirm";
-//                editButtonName = "Edit";
-//                name = null;
-//                address = null;
-//                contactNo = null;
-//                status = "Active";
-//                break;
-//            case 1: //view or update
-//                state = MaintainSchoolMenu.getGlobalState();
-//                name = MaintainSchoolMenu.getGlobalSchool();
-//                schoolID = MaintainSchoolMenu.getGlobalSchoolID();
-//                disabledEditButton = false;
-//                addButtonName = "New";
-//
-//                MaintainSchoolMenu.setGlobalCounter(0);
-//
-//                schoolDetailsList(schoolID);
-//
-//                disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
-//                break;
-//        }
+        counterReset = 0;
+
+        //set default disabled
+        disabledStatus = true;
+        disabledCommYear = true;
+        disabledAddButton = false;
+        disabledEditButton = true;
+
     }
 }

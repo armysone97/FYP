@@ -38,6 +38,8 @@ public class AssessmentMinSetting {
     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
 
     private Boolean disabledProject, disabledCollaboration, disabledPractical, disabledGroupwork;
+    
+    private int counterReset; //growl purpose
 
     public AssessmentMinSetting() {
         this.year = 2018;
@@ -45,6 +47,7 @@ public class AssessmentMinSetting {
         this.disabledCollaboration = true;
         this.disabledPractical = true;
         this.disabledGroupwork = true;
+        this.counterReset = 0;
     }
 
     public Boolean getDisabledProject() {
@@ -627,12 +630,23 @@ public class AssessmentMinSetting {
     
      //navigation bar purpose
     public String goToNextPage() {
+        
+         counterReset = 1;
+        
         reset();
         return "AssessmentMinSetting";
     }
 
     //reset page
     public void reset() {
+        
+         FacesContext context = FacesContext.getCurrentInstance();
+
+        switch (counterReset) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Reset successful!"));
+                break;
+        }
 
         //set default value
         year = 2018;
@@ -641,6 +655,8 @@ public class AssessmentMinSetting {
         collaboration = 0;
         practical = 0;
         groupwork = 0;
+        
+         counterReset = 0;
 
         //set default disabled
         disabledProject = true;

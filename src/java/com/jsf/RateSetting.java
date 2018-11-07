@@ -35,10 +35,13 @@ public class RateSetting {
     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
 
     private Boolean disabledTxt;
+    
+    private int counterReset; //growl purpose
 
     public RateSetting() {
         this.year = 2018;
         this.disabledTxt = true;
+        this.counterReset = 0;
     }
 
     public Boolean getDisabledTxt() {
@@ -329,18 +332,32 @@ public class RateSetting {
     
      //navigation bar purpose
     public String goToNextPage() {
+        
+        counterReset = 1;
+        
         reset();
         return "RateSetting";
     }
 
     //reset page
     public void reset() {
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        switch (counterReset) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Reset successful!"));
+                break;
+        }
+        
         //set default value
         year = 2018;
         numSampleAss = 0;
         mtHourlyRate = 0;
         evHourlyRate = 0;
         mileageRate = 0;
+        
+        counterReset = 0;
 
         //set default disabled
         disabledTxt = true;

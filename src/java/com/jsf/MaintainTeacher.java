@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -54,6 +55,8 @@ public class MaintainTeacher {
 
     private Boolean disabledButton, disabledNewTeacher, disabledNewTeacherID, disabledNewTeacherName;
 
+    private int counterReset; //growl purpose
+
     public MaintainTeacher() {
         this.state = "Pulau Pinang";
         this.school = "SJK Air Itam";
@@ -69,6 +72,7 @@ public class MaintainTeacher {
         this.disabledNewTeacherID = true;
         this.disabledNewTeacherName = true;
         this.newCount = 0;
+        this.counterReset = 0;
     }
 
     public Boolean getDisabledNewTeacherID() {
@@ -1762,15 +1766,33 @@ public class MaintainTeacher {
         }
 
     }
-    
-     //navigation bar purpose
+
+    //cancel insert newTeacher
+    public void cancel() {
+        counterReset = 1;
+
+        reset();
+    }
+
+    //navigation bar purpose
     public String goToNextPage() {
+
+        counterReset = 1;
+
         reset();
         return "MaintainTeacher";
     }
 
     //reset page
     public void reset() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        switch (counterReset) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Reset successful!"));
+                break;
+        }
 
         //set default value
         state = "Pulau Pinang";
@@ -1792,6 +1814,8 @@ public class MaintainTeacher {
         newTeacherStudNum = 0;
         newCount = 0;
 
+        counterReset = 0;
+
         //set default disabled
         disabledTxt = true;
         disabledDdl = true;
@@ -1799,6 +1823,16 @@ public class MaintainTeacher {
         disabledNewTeacher = true;
         disabledNewTeacherID = true;
         disabledNewTeacherName = true;
+    }
+
+    //reset newTeacher
+    public void newReset() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage("Reset successful!"));
+
+        newTeacherName = null;
+        newTeacherStudNum = 0;
     }
 
 }

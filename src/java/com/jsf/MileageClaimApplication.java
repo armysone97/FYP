@@ -6,8 +6,10 @@
 package com.jsf;
 
 import java.sql.*;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -29,8 +31,11 @@ public class MileageClaimApplication {
     private double accomodation;
     private double mileage;
     private double totalClaim;
+    
+    private int counterReset;
 
     public MileageClaimApplication() {
+        this.counterReset = 0;
     }
 
     public String getStaffID() {
@@ -103,6 +108,41 @@ public class MileageClaimApplication {
 
     public void setTotalClaim(double totalClaim) {
         this.totalClaim = totalClaim;
+    }
+    
+    //navigation bar purpose
+    public String goToNextPage() {
+
+        counterReset = 1;
+
+        reset();
+
+        return "MileageClaimApplication";
+    }
+
+    //reset page
+    public void reset() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        switch (counterReset) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Reset successful!"));
+                break;
+        }
+
+        //set default value
+        staffID = null;
+        name = null;
+        role = null;
+        rate = 0;
+        toll = 0;
+        parking = 0;
+        accomodation = 0;
+        mileage = 0;
+        totalClaim = 0;
+
+        counterReset = 0;
     }
     
     

@@ -20,9 +20,9 @@
                 <p:menubar styleClass="NavigationBar">
                     <p:menuitem title="Click to redirect to View Profile page" value="PROFILE MANAGEMENT" action="#{evaluatorPersonalDetails.goToNextPage()}" />
                     
-                    <p:submenu label="CLAIM PROCESSING">
-                        <p:menuitem title="Click to redirect to Workload Claim page" value="Workload Claim"  />
-                        <p:menuitem title="Click to redirect to Mileage Claim page" value="Mileage Claim"  />
+                     <p:submenu label="CLAIM PROCESSING">
+                        <p:menuitem title="Click to redirect to Workload Claim page" value="Workload Claim" action="#{workloadClaimApplication.goToNextPage()}"  />
+                        <p:menuitem title="Click to redirect to Mileage Claim page" value="Mileage Claim" action="#{mileageClaimApplication.goToNextPage()}"  />
                     </p:submenu>
 
                     <p:menuitem title="Click to Log Out" style="position: absolute; right: 12px;"  value="LOG OUT" action="#{login.goToNextPage()}" />

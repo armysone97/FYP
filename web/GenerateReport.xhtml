@@ -39,7 +39,7 @@
 
                     <p:menuitem title="Click to redirect to Evaluator Personal Details page" value="EVALUATOR MANAGEMENT" action="#{evaluatorPersonalDetails.goToNextPage()}" />
                     <p:menuitem title="Click to redirect to Workload Allocation page" value="WORKLOAD ALLOCATION" action="#{evaluatorWorkloadAllocation.goToNextPage()}" />
-                    <p:menuitem title="Click to redirect to Generate Report page" value="REPORT" action="GenerateReport.xhtml?faces-redirect=true" />
+                    <p:menuitem title="Click to redirect to Generate Report page" value="REPORT" action="#{generateReport.goToNextPage()}" />
                     <p:menuitem title="Click to Log Out" style="position: absolute; right: 12px;" value="LOG OUT" action="#{login.goToNextPage()}" />
                 </p:menubar>
 
@@ -55,7 +55,7 @@
                         </th>
                         <th align="left">
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu styleClass="ddlStyle">
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{generateReport.reportType}">
                                 <f:selectItem itemValue = "type1" itemLabel = "ABC" /> 
                                 <f:selectItem itemValue = "type2" itemLabel = "DEF" /> 
                                 <f:selectItem itemValue = "type3" itemLabel = "GHI" /> 
@@ -70,7 +70,7 @@
                         </th>
                         <th align="left">
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu styleClass="ddlStyle">
+                            <h:selectOneMenu styleClass="ddlStyle" value="#{generateReport.year}">
                                 <f:selectItem itemValue = "2018" itemLabel = "2018" /> 
                                 <f:selectItem itemValue = "2017" itemLabel = "2017" /> 
                                 <f:selectItem itemValue = "2016" itemLabel = "2016" /> 
@@ -85,7 +85,7 @@
                     </tr>
 
                     <tr>
-                        <th colspan="2" align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuAdmin"/></th>
+                        <th colspan="2" align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle"/></th>
                     </tr>  
                 </table> 
             </h:form>

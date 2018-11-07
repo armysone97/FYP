@@ -6,19 +6,20 @@
 package com.jsf;
 
 import java.sql.*;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
  * @author ruenyenchin
  */
-
 @ManagedBean
 @SessionScoped
 
 public class WorkloadClaimApplication {
-    
+
     private Connection con;
     private String staffID;
     private String name;
@@ -29,7 +30,10 @@ public class WorkloadClaimApplication {
     private double workHours;
     private double totalClaim;
 
+    private int counterReset;
+
     public WorkloadClaimApplication() {
+        this.counterReset = 0;
     }
 
     public String getStaffID() {
@@ -95,5 +99,39 @@ public class WorkloadClaimApplication {
     public void setTotalClaim(double totalClaim) {
         this.totalClaim = totalClaim;
     }
-    
+
+    //navigation bar purpose
+    public String goToNextPage() {
+
+        counterReset = 1;
+
+        reset();
+
+        return "WorkloadClaimApplication";
+    }
+
+    //reset page
+    public void reset() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        switch (counterReset) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Reset successful!"));
+                break;
+        }
+
+        //set default value
+        staffID = null;
+        name = null;
+        branch = null;
+        faculty = null;
+        role = null;
+        hourlyRate = 0;
+        workHours = 0;
+        totalClaim = 0;
+
+        counterReset = 0;
+    }
+
 }

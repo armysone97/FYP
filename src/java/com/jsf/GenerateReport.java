@@ -5,8 +5,10 @@
  */
 package com.jsf;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -20,8 +22,11 @@ public class GenerateReport {
     
     private String reportType;
     private Integer year;
+    
+    private int counterReset;
 
     public GenerateReport() {
+        this.counterReset = 0;
     }
 
     public String getReportType() {
@@ -38,6 +43,34 @@ public class GenerateReport {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+    
+      //navigation bar purpose
+    public String goToNextPage() {
+        
+        counterReset = 1;
+
+        reset();
+               
+        return "GenerateReport";
+    }
+
+    //reset page
+    public void reset() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        switch (counterReset) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Reset successful!"));
+                break;
+        }
+
+        //set default value
+        year = 2018;
+//        reportType = "";
+        
+        counterReset = 0;
     }
     
     

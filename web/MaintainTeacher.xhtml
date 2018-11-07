@@ -31,19 +31,18 @@
                         </p:submenu>
                     </p:submenu>
 
-                    <p:submenu label="SCHOOL MANAGEMENT">
+                     <p:submenu label="SCHOOL MANAGEMENT">
                         <p:submenu label="Maintain School">
                             <p:menuitem title="Click to redirect to Add New School page" value="Add New School" action="#{maintainSchoolDetails.goToNextPage()}" />
                             <p:menuitem title="Click to redirect to Edit or Update School page" value="Edit/Update School" action="#{maintainSchoolMenu.goToNextPage()}" />
                         </p:submenu>
                         <p:menuitem title="Click to redirect to Maintain Teacher page" value="Maintain Teacher" action="#{maintainTeacher.goToNextPage()}" />
                         <p:menuitem title="Click to redirect to Maintain Assessment Task page" value="Maintain Assessment Task" action="#{maintainAssessmentTask.goToNextPage()}" />
-
                     </p:submenu>
 
                     <p:menuitem title="Click to redirect to Evaluator Personal Details page" value="EVALUATOR MANAGEMENT" action="#{evaluatorPersonalDetails.goToNextPage()}" />
                     <p:menuitem title="Click to redirect to Workload Allocation page" value="WORKLOAD ALLOCATION" action="#{evaluatorWorkloadAllocation.goToNextPage()}" />
-                    <p:menuitem title="Click to redirect to Generate Report page" value="REPORT" action="GenerateReport.xhtml?faces-redirect=true" />
+                    <p:menuitem title="Click to redirect to Generate Report page" value="REPORT" action="#{generateReport.goToNextPage()}" />
                     <p:menuitem title="Click to Log Out" style="position: absolute; right: 12px;" value="LOG OUT" action="#{login.goToNextPage()}" />
                 </p:menubar>
 

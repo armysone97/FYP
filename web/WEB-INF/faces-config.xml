@@ -36,7 +36,7 @@
         <from-view-id>/MaintainSchoolMenu.xhtml</from-view-id>
         <navigation-case>
             <from-action>#{maintainSchoolMenu.nextPageToSchoolDetail()}</from-action>
-            <from-outcome>MaintainSchoolDetails</from-outcome>
+            <from-outcome>aabbc</from-outcome>
             <to-view-id>/MaintainSchoolDetails.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>

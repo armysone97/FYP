@@ -45,41 +45,41 @@ public class MaintainSchoolDetails {
 
     public MaintainSchoolDetails() {
 
-        this.disabledStatus = true;
-        this.disabledCommYear = true;
-        this.year = 2018;
-        this.counterReset = 0;
-
-        switch (MaintainSchoolMenu.getGlobalCounter()) {
-            case 0: //add
-                this.state = "Johor";
-                this.disabledTxt = false;
-                this.schoolID = autoGenerateID();
-                this.commYear = 2018;
-                this.disabledAddButton = false;
-                this.disabledEditButton = true;
-                this.addButtonName = "Confirm";
-                this.editButtonName = "Edit";
-                this.disabledResetButton = false;
-
-                MaintainSchoolMenu.setGlobalCounter(0);
-
-                break;
-            case 1: //view or update
-                this.state = MaintainSchoolMenu.getGlobalState();
-                this.name = MaintainSchoolMenu.getGlobalSchool();
-                this.schoolID = MaintainSchoolMenu.getGlobalSchoolID();
-                this.disabledEditButton = false;
-                this.addButtonName = "New";
-                this.disabledResetButton = true;
-
-                MaintainSchoolMenu.setGlobalCounter(0);
-
-                schoolDetailsList(schoolID);
-
-                this.disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
-                break;
-        }
+//        this.disabledStatus = true;
+//        this.disabledCommYear = true;
+//        this.year = 2018;
+//        this.counterReset = 0;
+//
+//        switch (MaintainSchoolMenu.getGlobalCounter()) {
+//            case 0: //add
+//                this.state = "Johor";
+//                this.disabledTxt = false;
+//                this.schoolID = autoGenerateID();
+//                this.commYear = 2018;
+//                this.disabledAddButton = false;
+//                this.disabledEditButton = true;
+//                this.addButtonName = "Confirm";
+//                this.editButtonName = "Edit";
+//                this.disabledResetButton = false;
+//
+//                MaintainSchoolMenu.setGlobalCounter(0);
+//
+//                break;
+//            case 1: //view or update
+//                this.state = MaintainSchoolMenu.getGlobalState();
+//                this.name = MaintainSchoolMenu.getGlobalSchool();
+//                this.schoolID = MaintainSchoolMenu.getGlobalSchoolID();
+//                this.disabledEditButton = false;
+//                this.addButtonName = "New";
+//                this.disabledResetButton = true;
+//
+//                MaintainSchoolMenu.setGlobalCounter(0);
+//
+//                schoolDetailsList(schoolID);
+//
+//                this.disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
+//                break;
+//        }
     }
 
     public Boolean getDisabledResetButton() {
@@ -767,7 +767,7 @@ public class MaintainSchoolDetails {
         switch (counterReset) {
             case 0:
                 context.addMessage(null, new FacesMessage("Reset successful!"));
-                context.addMessage(null, new FacesMessage("x: " + MaintainSchoolMenu.getGlobalCounter()));
+//                context.addMessage(null, new FacesMessage("x: " + MaintainSchoolMenu.getGlobalCounter()));
                 break;
         }
 
@@ -795,40 +795,70 @@ public class MaintainSchoolDetails {
                 disabledCommYear = true;
                 disabledAddButton = false;
                 disabledEditButton = true;
-                context.addMessage(null, new FacesMessage("yy"));
+//                context.addMessage(null, new FacesMessage("yy"));
                 break;
             case 1:
-                context.addMessage(null, new FacesMessage("zz"));
+//                context.addMessage(null, new FacesMessage("zz"));
                 break;
 
         }
 
     }
 
-    public static void tryaa() {
-//           this.year = 2018;
-//                state = "Johor";
-//                disabledTxt = false;
-//                schoolID = autoGenerateID();
-//                commYear = 2018;
-//                addButtonName = "Confirm";
-//                editButtonName = "Edit";
-//                name = null;
-//                address = null;
-//                contactNo = null;
-//                status = "Active";
-//
-//                MaintainSchoolMenu.setGlobalCounter(0);
-//
-//                counterReset = 0;
-//
-//                //set default disabled
-//                disabledStatus = true;
-//                disabledCommYear = true;
-//                disabledAddButton = false;
-//                disabledEditButton = true;
-//                
-//                reset();
+    //default school list when page load
+    public void defaultSchoolList() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+//        context.addMessage(null, new FacesMessage("xx"));
+//        context.addMessage(null, new FacesMessage("xx: " + MaintainSchoolMenu.getGlobalCounter()));
+        this.disabledStatus = true;
+        this.disabledCommYear = true;
+        this.year = 2018;
+        this.counterReset = 0;
+
+        switch (MaintainSchoolMenu.getGlobalCounter()) {
+            case 0: //add
+                this.state = "Johor";
+                this.disabledTxt = false;
+                this.schoolID = autoGenerateID();
+                this.commYear = 2018;
+                this.disabledAddButton = false;
+                this.disabledEditButton = true;
+                this.addButtonName = "Confirm";
+                this.editButtonName = "Edit";
+                this.disabledResetButton = false;
+
+                MaintainSchoolMenu.setGlobalCounter(0);
+
+                break;
+            case 1: //view or update
+                this.state = MaintainSchoolMenu.getGlobalState();
+                this.name = MaintainSchoolMenu.getGlobalSchool();
+                this.schoolID = MaintainSchoolMenu.getGlobalSchoolID();
+                this.disabledEditButton = false;
+                this.addButtonName = "New";
+                this.disabledResetButton = true;
+
+                MaintainSchoolMenu.setGlobalCounter(0);
+
+                schoolDetailsList(schoolID);
+
+                this.disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
+                break;
+            default: //direct come in without going maintainschoolmenu, so the globalcounter is null, not 0
+                this.state = "Johor";
+                this.disabledTxt = false;
+                this.schoolID = autoGenerateID();
+                this.commYear = 2018;
+                this.disabledAddButton = false;
+                this.disabledEditButton = true;
+                this.addButtonName = "Confirm";
+                this.editButtonName = "Edit";
+                this.disabledResetButton = false;
+
+                MaintainSchoolMenu.setGlobalCounter(0);
+        }
     }
 
 }

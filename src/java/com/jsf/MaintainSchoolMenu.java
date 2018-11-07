@@ -283,7 +283,9 @@ public class MaintainSchoolMenu {
             }
         }
 
-        return nextPage;
+//        MaintainSchoolDetails.tryaa();
+//        return nextPage;
+        return "aabbc";
     }
 
     //navigation bar purpose
@@ -305,6 +307,8 @@ public class MaintainSchoolMenu {
                 context.addMessage(null, new FacesMessage("Reset successful!"));
                 break;
         }
+        
+//         context.addMessage(null, new FacesMessage("xxaa"));
 
         //set default value
         state = "Pulau Pinang";
@@ -316,9 +320,8 @@ public class MaintainSchoolMenu {
         globalCounter = 0;
 
         counterReset = 0;
-        
-        MaintainSchoolDetails.tryaa();
-        
+
+//        MaintainSchoolDetails.tryaa();
     }
 
 }

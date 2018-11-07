@@ -6,6 +6,10 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>STEM CS Validation Programme</title>
+          <h:outputStylesheet name="css/style.css" />
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{maintainSchoolDetails.defaultSchoolList()}"/>
+        </f:metadata>
         <h:outputStylesheet name="css/style.css" />
     </h:head>
     <h:body>

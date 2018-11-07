@@ -38,6 +38,7 @@ public class MaintainTeacher {
     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
     private List<String> teacher_list = new ArrayList<>();
     private List<String> newTeacherID_list = new ArrayList<>();
+    private List<String> newCSLevel_list = new ArrayList<>();
 
     private int studNum, year;
     private String school, state, cslevel, teacher, status;
@@ -275,9 +276,216 @@ public class MaintainTeacher {
         this.status = status;
     }
 
+    public int retrieveTeacherIDFromSchoolLength() {
+//         disabledDdl = true;
+//        disabledTxt = true;
+
+        String teacherIDFromDB = "", schoolIDFromDB = "", schoolCSMapIDFromDB = "";
+        int countArr = 0;
+
+        int tmpCount = 0, tmpCount1 = 0;
+
+        //   FacesContext context = FacesContext.getCurrentInstance();
+        int count = 1;
+        String tmp = "";
+
+        //get schoolID first, based on schoolName that is selected by user in dll
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE schoolName = ?");
+            st.setString(1, school);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                schoolIDFromDB = rs.getString("schoolID");
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        int schoolCSMapListCount = retrieveSchoolCSMapIDCount(schoolIDFromDB);
+        String[] schoolCSMapIDListDuplicate = new String[schoolCSMapListCount];
+
+        Boolean verifyTeacherRecord = false;
+
+        //then get schoolCSMapID, based on schoolID which retrived on above
+        //due to one schoolID has one or many schoolCSMapID, so schoolCSMapID stored in array named "schoolCSMapIDListDuplicate"
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT schoolCSMapID FROM schoolcsmap WHERE schoolID = ?");
+            st.setString(1, schoolIDFromDB);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                schoolCSMapIDFromDB = rs.getString("schoolCSMapID");
+                schoolCSMapIDListDuplicate[tmpCount] = schoolCSMapIDFromDB;
+                tmpCount++;
+//                verifyTeacherRecord = true;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        int teacherIDListCount = retrieveTeacherIDCount(schoolCSMapIDListDuplicate);
+        String[] teacherIDListDuplicate = new String[teacherIDListCount];
+
+        //due to schoolCSMapIDListDuplicate is an array, need to get the teacherID in for loop
+        //after that, stored teacherID into an array named "teacherIDListDuplicate"
+        for (int i = 0; i < schoolCSMapIDListDuplicate.length; i++) {
+
+            String teacherIDTmp = "";
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = con.prepareStatement("SELECT teacherID FROM teachercsmap WHERE schoolCSMapID = ?");
+                st.setString(1, schoolCSMapIDListDuplicate[i]);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+                    teacherIDTmp = rs.getString("teacherID");
+                    teacherIDListDuplicate[tmpCount1] = teacherIDTmp;
+                    tmpCount1++;
+//                    verifyTeacherRecord = true;
+                }
+
+                st.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
+
+        //sorting array 
+        Arrays.sort(teacherIDListDuplicate);
+
+        int length = teacherIDListDuplicate.length;
+
+        //this function is to remove duplicate elements in array named "teacherIDListDuplicate"
+        length = removeDuplicateElementsString(teacherIDListDuplicate, length);
+
+        return length;
+    }
+
+    public String[] retrieveTeacherIDFromSchool() {
+//         disabledDdl = true;
+//        disabledTxt = true;
+
+        String teacherIDFromDB = "", schoolIDFromDB = "", schoolCSMapIDFromDB = "";
+        int countArr = 0;
+
+        int tmpCount = 0, tmpCount1 = 0;
+
+        teacher_list.clear();
+
+        //   FacesContext context = FacesContext.getCurrentInstance();
+        int count = 1;
+        String tmp = "";
+
+        //get schoolID first, based on schoolName that is selected by user in dll
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE schoolName = ?");
+            st.setString(1, school);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                schoolIDFromDB = rs.getString("schoolID");
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        int schoolCSMapListCount = retrieveSchoolCSMapIDCount(schoolIDFromDB);
+        String[] schoolCSMapIDListDuplicate = new String[schoolCSMapListCount];
+
+        Boolean verifyTeacherRecord = false;
+
+        //then get schoolCSMapID, based on schoolID which retrived on above
+        //due to one schoolID has one or many schoolCSMapID, so schoolCSMapID stored in array named "schoolCSMapIDListDuplicate"
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT schoolCSMapID FROM schoolcsmap WHERE schoolID = ?");
+            st.setString(1, schoolIDFromDB);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                schoolCSMapIDFromDB = rs.getString("schoolCSMapID");
+                schoolCSMapIDListDuplicate[tmpCount] = schoolCSMapIDFromDB;
+                tmpCount++;
+//                verifyTeacherRecord = true;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        int teacherIDListCount = retrieveTeacherIDCount(schoolCSMapIDListDuplicate);
+        String[] teacherIDListDuplicate = new String[teacherIDListCount];
+
+        //due to schoolCSMapIDListDuplicate is an array, need to get the teacherID in for loop
+        //after that, stored teacherID into an array named "teacherIDListDuplicate"
+        for (int i = 0; i < schoolCSMapIDListDuplicate.length; i++) {
+
+            String teacherIDTmp = "";
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = con.prepareStatement("SELECT teacherID FROM teachercsmap WHERE schoolCSMapID = ?");
+                st.setString(1, schoolCSMapIDListDuplicate[i]);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+                    teacherIDTmp = rs.getString("teacherID");
+                    teacherIDListDuplicate[tmpCount1] = teacherIDTmp;
+                    tmpCount1++;
+//                    verifyTeacherRecord = true;
+                }
+
+                st.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
+
+        //sorting array 
+        Arrays.sort(teacherIDListDuplicate);
+
+        int length = teacherIDListDuplicate.length;
+
+        //this function is to remove duplicate elements in array named "teacherIDListDuplicate"
+        length = removeDuplicateElementsString(teacherIDListDuplicate, length);
+
+        return teacherIDListDuplicate;
+    }
+
     public List<String> get_newTeacherID() {
         newTeacherID_list.clear();
 
+//        newTeacherSchoolName = "schoolxx: " + newCount;
         switch (newCount) {
             case 1: //select
                 int allTeacherIDListCount = retrieveAllTeacherIDCount();
@@ -290,16 +498,48 @@ public class MaintainTeacher {
 
                 teacherIDNotInSC = showTeacherNotInSC(allTeacherIDListDuplicate, teacherIDNotInSCCount); //get teacher which not in db
 
-                Arrays.sort(teacherIDNotInSC);
+                for (int i = 0; i < teacherIDNotInSC.length; i++) {
 
+//                    newTeacherID_list.add(teacherIDNotInSC[i]);
+                }
+
+                int teacherIDForSchoolCount = retrieveTeacherIDFromSchoolLength();
+
+                int finalTeacherIDCount = teacherIDNotInSCCount + teacherIDForSchoolCount;
+
+                String[] finalTeacherID = new String[finalTeacherIDCount];
+                String[] teacherIDFromSchool = new String[teacherIDForSchoolCount];
+
+                teacherIDFromSchool = retrieveTeacherIDFromSchool();
+
+                Arrays.sort(teacherIDNotInSC);
                 for (int i = 0; i < teacherIDNotInSC.length; i++) {
 
                     //        String teacherName = retriveTeacherName(teacherIDNotInSC[i]);
-                    newTeacherID_list.add(teacherIDNotInSC[i]);
+                    finalTeacherID[i] = teacherIDNotInSC[i];
+//                    newTeacherID_list.add(teacherIDNotInSC[i]);
+//                    newTeacherID_list.add(finalTeacherID[i]);
+                }
+
+                int teacherIDCounter = 0;
+                teacherIDCounter = teacherIDNotInSC.length;
+
+//                newTeacherSchoolName = teacherIDFromSchool.length + " : " + teacherIDForSchoolCount + " schoolzz: " + teacherIDCounter + " : " + finalTeacherIDCount;
+                for (int i = 0; i < teacherIDForSchoolCount; i++) {
+                    finalTeacherID[teacherIDCounter] = teacherIDFromSchool[i];
+                    teacherIDCounter++;
+                }
+
+                Arrays.sort(finalTeacherID);
+
+                for (int i = 0; i < finalTeacherID.length; i++) {
+                    newTeacherID_list.add(finalTeacherID[i]);
                 }
 
                 break;
             case 2: //add new
+//                  newTeacherName = "teacherName";
+//                newTeacherSchoolName = "schoolyy";
                 newTeacherID_list.add(autoGenerateTeacherID());
                 break;
         }
@@ -308,10 +548,209 @@ public class MaintainTeacher {
 
     }
 
+    public int countSchoolCSMapIDNew(String schoolID) {
+
+        int count = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT schoolCSMapID, CSLevelID FROM schoolcsmap WHERE schoolID = ? AND year = ?");
+            st.setString(1, schoolID);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                count++;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return count;
+    }
+
+    public int countSchoolCSMapIDNew1(String[] schoolCSMapIDList) {
+
+        int count = 0;
+//        Boolean verifyTrue = false;
+
+        for (int i = 0; i < schoolCSMapIDList.length; i++) {
+
+            Boolean verifyTrue = false;
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = con.prepareStatement("SELECT schoolCSMapID FROM teachercsmap WHERE teacherID = ? AND schoolCSMapID = ?");
+                st.setString(1, newTeacherID);
+                st.setString(2, schoolCSMapIDList[i]);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+                    verifyTrue = true;
+                }
+
+                st.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+
+            if (!verifyTrue) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    public List<String> get_newCSLevel() {
+        newCSLevel_list.clear();
+        String schoolID = matchSchoolID();
+        int countSchoolCSMapID = countSchoolCSMapIDNew(schoolID);
+
+        String[] schoolCSMapIDList = new String[countSchoolCSMapID];
+        String[] CSLevelIDList = new String[countSchoolCSMapID];
+
+        int tmp = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT schoolCSMapID, CSLevelID FROM schoolcsmap WHERE schoolID = ? AND year = ?");
+            st.setString(1, schoolID);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                schoolCSMapIDList[tmp] = rs.getString("schoolCSMapID");
+                CSLevelIDList[tmp] = rs.getString("CSLevelID");
+                tmp++;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        switch (newCount) {
+            case 1: //select 
+
+//        for (int i = 0; i < CSLevelIDList.length; i++) {
+//            newCSLevel_list.add(CSLevelIDList[i]);
+//        }
+                String schoolCSMapID = "";
+                int countSchoolCSMapID1 = countSchoolCSMapIDNew1(schoolCSMapIDList);
+                String[] schoolCSMapIDList1 = new String[countSchoolCSMapID1];
+                String[] CSLevelIDList1 = new String[countSchoolCSMapID1];
+
+                int tmp1 = 0;
+//        Boolean verifyTrue = false;
+
+                for (int i = 0; i < schoolCSMapIDList.length; i++) {
+
+                    Boolean verifyTrue = false;
+
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                        PreparedStatement st = con.prepareStatement("SELECT schoolCSMapID FROM teachercsmap WHERE teacherID = ? AND schoolCSMapID = ?");
+                        st.setString(1, newTeacherID);
+                        st.setString(2, schoolCSMapIDList[i]);
+                        ResultSet rs = st.executeQuery();
+
+                        while (rs.next()) {
+//                    schoolCSMapIDList1[tmp1] = rs.getString("schoolCSMapID");
+//                    tmp1++;
+                            verifyTrue = true;
+                        }
+
+                        st.close();
+                        con.close();
+
+                    } catch (Exception ex) {
+                        System.out.println("Error: " + ex);
+                    }
+
+                    if (!verifyTrue) {
+                        schoolCSMapIDList1[tmp1] = schoolCSMapIDList[i];
+                        CSLevelIDList1[tmp1] = CSLevelIDList[i];
+                        tmp1++;
+                    }
+                }
+
+//        int tmpCount = 0;
+//        for (int i = 0; i < schoolCSMapIDList1.length; i++) {
+//            for (int j = 0; j < schoolCSMapIDList.length; j++) {
+//                if (!schoolCSMapIDList1[i].equals(schoolCSMapIDList[j])) {
+//                    tmpCount++;
+//                    break;
+//                }
+//            }
+//        }
+                for (int i = 0; i < CSLevelIDList1.length; i++) {
+
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                        PreparedStatement st = con.prepareStatement("SELECT CSLevelName FROM cslevel WHERE CSLevelID = ?");
+                        st.setString(1, CSLevelIDList1[i]);
+                        ResultSet rs = st.executeQuery();
+                        while (rs.next()) {
+                            newCSLevel_list.add(rs.getString("CSLevelName"));
+                        }
+
+                        st.close();
+                        con.close();
+
+                    } catch (Exception ex) {
+                        System.out.println("Error: " + ex);
+                    }
+                }
+
+//            newCSLevel_list.add(CSLevelIDList1[i]);
+//        String[] finalSchoolCSMapIDList = new String[tmpCount];
+//        int tmpCount1 = 0;
+//
+//        for (int i = 0; i < schoolCSMapIDList.length; i++) {
+//            for (int j = 0; j < schoolCSMapIDList1.length; j++) {
+//                if (schoolCSMapIDList[i].equals(schoolCSMapIDList1[j])) {
+//                    finalSchoolCSMapIDList[tmpCount1] = schoolCSMapIDList[i];
+//                    tmpCount1++;
+//                    break;
+//                }
+//            }
+//        }
+//        newTeacherSchoolName = tmp1 + " : " + schoolCSMapIDList.length + " : " + tmp1 + " : " + newTeacherID;
+                break;
+            case 2: //add
+                for (int i = 0; i < CSLevelIDList.length; i++) {
+                    newCSLevel_list.add(matchCSLevelName(CSLevelIDList[i]));
+                }
+                break;
+        }
+
+        return newCSLevel_list;
+    }
+
     public void showTeacherName() {
         String teacherName = retriveTeacherName(newTeacherID);
 
         newTeacherName = teacherName;
+
+        String teacherStatus = retriveTeacherStatus(newTeacherID);
+
+        newTeacherStatus = teacherStatus;
+
+        get_newCSLevel();
     }
 
     //remove duplicate element for teacher name array
@@ -469,8 +908,8 @@ public class MaintainTeacher {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE schoolState = ? AND schoolName = ?");
-            st.setString(1, state);
-            st.setString(2, school);
+            st.setString(1, newTeacherSchoolState);
+            st.setString(2, newTeacherSchoolName);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -824,6 +1263,31 @@ public class MaintainTeacher {
         return tName;
     }
 
+    public String retriveTeacherStatus(String teacherIDNotInSC) {
+
+        String tStatus = "";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT teacherStatus FROM teacher WHERE teacherID = ?");
+            st.setString(1, teacherIDNotInSC);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                tStatus = rs.getString("teacherStatus");
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return tStatus;
+    }
+
     //get teacher list and put inside ddl based on the school that is selected by user in ddl
     public List<String> get_teacher() {
 
@@ -1135,7 +1599,7 @@ public class MaintainTeacher {
     public void callStatus() {
         String thID = matchTeacherID();
         status = matchStatus(thID);
-        disabledStatus = false;
+        disabledStatus = true;
     }
 
     public String matchStatus(String thID) {
@@ -1221,7 +1685,8 @@ public class MaintainTeacher {
         //3. go to schoolcsmap find csID, and go cs table find csName 
         //4. if not, then same as below
         //extra: if commercial year for a school is 2018. then go add new teacher, cs level same as 4.
-        String thID = matchTeacherID(); //1. find teacher id based on teacher name
+        
+        String thID = matchTeacherID1(); //1. find teacher id based on teacher name
         int scListLength = countSchoolCSMapID(thID); //2. declare school cs map id array length
         String[] scList = new String[scListLength]; //3. declare school cs map id array
         scList = matchSchoolCSMapID1(thID, scListLength); //4. find school cs map id based on teacher id
@@ -1301,72 +1766,73 @@ public class MaintainTeacher {
             }
 
             //    temp = "studNum: " + studNum + " status: " + status + " csID: " + csID + " cslevel: " + cslevel;
-        } else {
-
-            disabledDdl = false;
-            disabledTxt = false;
-
-            //  newTeacherName = year1 + "y";
-            //disabledTxt = false;
-            // disabledDdl = false;
-            int lengthCSIDList = get_csCount();
-
-            String[] CSIDListDuplicate = new String[lengthCSIDList];
-            int tmp = 0;
-
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-                PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM yearofstudycsmap WHERE numYearComm = ? AND year = ?");
-                st.setInt(1, commYear);
-                st.setInt(2, year);
-                ResultSet rs = st.executeQuery();
-
-                while (rs.next()) {
-                    CSIDListDuplicate[tmp] = rs.getString("CSLevelID");
-                    tmp++;
-                }
-
-                st.close();
-                con.close();
-
-            } catch (Exception ex) {
-                System.out.println("Error: " + ex);
-            }
-
-            Arrays.sort(CSIDListDuplicate);//sorting array  
-            int length = CSIDListDuplicate.length;
-            length = removeDuplicateElementsString(CSIDListDuplicate, length);
-
-            String[] CSNameList = new String[length];
-            int tmp1 = 0;
-
-            //printing array elements  
-            for (int i = 0; i < length; i++) {
-                try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-                    PreparedStatement st = con.prepareStatement("SELECT CSLevelName FROM cslevel WHERE CSLevelID = ?");
-                    st.setString(1, CSIDListDuplicate[i]);
-                    ResultSet rs = st.executeQuery();
-
-                    while (rs.next()) {
-                        CSNameList[tmp1] = rs.getString("CSLevelName");
-                        tmp1++;
-                    }
-
-                    st.close();
-                    con.close();
-
-                } catch (Exception ex) {
-                    System.out.println("Error: " + ex);
-                }
-            }
-
-            for (int i = 0; i < length; i++) {
-                CSLevel_list.add(CSNameList[i]);
-            }
         }
+//        else {
+//
+//            disabledDdl = false;
+//            disabledTxt = false;
+//
+//            //  newTeacherName = year1 + "y";
+//            //disabledTxt = false;
+//            // disabledDdl = false;
+//            int lengthCSIDList = get_csCount();
+//
+//            String[] CSIDListDuplicate = new String[lengthCSIDList];
+//            int tmp = 0;
+//
+//            try {
+//                Class.forName("com.mysql.cj.jdbc.Driver");
+//                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+//                PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM yearofstudycsmap WHERE numYearComm = ? AND year = ?");
+//                st.setInt(1, commYear);
+//                st.setInt(2, year);
+//                ResultSet rs = st.executeQuery();
+//
+//                while (rs.next()) {
+//                    CSIDListDuplicate[tmp] = rs.getString("CSLevelID");
+//                    tmp++;
+//                }
+//
+//                st.close();
+//                con.close();
+//
+//            } catch (Exception ex) {
+//                System.out.println("Error: " + ex);
+//            }
+//
+//            Arrays.sort(CSIDListDuplicate);//sorting array  
+//            int length = CSIDListDuplicate.length;
+//            length = removeDuplicateElementsString(CSIDListDuplicate, length);
+//
+//            String[] CSNameList = new String[length];
+//            int tmp1 = 0;
+//
+//            //printing array elements  
+//            for (int i = 0; i < length; i++) {
+//                try {
+//                    Class.forName("com.mysql.cj.jdbc.Driver");
+//                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+//                    PreparedStatement st = con.prepareStatement("SELECT CSLevelName FROM cslevel WHERE CSLevelID = ?");
+//                    st.setString(1, CSIDListDuplicate[i]);
+//                    ResultSet rs = st.executeQuery();
+//
+//                    while (rs.next()) {
+//                        CSNameList[tmp1] = rs.getString("CSLevelName");
+//                        tmp1++;
+//                    }
+//
+//                    st.close();
+//                    con.close();
+//
+//                } catch (Exception ex) {
+//                    System.out.println("Error: " + ex);
+//                }
+//            }
+//
+//            for (int i = 0; i < length; i++) {
+//                CSLevel_list.add(CSNameList[i]);
+//            }
+//        }
 
         return CSLevel_list;
     }
@@ -1410,7 +1876,7 @@ public class MaintainTeacher {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM cslevel WHERE CSLevelName = ?");
-            st.setString(1, cslevel);
+            st.setString(1, newTeacherCSLevel);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -1456,6 +1922,31 @@ public class MaintainTeacher {
 
         return scID;
     }
+    
+    public String matchTeacherID1() {
+
+        String thID = "";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT teacherID FROM teacher WHERE teacherName = ?");
+            st.setString(1, teacher);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                thID = rs.getString("teacherID");
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return thID;
+    }
 
     public String matchTeacherID() {
 
@@ -1465,7 +1956,7 @@ public class MaintainTeacher {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT teacherID FROM teacher WHERE teacherName = ?");
-            st.setString(1, teacher);
+            st.setString(1, newTeacherName);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -1517,8 +2008,7 @@ public class MaintainTeacher {
         thID = matchTeacherID();
         numSampleAss = matchNumSampleAss();
 
-        updateTeacher(thID);
-
+//        updateTeacher(thID);
         //   tmp = "tcID : " + tcID + " scID : " + scID + " thID : " + thID + " numSampleAss : " + numSampleAss;
         //insert teachercsmap
         try {
@@ -1551,15 +2041,15 @@ public class MaintainTeacher {
     }
 
     //update teacher
-    public void updateTeacher(String thID) {
+    public void updateTeacher() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE teacher SET teacherName = ?, teacherStatus = ? WHERE teacherID = ?");
 
-            statement.setString(1, teacher);
-            statement.setString(2, status);
-            statement.setString(3, thID);
+            statement.setString(1, newTeacherName);
+            statement.setString(2, newTeacherStatus);
+            statement.setString(3, newTeacherID);
             statement.executeUpdate();
 
             statement.close();
@@ -1622,12 +2112,12 @@ public class MaintainTeacher {
 
         switch (verifyCounter) {
             case 0:
-                context.addMessage(null, new FacesMessage("Add New Teacher CS Map of teacher name " + teacher + " for school " + school + " not successful!"));
+                context.addMessage(null, new FacesMessage("Total Enrolment student for school " + school + " updated not successful!"));
                 break;
             case 1:
-                context.addMessage(null, new FacesMessage("Add New Teacher CS Map of teacher name " + teacher + " for school " + school + " successful!"));
-                disabledTxt = true;
-                disabledStatus = true;
+                context.addMessage(null, new FacesMessage("Total Enrolment student for school " + school + " updated successful!"));
+//                disabledTxt = true;
+//                disabledStatus = true;
                 break;
         }
 
@@ -1670,11 +2160,11 @@ public class MaintainTeacher {
         newCount = 1;
 
         // newTeacherID = "TH21";
-        newTeacherStatus = "Available";
+//        newTeacherStatus = "Available";
         newTeacherYear = year;
         newTeacherSchoolState = state;
         newTeacherSchoolName = school;
-        newTeacherCSLevel = cslevel;
+//        newTeacherCSLevel = cslevel;
 
         disabledButton = true;
         disabledNewTeacher = false;
@@ -1682,18 +2172,20 @@ public class MaintainTeacher {
         disabledNewTeacherName = true;
         disabledTxt = true;
         disabledDdl = true;
+
+        get_newTeacherID();
     }
 
     public void addNewTeacher() {
 
         newCount = 2;
 
-        newTeacherID = autoGenerateTeacherID();
+//        newTeacherID = autoGenerateTeacherID();
         newTeacherStatus = "Available";
         newTeacherYear = year;
         newTeacherSchoolState = state;
         newTeacherSchoolName = school;
-        newTeacherCSLevel = cslevel;
+//        newTeacherCSLevel = cslevel;
 
         disabledButton = true;
         disabledNewTeacher = false;
@@ -1701,6 +2193,8 @@ public class MaintainTeacher {
         disabledNewTeacherName = false;
         disabledTxt = true;
         disabledDdl = true;
+
+        get_newTeacherID();
     }
 
     public void addTeacher() {
@@ -1714,11 +2208,12 @@ public class MaintainTeacher {
 //        newTeacherStudNum = 65412;
         switch (newCount) {
             case 1: //select
-                 if (newTeacherName.isEmpty() || newTeacherStudNum == 0) {
+                if (newTeacherName.isEmpty() || newTeacherStudNum == 0) {
                     context.addMessage(null, new FacesMessage("Please fill in whole form!"));
                 } else {
-                     addTeacherCSMap();
-                 }
+                    updateTeacher();
+                    addTeacherCSMap();
+                }
                 break;
             case 2: //add
 
@@ -1744,7 +2239,7 @@ public class MaintainTeacher {
                     } catch (Exception ex) {
                         System.out.println("Error: " + ex);
                     }
-                    
+
                     switch (verifyCounter) {
                         case 0:
                             break;
@@ -1789,6 +2284,8 @@ public class MaintainTeacher {
 
             statement.close();
             con.close();
+
+            updateTtlEnrolStud(scID);
 
             verifyCounter = 1;
 

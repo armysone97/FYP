@@ -109,7 +109,7 @@ public class WorkloadClaimApplication {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT name, campus, faculty FROM evaluatorpersonaldetails WHERE staffID = ?");
-            st.setString(1, staffID);
+            st.setString(1, Login.getGlobalStaffID());
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -150,10 +150,10 @@ public class WorkloadClaimApplication {
         }
 
         //set default value
-        staffID = null;
-        name = null;
-        branch = null;
-        faculty = null;
+//        staffID = null;
+//        name = null;
+//        branch = null;
+//        faculty = null;
         role = null;
         hourlyRate = 0;
         workHours = 0;

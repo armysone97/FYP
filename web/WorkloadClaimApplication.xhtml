@@ -42,7 +42,7 @@
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                            <h:inputText id="txtStaffID" styleClass="txtboxSmallStyle" required="required" size="35"/>
+                            <h:inputText id="txtStaffID" value="#{workloadClaimApplication.staffID}" styleClass="txtboxSmallStyle" required="required" size="35"/>
                             &nbsp;&nbsp;&nbsp;         <h:commandButton id="btnCheck" value="Check" styleClass="buttonStyle" action="#{workloadClaimApplication.retrievePersonalDetails()}"/>
 
                         </th>

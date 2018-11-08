@@ -28,6 +28,7 @@ public class EvaluatorWorkloadAllocation {
     private Connection con;
     private String evaluator;
     //private String takeEvaluator;
+    private String staffID;
     private String school;
     private String csLevel;
     private String teacher;
@@ -39,7 +40,7 @@ public class EvaluatorWorkloadAllocation {
     private int year;
     private String result;
     private String schoolID;
-    private int totalWorkloadAssigned;
+    private String totalWorkloadAssigned;
     private int workloadCount;
     private String waID;
 //    private String testing;
@@ -72,15 +73,15 @@ public class EvaluatorWorkloadAllocation {
         this.counterReset = 0;
         this.year = 2018;
 //        this.workloadAssigned = 0;
-        this.totalWorkloadAssigned = 0;
+        this.totalWorkloadAssigned = "0.0";
         this.result = "0";
     }
 
-    public int getTotalWorkloadAssigned() {
+    public String getTotalWorkloadAssigned() {
         return totalWorkloadAssigned;
     }
 
-    public void setTotalWorkloadAssigned(int totalWorkloadAssigned) {
+    public void setTotalWorkloadAssigned(String totalWorkloadAssigned) {
         this.totalWorkloadAssigned = totalWorkloadAssigned;
     }
 
@@ -330,6 +331,26 @@ public class EvaluatorWorkloadAllocation {
 
             while (rs.next()) {
                 workloadLimit = rs.getInt("workloadLimit");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        //retrieve total workload assign
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT SUM(workloadAssigned) FROM workloadallocation WHERE staffID = ?");
+            st.setString(1, staffIDFromDB);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                setTotalWorkloadAssigned(String.format("%.2f", rs.getDouble("SUM(workloadAssigned)")));
             }
 
             rs.close();
@@ -785,6 +806,7 @@ public class EvaluatorWorkloadAllocation {
     }
     
     public void addWorkload(){
+        FacesContext context = FacesContext.getCurrentInstance();
         
         //count workload index
         try {
@@ -928,6 +950,8 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+        
+        context.addMessage(null, new FacesMessage("Added successfully!"));
     }
     
     //display data table

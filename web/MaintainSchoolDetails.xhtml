@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>STEM CS Validation Programme</title>
-          <h:outputStylesheet name="css/style.css" />
+        <h:outputStylesheet name="css/style.css" />
         <f:metadata>
             <f:event type="preRenderView" listener="#{maintainSchoolDetails.defaultSchoolList()}"/>
         </f:metadata>
@@ -33,7 +33,7 @@
                         </p:submenu>
                     </p:submenu>
 
-                  <p:submenu label="SCHOOL MANAGEMENT">
+                    <p:submenu label="SCHOOL MANAGEMENT">
                         <p:submenu label="Maintain School">
                             <p:menuitem title="Click to redirect to Add New School page" value="Add New School" action="#{maintainSchoolDetails.goToNextPage()}" />
                             <p:menuitem title="Click to redirect to Edit or Update School page" value="Edit/Update School" action="#{maintainSchoolMenu.goToNextPage()}" />
@@ -53,7 +53,7 @@
 
                 <br />
                 <br />
-                
+
                 <fieldset style="display: inline-block">
                     <legend id="schoolDetails" align="left">
                         <h:outputText id="lblSchoolDetails" value="School Details"  styleClass="lblStyle"/>
@@ -154,42 +154,57 @@
                         <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
                             <tr>
-                                <th colspan="4" align="left">
-                                    <h:outputText id="lblYear" value="Year : "  styleClass="lblStyle"/>
+                                <th align="left">
+                                    <h:outputText id="lblYear" value="Year : "  styleClass="lblStyle"/> </th>
 
-                                    <h:selectOneMenu title="Select year"  value="#{maintainSchoolDetails.year}" styleClass="ddlStyle">
+                                <th colspan="3" align="left">
+                                    <h:selectOneMenu title="Select year"  value="#{maintainSchoolDetails.year}" styleClass="ddlSmallSpecialStyle" disabled="#{maintainSchoolDetails.disabledEnrol}">
                                         <f:selectItems value="#{maintainSchoolDetails.get_year()}"  /> 
                                     </h:selectOneMenu> 
 
-                                    &nbsp;&nbsp;&nbsp;    <h:commandButton title="Click to show CS level"  id="btnShowList111" value="Show" styleClass="buttonShowStyle"/>
+                                    &nbsp;&nbsp;&nbsp;    <h:commandButton title="Click to show CS level"  id="btnShowllk" action="#{maintainSchoolDetails.callCSLevel()}"  value="Show" styleClass="buttonShowStyle" disabled="#{maintainSchoolDetails.disabledEnrol}">
+                                        <!--<f:ajax execute="@form" render="txtEnrolStud ddlCSLevel1" />-->
+                                    </h:commandButton>
 
                                 </th>
                             </tr> 
-                            
+
                             <!--change cslevel style-->
-                            
+
                             <tr>
-                        <th colspan="2" align="left"> 
-                            <h:outputText id="lblCSLevel" value="CS Level : "  styleClass="lblStyle"/>
-
-                            <h:selectOneMenu title="Select CS Level" styleClass="ddlStyle" value="#{cSLevelSetting.cslevel}">
-                                <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
-                            </h:selectOneMenu>  
-
-                            &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList111" title="Click to show assessment" value="Show" action="#{cSLevelSetting.assessmentList()}" disabled="#{cSLevelSetting.disabledButton}" styleClass="buttonShowStyle"/>
-                            <!--&nbsp;&nbsp;&nbsp;    <h:commandButton title="Click to add new CS Level"  id="btnAddNewCSLevel" value="Add New CS Level" action="#{cSLevelSetting.addNewCS()}" disabled="#{cSLevelSetting.disabledButton}" styleClass="buttonSpecialStyle"/>-->
-                        </th>
-                    </tr>   
-                            
-                            
-<!--                            <tr>
+                                <th align="left"> 
+                                    <h:outputText id="lblCSLevel" value="CS Level : "  styleClass="lblStyle"/> </th>
                                 <th align="left">
-                                    <h:outputText id="simbol5000" value="#{maintainSchoolDetails.testing}" escape="false"  styleClass="lblStyle"/></th>
-                            </tr>-->
-<!--                            <tr>
-                                <th colspan="2" align="left"> <h:commandButton title="Click to cancel"  id="btnCancel100" value="Cancel" styleClass="buttonStyle"/></th>
-                                <th colspan="2" align="right"><h:commandButton title="Click to confirm"  id="btnConfirm" value="Confirm" styleClass="buttonStyle"/></th>
-                            </tr>  -->
+                                    <h:selectOneMenu id="ddlCSLevel" title="Select CS Level" styleClass="ddlSmallSpecialStyle" value="#{maintainSchoolDetails.cslevel}" disabled="#{maintainSchoolDetails.disabledEnrol}">
+                                        <f:selectItems id="ddlCSLevel1" value="#{maintainSchoolDetails.get_CSLevel()}" /> 
+                                    </h:selectOneMenu>  
+
+                                    &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowTtlStud" title="Click to show total enrolment student" value="Show" action="#{maintainSchoolDetails.retrieveTtlEnrolStud()}" disabled="#{maintainSchoolDetails.disabledEnrol}" styleClass="buttonShowStyle">
+                                        <!--<f:ajax execute="@form" render="txtNewCSLevel" />-->
+                                    </h:commandButton>
+
+                                </th>
+
+                                <th align="right"> 
+                                    <h:outputText id="lblTotalEnrolStud" value="Total Student : "  styleClass="lblStyle"/> </th>
+
+                                <th align="left">
+                                    <h:inputText title="Total enrolment student"  id="txtEnrolStud" value="#{maintainSchoolDetails.ttlEnrolStud}" disabled="#{maintainSchoolDetails.disabledEnrol}" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+
+                                </th>
+
+
+                            </tr>   
+
+
+                            <!--                            <tr>
+                                                            <th align="left">
+                                                                <h:outputText id="simbol5000" value="{maintainSchoolDetails.testing}" escape="false"  styleClass="lblStyle"/></th>
+                                                        </tr>-->
+                            <!--                            <tr>
+                                                            <th colspan="2" align="left"> <h:commandButton title="Click to cancel"  id="btnCancel100" value="Cancel" styleClass="buttonStyle"/></th>
+                                                            <th colspan="2" align="right"><h:commandButton title="Click to confirm"  id="btnConfirm" value="Confirm" styleClass="buttonStyle"/></th>
+                                                        </tr>  -->
 
                         </table>
                     </fieldset>

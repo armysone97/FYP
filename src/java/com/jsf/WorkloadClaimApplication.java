@@ -34,6 +34,8 @@ public class WorkloadClaimApplication {
 
     public WorkloadClaimApplication() {
         this.counterReset = 0;
+        this.staffID = Login.getGlobalStaffID();
+        retrievePersonalDetails();
     }
 
     public String getStaffID() {
@@ -105,7 +107,7 @@ public class WorkloadClaimApplication {
         //retrieve personal details
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT name, campus, faculty FROM evaluatorpersonaldetails WHERE staffID = ?");
             st.setString(1, staffID);
             ResultSet rs = st.executeQuery();

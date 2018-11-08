@@ -88,8 +88,16 @@ and open the template in the editor.
     font-family: Georgia;
 }
 
+.ddlSmallSpecialStyle{
+    font-size: 18pt;
+    column-width: 10px;
+    width: 150px;
+    height: 40px;
+    font-family: Georgia;
+}
+
 .checkboxStyle{
-    font-size: 20pt;
+    font-size: 18pt;
     font-family: Georgia;
 }
 
@@ -120,13 +128,6 @@ and open the template in the editor.
     font-family: Georgia;
 }
 
-.ddlSmallSpecialStyle{
-    font-size: 18pt;
-    column-width: 10px;
-    width: 150px;
-    height: 40px;
-    font-family: Georgia;
-}
 
 /*MaintainSchoolDetails*/
 .textAreaSpecialStyle{

@@ -41,6 +41,10 @@ public class MaintainSchoolDetails {
 
     private String testing;
 
+    private String cslevel;
+    private int ttlEnrolStud;
+    private Boolean disabledEnrol;
+
     private int counterReset; //growl purpose
 
     public MaintainSchoolDetails() {
@@ -80,6 +84,30 @@ public class MaintainSchoolDetails {
 //                this.disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
 //                break;
 //        }
+    }
+
+    public String getCslevel() {
+        return cslevel;
+    }
+
+    public void setCslevel(String cslevel) {
+        this.cslevel = cslevel;
+    }
+
+    public int getTtlEnrolStud() {
+        return ttlEnrolStud;
+    }
+
+    public void setTtlEnrolStud(int ttlEnrolStud) {
+        this.ttlEnrolStud = ttlEnrolStud;
+    }
+
+    public Boolean getDisabledEnrol() {
+        return disabledEnrol;
+    }
+
+    public void setDisabledEnrol(Boolean disabledEnrol) {
+        this.disabledEnrol = disabledEnrol;
     }
 
     public Boolean getDisabledResetButton() {
@@ -227,11 +255,13 @@ public class MaintainSchoolDetails {
                 disable = true;
                 disabledAddButton = false;
                 editButtonName = "Edit";
+                disabledEnrol = false;
                 break;
             case "Update":
                 disable = false;
                 disabledAddButton = true;
                 editButtonName = "Update";
+                disabledEnrol = true;
                 break;
         }
 
@@ -348,10 +378,10 @@ public class MaintainSchoolDetails {
         int statusOfYearLength = 0;
 
         int lengthYearList = get_yearCount();
-        if (lengthYearList == 0) {
-            lengthYearList = 1;
-            statusOfYearLength = 1;
-        }
+//        if (lengthYearList == 0) {
+//            lengthYearList = 1;
+//            statusOfYearLength = 1;
+//        }
 
         int[] yearListDuplicate = new int[lengthYearList];
 
@@ -381,19 +411,20 @@ public class MaintainSchoolDetails {
             System.out.println(yearListDuplicate[i]);
         }
 
-        if (statusOfYearLength == 1) {
-            yearListDuplicate[0] = 2018;
-            year_list.add(2018);
-        } else {
-            Arrays.sort(yearListDuplicate);//sorting array  
-            int length = yearListDuplicate.length;
-            length = removeDuplicateElements(yearListDuplicate, length);
+//        if (statusOfYearLength == 1) {
+//            yearListDuplicate[0] = 2018;
+//            year_list.add(2018);
+//        }
+//        else {
+        Arrays.sort(yearListDuplicate);//sorting array  
+        int length = yearListDuplicate.length;
+        length = removeDuplicateElements(yearListDuplicate, length);
 
-            //printing array elements  
-            for (int i = 0; i < length; i++) {
-                year_list.add(yearListDuplicate[i]);
-            }
+        //printing array elements  
+        for (int i = 0; i < length; i++) {
+            year_list.add(yearListDuplicate[i]);
         }
+//        }
 
         return year_list;
     }
@@ -403,9 +434,11 @@ public class MaintainSchoolDetails {
 
         switch (addButtonName) {
             case "New":
+                MaintainSchoolMenu.setGlobalCounter(0);
                 newSchool();
                 break;
             case "Confirm":
+                ttlEnrolStud = 67890;
                 addSchool();
                 break;
         }
@@ -428,6 +461,12 @@ public class MaintainSchoolDetails {
         addButtonName = "Confirm";
         disabledEditButton = true;
         disabledResetButton = false;
+
+        disabledEnrol = true;
+        ttlEnrolStud = 0;
+        cslevel = null;
+        year = 0;
+
     }
 
     public void addSchool() {
@@ -467,12 +506,17 @@ public class MaintainSchoolDetails {
 
                     verifyCounter = 1;
 
-                    disabledTxt = true;
+                    MaintainSchoolMenu.setGlobalAction("View");
+                    disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
+
+//                    disabledTxt = true;
                     disabledAddButton = false;
                     disabledEditButton = false;
                     disabledResetButton = true;
 
                     addButtonName = "New";
+                    disabledEnrol = false;
+
                     counterCSLevel(numYearComm);
 
                 } catch (Exception ex) {
@@ -662,6 +706,7 @@ public class MaintainSchoolDetails {
 
         switch (editButtonName) {
             case "Edit":
+                MaintainSchoolMenu.setGlobalCounter(1);
                 editSchool();
                 break;
             case "Update":
@@ -672,11 +717,17 @@ public class MaintainSchoolDetails {
 
     public void editSchool() {
         //reset page
-        disabledTxt = false;
+//        disabledTxt = false;
         disabledCommYear = true;
         disabledStatus = false;
-        editButtonName = "Update";
-        disabledAddButton = true;
+//        editButtonName = "Update";
+//        disabledAddButton = true;
+        MaintainSchoolMenu.setGlobalAction("Update");
+        disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
+        disabledEnrol = true;
+//        ttlEnrolStud = 0;
+//        cslevel = null;
+//        year = 0;
     }
 
     public void updateSchool() {
@@ -719,8 +770,7 @@ public class MaintainSchoolDetails {
                     yearListDuplicate[0] = 2222;
                     yearListDuplicate[1] = 3333;
 
-                    testing = yearListDuplicate[0] + "\n" + yearListDuplicate[1]; //output: 2222 3333
-
+//                    testing = yearListDuplicate[0] + "\n" + yearListDuplicate[1]; //output: 2222 3333
 //            for (int i = 0; i < 2; i++) {
 //                testing = yearListDuplicate[i] + "x";
 //            }
@@ -738,11 +788,15 @@ public class MaintainSchoolDetails {
                         disabledAddButton = false;
                         disabledEditButton = false;
                         editButtonName = "Edit";
-                        disabledTxt = true;
+//                        disabledTxt = true;
                         disabledStatus = true;
+                        MaintainSchoolMenu.setGlobalAction("View");
+                        disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
 
                         disabledAddButton = false;
                         disabledEditButton = false;
+
+                        disabledEnrol = false;
 
                         break;
                 }
@@ -774,7 +828,7 @@ public class MaintainSchoolDetails {
         //set default value
         switch (MaintainSchoolMenu.getGlobalCounter()) {
             case 0: //add
-                year = 2018;
+//                year = 2018;
                 state = "Johor";
                 disabledTxt = false;
                 schoolID = autoGenerateID();
@@ -786,6 +840,10 @@ public class MaintainSchoolDetails {
                 contactNo = null;
                 status = "Active";
 
+                ttlEnrolStud = 0;
+                cslevel = null;
+                year = 0;
+
                 MaintainSchoolMenu.setGlobalCounter(0);
 
                 counterReset = 0;
@@ -795,6 +853,8 @@ public class MaintainSchoolDetails {
                 disabledCommYear = true;
                 disabledAddButton = false;
                 disabledEditButton = true;
+
+                disabledEnrol = true;
 //                context.addMessage(null, new FacesMessage("yy"));
                 break;
             case 1:
@@ -814,7 +874,7 @@ public class MaintainSchoolDetails {
 //        context.addMessage(null, new FacesMessage("xx: " + MaintainSchoolMenu.getGlobalCounter()));
         this.disabledStatus = true;
         this.disabledCommYear = true;
-        this.year = 2018;
+//        this.year = 2018;
         this.counterReset = 0;
 
         switch (MaintainSchoolMenu.getGlobalCounter()) {
@@ -829,6 +889,11 @@ public class MaintainSchoolDetails {
                 this.editButtonName = "Edit";
                 this.disabledResetButton = false;
 
+                disabledEnrol = true;
+                ttlEnrolStud = 0;
+                cslevel = null;
+                year = 0;
+
                 MaintainSchoolMenu.setGlobalCounter(0);
 
                 break;
@@ -840,8 +905,7 @@ public class MaintainSchoolDetails {
                 this.addButtonName = "New";
                 this.disabledResetButton = true;
 
-                MaintainSchoolMenu.setGlobalCounter(0);
-
+//                MaintainSchoolMenu.setGlobalCounter(0);
                 schoolDetailsList(schoolID);
 
                 this.disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
@@ -859,6 +923,152 @@ public class MaintainSchoolDetails {
 
                 MaintainSchoolMenu.setGlobalCounter(0);
         }
+    }
+
+    public void callCSLevel() {
+        get_CSLevel();
+
+    }
+
+    public int retrieveCSIDCount() {
+
+        int count = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM schoolcsmap WHERE schoolID = ? AND year = ?");
+            st.setString(1, schoolID);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                count++;
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return count;
+    }
+
+    //get cs level in db
+    public List<String> get_CSLevel() {
+
+        CSLevel_list.clear();
+
+//       testing = year + schoolID;
+        int CSIDListCount = retrieveCSIDCount();
+        String[] CSIDList = new String[CSIDListCount];
+
+        int tmp = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM schoolcsmap WHERE schoolID = ? AND year = ?");
+            st.setString(1, schoolID);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                //                CSLevel_list.add(rs.getString("CSLevelID"));
+                CSIDList[tmp] = rs.getString("CSLevelID");
+                tmp++;
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        Arrays.sort(CSIDList);
+
+        for (int i = 0; i < CSIDList.length; i++) {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = con.prepareStatement("SELECT CSLevelName FROM cslevel WHERE CSLevelID = ?");
+                st.setString(1, CSIDList[i]);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+//                    totalStudent = rs.getInt("numSampleAss");
+//                    teacherIDListDuplicate[tmp1] = rs.getString("teacherID");
+//                    tmp1++;
+                    CSLevel_list.add(rs.getString("CSLevelName"));
+                }
+
+                rs.close();
+                st.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
+
+        return CSLevel_list;
+    }
+
+    public String matchCSLevelID() {
+
+        String CSID = "";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM cslevel WHERE CSLevelName = ?");
+            st.setString(1, cslevel);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                CSID = rs.getString("CSLevelID");
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return CSID;
+    }
+
+    public void retrieveTtlEnrolStud() {
+
+        String CSID = matchCSLevelID();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT ttlEnrolStud FROM schoolcsmap WHERE schoolID = ? AND year = ? AND CSLevelID = ?");
+            st.setString(1, schoolID);
+            st.setInt(2, year);
+            st.setString(3, CSID);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                ttlEnrolStud = rs.getInt("ttlEnrolStud");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
     }
 
 }

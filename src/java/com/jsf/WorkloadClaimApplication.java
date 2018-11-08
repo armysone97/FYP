@@ -99,6 +99,32 @@ public class WorkloadClaimApplication {
     public void setTotalClaim(double totalClaim) {
         this.totalClaim = totalClaim;
     }
+    
+    public void retrievePersonalDetails(){
+        
+        //retrieve personal details
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT name, campus, faculty FROM evaluatorpersonaldetails WHERE staffID = ?");
+            st.setString(1, staffID);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                setName(rs.getString("name"));
+                setBranch(rs.getString("campus"));
+                setFaculty(rs.getString("faculty"));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+    }
 
     //navigation bar purpose
     public String goToNextPage() {

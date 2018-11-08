@@ -26,14 +26,17 @@ public class WorkloadClaimApplication {
     private String branch;
     private String faculty;
     private String role;
-    private double hourlyRate;
+    private String hourlyRate;
     private double workHours;
     private double totalClaim;
+    private int year;
 
     private int counterReset;
 
     public WorkloadClaimApplication() {
         this.counterReset = 0;
+        this.year = 2018;
+        this.hourlyRate = "0.0";
 //        this.staffID = Login.getGlobalStaffID();
 //        retrievePersonalDetails();
     }
@@ -78,11 +81,11 @@ public class WorkloadClaimApplication {
         this.role = role;
     }
 
-    public double getHourlyRate() {
+    public String getHourlyRate() {
         return hourlyRate;
     }
 
-    public void setHourlyRate(double hourlyRate) {
+    public void setHourlyRate(String hourlyRate) {
         this.hourlyRate = hourlyRate;
     }
 
@@ -116,7 +119,7 @@ public class WorkloadClaimApplication {
         //retrieve personal details
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT name, campus, faculty FROM evaluatorpersonaldetails WHERE staffID = ?");
             st.setString(1, staffID);
             ResultSet rs = st.executeQuery();
@@ -135,6 +138,55 @@ public class WorkloadClaimApplication {
             System.out.println("Error: " + ex);
         }
 
+    }
+    
+    //retrieve hourly rate
+    public void retrieveHourlyRate(){
+        
+        //retrieve hourly rate
+        if(role.equals("Evaluator")){
+            try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT evHourlyRate FROM rate WHERE year = ?");
+            st.setInt(1, year);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                setHourlyRate(String.format("%.2f", rs.getDouble("evHourlyRate")));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+            
+            } 
+            catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+            
+        }
+        else{
+            try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT mtHourlyRate FROM rate WHERE year = ?");
+            st.setInt(1, year);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                setHourlyRate(String.format("%.2f", rs.getDouble("mtHourlyRate")));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+            
+            } 
+            catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
     }
 
     //navigation bar purpose
@@ -166,7 +218,7 @@ public class WorkloadClaimApplication {
 //        staffID = Login.getGlobalStaffID();
 //        retrievePersonalDetails();
         role = null;
-        hourlyRate = 0;
+        hourlyRate = null;
         workHours = 0;
         totalClaim = 0;
 

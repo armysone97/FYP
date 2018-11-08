@@ -5,6 +5,7 @@
  */
 package com.jsf;
 
+import java.io.PrintWriter;
 import java.sql.*;
 import java.util.*;
 import javax.faces.application.FacesMessage;
@@ -927,6 +928,11 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+    }
+    
+    //display data table
+    public void displayData(){
+        
     }
 
     //navigation bar purpose

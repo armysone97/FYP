@@ -150,8 +150,8 @@
                     </tr>
 
                     <tr>
-                        <th colspan="2" align="left"> <h:commandButton id="btnReset" title="Click to reset" value="Reset" styleClass="buttonStyle" action="#{yearOfStudySetting.reset()}"/></th>
-                        <th align="right"><h:commandButton id="btnConfirm" title="Click to confirm" value="Confirm" styleClass="buttonStyle" action="#{yearOfStudySetting.addYearOfStudyCSMap()}"/></th>
+                        <th colspan="2" align="left"> <h:commandButton id="btnReset" title="Click to reset" value="Reset" styleClass="buttonStyle" action="#{yearOfStudySetting.reset()}" disabled="#{yearOfStudySetting.disabledDDL}"/></th>
+                        <th align="right"><h:commandButton id="btnConfirm" title="Click to confirm" value="Confirm" styleClass="buttonStyle" action="#{yearOfStudySetting.addYearOfStudyCSMap()}" disabled="#{yearOfStudySetting.disabledDDL}"/></th>
                     </tr>  
                 </table>
             </h:form>

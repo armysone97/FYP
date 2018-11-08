@@ -438,7 +438,7 @@ public class MaintainSchoolDetails {
                 newSchool();
                 break;
             case "Confirm":
-                ttlEnrolStud = 67890;
+                // ttlEnrolStud = 67890;
                 addSchool();
                 break;
         }
@@ -505,18 +505,20 @@ public class MaintainSchoolDetails {
                     con.close();
 
                     verifyCounter = 1;
+                    
+                     MaintainSchoolMenu.setGlobalCounter(2);
 
-                    MaintainSchoolMenu.setGlobalAction("View");
-                    disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
-
+//                    MaintainSchoolMenu.setGlobalAction("View");
+////                    disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
+//name = MaintainSchoolMenu.getGlobalAction();
+//
 //                    disabledTxt = true;
-                    disabledAddButton = false;
-                    disabledEditButton = false;
-                    disabledResetButton = true;
-
-                    addButtonName = "New";
-                    disabledEnrol = false;
-
+//                    disabledAddButton = false;
+//                    disabledEditButton = false;
+//                    disabledResetButton = true;
+//
+//                    addButtonName = "New";
+//                    disabledEnrol = false;
                     counterCSLevel(numYearComm);
 
                 } catch (Exception ex) {
@@ -910,6 +912,20 @@ public class MaintainSchoolDetails {
 
                 this.disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
                 break;
+            case 2:
+                MaintainSchoolMenu.setGlobalAction("View");
+//                    disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
+//                name = MaintainSchoolMenu.getGlobalAction();
+
+                disabledTxt = true;
+                disabledAddButton = false;
+                disabledEditButton = false;
+                disabledResetButton = true;
+
+                addButtonName = "New";
+                disabledEnrol = false;
+                break;
+
             default: //direct come in without going maintainschoolmenu, so the globalcounter is null, not 0
                 this.state = "Johor";
                 this.disabledTxt = false;

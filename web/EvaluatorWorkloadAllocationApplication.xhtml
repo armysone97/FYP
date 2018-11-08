@@ -76,6 +76,7 @@
                             <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.school}">
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_SchoolList()}" />
                             </h:selectOneMenu>  
+                            &nbsp;&nbsp;&nbsp;         <h:commandButton id="btnSchool" value="Confirm" styleClass="buttonStyle"/>
 
                         </th>
                     </tr> 
@@ -89,6 +90,8 @@
                             <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.csLevel}">
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_CSLevelList()}" />
                             </h:selectOneMenu>  
+                            &nbsp;&nbsp;&nbsp;         <h:commandButton id="btnCSLevel" value="Confirm" styleClass="buttonStyle" />
+
                         </th>
                     </tr>   
 

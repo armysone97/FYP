@@ -37,6 +37,7 @@ public class EvaluatorWorkloadAllocation {
     private double workloadAssigned;
     private int year = 2018;
     private String result;
+    private String schoolID;
 
 //    private String name;
 //    private String schoolName;
@@ -452,18 +453,17 @@ public class EvaluatorWorkloadAllocation {
 
         // String scID = "";
         // verifySchoolID();
+        
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            Statement st = con.createStatement();
-            //ResultSet rs = st.executeQuery("SELECT school.schoolID, school.schoolName, schoolcsmap.CSLevelID FROM school INNER JOIN schoolcsmap ON school.schoolID = schoolcsmap.schoolID");
-            //ResultSet rs = st.executeQuery("SELECT CSLevelID FROM schoolcsmap WHERE schoolID = ?");
-            //st.setString(1, schoolID);
-//            ResultSet rs = st.executeQuery();
-            ResultSet rs = st.executeQuery("SELECT CSLevelName FROM cslevel");
-
+            PreparedStatement st = con.prepareStatement("SELECT schoolID FROM school WHERE schoolName = ? AND year = ?");
+            st.setString(1, school);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+            
             while (rs.next()) {
-                cslevel_list.add(rs.getString("CSLevelName"));
+                schoolID = rs.getString("schoolID");
             }
 
             rs.close();
@@ -473,6 +473,47 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM schoolcsmap WHERE schoolID = ?");
+            st.setString(1, schoolID);
+            ResultSet rs = st.executeQuery();
+            
+            while (rs.next()) {
+                cslevel_list.add(rs.getString("CSLevelID"));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+//        try {
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+//            Statement st = con.createStatement();
+//            //ResultSet rs = st.executeQuery("SELECT school.schoolID, school.schoolName, schoolcsmap.CSLevelID FROM school INNER JOIN schoolcsmap ON school.schoolID = schoolcsmap.schoolID");
+//            //ResultSet rs = st.executeQuery("SELECT CSLevelID FROM schoolcsmap WHERE schoolID = ?");
+//            //st.setString(1, schoolID);
+////            ResultSet rs = st.executeQuery();
+//            ResultSet rs = st.executeQuery("SELECT CSLevelName FROM cslevel");
+//
+//            while (rs.next()) {
+//                cslevel_list.add(rs.getString("CSLevelName"));
+//            }
+//
+//            rs.close();
+//            st.close();
+//            con.close();
+//
+//        } catch (Exception ex) {
+//            System.out.println("Error: " + ex);
+//        }
 
         return cslevel_list;
     }

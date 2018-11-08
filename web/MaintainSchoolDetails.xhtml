@@ -151,7 +151,7 @@
                             <h:outputText id="lblEnrolNum" value="Enrolment numbers of student "  styleClass="lblStyle"/>
                         </legend>
 
-                        <table border="0" cellpadding="10px" cellspacing="0" width="400px" align="center">
+                        <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
                             <tr>
                                 <th colspan="4" align="left">
@@ -164,15 +164,32 @@
                                     &nbsp;&nbsp;&nbsp;    <h:commandButton title="Click to show CS level"  id="btnShowList111" value="Show" styleClass="buttonShowStyle"/>
 
                                 </th>
-                            </tr>  
+                            </tr> 
+                            
+                            <!--change cslevel style-->
+                            
                             <tr>
+                        <th colspan="2" align="left"> 
+                            <h:outputText id="lblCSLevel" value="CS Level : "  styleClass="lblStyle"/>
+
+                            <h:selectOneMenu title="Select CS Level" styleClass="ddlStyle" value="#{cSLevelSetting.cslevel}">
+                                <f:selectItems value="#{cSLevelSetting.get_CSLevel()}" /> 
+                            </h:selectOneMenu>  
+
+                            &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList111" title="Click to show assessment" value="Show" action="#{cSLevelSetting.assessmentList()}" disabled="#{cSLevelSetting.disabledButton}" styleClass="buttonShowStyle"/>
+                            <!--&nbsp;&nbsp;&nbsp;    <h:commandButton title="Click to add new CS Level"  id="btnAddNewCSLevel" value="Add New CS Level" action="#{cSLevelSetting.addNewCS()}" disabled="#{cSLevelSetting.disabledButton}" styleClass="buttonSpecialStyle"/>-->
+                        </th>
+                    </tr>   
+                            
+                            
+<!--                            <tr>
                                 <th align="left">
                                     <h:outputText id="simbol5000" value="#{maintainSchoolDetails.testing}" escape="false"  styleClass="lblStyle"/></th>
-                            </tr>
-                            <tr>
+                            </tr>-->
+<!--                            <tr>
                                 <th colspan="2" align="left"> <h:commandButton title="Click to cancel"  id="btnCancel100" value="Cancel" styleClass="buttonStyle"/></th>
-                                <th colspan="4" align="right"><h:commandButton title="Click to confirm"  id="btnConfirm" value="Confirm" styleClass="buttonStyle"/></th>
-                            </tr>  
+                                <th colspan="2" align="right"><h:commandButton title="Click to confirm"  id="btnConfirm" value="Confirm" styleClass="buttonStyle"/></th>
+                            </tr>  -->
 
                         </table>
                     </fieldset>

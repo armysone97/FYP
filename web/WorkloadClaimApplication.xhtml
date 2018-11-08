@@ -7,7 +7,9 @@
     <h:head>
         <title>STEM CS Validation Programme</title>
         <h:outputStylesheet name="css/style.css" />
-
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{workloadClaimApplication.defaultStaffList()}"/>
+        </f:metadata>
     </h:head>
     <h:body>
         <div align="center">
@@ -34,7 +36,7 @@
 
                 <br />
                 <br />
-                
+
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
                     <tr>
                         <th align="left"> <h:outputText id="lblStaffID" value="Staff ID"  styleClass="lblStyle"/></th>

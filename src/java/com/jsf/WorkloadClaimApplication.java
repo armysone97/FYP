@@ -102,6 +102,15 @@ public class WorkloadClaimApplication {
         this.totalClaim = totalClaim;
     }
 
+    public void defaultStaffList() {
+        switch (Login.getGlobalCounter()) {
+            case 1:
+                this.staffID = Login.getGlobalStaffID();
+                retrievePersonalDetails();
+                break;
+        }
+    }
+
     public void retrievePersonalDetails() {
 
         //retrieve personal details
@@ -150,11 +159,10 @@ public class WorkloadClaimApplication {
         }
 
         //set default value
-        staffID = null;
-        name = null;
-        branch = null;
-        faculty = null;
-        
+//        staffID = null;
+//        name = null;
+//        branch = null;
+//        faculty = null;
 //        staffID = Login.getGlobalStaffID();
 //        retrievePersonalDetails();
         role = null;

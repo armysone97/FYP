@@ -35,13 +35,24 @@ public class Login {
     private String role;
     private String nextPage;
     private int counterReset; //growl purpose
-    
+    private static int globalCounter;
+
     private static String globalStaffID;
 
     public Login() {
         this.role = "Admin";
 //        username = null;
         this.counterReset = 0;
+        this.globalCounter = 0;
+
+    }
+
+    public static int getGlobalCounter() {
+        return globalCounter;
+    }
+
+    public static void setGlobalCounter(int globalCounter) {
+        Login.globalCounter = globalCounter;
     }
 
     public static String getGlobalStaffID() {
@@ -185,12 +196,14 @@ public class Login {
                 if (role.equals("Admin")) {
                     nextPage = "CSLevelSetting";
                     globalStaffID = username;
+                    globalCounter = 1;
 
                     context.addMessage(null, new FacesMessage("Login Successful!"));
 
                 } else if (role.equals("Evaluator")) {
                     nextPage = "WorkloadClaimApplication";
                     globalStaffID = username;
+                    globalCounter = 1;
 
                     context.addMessage(null, new FacesMessage("Login Successful!"));
 
@@ -253,14 +266,13 @@ public class Login {
 
     //navigation bar purpose
     public String goToNextPage() {
-        
+
 //        FacesContext context = FacesContext.getCurrentInstance();
 //        context.addMessage(null, new FacesMessage("Logout successful!"));
-
         counterReset = 1;
 
         reset();
-               
+
         return "Login";
     }
 
@@ -282,6 +294,7 @@ public class Login {
         role = "Admin";
         globalStaffID = null;
         counterReset = 0;
+        globalCounter = 0;
     }
 
 //    public void main(String args[]) {

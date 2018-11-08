@@ -27,9 +27,10 @@ public class WorkloadClaimApplication {
     private String faculty;
     private String role;
     private String hourlyRate;
-    private double workHours;
+    private String workHours;
     private double totalClaim;
     private int year;
+    private String result;
 
     private int counterReset;
 
@@ -37,6 +38,8 @@ public class WorkloadClaimApplication {
         this.counterReset = 0;
         this.year = 2018;
         this.hourlyRate = "0.0";
+        this.workHours = "0.0";
+        this.result = "0.0";
 //        this.staffID = Login.getGlobalStaffID();
 //        retrievePersonalDetails();
     }
@@ -89,11 +92,11 @@ public class WorkloadClaimApplication {
         this.hourlyRate = hourlyRate;
     }
 
-    public double getWorkHours() {
+    public String getWorkHours() {
         return workHours;
     }
 
-    public void setWorkHours(double workHours) {
+    public void setWorkHours(String workHours) {
         this.workHours = workHours;
     }
 
@@ -103,6 +106,14 @@ public class WorkloadClaimApplication {
 
     public void setTotalClaim(double totalClaim) {
         this.totalClaim = totalClaim;
+    }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
     }
 
     public void defaultStaffList() {
@@ -128,6 +139,26 @@ public class WorkloadClaimApplication {
                 setName(rs.getString("name"));
                 setBranch(rs.getString("campus"));
                 setFaculty(rs.getString("faculty"));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        //retrieve total workload
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT SUM(workloadAssigned) FROM workloadallocation WHERE staffID = ?");
+            st.setString(1, staffID);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                setWorkHours(String.format("%.2f", rs.getDouble("SUM(workloadAssigned)")));
             }
 
             rs.close();
@@ -188,6 +219,13 @@ public class WorkloadClaimApplication {
             }
         }
     }
+    
+    //calculate total workload claim
+    public void calculateWorkloadClaim(){
+        totalClaim = (Double.valueOf(hourlyRate))*(Double.valueOf(workHours));
+        
+        result = String.format("%.2f", totalClaim);
+    }
 
     //navigation bar purpose
     public String goToNextPage() {
@@ -218,9 +256,11 @@ public class WorkloadClaimApplication {
 //        staffID = Login.getGlobalStaffID();
 //        retrievePersonalDetails();
         role = null;
-        hourlyRate = null;
-        workHours = 0;
+        hourlyRate = "0.0";
+        workHours = "0.0";
         totalClaim = 0;
+        result = "0.0";
+        year = 2018;
 
         counterReset = 0;
     }

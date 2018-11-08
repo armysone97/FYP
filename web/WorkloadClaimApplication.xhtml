@@ -136,13 +136,13 @@
 
                         <th align="left">
                             <h:outputText id="simbol9" value="RM "  styleClass="lblStyle"/>
-                            <h:inputText id="txtTotal" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{workloadClaimApplication.totalClaim}"/>
+                            <h:inputText id="txtTotal" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{workloadClaimApplication.result}"/>
                         </th>
                     </tr> 
 
                     <tr>
                         <th colspan="3" align="right">
-                                     <h:commandButton id="btnCal" value="Calculate" styleClass="buttonStyle" />
+                            <h:commandButton id="btnCal" value="Calculate" styleClass="buttonStyle" action="#{workloadClaimApplication.calculateWorkloadClaim()}" />
                         &nbsp;&nbsp;&nbsp;
                             <h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuEvaluator"/></th>
                     </tr>    

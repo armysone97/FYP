@@ -133,12 +133,13 @@
 
                             <th colspan="2" align="left">
                                 <h:outputText id="lblStatus" value="Status : "  styleClass="lblStyle"/>
-
-                                <h:selectOneMenu title="Select teacher status" value="#{maintainTeacher.status}" disabled="#{maintainTeacher.disabledStatus}" styleClass="ddlStyle">
+         <h:inputText id="txtStatus" title="Teacher status" value="#{maintainTeacher.status}" disabled="#{maintainTeacher.disabledStatus}" styleClass="txtboxSmallStyle"/>
+                         
+<!--                                <h:selectOneMenu title="Select teacher status" value="#{maintainTeacher.status}" disabled="#{maintainTeacher.disabledStatus}" styleClass="ddlStyle">
                                     <f:selectItem itemValue = "Available" itemLabel = "Available" /> 
                                     <f:selectItem itemValue = "Resigned" itemLabel = "Resigned" /> 
                                     <f:selectItem itemValue = "Retired" itemLabel = "Retired" /> 
-                                </h:selectOneMenu> 
+                                </h:selectOneMenu> -->
 
                             </th>
                         </tr>   
@@ -155,7 +156,7 @@
 
                             <th colspan="2" align="left"> 
                                 <h:outputText  id="lblStudNum" value="Number of Student: "  styleClass="lblStyle"/>
-                                <h:inputText title="Enter student enrolment number" id="txtStudNum" value="#{maintainTeacher.studNum}" disabled="#{maintainTeacher.disabledTxt}" styleClass="txtboxSmallestStyle" required="required" size="10"/>
+                                <h:inputText title="Student enrolment number" id="txtStudNum" value="#{maintainTeacher.studNum}" disabled="#{maintainTeacher.disabledTxt}" styleClass="txtboxSmallestStyle" required="required" size="10"/>
                             </th>
                         </tr>   
                     </table>

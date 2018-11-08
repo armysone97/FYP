@@ -143,3 +143,10 @@ and open the template in the editor.
     width : 340px;
     font-family: Georgia;
 }
+
+.txtboxSmallSpecialStyle {
+    font-size: 18pt;
+    height: 35px;
+    width : 100px;
+    font-family: Georgia;
+}

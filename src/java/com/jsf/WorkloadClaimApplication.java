@@ -34,8 +34,8 @@ public class WorkloadClaimApplication {
 
     public WorkloadClaimApplication() {
         this.counterReset = 0;
-        this.staffID = Login.getGlobalStaffID();
-        retrievePersonalDetails();
+//        this.staffID = Login.getGlobalStaffID();
+//        retrievePersonalDetails();
     }
 
     public String getStaffID() {
@@ -101,15 +101,15 @@ public class WorkloadClaimApplication {
     public void setTotalClaim(double totalClaim) {
         this.totalClaim = totalClaim;
     }
-    
-    public void retrievePersonalDetails(){
-        
+
+    public void retrievePersonalDetails() {
+
         //retrieve personal details
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT name, campus, faculty FROM evaluatorpersonaldetails WHERE staffID = ?");
-            st.setString(1, Login.getGlobalStaffID());
+            st.setString(1, staffID);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -150,10 +150,13 @@ public class WorkloadClaimApplication {
         }
 
         //set default value
-//        staffID = null;
-//        name = null;
-//        branch = null;
-//        faculty = null;
+        staffID = null;
+        name = null;
+        branch = null;
+        faculty = null;
+        
+//        staffID = Login.getGlobalStaffID();
+//        retrievePersonalDetails();
         role = null;
         hourlyRate = 0;
         workHours = 0;

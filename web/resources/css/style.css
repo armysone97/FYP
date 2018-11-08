@@ -135,3 +135,11 @@ and open the template in the editor.
     text-align: left;
     font-family: Georgia;
 }
+
+/*WorkloadClaimApplication*/
+.txtboxSpecialStyle {
+    font-size: 18pt;
+    height: 35px;
+    width : 340px;
+    font-family: Georgia;
+}

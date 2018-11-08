@@ -39,6 +39,7 @@ public class CSLevelSetting {
 
     private Boolean disabledDDL, disabledProject, disabledCollaboration, disabledPractical, disabledGroupwork;
     private Boolean disabledNewCS, disabledButton;
+    private Boolean disabledReset;
 
     private String newcslevelname, newcslevelid;
 
@@ -51,9 +52,18 @@ public class CSLevelSetting {
         this.disabledCollaboration = true;
         this.disabledPractical = true;
         this.disabledGroupwork = true;
+        this.disabledReset = true;
         this.disabledNewCS = true;
         this.disabledButton = false;
         this.counterReset = 0;
+    }
+
+    public Boolean getDisabledReset() {
+        return disabledReset;
+    }
+
+    public void setDisabledReset(Boolean disabledReset) {
+        this.disabledReset = disabledReset;
     }
 
     public Boolean getDisabledNewCS() {
@@ -521,12 +531,14 @@ public class CSLevelSetting {
                 disabledCollaboration = true;
                 disabledPractical = true;
                 disabledGroupwork = true;
+                disabledReset = true;
             } else {
                 tmpYear = 2017;
                 disabledProject = false;
                 disabledCollaboration = false;
                 disabledPractical = false;
                 disabledGroupwork = false;
+                disabledReset = false;
             }
 
         } else {
@@ -535,6 +547,7 @@ public class CSLevelSetting {
             disabledCollaboration = true;
             disabledPractical = true;
             disabledGroupwork = true;
+            disabledReset = true;
         }
 
         //newcslevelname = tmpYear + "x";
@@ -730,6 +743,7 @@ public class CSLevelSetting {
                 disabledProject = true;
                 disabledPractical = true;
                 disabledGroupwork = true;
+                disabledReset = true;
 
                 verifyCounter = 1;
 
@@ -792,6 +806,7 @@ public class CSLevelSetting {
         disabledPractical = true;
         disabledGroupwork = true;
         disabledButton = true;
+        disabledReset = true;
     }
 
     public void addCSLevel() {
@@ -837,6 +852,7 @@ public class CSLevelSetting {
                     disabledPractical = true;
                     disabledGroupwork = true;
                     disabledButton = false;
+                    disabledReset = false;
 
                     newcslevelname = null;
                     newcslevelid = null;
@@ -893,6 +909,7 @@ public class CSLevelSetting {
         disabledGroupwork = true;
         disabledNewCS = true;
         disabledButton = false;
+        disabledReset = true;
     }
 
     //reset newCSLevel

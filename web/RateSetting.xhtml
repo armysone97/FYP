@@ -84,7 +84,7 @@
 
                     <tr>
                         <th rowspan="2" align="left">
-                            <h:outputText id="lblHourlyRate" value="Set HourlyRate "  styleClass="lblStyle"/>
+                            <h:outputText id="lblHourlyRate" value="Set Hourly Rate "  styleClass="lblStyle"/>
                         </th>
 
                         <th rowspan="2" align="left">
@@ -93,7 +93,9 @@
                         <th align="left">
                             <h:outputText id="lblMasterTrainer" value="Master Trainer"  styleClass="lblStyle"/>
                         </th>
-                        <th align="left">   <h:inputText id="HourlyRateMasterTrainer" title="Enter hourly rate for master trainer" value="#{rateSetting.mtHourlyRate}" disabled="#{rateSetting.disabledTxt}"  styleClass="txtboxSmallestStyle" required="required" size="3"/>
+                        <th align="left">  
+                            <h:outputText id="lblRM1" value="RM"  styleClass="lblStyle"/> 
+                            <h:inputText id="HourlyRateMasterTrainer" title="Enter hourly rate for master trainer" value="#{rateSetting.mtHourlyRate}" disabled="#{rateSetting.disabledTxt}"  styleClass="txtboxSmallestStyle" required="required" size="3"/>
                         </th>
                         <th align="left">
                             <h:outputText id="hr1" value=" /hr"  styleClass="lblStyle"/>
@@ -104,6 +106,7 @@
                             <h:outputText id="lblEvaluator" value="Evaluator"  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
+                             <h:outputText id="lblRM2" value="RM"  styleClass="lblStyle"/>  
                             <h:inputText id="HourlyRateEvaluator" title="Enter hourly rate for evaluator" value="#{rateSetting.evHourlyRate}" disabled="#{rateSetting.disabledTxt}"  styleClass="txtboxSmallestStyle" required="required" size="3"/>
                         </th>
                         <th align="left">
@@ -120,6 +123,7 @@
                             <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
+                             <h:outputText id="lblRM3" value="RM"  styleClass="lblStyle"/> 
                             <h:inputText id="RateOfMileage" title="Enter mileage rate"  value="#{rateSetting.mileageRate}" disabled="#{rateSetting.disabledTxt}"  styleClass="txtboxSmallestStyle" required="required" size="3"/>
                         </th>
                         <th align="left">
@@ -136,8 +140,8 @@
                     </tr>
 
                     <tr>
-                        <th colspan="3" align="left"> <h:commandButton id="btnReset" title="Click to reset" value="Reset" action="#{rateSetting.reset()}" styleClass="buttonStyle"/></th>
-                        <th align="right"><h:commandButton id="btnConfirm" title="Click to confirm" value="Confirm" styleClass="buttonStyle" action="#{rateSetting.addSetting()}"/></th>
+                        <th colspan="3" align="left"> <h:commandButton id="btnReset" title="Click to reset" value="Reset" action="#{rateSetting.reset()}" styleClass="buttonStyle" disabled="#{rateSetting.disabledTxt}" /></th>
+                        <th align="right"><h:commandButton id="btnConfirm" title="Click to confirm" value="Confirm" styleClass="buttonStyle" action="#{rateSetting.addSetting()}" disabled="#{rateSetting.disabledTxt}" /></th>
                     </tr> 
                 </table>
             </h:form>

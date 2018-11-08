@@ -312,6 +312,7 @@ public class MaintainSchoolMenu {
 
         //set default value
         state = "Pulau Pinang";
+        school = "SJK Air Itam";
         globalCounter = 0;
         action = "View";
         globalAction = null;

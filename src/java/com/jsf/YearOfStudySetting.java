@@ -805,7 +805,7 @@ public class YearOfStudySetting {
         counterReset = 0;
 
         //set default disabled
-        this.disabledDDL = false;
+        disabledDDL = false;
 
     }
 

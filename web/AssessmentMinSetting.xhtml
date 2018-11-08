@@ -130,8 +130,8 @@
                     </tr>
 
                     <tr>
-                        <th colspan="3"  align="left"> <h:commandButton id="btnReset" title="Click to reset" value="Reset" action="#{assessmentMinSetting.reset()}" styleClass="buttonStyle"/></th>
-                        <th align="right"><h:commandButton id="btnConfirm" title="Click to confirm" value="Confirm" styleClass="buttonStyle" action="#{assessmentMinSetting.updateMinPerStud()}"/></th>
+                        <th colspan="3"  align="left"> <h:commandButton id="btnReset" title="Click to reset" value="Reset" action="#{assessmentMinSetting.reset()}" disabled="#{assessmentMinSetting.disabledReset}" styleClass="buttonStyle"/></th>
+                        <th align="right"><h:commandButton id="btnConfirm" title="Click to confirm" value="Confirm" styleClass="buttonStyle" disabled="#{assessmentMinSetting.disabledReset}" action="#{assessmentMinSetting.updateMinPerStud()}"/></th>
                     </tr> 
 
                 </table>

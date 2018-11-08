@@ -37,6 +37,7 @@ public class AssessmentTaskSetting {
     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
 
     private Boolean disabledDDL, disabledProject, disabledCollaboration, disabledPractical, disabledGroupwork;
+    private Boolean disabledReset;
 
     private int counterReset; //growl purpose
 
@@ -48,6 +49,15 @@ public class AssessmentTaskSetting {
         this.disabledPractical = true;
         this.disabledGroupwork = true;
         this.counterReset = 0;
+        this.disabledReset = true;
+    }
+
+    public Boolean getDisabledReset() {
+        return disabledReset;
+    }
+
+    public void setDisabledReset(Boolean disabledReset) {
+        this.disabledReset = disabledReset;
     }
 
     public Boolean getDisabledProject() {
@@ -548,12 +558,14 @@ public class AssessmentTaskSetting {
                 disabledCollaboration = true;
                 disabledPractical = true;
                 disabledGroupwork = true;
+                disabledReset = true;
             } else {
                 tmpYear = 2017;
                 disabledProject = false;
                 disabledCollaboration = false;
                 disabledPractical = false;
                 disabledGroupwork = false;
+                disabledReset = false;
             }
 
         } else {
@@ -562,6 +574,7 @@ public class AssessmentTaskSetting {
             disabledCollaboration = true;
             disabledPractical = true;
             disabledGroupwork = true;
+            disabledReset = true;
         }
 
         //get project tasktitle
@@ -725,6 +738,7 @@ public class AssessmentTaskSetting {
                 disabledCollaboration = true;
                 disabledPractical = true;
                 disabledGroupwork = true;
+                disabledReset = true;
                 break;
         }
         }
@@ -768,6 +782,7 @@ public class AssessmentTaskSetting {
         disabledCollaboration = true;
         disabledPractical = true;
         disabledGroupwork = true;
+        disabledReset = true;
     }
 
 }

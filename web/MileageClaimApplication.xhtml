@@ -66,9 +66,9 @@
 
                         <th align="left"> 
 
-                            <h:selectOneRadio layout="lineDirection" styleClass="radiobuttonStyle"> 
-                                <f:selectItem itemValue = "EV" itemLabel = "Evaluator " /> 
-                                <f:selectItem itemValue = "MT" itemLabel = "Master Trainer" /> 
+                            <h:selectOneRadio layout="lineDirection" styleClass="radiobuttonStyle" value="#{mileageClaimApplication.role}"> 
+                                <f:selectItem itemValue = "Evaluator" itemLabel = "Evaluator" /> 
+                                <f:selectItem itemValue = "Master Trainer" itemLabel = "Master Trainer" /> 
                             </h:selectOneRadio>
 
                         </th>
@@ -83,7 +83,7 @@
 
                         <th align="left">
                             <h:outputText id="simbol10" value="RM "  styleClass="lblStyle"/>
-                            <h:inputText id="txtHourlyRate" styleClass="txtboxSmallSpecialStyle" required="required" size="5"/>
+                            <h:inputText id="txtHourlyRate" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{mileageClaimApplication.rate}"/>
                         </th>
                     </tr> 
 
@@ -96,7 +96,7 @@
 
                         <th align="left">
                             <h:outputText id="simbol11" value="RM "  styleClass="lblStyle"/>
-                            <h:inputText id="txtToll" styleClass="txtboxSmallSpecialStyle" required="required" size="5"/>
+                            <h:inputText id="txtToll" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{mileageClaimApplication.toll}"/>
                         </th>
                     </tr> 
 
@@ -109,7 +109,7 @@
 
                         <th align="left">
                             <h:outputText id="simbol12" value="RM "  styleClass="lblStyle"/>
-                            <h:inputText id="txtParking" styleClass="txtboxSmallSpecialStyle" required="required" size="5"/>
+                            <h:inputText id="txtParking" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{mileageClaimApplication.parking}"/>
                         </th>
                     </tr> 
 
@@ -123,7 +123,7 @@
 
                         <th align="left">
                             <h:outputText id="simbol13" value="RM "  styleClass="lblStyle"/>
-                            <h:inputText id="txtAccomodation" styleClass="txtboxSmallSpecialStyle" required="required" size="5"/>
+                            <h:inputText id="txtAccomodation" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{mileageClaimApplication.accomodation}"/>
                         </th>
                     </tr> 
 
@@ -135,7 +135,7 @@
                         </th>
 
                         <th align="left">
-                            <h:inputText id="txtMileage" styleClass="txtboxSmallSpecialStyle" required="required" size="5"/>
+                            <h:inputText id="txtMileage" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{mileageClaimApplication.mileage}"/>
                             <h:outputText id="simbol16" value=" km "  styleClass="lblStyle"/>
 
                         </th>
@@ -151,12 +151,15 @@
 
                         <th align="left">
                             <h:outputText id="simbol14" value="RM "  styleClass="lblStyle"/>
-                            <h:inputText id="txtTotal" styleClass="txtboxSmallSpecialStyle" required="required" size="5"/>
+                            <h:inputText id="txtTotal" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{mileageClaimApplication.result}"/>
                         </th>
                     </tr> 
 
                     <tr>
-                        <th colspan="3" align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuEvaluator"/></th>
+                        <th colspan="3" align="right">
+                            <h:commandButton id="btnCal" value="Calculate" styleClass="buttonStyle" action="#{mileageClaimApplication.calculateMileageClaim()}"/>
+                        &nbsp;&nbsp;&nbsp;
+                        <h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{mileageClaimApplication.addMileageClaim()}"/></th>
                     </tr> 
                 </table>   
             </h:form>

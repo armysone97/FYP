@@ -91,7 +91,7 @@
 
                         <th align="left"> 
                             <h:selectOneRadio layout="lineDirection" styleClass="radiobuttonStyle" value="#{workloadClaimApplication.role}"> 
-                                <f:selectItem itemValue = "Evaluator" itemLabel = "Evaluator " /> 
+                                <f:selectItem itemValue = "Evaluator" itemLabel = "Evaluator" /> 
                                 <f:selectItem itemValue = "Master Trainer" itemLabel = "Master Trainer" /> 
                             </h:selectOneRadio>
                             
@@ -143,7 +143,7 @@
                         <th colspan="3" align="right">
                             <h:commandButton id="btnCal" value="Calculate" styleClass="buttonStyle" action="#{workloadClaimApplication.calculateWorkloadClaim()}" />
                         &nbsp;&nbsp;&nbsp;
-                            <h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="MainMenuEvaluator"/></th>
+                        <h:commandButton id="btnSave" value="Confirm" styleClass="buttonStyle" action="#{workloadClaimApplication.addWorkloadClaim()}"/></th>
                     </tr>    
                 </table>   
             </h:form>

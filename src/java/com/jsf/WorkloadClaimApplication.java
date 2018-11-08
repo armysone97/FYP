@@ -33,6 +33,12 @@ public class WorkloadClaimApplication {
     private String result;
 
     private int counterReset;
+    
+    //for add workload claim
+    private int workloadClaimCount;
+    private String wcID;
+    private String role_ID;
+    private String rdID;
 
     public WorkloadClaimApplication() {
         this.counterReset = 0;
@@ -225,6 +231,93 @@ public class WorkloadClaimApplication {
         totalClaim = (Double.valueOf(hourlyRate))*(Double.valueOf(workHours));
         
         result = String.format("%.2f", totalClaim);
+    }
+    
+    //save workload claim
+    public void addWorkloadClaim(){
+        
+        //count workload claim index
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM workloadclaim");
+
+            while (rs.next()) {
+                workloadClaimCount = rs.getInt("COUNT(*)");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        workloadClaimCount = workloadClaimCount + 1;
+        wcID = "WC" + Integer.toString(workloadClaimCount);
+        
+        //retrieve role ID
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT roleID FROM roles WHERE roleType = ?");
+            st.setString(1, role);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                role_ID = rs.getString("roleID");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        //retrieve rdID
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT RD_ID FROM evaluatorroledetails WHERE staffID = ? AND roleID = ?");
+            st.setString(1, staffID);
+            st.setString(2, role_ID);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                rdID = rs.getString("RD_ID");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        //insert worload claim
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO workloadclaim (WC_ID, totalWorkload, totalWorkloadClaim, year, RD_ID) VALUES (?, ?, ?, ?, ?)");
+
+            statement.setString(1, wcID);
+            statement.setDouble(2, Double.valueOf(workHours));
+            statement.setDouble(3, Double.valueOf(result));
+            statement.setInt(4, year);
+            statement.setString(5, rdID);
+
+            statement.executeUpdate();
+            statement.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
     }
 
     //navigation bar purpose

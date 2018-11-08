@@ -25,17 +25,25 @@ public class MileageClaimApplication {
     private String staffID;
     private String name;
     private String role;
-    private double rate;
+    private String rate;
     private double toll;
     private double parking;
     private double accomodation;
     private double mileage;
     private double totalClaim;
+    private int year;
+    private String result;
     
     private int counterReset;
+    
+    //for add mileage claim
+    private int mileageClaimCount;
+    private String mcID;
 
     public MileageClaimApplication() {
         this.counterReset = 0;
+        this.year = 2018;
+        this.result = "0.0";
     }
 
     public String getStaffID() {
@@ -62,11 +70,11 @@ public class MileageClaimApplication {
         this.role = role;
     }
 
-    public double getRate() {
+    public String getRate() {
         return rate;
     }
 
-    public void setRate(double rate) {
+    public void setRate(String rate) {
         this.rate = rate;
     }
 
@@ -109,6 +117,14 @@ public class MileageClaimApplication {
     public void setTotalClaim(double totalClaim) {
         this.totalClaim = totalClaim;
     }
+
+    public String getResult() {
+        return result;
+    }
+
+    public void setResult(String result) {
+        this.result = result;
+    }
     
     public void defaultStaffList() {
         switch (Login.getGlobalCounter()) {
@@ -125,7 +141,7 @@ public class MileageClaimApplication {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT name, campus, faculty FROM evaluatorpersonaldetails WHERE staffID = ?");
+            PreparedStatement st = con.prepareStatement("SELECT name FROM evaluatorpersonaldetails WHERE staffID = ?");
             st.setString(1, staffID);
             ResultSet rs = st.executeQuery();
 
@@ -140,8 +156,84 @@ public class MileageClaimApplication {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+        
+        //retrieve mileage rate
+         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT mileageRate FROM rate WHERE year = ?");
+            st.setInt(1, year);
+            ResultSet rs = st.executeQuery();
 
+            while (rs.next()) {
+                setRate(String.format("%.2f", rs.getDouble("mileageRate")));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
     }
+     
+     //calculate total mileage claim
+     public void calculateMileageClaim(){
+         
+        totalClaim = ((Double.valueOf(rate))*mileage)+toll+parking+accomodation;
+        
+        result = String.format("%.2f", totalClaim);
+     }
+     
+     //add mileage claim
+     public void addMileageClaim(){
+         
+         //count mileage claim index
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM mileageclaimprocessing");
+
+            while (rs.next()) {
+                mileageClaimCount = rs.getInt("COUNT(*)");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        mileageClaimCount = mileageClaimCount + 1;
+        mcID = "MC" + Integer.toString(mileageClaimCount);
+        
+        //insert mileage claim
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO mileageclaimprocessing (MC_ID, toll, parking, accomodation, mileage, totalMileageClaim, year, staffID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+
+            statement.setString(1, mcID);
+            statement.setDouble(2, toll);
+            statement.setDouble(3, parking);
+            statement.setDouble(4, accomodation);
+            statement.setDouble(5, mileage);
+            statement.setDouble(6, totalClaim);
+            statement.setInt(7, year);
+            statement.setString(8, staffID);
+
+            statement.executeUpdate();
+            statement.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+     }
     
     //navigation bar purpose
     public String goToNextPage() {
@@ -168,12 +260,14 @@ public class MileageClaimApplication {
 //        staffID = null;
 //        name = null;
         role = null;
-        rate = 0;
+        rate = "0.0";
         toll = 0;
         parking = 0;
         accomodation = 0;
         mileage = 0;
         totalClaim = 0;
+        year = 2018;
+        result = "0.0";
 
         counterReset = 0;
     }

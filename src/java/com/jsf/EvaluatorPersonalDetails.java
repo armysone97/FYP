@@ -23,7 +23,7 @@ public class EvaluatorPersonalDetails {
     private Connection con;
     private String evaName;
     private String staffID;
-    private String contactNum;
+    private int contactNum;
     private String branch;
     private String faculty;
     private String role;
@@ -56,11 +56,11 @@ public class EvaluatorPersonalDetails {
         this.staffID = staffID;
     }
 
-    public String getContactNum() {
+    public int getContactNum() {
         return contactNum;
     }
 
-    public void setContactNum(String contactNum) {
+    public void setContactNum(int contactNum) {
         this.contactNum = contactNum;
     }
 
@@ -108,17 +108,17 @@ public class EvaluatorPersonalDetails {
     public void evaluatorData() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO evaluatorpersonaldetails (staffID, name, campus, faculty, contactNo, status, username, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 
             statement.setString(1, staffID);
             statement.setString(2, evaName);
             statement.setString(3, branch);
             statement.setString(4, faculty);
-            statement.setString(5, contactNum);
+            statement.setInt(5, contactNum);
             statement.setString(6, status);
             statement.setString(7, staffID);
-            statement.setString(8, contactNum);
+            statement.setString(8, String.valueOf(contactNum));
 
             statement.executeUpdate();
             statement.close();
@@ -136,7 +136,7 @@ public class EvaluatorPersonalDetails {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT * FROM roles");
 
@@ -165,7 +165,7 @@ public class EvaluatorPersonalDetails {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM evaluatorroledetails");
 
@@ -192,7 +192,7 @@ public class EvaluatorPersonalDetails {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO evaluatorroledetails (RD_ID, roleID, staffID) VALUES (?, ?, ?)");
 
             statement.setString(1, rdID);
@@ -213,7 +213,7 @@ public class EvaluatorPersonalDetails {
     public void countWorkloadLimit() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT COUNT(*) FROM workloadlimit");
 
@@ -233,12 +233,15 @@ public class EvaluatorPersonalDetails {
     }
 
     public void addWorkloadLimit(Integer workloadLimitCount) {
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        
         workloadLimitCount = workloadLimitCount + 1;
         wlID = "WL" + Integer.toString(workloadLimitCount);
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO workloadlimit (WL_ID, workloadLimit, ttlWorkloadAssigned, year, staffID) VALUES (?, ?, ?, ?, ?)");
 
             statement.setString(1, wlID);
@@ -254,6 +257,10 @@ public class EvaluatorPersonalDetails {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+        
+        context.addMessage(null, new FacesMessage("Added successful!"));
+        
+        reset();
     }
 
     //navigation bar purpose
@@ -279,7 +286,7 @@ public class EvaluatorPersonalDetails {
         //set default value
         evaName = null;
         staffID = null;
-        contactNum = null;
+        contactNum = 0;
         branch = "Kuala Lumpur Main Campus";
         faculty = "FOCS";
         role = null;

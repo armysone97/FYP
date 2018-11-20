@@ -150,3 +150,12 @@ and open the template in the editor.
     width : 100px;
     font-family: Georgia;
 }
+
+/*RateSetting*/
+.txtboxSmallestSpecialStyle {
+    font-size: 18pt;
+    height: 35px;
+    width : 70px;
+    text-align: center;
+    font-family: Georgia;
+}

@@ -33,7 +33,7 @@
                         </p:submenu>
                     </p:submenu>
 
-                  <p:submenu label="SCHOOL MANAGEMENT">
+                    <p:submenu label="SCHOOL MANAGEMENT">
                         <p:submenu label="Maintain School">
                             <p:menuitem title="Click to redirect to Add New School page" value="Add New School" action="#{maintainSchoolDetails.goToNextPage()}" />
                             <p:menuitem title="Click to redirect to View or Edit School page" value="View/Edit School" action="#{maintainSchoolMenu.goToNextPage()}" />
@@ -65,15 +65,19 @@
                     </tr>   
 
                     <tr>
-                        <th align="left">
-                            <h:outputText id="lblYear1" value="Commerce Year of STEM CS: "  styleClass="lblStyle"/>
+                        <th colspan="2" align="left">
+                            <h:outputText id="lblYear1" value="Commencement Year of STEM CS: "  styleClass="lblStyle"/>
 
-                            <h:selectOneMenu title="Select commercial year" styleClass="ddlStyle" value="#{yearOfStudySetting.yearComm}">
+                            <h:selectOneMenu title="Select STEM CS commencement year" styleClass="ddlStyle" value="#{yearOfStudySetting.yearComm}">
                                 <f:selectItems value="#{yearOfStudySetting.get_year()}" /> 
                             </h:selectOneMenu>  
                         </th>
+                    </tr>  
 
-                        <th align="right"><h:commandButton title="Click to show CS level" id="btnShow" value="Show" styleClass="buttonStyle" action="#{yearOfStudySetting.yearOfStudyCSMapList()}"/></th>
+                    <tr>
+                        <th colspan="2" align="right">
+                            <h:commandButton title="Click to show CS level" id="btnShow" value="Show" styleClass="buttonStyle" action="#{yearOfStudySetting.yearOfStudyCSMapList()}"/>
+                        </th>
                     </tr>  
 
                     <tr>

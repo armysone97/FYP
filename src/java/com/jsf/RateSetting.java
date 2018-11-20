@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +33,7 @@ public class RateSetting {
     private Connection con;
 
     private int numSampleAss, year;
-    private double mtHourlyRate, evHourlyRate, mileageRate;
+    private String mtHourlyRate, evHourlyRate, mileageRate;
 
     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
 
@@ -43,6 +45,9 @@ public class RateSetting {
         this.year = 2018;
         this.disabledTxt = true;
         this.counterReset = 0;
+        this.mtHourlyRate = "0.00";
+        this.evHourlyRate = "0.00";
+        this.mileageRate = "0.00";
     }
 
     public Boolean getDisabledTxt() {
@@ -61,19 +66,19 @@ public class RateSetting {
         this.numSampleAss = numSampleAss;
     }
 
-    public double getMtHourlyRate() {
+    public String getMtHourlyRate() {
         return mtHourlyRate;
     }
 
-    public void setMtHourlyRate(double mtHourlyRate) {
+    public void setMtHourlyRate(String mtHourlyRate) {
         this.mtHourlyRate = mtHourlyRate;
     }
 
-    public double getEvHourlyRate() {
+    public String getEvHourlyRate() {
         return evHourlyRate;
     }
 
-    public void setEvHourlyRate(double evHourlyRate) {
+    public void setEvHourlyRate(String evHourlyRate) {
         this.evHourlyRate = evHourlyRate;
     }
 
@@ -85,11 +90,11 @@ public class RateSetting {
         this.year = year;
     }
 
-    public double getMileageRate() {
+    public String getMileageRate() {
         return mileageRate;
     }
 
-    public void setMileageRate(double mileageRate) {
+    public void setMileageRate(String mileageRate) {
         this.mileageRate = mileageRate;
     }
 
@@ -245,6 +250,9 @@ public class RateSetting {
             disabledTxt = true;
         }
 
+//        NumberFormat formatter = new DecimalFormat("#0.00");
+//        System.out.println(formatter.format(4.0));
+
         //get data from db
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -255,9 +263,10 @@ public class RateSetting {
 
             while (rs.next()) {
                 numSampleAss = rs.getInt("numSampleAss");
-                mtHourlyRate = rs.getDouble("mtHourlyRate");
-                evHourlyRate = rs.getDouble("evHourlyRate");
-                mileageRate = rs.getDouble("mileageRate");
+//                mtHourlyRate = formatter.format(rs.getDouble("mtHourlyRate"));
+                mtHourlyRate = String.format("%.2f", rs.getDouble("mtHourlyRate"));
+                evHourlyRate = String.format("%.2f", rs.getDouble("evHourlyRate"));
+                mileageRate = String.format("%.2f", rs.getDouble("mileageRate"));
             }
 
             rs.close();
@@ -304,8 +313,8 @@ public class RateSetting {
         String rtID = "";
 
         int verifyCounter = 0;
-        
-        if (numSampleAss == 0 || mtHourlyRate == 0 || evHourlyRate == 0 || mileageRate == 0) {
+
+        if (numSampleAss == 0 || Double.valueOf(mtHourlyRate) == 0 || Double.valueOf(evHourlyRate) == 0 || Double.valueOf(mileageRate) == 0) {
             context.addMessage(null, new FacesMessage("Please fill in whole form!"));
         } else {
             try {
@@ -320,9 +329,9 @@ public class RateSetting {
 
                 statement.setString(1, rtID);
                 statement.setInt(2, numSampleAss);
-                statement.setDouble(3, mtHourlyRate);
-                statement.setDouble(4, evHourlyRate);
-                statement.setDouble(5, mileageRate);
+                statement.setDouble(3, Double.valueOf(mtHourlyRate));
+                statement.setDouble(4, Double.valueOf(evHourlyRate));
+                statement.setDouble(5, Double.valueOf(mileageRate));
                 statement.setInt(6, year);
 
                 statement.executeUpdate();
@@ -372,9 +381,9 @@ public class RateSetting {
         //set default value
         year = 2018;
         numSampleAss = 0;
-        mtHourlyRate = 0;
-        evHourlyRate = 0;
-        mileageRate = 0;
+        mtHourlyRate = "0.00";
+        evHourlyRate = "0.00";
+        mileageRate = "0.00";
 
         counterReset = 0;
 

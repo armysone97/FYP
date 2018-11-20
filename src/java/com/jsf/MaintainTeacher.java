@@ -1685,7 +1685,6 @@ public class MaintainTeacher {
         //3. go to schoolcsmap find csID, and go cs table find csName 
         //4. if not, then same as below
         //extra: if commercial year for a school is 2018. then go add new teacher, cs level same as 4.
-        
         String thID = matchTeacherID1(); //1. find teacher id based on teacher name
         int scListLength = countSchoolCSMapID(thID); //2. declare school cs map id array length
         String[] scList = new String[scListLength]; //3. declare school cs map id array
@@ -1922,7 +1921,7 @@ public class MaintainTeacher {
 
         return scID;
     }
-    
+
     public String matchTeacherID1() {
 
         String thID = "";
@@ -1973,7 +1972,32 @@ public class MaintainTeacher {
         return thID;
     }
 
-    public int matchNumSampleAss() {
+//    public int matchStudNum(String scID, String thID) {
+//        int studNum = 0;
+//
+//        try {
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+//            PreparedStatement st = con.prepareStatement("SELECT enrolStudNum FROM teachercsmap WHERE schoolCSMapID = ? AND teacherID = ?");
+//            st.setString(1, scID);
+//            st.setString(2, thID);
+//            ResultSet rs = st.executeQuery();
+//
+//            while (rs.next()) {
+//                studNum = rs.getInt("enrolStudNum");
+//            }
+//
+//            st.close();
+//            con.close();
+//
+//        } catch (Exception ex) {
+//            System.out.println("Error: " + ex);
+//        }
+//
+//        return studNum;
+//    }
+
+    public int matchNumSampleAss(String scID, String newTeacherID) {
 
         int num = 0;
 
@@ -1995,6 +2019,15 @@ public class MaintainTeacher {
             System.out.println("Error: " + ex);
         }
 
+//        int studEnrol = matchStudNum(scID, newTeacherID);
+
+        if (studNum < num) {
+            num = studNum;
+        }
+//         else {
+//            num = numSampleAssConstant;
+//        }
+
         return num;
 
     }
@@ -2006,7 +2039,7 @@ public class MaintainTeacher {
         tcID = autoGenerateTeacherCSMapID();
         scID = matchSchoolCSMapID();
         thID = matchTeacherID();
-        numSampleAss = matchNumSampleAss();
+        numSampleAss = matchNumSampleAss(scID, thID);
 
 //        updateTeacher(thID);
         //   tmp = "tcID : " + tcID + " scID : " + scID + " thID : " + thID + " numSampleAss : " + numSampleAss;
@@ -2110,17 +2143,16 @@ public class MaintainTeacher {
             System.out.println("Error: " + ex);
         }
 
-        switch (verifyCounter) {
-            case 0:
-                context.addMessage(null, new FacesMessage("Total Enrolment student for school " + school + " updated not successful!"));
-                break;
-            case 1:
-                context.addMessage(null, new FacesMessage("Total Enrolment student for school " + school + " updated successful!"));
-//                disabledTxt = true;
-//                disabledStatus = true;
-                break;
-        }
-
+//        switch (verifyCounter) {
+//            case 0:
+//                context.addMessage(null, new FacesMessage("Total Enrolment student for school " + school + " updated not successful!"));
+//                break;
+//            case 1:
+//                context.addMessage(null, new FacesMessage("Total Enrolment student for school " + school + " updated successful!"));
+////                disabledTxt = true;
+////                disabledStatus = true;
+//                break;
+//        }
         // temp = "lateststud: " + latestStud + " studNum: " + studNum + " originalStud: " + originalStud + " scID: " + scID;
     }
 
@@ -2266,7 +2298,7 @@ public class MaintainTeacher {
         tcID = autoGenerateTeacherCSMapID();
         scID = matchSchoolCSMapID();
         //   thID = matchTeacherID();
-        numSampleAss = matchNumSampleAss();
+        numSampleAss = matchNumSampleAss(scID, newTeacherID);
 
         //   tmp = "tcID : " + tcID + " scID : " + scID + " thID : " + thID + " numSampleAss : " + numSampleAss;
         //insert teachercsmap
@@ -2295,10 +2327,10 @@ public class MaintainTeacher {
 
         switch (verifyCounter) {
             case 0:
-                context.addMessage(null, new FacesMessage("Add New Teacher CS Map for school " + newTeacherSchoolName + " not successful!"));
+//                context.addMessage(null, new FacesMessage("Add New Teacher CS Map for school " + newTeacherSchoolName + " not successful!"));
                 break;
             case 1:
-                context.addMessage(null, new FacesMessage("Add New Teacher CS Map for school " + newTeacherSchoolName + " successful!"));
+//                context.addMessage(null, new FacesMessage("Add New Teacher CS Map for school " + newTeacherSchoolName + " successful!"));
 
                 disabledButton = false;
                 disabledNewTeacher = true;

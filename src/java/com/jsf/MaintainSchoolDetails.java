@@ -693,14 +693,14 @@ public class MaintainSchoolDetails {
             }
         }
 
-        switch (verifyCounter) {
-            case 0:
-                context.addMessage(null, new FacesMessage("School CS Map for school " + name + " automatic added not successful!"));
-                break;
-            case 1:
-                context.addMessage(null, new FacesMessage("School CS Map for school " + name + " automatic added successful!"));
-                break;
-        }
+//        switch (verifyCounter) {
+//            case 0:
+//                context.addMessage(null, new FacesMessage("School CS Map for school " + name + " automatic added not successful!"));
+//                break;
+//            case 1:
+//                context.addMessage(null, new FacesMessage("School CS Map for school " + name + " automatic added successful!"));
+//                break;
+//        }
     }
 
     //change button action when click the button

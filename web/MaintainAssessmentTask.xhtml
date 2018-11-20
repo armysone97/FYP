@@ -145,7 +145,7 @@
 
                     <tr>
                         <th align="center"><h:inputText id="txtEnrol1" title="Enter student enrolment number" disabled="#{maintainAssessmentTask.disabledtxt}"  value="#{maintainAssessmentTask.studEnrol}" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
-                        <th align="center"><h:inputText id="txtAss1" title="Enter number sample assessment" disabled="#{maintainAssessmentTask.disabledNumSampleAss}" value="#{maintainAssessmentTask.numSampleAss}" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
+                        <th align="center"><h:inputText id="txtAss1" title="Enter number sample assessment" disabled="#{maintainAssessmentTask.disabledtxt}" value="#{maintainAssessmentTask.numSampleAss}" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
                     </tr> 
                 </table>
 
@@ -157,8 +157,8 @@
                     </tr>
 
                     <tr>
-                        <th colspan="2" align="left"> <h:commandButton id="btnResetxx" title="Click to reset" value="Reset" action="#{maintainAssessmentTask.reset()}" styleClass="buttonStyle" disabled="#{maintainAssessmentTask.disabledNumSampleAss}"/></th>
-                        <th align="right"><h:commandButton id="btnConfirm" title="Click to confirm" value="Confirm" styleClass="buttonStyle" action="#{maintainAssessmentTask.updateNumSampleAss()}" disabled="#{maintainAssessmentTask.disabledNumSampleAss}"/></th>
+                        <th colspan="3" align="left"> <h:commandButton id="btnResetxx" title="Click to reset" value="Reset" action="#{maintainAssessmentTask.reset()}" styleClass="buttonStyle" disabled="#{maintainAssessmentTask.disabledNumSampleAss}"/></th>
+                        <!--<th align="right"><h:commandButton id="btnConfirm" title="Click to confirm" value="Confirm" styleClass="buttonStyle" action="#{maintainAssessmentTask.updateNumSampleAss()}" disabled="#{maintainAssessmentTask.disabledNumSampleAss}"/></th>-->
                     </tr>  
                 </table>   
             </h:form>

@@ -38,6 +38,7 @@ public class MaintainTeacher {
     private List<Integer> year_list = new ArrayList<>(); //year list that retrieve from db
     private List<String> teacher_list = new ArrayList<>();
     private List<String> newTeacherID_list = new ArrayList<>();
+    private List<String> newTeacherIDName_list = new ArrayList<>();
     private List<String> newCSLevel_list = new ArrayList<>();
 
     private int studNum, year;
@@ -49,12 +50,12 @@ public class MaintainTeacher {
 
     private String temp;
 
-    private String newTeacherID, newTeacherName, newTeacherStatus, newTeacherCSLevel, newTeacherSchoolState, newTeacherSchoolName;
+    private String newTeacherID, newTeacherIDName, newTeacherName, newTeacherStatus, newTeacherCSLevel, newTeacherSchoolState, newTeacherSchoolName;
     private int newTeacherYear, newTeacherStudNum;
 
     private int newCount;
 
-    private Boolean disabledButton, disabledNewTeacher, disabledNewTeacherID, disabledNewTeacherName;
+    private Boolean disabledButton, disabledNewTeacher, disabledNewTeacherID, disabledNewTeacherIDName, disabledNewTeacherName;
 
     private int counterReset; //growl purpose
 
@@ -72,8 +73,28 @@ public class MaintainTeacher {
         this.disabledNewTeacher = true;
         this.disabledNewTeacherID = true;
         this.disabledNewTeacherName = true;
+        this.disabledNewTeacherIDName = true;
+        this.newTeacherID = null;
+        this.newTeacherName = null;
+        this.newTeacherIDName = null;
         this.newCount = 0;
         this.counterReset = 0;
+    }
+
+    public String getNewTeacherIDName() {
+        return newTeacherIDName;
+    }
+
+    public void setNewTeacherIDName(String newTeacherIDName) {
+        this.newTeacherIDName = newTeacherIDName;
+    }
+
+    public Boolean getDisabledNewTeacherIDName() {
+        return disabledNewTeacherIDName;
+    }
+
+    public void setDisabledNewTeacherIDName(Boolean disabledNewTeacherIDName) {
+        this.disabledNewTeacherIDName = disabledNewTeacherIDName;
     }
 
     public Boolean getDisabledNewTeacherID() {
@@ -482,8 +503,8 @@ public class MaintainTeacher {
         return teacherIDListDuplicate;
     }
 
-    public List<String> get_newTeacherID() {
-        newTeacherID_list.clear();
+    public List<String> get_newTeacherIDName() { //select
+        newTeacherIDName_list.clear();
 
 //        newTeacherSchoolName = "schoolxx: " + newCount;
         switch (newCount) {
@@ -532,10 +553,82 @@ public class MaintainTeacher {
 
                 Arrays.sort(finalTeacherID);
 
+                String teacherID = "",
+                 teacherName = "";
                 for (int i = 0; i < finalTeacherID.length; i++) {
-                    newTeacherID_list.add(finalTeacherID[i]);
+                    teacherID = finalTeacherID[i];
+                    teacherName = retriveTeacherName(teacherID);
+                    newTeacherIDName_list.add(teacherID + " - " + teacherName);
                 }
 
+                break;
+            case 2: //add new
+//                  newTeacherName = "teacherName";
+//                newTeacherSchoolName = "schoolyy";
+//                newTeacherIDName_list.add(autoGenerateTeacherID());
+                newTeacherIDName_list.add("---");
+                break;
+        }
+        return newTeacherIDName_list;
+
+    }
+
+    public List<String> get_newTeacherID() { //add new
+        newTeacherID_list.clear();
+
+//        newTeacherSchoolName = "schoolxx: " + newCount;
+        switch (newCount) {
+            case 1: //select
+//                int allTeacherIDListCount = retrieveAllTeacherIDCount();
+//                String[] allTeacherIDListDuplicate = new String[allTeacherIDListCount];
+//
+//                allTeacherIDListDuplicate = showAllTeacher(allTeacherIDListCount); //get all teacher
+//
+//                int teacherIDNotInSCCount = retrieveTeacherIDNotInSCCount(allTeacherIDListDuplicate);
+//                String[] teacherIDNotInSC = new String[teacherIDNotInSCCount];
+//
+//                teacherIDNotInSC = showTeacherNotInSC(allTeacherIDListDuplicate, teacherIDNotInSCCount); //get teacher which not in db
+//
+//                for (int i = 0; i < teacherIDNotInSC.length; i++) {
+//
+////                    newTeacherID_list.add(teacherIDNotInSC[i]);
+//                }
+//
+//                int teacherIDForSchoolCount = retrieveTeacherIDFromSchoolLength();
+//
+//                int finalTeacherIDCount = teacherIDNotInSCCount + teacherIDForSchoolCount;
+//
+//                String[] finalTeacherID = new String[finalTeacherIDCount];
+//                String[] teacherIDFromSchool = new String[teacherIDForSchoolCount];
+//
+//                teacherIDFromSchool = retrieveTeacherIDFromSchool();
+//
+//                Arrays.sort(teacherIDNotInSC);
+//                for (int i = 0; i < teacherIDNotInSC.length; i++) {
+//
+//                    //        String teacherName = retriveTeacherName(teacherIDNotInSC[i]);
+//                    finalTeacherID[i] = teacherIDNotInSC[i];
+////                    newTeacherID_list.add(teacherIDNotInSC[i]);
+////                    newTeacherID_list.add(finalTeacherID[i]);
+//                }
+//
+//                int teacherIDCounter = 0;
+//                teacherIDCounter = teacherIDNotInSC.length;
+//
+////                newTeacherSchoolName = teacherIDFromSchool.length + " : " + teacherIDForSchoolCount + " schoolzz: " + teacherIDCounter + " : " + finalTeacherIDCount;
+//                for (int i = 0; i < teacherIDForSchoolCount; i++) {
+//                    finalTeacherID[teacherIDCounter] = teacherIDFromSchool[i];
+//                    teacherIDCounter++;
+//                }
+//
+//                Arrays.sort(finalTeacherID);
+//
+//                for (int i = 0; i < finalTeacherID.length; i++) {
+//                    newTeacherID_list.add(finalTeacherID[i]);
+//                }
+
+                newTeacherID_list.add("---");
+//
                 break;
             case 2: //add new
 //                  newTeacherName = "teacherName";
@@ -1652,14 +1745,15 @@ public class MaintainTeacher {
 
     }
 
-    public int matchStudNum(String scID) {
+    public int matchStudNum(String scID, String thID) {
         int studNum = 0;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT enrolStudNum FROM teachercsmap WHERE schoolCSMapID = ?");
+            PreparedStatement st = con.prepareStatement("SELECT enrolStudNum FROM teachercsmap WHERE schoolCSMapID = ? AND teacherID = ?");
             st.setString(1, scID);
+            st.setString(2, thID);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -1749,7 +1843,8 @@ public class MaintainTeacher {
                         CSLevel_list.add(csName);
 
                         if (cslevel.equals(csName)) {
-                            studNum = matchStudNum(scList[i]);
+//                            String thID = matchTeacherID();
+                            studNum = matchStudNum(scList[i], thID);
 
                             disabledTxt = true;
                         }
@@ -1996,7 +2091,6 @@ public class MaintainTeacher {
 //
 //        return studNum;
 //    }
-
     public int matchNumSampleAss(String scID, String newTeacherID) {
 
         int num = 0;
@@ -2020,9 +2114,8 @@ public class MaintainTeacher {
         }
 
 //        int studEnrol = matchStudNum(scID, newTeacherID);
-
-        if (studNum < num) {
-            num = studNum;
+        if (newTeacherStudNum < num) {
+            num = newTeacherStudNum;
         }
 //         else {
 //            num = numSampleAssConstant;
@@ -2198,10 +2291,13 @@ public class MaintainTeacher {
         newTeacherSchoolName = school;
 //        newTeacherCSLevel = cslevel;
 
+        newTeacherID = null;
+        newTeacherName = null;
         disabledButton = true;
         disabledNewTeacher = false;
-        disabledNewTeacherID = false;
+        disabledNewTeacherID = true;
         disabledNewTeacherName = true;
+        disabledNewTeacherIDName = false;
         disabledTxt = true;
         disabledDdl = true;
 
@@ -2218,11 +2314,14 @@ public class MaintainTeacher {
         newTeacherSchoolState = state;
         newTeacherSchoolName = school;
 //        newTeacherCSLevel = cslevel;
+        newTeacherName = null;
+        newTeacherIDName = null;
 
         disabledButton = true;
         disabledNewTeacher = false;
         disabledNewTeacherID = true;
         disabledNewTeacherName = false;
+        disabledNewTeacherIDName = true;
         disabledTxt = true;
         disabledDdl = true;
 
@@ -2238,8 +2337,15 @@ public class MaintainTeacher {
         // newCount = 0;
         //   newTeacherName = "newTeacherID: " + newTeacherID + " newTeacherName: " + ttt + " newTeacherStatus: " + newTeacherStatus + " newTeacherYear: " + newTeacherYear;
 //        newTeacherStudNum = 65412;
+//        newTeacherNameID;
         switch (newCount) {
             case 1: //select
+
+                //split method
+                String[] parts = newTeacherIDName.split(" - ");
+                newTeacherID = parts[0];
+                newTeacherName = parts[1];
+
                 if (newTeacherName.isEmpty() || newTeacherStudNum == 0) {
                     context.addMessage(null, new FacesMessage("Please fill in whole form!"));
                 } else {
@@ -2276,7 +2382,7 @@ public class MaintainTeacher {
                         case 0:
                             break;
                         case 1:
-                            context.addMessage(null, new FacesMessage("Add New Teacher name " + newTeacherName + " for school " + newTeacherSchoolName + " successful!"));
+//                            context.addMessage(null, new FacesMessage("Add New Teacher name " + newTeacherName + " for school " + newTeacherSchoolName + " successful!"));
                             addTeacherCSMap();
                     }
                     break;
@@ -2327,10 +2433,10 @@ public class MaintainTeacher {
 
         switch (verifyCounter) {
             case 0:
-//                context.addMessage(null, new FacesMessage("Add New Teacher CS Map for school " + newTeacherSchoolName + " not successful!"));
+                context.addMessage(null, new FacesMessage("Add New Teacher CS Map for school " + newTeacherSchoolName + " not successful!"));
                 break;
             case 1:
-//                context.addMessage(null, new FacesMessage("Add New Teacher CS Map for school " + newTeacherSchoolName + " successful!"));
+                context.addMessage(null, new FacesMessage("Add New Teacher CS Map for school " + newTeacherSchoolName + " successful!"));
 
                 disabledButton = false;
                 disabledNewTeacher = true;
@@ -2338,9 +2444,11 @@ public class MaintainTeacher {
                 disabledDdl = false;
                 disabledNewTeacherID = true;
                 disabledNewTeacherName = true;
+                disabledNewTeacherIDName = true;
 
                 newTeacherID = null;
                 newTeacherName = null;
+                newTeacherIDName = null;
                 newTeacherStatus = null;
                 newTeacherCSLevel = null;
                 newTeacherSchoolState = null;
@@ -2390,6 +2498,7 @@ public class MaintainTeacher {
 
         newTeacherID = null;
         newTeacherName = null;
+        newTeacherIDName = null;
         newTeacherStatus = null;
         newTeacherCSLevel = null;
         newTeacherSchoolState = null;
@@ -2407,6 +2516,7 @@ public class MaintainTeacher {
         disabledNewTeacher = true;
         disabledNewTeacherID = true;
         disabledNewTeacherName = true;
+        disabledNewTeacherIDName = true;
     }
 
     //reset newTeacher
@@ -2417,6 +2527,7 @@ public class MaintainTeacher {
 
         newTeacherName = null;
         newTeacherStudNum = 0;
+
     }
 
 }

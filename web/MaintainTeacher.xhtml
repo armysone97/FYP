@@ -219,12 +219,22 @@
                             </th>
 
                             <td align="left" colspan="2">
-                                <h:selectOneMenu title="Select Teacher ID and Name" styleClass="ddlSpecialStyle" disabled="#{maintainTeacher.disabledNewTeacherIDName}" value="#{maintainTeacher.newTeacherIDName}">
+                                <h:selectOneMenu title="Select Teacher ID and Name" styleClass="ddlSpecialOneStyle" disabled="#{maintainTeacher.disabledNewTeacherIDName}" value="#{maintainTeacher.newTeacherIDName}">
                                     <f:selectItems value="#{maintainTeacher.get_newTeacherIDName()}" /> 
                                 </h:selectOneMenu>  
+                                
+                                &nbsp; &nbsp; &nbsp; <h:commandButton id="btnShowList88" title="Click to show CS Level" action="#{maintainTeacher.showTeacherName()}"  value="Show" styleClass="buttonShowStyle" disabled="#{maintainTeacher.disabledNewTeacherIDName}"/>
+                            
 
                             </td>   
-                        </tr>   
+                        </tr> 
+                        
+                        
+<!--                        <tr>
+                            <th></th>
+                            <th  align="left">
+                             </th> 
+                        </tr> -->
 
                         <tr>
                             <th align="left">
@@ -246,13 +256,7 @@
                                 <h:inputText id="txtNewTeacherName" title="Enter new teacher name" value="#{maintainTeacher.newTeacherName}" disabled="#{maintainTeacher.disabledNewTeacherName}" styleClass="txtboxSmallStyle" required="required" size="10"/>
                             </td>  
                         </tr>   
-
-<!--                        <tr>
-                            <th></th>
-                            <th align="left">
-                                <h:commandButton id="btnShowList88" title="Click to show teacher name" action="#{maintainTeacher.showTeacherName()}"  value="Show" styleClass="buttonShowStyle" disabled="#{maintainTeacher.disabledNewTeacherID}"/>
-                            </th> 
-                        </tr>  -->
+ 
                         <tr>
                             <th align="left">
                                 <h:outputText id="lblNewTeacherYear" value="Year : "  styleClass="lblStyle"/>

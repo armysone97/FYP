@@ -509,6 +509,7 @@ public class MaintainTeacher {
 //        newTeacherSchoolName = "schoolxx: " + newCount;
         switch (newCount) {
             case 1: //select
+            case 3: //select
                 int allTeacherIDListCount = retrieveAllTeacherIDCount();
                 String[] allTeacherIDListDuplicate = new String[allTeacherIDListCount];
 
@@ -579,6 +580,7 @@ public class MaintainTeacher {
 //        newTeacherSchoolName = "schoolxx: " + newCount;
         switch (newCount) {
             case 1: //select
+            case 3: //select
 //                int allTeacherIDListCount = retrieveAllTeacherIDCount();
 //                String[] allTeacherIDListDuplicate = new String[allTeacherIDListCount];
 //
@@ -627,7 +629,16 @@ public class MaintainTeacher {
 //                    newTeacherID_list.add(finalTeacherID[i]);
 //                }
 
+//               
+//                if (newTeacherIDName.isEmpty()) {
                 newTeacherID_list.add("---");
+//                newTeacherID_list.add(newTeacherIDName);
+//                } else {
+//                    String[] parts = newTeacherIDName.split(" - ");
+//                    newTeacherID = parts[0];
+//                    newTeacherName = parts[1];
+//                }
+
 //
                 break;
             case 2: //add new
@@ -672,6 +683,11 @@ public class MaintainTeacher {
         int count = 0;
 //        Boolean verifyTrue = false;
 
+        String[] parts = newTeacherIDName.split(" - ");
+        String newTeacherID1 = parts[0];
+        
+        
+
         for (int i = 0; i < schoolCSMapIDList.length; i++) {
 
             Boolean verifyTrue = false;
@@ -680,7 +696,7 @@ public class MaintainTeacher {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
                 PreparedStatement st = con.prepareStatement("SELECT schoolCSMapID FROM teachercsmap WHERE teacherID = ? AND schoolCSMapID = ?");
-                st.setString(1, newTeacherID);
+                st.setString(1, newTeacherID1);
                 st.setString(2, schoolCSMapIDList[i]);
                 ResultSet rs = st.executeQuery();
 
@@ -699,6 +715,9 @@ public class MaintainTeacher {
                 count++;
             }
         }
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+//        context.addMessage(null, new FacesMessage(count + " hhh: " + newTeacherID1));
 
         return count;
     }
@@ -735,34 +754,48 @@ public class MaintainTeacher {
         }
 
         switch (newCount) {
-            case 1: //select 
+            case 1: //select (before select teacherID and Name)
+                for (int i = 0; i < CSLevelIDList.length; i++) {
+                    newCSLevel_list.add(matchCSLevelName(CSLevelIDList[i]));
+                }
+                break;
+            case 3: //select (after select teacherID and Name)
 
 //        for (int i = 0; i < CSLevelIDList.length; i++) {
 //            newCSLevel_list.add(CSLevelIDList[i]);
 //        }
+                FacesContext context = FacesContext.getCurrentInstance();
+//                context.addMessage(null, new FacesMessage("xx : " + newTeacherIDName + " : yy"));
                 String schoolCSMapID = "";
                 int countSchoolCSMapID1 = countSchoolCSMapIDNew1(schoolCSMapIDList);
                 String[] schoolCSMapIDList1 = new String[countSchoolCSMapID1];
                 String[] CSLevelIDList1 = new String[countSchoolCSMapID1];
 
                 int tmp1 = 0;
+                
 //        Boolean verifyTrue = false;
+                String[] parts = newTeacherIDName.split(" - ");
+                String newTeacherID1 = parts[0];
+                
+//                 context.addMessage(null, new FacesMessage(newTeacherID1 + "zz : " + countSchoolCSMapID1 + " : yy"));
 
                 for (int i = 0; i < schoolCSMapIDList.length; i++) {
 
-                    Boolean verifyTrue = false;
+//                    context.addMessage(null, new FacesMessage("hhh"));
 
+                    Boolean verifyTrue = false;
                     try {
                         Class.forName("com.mysql.cj.jdbc.Driver");
                         con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
                         PreparedStatement st = con.prepareStatement("SELECT schoolCSMapID FROM teachercsmap WHERE teacherID = ? AND schoolCSMapID = ?");
-                        st.setString(1, newTeacherID);
+                        st.setString(1, newTeacherID1);
                         st.setString(2, schoolCSMapIDList[i]);
                         ResultSet rs = st.executeQuery();
 
                         while (rs.next()) {
 //                    schoolCSMapIDList1[tmp1] = rs.getString("schoolCSMapID");
 //                    tmp1++;
+//                            context.addMessage(null, new FacesMessage("mmm"));
                             verifyTrue = true;
                         }
 
@@ -776,19 +809,12 @@ public class MaintainTeacher {
                     if (!verifyTrue) {
                         schoolCSMapIDList1[tmp1] = schoolCSMapIDList[i];
                         CSLevelIDList1[tmp1] = CSLevelIDList[i];
+                        
+//                        context.addMessage(null, new FacesMessage("zz : " + schoolCSMapIDList1[tmp1] + " : yy"));
                         tmp1++;
                     }
                 }
 
-//        int tmpCount = 0;
-//        for (int i = 0; i < schoolCSMapIDList1.length; i++) {
-//            for (int j = 0; j < schoolCSMapIDList.length; j++) {
-//                if (!schoolCSMapIDList1[i].equals(schoolCSMapIDList[j])) {
-//                    tmpCount++;
-//                    break;
-//                }
-//            }
-//        }
                 for (int i = 0; i < CSLevelIDList1.length; i++) {
 
                     try {
@@ -809,20 +835,6 @@ public class MaintainTeacher {
                     }
                 }
 
-//            newCSLevel_list.add(CSLevelIDList1[i]);
-//        String[] finalSchoolCSMapIDList = new String[tmpCount];
-//        int tmpCount1 = 0;
-//
-//        for (int i = 0; i < schoolCSMapIDList.length; i++) {
-//            for (int j = 0; j < schoolCSMapIDList1.length; j++) {
-//                if (schoolCSMapIDList[i].equals(schoolCSMapIDList1[j])) {
-//                    finalSchoolCSMapIDList[tmpCount1] = schoolCSMapIDList[i];
-//                    tmpCount1++;
-//                    break;
-//                }
-//            }
-//        }
-//        newTeacherSchoolName = tmp1 + " : " + schoolCSMapIDList.length + " : " + tmp1 + " : " + newTeacherID;
                 break;
             case 2: //add
                 for (int i = 0; i < CSLevelIDList.length; i++) {
@@ -835,11 +847,17 @@ public class MaintainTeacher {
     }
 
     public void showTeacherName() {
-        String teacherName = retriveTeacherName(newTeacherID);
 
-        newTeacherName = teacherName;
+        newCount = 3;
 
-        String teacherStatus = retriveTeacherStatus(newTeacherID);
+        String[] parts = newTeacherIDName.split(" - ");
+        String newTeacherID1 = parts[0];
+        String newTeacherName1 = parts[1];
+
+//        String teacherName = retriveTeacherName(newTeacherID);
+//
+//        newTeacherName = teacherName;
+        String teacherStatus = retriveTeacherStatus(newTeacherID1);
 
         newTeacherStatus = teacherStatus;
 
@@ -2340,6 +2358,7 @@ public class MaintainTeacher {
 //        newTeacherNameID;
         switch (newCount) {
             case 1: //select
+            case 3: //select
 
                 //split method
                 String[] parts = newTeacherIDName.split(" - ");

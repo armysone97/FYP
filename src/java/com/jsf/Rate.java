@@ -22,15 +22,16 @@ public class Rate {
 
     private RateObject rateObj = null;
     private ArrayList rateList = null;
-     private Connection con;
-     
-       private Rate rateObj1 = null;
+    private Connection con;
 
-       private String rateID = "";
-      private int numSampleAss = 0;
+    private Rate rateObj1 = null;
 
-       public Rate() {
+    private String rateID = "";
+    private int numSampleAss = 0;
+
+    public Rate() {
     }
+
     public String getRateID() {
         return rateID;
     }
@@ -46,15 +47,14 @@ public class Rate {
     public void setNumSampleAss(int numSampleAss) {
         this.numSampleAss = numSampleAss;
     }
-   
 
     public ArrayList getRateList() {
-        
-         String[] rateIDList = new String[4];
-         int[] numSampleAssList = new int[4];
-         int tmp = 0;
-        
-         try {
+
+        String[] rateIDList = new String[4];
+        int[] numSampleAssList = new int[4];
+        int tmp = 0;
+
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();

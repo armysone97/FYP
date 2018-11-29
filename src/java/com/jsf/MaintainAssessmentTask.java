@@ -44,6 +44,7 @@ public class MaintainAssessmentTask {
 
     private int counterReset; //growl purpose
 
+    //datatable
     private String cslevelNew;
     private int numSampleAssNew, studEnrolNew;
     private ArrayList cslevelList;

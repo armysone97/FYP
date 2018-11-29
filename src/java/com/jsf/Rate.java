@@ -20,7 +20,7 @@ import javax.faces.bean.ManagedBean;
 
 public class Rate {
 
-    private RateObject rateObj = null;
+//    private RateObject rateObj = null;
     private ArrayList rateList = null;
     private Connection con;
 

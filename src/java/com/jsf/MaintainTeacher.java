@@ -2233,7 +2233,10 @@ public class MaintainTeacher {
         }
 
         //then original ttlstud add on with new ttlstud
-        latestStud = originalStud + studNum;
+        latestStud = originalStud + newTeacherStudNum;
+        
+//          context.addMessage(null, new FacesMessage(latestStud + " xxx " + originalStud + " ! " + newTeacherStudNum));
+//              
 
         //then update latest ttlstud inside schoolcsmap table
         try {
@@ -2474,6 +2477,7 @@ public class MaintainTeacher {
                 newTeacherSchoolName = null;
                 newTeacherYear = 0;
                 newTeacherStudNum = 0;
+                newCount = 0;
                 break;
         }
     }

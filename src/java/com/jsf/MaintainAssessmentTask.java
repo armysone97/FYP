@@ -1162,72 +1162,81 @@ public class MaintainAssessmentTask {
                     System.out.println("Error: " + ex);
                 }
             }
-            int csListLength = countCSID(scList); //2. declare school cs map id array length
-            String[] csList = new String[csListLength]; //3. declare cs id array
-            String csID = "", csName = "";
-            int tmp1 = 0;
 
-            status = matchStatus(thID);
-            
-            //1. use school cs map id array and year go find cs id
-            for (int i = 0; i < scList.length; i++) {
-                try {
-                    Class.forName("com.mysql.cj.jdbc.Driver");
-                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-                    PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM schoolcsmap WHERE schoolCSMapID = ? AND year = ?");
-                    st.setString(1, scList[i]);
-                    st.setInt(2, year);
-                    ResultSet rs = st.executeQuery();
+            if (verify) {
+                int csListLength = countCSID(scList); //2. declare school cs map id array length
+                String[] csList = new String[csListLength]; //3. declare cs id array
+                String csID = "", csName = "";
+                int tmp1 = 0;
 
-                    while (rs.next()) {
-                        csID = rs.getString("CSLevelID");
-                        csName = matchCSLevelName(csID);
+                status = matchStatus(thID);
 
-                        csList[tmp1] = csName;
-                        tmp1++;
+                //1. use school cs map id array and year go find cs id
+                for (int i = 0; i < scList.length; i++) {
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                        PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM schoolcsmap WHERE schoolCSMapID = ? AND year = ?");
+                        st.setString(1, scList[i]);
+                        st.setInt(2, year);
+                        ResultSet rs = st.executeQuery();
 
-                      
+                        while (rs.next()) {
+                            csID = rs.getString("CSLevelID");
+                            csName = matchCSLevelName(csID);
+
+                            csList[tmp1] = csName;
+                            tmp1++;
+
+                        }
+
+                        st.close();
+                        con.close();
+
+                    } catch (Exception ex) {
+                        System.out.println("Error: " + ex);
                     }
 
-                    st.close();
-                    con.close();
-
-                } catch (Exception ex) {
-                    System.out.println("Error: " + ex);
                 }
 
-            }
+                Arrays.sort(csList);//sorting array 
+                int numSampleAssConstant = 0;
+                int[] studEnrolList = new int[csListLength];
+                int[] numSampleAssList = new int[csListLength];
 
-            Arrays.sort(csList);//sorting array 
-            int numSampleAssConstant = 0;
-            int[] studEnrolList = new int[csListLength];
-            int[] numSampleAssList = new int[csListLength];
+                String scID = "";
 
-            String scID = "";
+                String csIDNew = "";
 
-            String csIDNew = "";
+                for (int i = 0; i < csList.length; i++) {
+                    csIDNew = matchCSLevelIDNew(csList[i]);
+                    scID = matchSchoolCSMapIDNew(csIDNew);
 
-            for (int i = 0; i < csList.length; i++) {
-                csIDNew = matchCSLevelIDNew(csList[i]);
-                scID = matchSchoolCSMapIDNew(csIDNew);
+                    studEnrolList[i] = matchStudNum(thID, scID);
+                    numSampleAssConstant = matchAssNum(thID, scID);
 
-                studEnrolList[i] = matchStudNum(thID, scID);
-                numSampleAssConstant = matchAssNum(thID, scID);
-
-                if (studEnrolList[i] < numSampleAssConstant) {
-                    numSampleAssList[i] = studEnrolList[i];
-                } else {
-                    numSampleAssList[i] = numSampleAssConstant;
+                    if (studEnrolList[i] < numSampleAssConstant) {
+                        numSampleAssList[i] = studEnrolList[i];
+                    } else {
+                        numSampleAssList[i] = numSampleAssConstant;
+                    }
                 }
-            }
 
-            cslevelList = new ArrayList();
+                cslevelList = new ArrayList();
 
-            for (int i = 0; i < csList.length; i++) {
+                for (int i = 0; i < csList.length; i++) {
+                    numSamAssObj = new MaintainAssessmentTask();
+                    numSamAssObj.setCslevelNew(csList[i]);
+                    numSamAssObj.setStudEnrolNew(studEnrolList[i]);
+                    numSamAssObj.setNumSampleAssNew(numSampleAssList[i]);
+                    cslevelList.add(numSamAssObj);
+                }
+            } else {
+                cslevelList = new ArrayList();
                 numSamAssObj = new MaintainAssessmentTask();
-                numSamAssObj.setCslevelNew(csList[i]);
-                numSamAssObj.setStudEnrolNew(studEnrolList[i]);
-                numSamAssObj.setNumSampleAssNew(numSampleAssList[i]);
+                numSamAssObj.setCslevelNew("CS Level");
+                numSamAssObj.setStudEnrolNew(0);
+                numSamAssObj.setNumSampleAssNew(0);
                 cslevelList.add(numSamAssObj);
             }
 

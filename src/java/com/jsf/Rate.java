@@ -10,13 +10,21 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 
 /**
  *
  * @author hsuhong1210
  */
 @ManagedBean
+//@ViewScoped
+@SessionScoped
 
 public class Rate {
 
@@ -29,7 +37,12 @@ public class Rate {
     private String rateID = "";
     private int numSampleAss = 0;
 
+    private String input, output;
+    private int year;
+
     public Rate() {
+//        this.output = "xxxxxx";
+//        this.input = "yyyyy";
     }
 
     public String getRateID() {
@@ -86,4 +99,57 @@ public class Rate {
 
     }
 
+    public String getInput() {
+        return input;
+    }
+
+    public void setInput(String input) {
+        this.input = input;
+    }
+
+    public String getOutput() {
+        return output;
+    }
+
+    public void setOutput(String output) {
+        this.output = output;
+
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
+    }
+    
+    public void yearChanged(){
+         output = "Hello, you selected " + year;
+    }
+
+    public void namedChanged() {
+//        output = "mjj";
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(input));
+        output = "Hello, you entered " + input;
+    }
+
+    public void damnit() {
+        output = "xx";
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(" hhh: "));
+    }
+
+//    public void namedChanged(ValueChangeEvent event){
+//        
+//        FacesContext context = FacesContext.getCurrentInstance();
+//        
+////        context.getViewRoot().set
+//        
+//        output = (String) event.getNewValue();
+//        
+//        context.renderResponse();
+//        
+//    }
 }

@@ -324,5 +324,9 @@ public class MaintainSchoolMenu {
 
 //        MaintainSchoolDetails.tryaa();
     }
+    
+    public void stateChanged(){
+        get_school();
+    }
 
 }

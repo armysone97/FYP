@@ -51,12 +51,16 @@ public class MaintainAssessmentTask {
     private MaintainAssessmentTask numSamAssObj = null;
 
     private int counterDataTable;
+    
+    //valuechangelistener purpose
+    private String schoolNameDefault;
 
     public MaintainAssessmentTask() {
-        this.state = "Pulau Pinang";
-        this.school = "SMJK Heng Yee";
+       this.state = "Pulau Pinang";
+        this.school = "SJK Air Itam";
         this.year = 2018;
-        this.teacher = "Teoh Kok Xing";
+        this.teacher = "Teoh Wei Ran";
+        this.schoolNameDefault = "SJK Air Itam";
         this.studEnrol = 0;
         this.numSampleAss = 0;
         this.disabledtxt = true;
@@ -266,6 +270,8 @@ public class MaintainAssessmentTask {
         FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         String tmp = "";
+        
+        int schoolNameDefaultCount = 0;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -275,7 +281,14 @@ public class MaintainAssessmentTask {
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
+                
                 school_list.add(rs.getString("schoolName"));
+                
+                //valuechangelistener purpose
+                if(schoolNameDefaultCount == 0){
+                    schoolNameDefault = rs.getString("schoolName");
+                    schoolNameDefaultCount++;
+                }
             }
 
             st.close();
@@ -1054,9 +1067,10 @@ public class MaintainAssessmentTask {
 
         //set default value
         state = "Pulau Pinang";
-        school = "SMJK Heng Yee";
+        school = "SJK Air Itam";
         year = 2018;
-        teacher = "Teoh Kok Xing";
+        teacher = "Teoh Wei Ran";
+        schoolNameDefault = "SJK Air Itam";
         studEnrol = 0;
         numSampleAss = 0;
         status = "Available";
@@ -1251,6 +1265,23 @@ public class MaintainAssessmentTask {
         }
 
         return cslevelList;
+    }
+    
+    //valuechangelistener purpose
+     public void stateChanged() {
+        get_school();
+        school = schoolNameDefault;
+        get_teacher();
+        get_year();
+    }
+
+    public void schoolChanged() {
+        get_teacher();
+        get_year();
+    }
+    
+    public void teacherChanged(){
+        get_year();
     }
 
 }

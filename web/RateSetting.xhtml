@@ -30,7 +30,7 @@
                         </p:submenu>
                     </p:submenu>
 
-                 <p:submenu label="SCHOOL MANAGEMENT">
+                    <p:submenu label="SCHOOL MANAGEMENT">
                         <p:submenu label="Maintain School">
                             <p:menuitem title="Click to redirect to Add New School page" value="Add New School" action="#{maintainSchoolDetails.goToNextPage()}" />
                             <p:menuitem title="Click to redirect to View or Edit School page" value="View/Edit School" action="#{maintainSchoolMenu.goToNextPage()}" />
@@ -57,6 +57,8 @@
 
                             <h:selectOneMenu title="Select year" styleClass="ddlStyle" value="#{rateSetting.year}">
                                 <f:selectItems value="#{rateSetting.get_year()}"  /> 
+                                <!--valuechangelistener-->
+                                <f:ajax listener="#{rateSetting.yearChanged()}" render="MaxNumSampleAss HourlyRateMasterTrainer HourlyRateEvaluator RateOfMileage btnReset btnConfirm"/>
                             </h:selectOneMenu>  
                             &nbsp;&nbsp;&nbsp;  <h:commandButton id="btnShow" value="Show" title="Click to show rate" styleClass="buttonStyle" action="#{rateSetting.settingList()}"/>
                         </th>
@@ -106,7 +108,7 @@
                             <h:outputText id="lblEvaluator" value="Evaluator"  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                             <h:outputText id="lblRM2" value="RM"  styleClass="lblStyle"/>  
+                            <h:outputText id="lblRM2" value="RM"  styleClass="lblStyle"/>  
                             <h:inputText id="HourlyRateEvaluator" title="Enter hourly rate for evaluator" value="#{rateSetting.evHourlyRate}" disabled="#{rateSetting.disabledTxt}"  styleClass="txtboxSmallestSpecialStyle" required="required" size="3"/>
                         </th>
                         <th align="left">
@@ -123,7 +125,7 @@
                             <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                             <h:outputText id="lblRM3" value="RM"  styleClass="lblStyle"/> 
+                            <h:outputText id="lblRM3" value="RM"  styleClass="lblStyle"/> 
                             <h:inputText id="RateOfMileage" title="Enter mileage rate"  value="#{rateSetting.mileageRate}" disabled="#{rateSetting.disabledTxt}"  styleClass="txtboxSmallestSpecialStyle" required="required" size="3"/>
                         </th>
                         <th align="left">

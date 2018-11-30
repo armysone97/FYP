@@ -809,7 +809,13 @@ public class YearOfStudySetting {
 
     }
 
-    public void main(String args[]) {
-
+    //valuechangelistener purpose
+    public void yearChanged(){
+        yearComm = 2018;
+        yearOfStudyCSMapList();
+    }
+    
+    public void yearCommChanged(){
+        yearOfStudyCSMapList();
     }
 }

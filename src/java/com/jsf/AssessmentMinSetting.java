@@ -44,12 +44,14 @@ public class AssessmentMinSetting {
 
     public AssessmentMinSetting() {
         this.year = 2018;
+        this.cslevel = "CS Level 1";
         this.disabledProject = true;
         this.disabledCollaboration = true;
         this.disabledPractical = true;
         this.disabledGroupwork = true;
         this.disabledReset = true;
         this.counterReset = 0;
+        assessmentList();
     }
 
     public Boolean getDisabledReset() {
@@ -700,6 +702,19 @@ public class AssessmentMinSetting {
         disabledPractical = true;
         disabledGroupwork = true;
         disabledReset = true;
+
+        assessmentList();
+    }
+
+    //valuechangelistener purpose
+    public void yearChanged() {
+        cslevel = "CS Level 1";
+        get_CSLevel();
+        assessmentList();
+    }
+
+    public void CSLevelChanged() {
+        assessmentList();
     }
 
 }

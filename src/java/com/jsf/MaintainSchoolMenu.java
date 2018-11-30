@@ -322,9 +322,9 @@ public class MaintainSchoolMenu {
 
         counterReset = 0;
 
-//        MaintainSchoolDetails.tryaa();
     }
     
+    //valuechangelistener purpose
     public void stateChanged(){
         get_school();
     }

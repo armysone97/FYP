@@ -43,13 +43,15 @@ public class AssessmentTaskSetting {
 
     public AssessmentTaskSetting() {
         this.year = 2018;
-        //  this.disabledDDL = false;
+        this.cslevel = "CS Level 1";
         this.disabledProject = true;
         this.disabledCollaboration = true;
         this.disabledPractical = true;
         this.disabledGroupwork = true;
         this.counterReset = 0;
         this.disabledReset = true;
+        
+         assessmentList();
     }
 
     public Boolean getDisabledReset() {
@@ -645,105 +647,104 @@ public class AssessmentTaskSetting {
     public void addTask() { //if need redirect to another xhtml, need change void to String and return keyword
 
         FacesContext context = FacesContext.getCurrentInstance();
-        
+
         int length = 0;
         String tsID = "", assID = "", csID = "", assActivityID = "", assTypeID = "";
         int verifyCounter = 0;
-        
-        if (project.isEmpty() && collaboration.isEmpty() && practical.isEmpty() && groupwork.isEmpty()){
-               context.addMessage(null, new FacesMessage("At least one of the assessment must be fill in! Please try again!"));
-        }else{
+
+        if (project.isEmpty() && collaboration.isEmpty() && practical.isEmpty() && groupwork.isEmpty()) {
+            context.addMessage(null, new FacesMessage("At least one of the assessment must be fill in! Please try again!"));
+        } else {
             try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO task (taskID, taskTitle, assID) VALUES (?, ?, ?)");
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO task (taskID, taskTitle, assID) VALUES (?, ?, ?)");
 
-            //insert project
-            if (!project.isEmpty()) {
-                length = autoGenerateID();
-                length = length + 1;
-                tsID = "TS" + Integer.toString(length);
-                assID = matchCSLevelName(cslevel, "AA1", year);
+                //insert project
+                if (!project.isEmpty()) {
+                    length = autoGenerateID();
+                    length = length + 1;
+                    tsID = "TS" + Integer.toString(length);
+                    assID = matchCSLevelName(cslevel, "AA1", year);
 
-                statement.setString(1, tsID);
-                statement.setString(2, project);
-                statement.setString(3, assID);
-                statement.executeUpdate();
+                    statement.setString(1, tsID);
+                    statement.setString(2, project);
+                    statement.setString(3, assID);
+                    statement.executeUpdate();
 
-                verifyCounter = 1;
-            }
+                    verifyCounter = 1;
+                }
 
-            //insert collaboration
-            if (!collaboration.isEmpty()) {
-                length = autoGenerateID();
-                length = length + 1;
-                tsID = "TS" + Integer.toString(length);
-                assID = matchCSLevelName(cslevel, "AA2", year);
-
-//                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
-                statement.setString(1, tsID);
-                statement.setString(2, collaboration);
-                statement.setString(3, assID);
-                statement.executeUpdate();
-
-                verifyCounter = 1;
-            }
-
-            //insert practical
-            if (!practical.isEmpty()) {
-                length = autoGenerateID();
-                length = length + 1;
-                tsID = "TS" + Integer.toString(length);
-                assID = matchCSLevelName(cslevel, "AA3", year);
+                //insert collaboration
+                if (!collaboration.isEmpty()) {
+                    length = autoGenerateID();
+                    length = length + 1;
+                    tsID = "TS" + Integer.toString(length);
+                    assID = matchCSLevelName(cslevel, "AA2", year);
 
 //                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
-                statement.setString(1, tsID);
-                statement.setString(2, practical);
-                statement.setString(3, assID);
-                statement.executeUpdate();
+                    statement.setString(1, tsID);
+                    statement.setString(2, collaboration);
+                    statement.setString(3, assID);
+                    statement.executeUpdate();
 
-                verifyCounter = 1;
-            }
+                    verifyCounter = 1;
+                }
 
-            //insert groupwork
-            if (!groupwork.isEmpty()) {
-                length = autoGenerateID();
-                length = length + 1;
-                tsID = "TS" + Integer.toString(length);
-                assID = matchCSLevelName(cslevel, "AA4", year);
+                //insert practical
+                if (!practical.isEmpty()) {
+                    length = autoGenerateID();
+                    length = length + 1;
+                    tsID = "TS" + Integer.toString(length);
+                    assID = matchCSLevelName(cslevel, "AA3", year);
 
 //                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
-                statement.setString(1, tsID);
-                statement.setString(2, groupwork);
-                statement.setString(3, assID);
-                statement.executeUpdate();
+                    statement.setString(1, tsID);
+                    statement.setString(2, practical);
+                    statement.setString(3, assID);
+                    statement.executeUpdate();
 
-                verifyCounter = 1;
+                    verifyCounter = 1;
+                }
+
+                //insert groupwork
+                if (!groupwork.isEmpty()) {
+                    length = autoGenerateID();
+                    length = length + 1;
+                    tsID = "TS" + Integer.toString(length);
+                    assID = matchCSLevelName(cslevel, "AA4", year);
+
+//                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
+                    statement.setString(1, tsID);
+                    statement.setString(2, groupwork);
+                    statement.setString(3, assID);
+                    statement.executeUpdate();
+
+                    verifyCounter = 1;
+                }
+
+                statement.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
             }
 
-            statement.close();
-            con.close();
-
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
+            switch (verifyCounter) {
+                case 0:
+                    context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " not successful!"));
+                    break;
+                case 1:
+                    context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " successful!"));
+                    disabledProject = true;
+                    disabledCollaboration = true;
+                    disabledPractical = true;
+                    disabledGroupwork = true;
+                    disabledReset = true;
+                    break;
+            }
         }
 
-        switch (verifyCounter) {
-            case 0:
-                context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " not successful!"));
-                break;
-            case 1:
-                context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " successful!"));
-                disabledProject = true;
-                disabledCollaboration = true;
-                disabledPractical = true;
-                disabledGroupwork = true;
-                disabledReset = true;
-                break;
-        }
-        }
-
-        
     }
 
     //navigation bar purpose
@@ -783,6 +784,19 @@ public class AssessmentTaskSetting {
         disabledPractical = true;
         disabledGroupwork = true;
         disabledReset = true;
+        
+        assessmentList();
+    }
+
+    //valuechangelistener purpose
+    public void yearChanged() {
+        cslevel = "CS Level 1";
+        get_CSLevel();
+        assessmentList();
+    }
+
+    public void CSLevelChanged() {
+        assessmentList();
     }
 
 }

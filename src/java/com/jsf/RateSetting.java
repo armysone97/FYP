@@ -48,6 +48,7 @@ public class RateSetting {
         this.mtHourlyRate = "0.00";
         this.evHourlyRate = "0.00";
         this.mileageRate = "0.00";
+        settingList();
     }
 
     public Boolean getDisabledTxt() {
@@ -389,6 +390,13 @@ public class RateSetting {
 
         //set default disabled
         disabledTxt = true;
+        
+        settingList();
+    }
+    
+    //valuechangelistener purpose
+    public void yearChanged() {
+        settingList();
     }
 
 }

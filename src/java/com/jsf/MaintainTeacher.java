@@ -67,12 +67,17 @@ public class MaintainTeacher {
 
     private int counterDataTable;
 
+    //valuechangelistener purpose
+    private String schoolNameDefault;
+//    private int yearDefault;
+    
     public MaintainTeacher() {
         this.state = "Pulau Pinang";
         this.school = "SJK Air Itam";
         this.year = 2018;
         this.commYear = 0;
         this.teacher = "Teoh Wei Ran";
+        this.schoolNameDefault = "SJK Air Itam";
 //        this.cslevel = "CS Level 1";
         this.disabledTxt = true;
         this.disabledDdl = true;
@@ -990,6 +995,7 @@ public class MaintainTeacher {
         FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         String tmp = "";
+        int schoolNameDefaultCount = 0;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -1000,6 +1006,12 @@ public class MaintainTeacher {
 
             while (rs.next()) {
                 school_list.add(rs.getString("schoolName"));
+                
+                //valuechangelistener purpose
+                if(schoolNameDefaultCount == 0){
+                    schoolNameDefault = rs.getString("schoolName");
+                    schoolNameDefaultCount++;
+                }
             }
 
             st.close();
@@ -1155,10 +1167,10 @@ public class MaintainTeacher {
 
         if (verifyRecord) { //means got 2018 data 
             lengthYearListEnhance = lengthYearList;
-            context.addMessage(null, new FacesMessage("bbb"));
+//            context.addMessage(null, new FacesMessage("bbb"));
         } else {
             lengthYearListEnhance = lengthYearList + 1;
-            context.addMessage(null, new FacesMessage("ccc"));
+//            context.addMessage(null, new FacesMessage("ccc"));
         }
 
         int[] yearListDuplicate = new int[lengthYearListEnhance];
@@ -2564,10 +2576,11 @@ public class MaintainTeacher {
 
         //set default value
         state = "Pulau Pinang";
-        school = "SMJK Heng Yee";
+        school = "SJK Air Itam";
+        schoolNameDefault = "SJK Air Itam";
         year = 2018;
         commYear = 0;
-        teacher = "Teoh Kok Xing";
+        teacher = "Teoh Wei Ran";
         studNum = 0;
         cslevel = "CS Level 1";
         status = "Available";
@@ -2593,6 +2606,8 @@ public class MaintainTeacher {
         disabledNewTeacherID = true;
         disabledNewTeacherName = true;
         disabledNewTeacherIDName = true;
+
+        counterDataTable = 0;
     }
 
     //reset newTeacher
@@ -2721,6 +2736,32 @@ public class MaintainTeacher {
         }
 
         return cslevelList;
+    }
+
+    //valuechangelistener purpose
+    public void stateChanged() {
+        get_school();
+        
+        school = schoolNameDefault;
+        
+        controlDisabledStatus();
+        get_year();
+        calculateCommYear();
+        get_teacher();
+    }
+
+    public void schoolChanged() {
+        controlDisabledStatus();
+        get_year();
+    }
+
+    public void yearChanged() {
+        calculateCommYear();
+        get_teacher();
+    }
+    
+    public void teacherIDNameChanged(){
+        showTeacherName();
     }
 
 }

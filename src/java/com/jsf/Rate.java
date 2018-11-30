@@ -61,6 +61,7 @@ public class Rate {
         this.numSampleAss = numSampleAss;
     }
 
+//    datatable
     public ArrayList getRateList() {
 
         String[] rateIDList = new String[4];
@@ -124,6 +125,7 @@ public class Rate {
         this.year = year;
     }
     
+//    valuechangelistener
     public void yearChanged(){
          output = "Hello, you selected " + year;
     }

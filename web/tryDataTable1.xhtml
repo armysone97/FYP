@@ -9,17 +9,19 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <!--        <table>
+        <!--datatable-->
+                <table>
                     <ui:repeat value="{rate.rateList}" var="released">
                         <tr>
                             <th><h:outputText value="{released.rateID}"/></th>
                             <th><h:outputText value="{released.numSampleAss}"/></th>
                         </tr>
                     </ui:repeat>
-                </table>-->
+                </table>
         <h:form>
             <p:growl id="messages"/> 
 
+            <!--valuechangelistener-->
             <h:inputText id="name11" value="#{rate.input}" >
                 <f:ajax listener="#{rate.namedChanged()}" render="output11"/>
             </h:inputText>

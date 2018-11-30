@@ -1149,7 +1149,7 @@ public class MaintainTeacher {
         int lengthYearListEnhance = 0;
 
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("xxxyyy " + schoolID + " : x"));
+//        context.addMessage(null, new FacesMessage("xxxyyy " + schoolID + " : x"));
 
         Boolean verifyRecord = verifyRecord(schoolID);
 

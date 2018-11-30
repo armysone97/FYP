@@ -761,14 +761,14 @@ public class YearOfStudySetting {
 
         FacesContext context = FacesContext.getCurrentInstance();
 
-         switch (verifyCounter) {
-            case 0:
-                context.addMessage(null, new FacesMessage("Add School CS Map Setting for year " + year + " with commercial year " + yearComm + " not successful!"));
-                break;
-            case 1:
-                context.addMessage(null, new FacesMessage("Add School CS Map Setting for year " + year + " with commercial year " + yearComm + " successful!"));
-                break;
-        }
+//         switch (verifyCounter) {
+//            case 0:
+//                context.addMessage(null, new FacesMessage("Add School CS Map Setting for year " + year + " with commercial year " + yearComm + " not successful!"));
+//                break;
+//            case 1:
+//                context.addMessage(null, new FacesMessage("Add School CS Map Setting for year " + year + " with commercial year " + yearComm + " successful!"));
+//                break;
+//        }
 
     }
 

@@ -47,43 +47,32 @@ public class MaintainSchoolDetails {
 
     private int counterReset; //growl purpose
 
-    public MaintainSchoolDetails() {
+    //datatable
+    private String cslevelNew;
+    private int totalStudNew;
+    private ArrayList cslevelList;
+    private MaintainSchoolDetails totalStudObj = null;
 
-//        this.disabledStatus = true;
-//        this.disabledCommYear = true;
-//        this.year = 2018;
-//        this.counterReset = 0;
-//
-//        switch (MaintainSchoolMenu.getGlobalCounter()) {
-//            case 0: //add
-//                this.state = "Johor";
-//                this.disabledTxt = false;
-//                this.schoolID = autoGenerateID();
-//                this.commYear = 2018;
-//                this.disabledAddButton = false;
-//                this.disabledEditButton = true;
-//                this.addButtonName = "Confirm";
-//                this.editButtonName = "Edit";
-//                this.disabledResetButton = false;
-//
-//                MaintainSchoolMenu.setGlobalCounter(0);
-//
-//                break;
-//            case 1: //view or update
-//                this.state = MaintainSchoolMenu.getGlobalState();
-//                this.name = MaintainSchoolMenu.getGlobalSchool();
-//                this.schoolID = MaintainSchoolMenu.getGlobalSchoolID();
-//                this.disabledEditButton = false;
-//                this.addButtonName = "New";
-//                this.disabledResetButton = true;
-//
-//                MaintainSchoolMenu.setGlobalCounter(0);
-//
-//                schoolDetailsList(schoolID);
-//
-//                this.disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
-//                break;
-//        }
+    private int counterDataTable; //datatable
+
+    public MaintainSchoolDetails() {
+        this.counterDataTable = 0;
+    }
+
+    public String getCslevelNew() {
+        return cslevelNew;
+    }
+
+    public void setCslevelNew(String cslevelNew) {
+        this.cslevelNew = cslevelNew;
+    }
+
+    public int getTotalStudNew() {
+        return totalStudNew;
+    }
+
+    public void setTotalStudNew(int totalStudNew) {
+        this.totalStudNew = totalStudNew;
     }
 
     public String getCslevel() {
@@ -505,8 +494,8 @@ public class MaintainSchoolDetails {
                     con.close();
 
                     verifyCounter = 1;
-                    
-                     MaintainSchoolMenu.setGlobalCounter(2);
+
+                    MaintainSchoolMenu.setGlobalCounter(2);
 
 //                    MaintainSchoolMenu.setGlobalAction("View");
 ////                    disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
@@ -693,14 +682,14 @@ public class MaintainSchoolDetails {
             }
         }
 
-        switch (verifyCounter) {
-            case 0:
-                context.addMessage(null, new FacesMessage("School CS Map for school " + name + " automatic added not successful!"));
-                break;
-            case 1:
-                context.addMessage(null, new FacesMessage("School CS Map for school " + name + " automatic added successful!"));
-                break;
-        }
+//        switch (verifyCounter) {
+//            case 0:
+//                context.addMessage(null, new FacesMessage("School CS Map for school " + name + " automatic added not successful!"));
+//                break;
+//            case 1:
+//                context.addMessage(null, new FacesMessage("School CS Map for school " + name + " automatic added successful!"));
+//                break;
+//        }
     }
 
     //change button action when click the button
@@ -878,6 +867,7 @@ public class MaintainSchoolDetails {
         this.disabledCommYear = true;
 //        this.year = 2018;
         this.counterReset = 0;
+//        this.counterDataTable = 0;
 
         switch (MaintainSchoolMenu.getGlobalCounter()) {
             case 0: //add
@@ -936,13 +926,18 @@ public class MaintainSchoolDetails {
                 this.addButtonName = "Confirm";
                 this.editButtonName = "Edit";
                 this.disabledResetButton = false;
+//                this.counterDataTable = 0;
 
                 MaintainSchoolMenu.setGlobalCounter(0);
         }
     }
 
     public void callCSLevel() {
-        get_CSLevel();
+//      get_CSLevel();
+
+        counterDataTable = 1;
+
+        getCslevelList();
 
     }
 
@@ -1085,6 +1080,101 @@ public class MaintainSchoolDetails {
             System.out.println("Error: " + ex);
         }
 
+    }
+
+    public ArrayList getCslevelList() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (counterDataTable == 1) {
+//            context.addMessage(null, new FacesMessage("mmm"));
+//            context.addMessage(null, new FacesMessage(schoolID + year));
+
+            int CSIDListCount = retrieveCSIDCount();
+
+            if (CSIDListCount > 0) {
+                String[] CSIDList = new String[CSIDListCount];
+                int[] totalStudList = new int[CSIDListCount];
+
+                int tmp = 0;
+
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                    PreparedStatement st = con.prepareStatement("SELECT CSLevelID, ttlEnrolStud FROM schoolcsmap WHERE schoolID = ? AND year = ?");
+                    st.setString(1, schoolID);
+                    st.setInt(2, year);
+                    ResultSet rs = st.executeQuery();
+
+                    while (rs.next()) {
+                        //                CSLevel_list.add(rs.getString("CSLevelID"));
+                        CSIDList[tmp] = rs.getString("CSLevelID");
+                        totalStudList[tmp] = rs.getInt("ttlEnrolStud");
+                        tmp++;
+                    }
+
+                    rs.close();
+                    st.close();
+                    con.close();
+
+                } catch (Exception ex) {
+                    System.out.println("Error: " + ex);
+                }
+
+                Arrays.sort(CSIDList);
+
+                String[] CSNameList = new String[CSIDListCount];
+
+                for (int i = 0; i < CSIDList.length; i++) {
+
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                        PreparedStatement st = con.prepareStatement("SELECT CSLevelName FROM cslevel WHERE CSLevelID = ?");
+                        st.setString(1, CSIDList[i]);
+                        ResultSet rs = st.executeQuery();
+
+                        while (rs.next()) {
+//                    CSLevel_list.add(rs.getString("CSLevelName"));
+                            CSNameList[i] = rs.getString("CSLevelName");
+//                         context.addMessage(null, new FacesMessage(CSNameList[i] + " : x"));
+                        }
+
+                        rs.close();
+                        st.close();
+                        con.close();
+
+                    } catch (Exception ex) {
+                        System.out.println("Error: " + ex);
+                    }
+                }
+
+                cslevelList = new ArrayList();
+                for (int i = 0; i < CSIDListCount; i++) {
+                    totalStudObj = new MaintainSchoolDetails();
+                    totalStudObj.setCslevelNew(CSNameList[i]);
+                    totalStudObj.setTotalStudNew(totalStudList[i]);
+                    cslevelList.add(totalStudObj);
+                }
+
+            } else {
+                cslevelList = new ArrayList();
+                totalStudObj = new MaintainSchoolDetails();
+                totalStudObj.setCslevelNew("CS Level");
+                totalStudObj.setTotalStudNew(0);
+                cslevelList.add(totalStudObj);
+            }
+//            counterDataTable = 0;
+        } 
+        else {
+            cslevelList = new ArrayList();
+            totalStudObj = new MaintainSchoolDetails();
+            totalStudObj.setCslevelNew("CS Level");
+            totalStudObj.setTotalStudNew(0);
+            cslevelList.add(totalStudObj);
+        }
+
+        return cslevelList;
     }
 
 }

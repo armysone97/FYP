@@ -994,11 +994,11 @@ public class EvaluatorWorkloadAllocation {
 
         FacesContext context = FacesContext.getCurrentInstance();
 
-        switch (counterReset) {
-            case 0:
-                context.addMessage(null, new FacesMessage("Reset successful!"));
-                break;
-        }
+//        switch (counterReset) {
+//            case 0:
+//                context.addMessage(null, new FacesMessage("Reset successful!"));
+//                break;
+//        }
 
         //set default value
         school = null;

@@ -212,6 +212,7 @@ public class MileageClaimApplication {
         mcID = "MC" + Integer.toString(mileageClaimCount);
         
         //insert mileage claim
+        
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");

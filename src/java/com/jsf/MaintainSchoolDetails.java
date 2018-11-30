@@ -1088,7 +1088,7 @@ public class MaintainSchoolDetails {
 
         if (counterDataTable == 1) {
 //            context.addMessage(null, new FacesMessage("mmm"));
-            context.addMessage(null, new FacesMessage(schoolID + year));
+//            context.addMessage(null, new FacesMessage(schoolID + year));
 
             int CSIDListCount = retrieveCSIDCount();
 

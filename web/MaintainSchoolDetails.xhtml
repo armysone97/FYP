@@ -159,39 +159,16 @@
 
                                     <!--<th colspan="3" align="left">-->
                                     &nbsp;&nbsp;&nbsp;      <h:selectOneMenu title="Select year"  value="#{maintainSchoolDetails.year}" styleClass="ddlSmallSpecialStyle" disabled="#{maintainSchoolDetails.disabledEnrol}">
-                                        <f:selectItems value="#{maintainSchoolDetails.get_year()}"  /> 
+                                        <f:selectItems value="#{maintainSchoolDetails.get_year()}"  />
+                                        <!--valuechangelistener-->
+                                        <f:ajax listener="#{rateSetting.yearChanged()}" render="dataTableStudNum lblCSLevelNewOutput lblTotalStudentNewOutput row1 row2"/>
                                     </h:selectOneMenu> 
 
                                     &nbsp;&nbsp;&nbsp;    <h:commandButton title="Click to show CS level"  id="btnShowllk" action="#{maintainSchoolDetails.callCSLevel()}"  value="Show" styleClass="buttonShowStyle" disabled="#{maintainSchoolDetails.disabledEnrol}">
-                                        <!--<f:ajax execute="@form" render="txtEnrolStud ddlCSLevel1" />-->
-                                    </h:commandButton>
+                                     </h:commandButton>
                                 </th>
                                 <!--</th>-->
                             </tr> 
-
-                            <!--change cslevel style-->
-
-                            <!--                            <tr>
-                                                            <th align="left"> 
-                                                                <h:outputText id="lblCSLevel" value="CS Level : "  styleClass="lblStyle"/> </th>
-                                                            <th align="left">
-                                                                <h:selectOneMenu id="ddlCSLevel" title="Select CS Level" styleClass="ddlSmallSpecialStyle" value="#{maintainSchoolDetails.cslevel}" disabled="#{maintainSchoolDetails.disabledEnrol}">
-                                                                    <f:selectItems id="ddlCSLevel1" value="#{maintainSchoolDetails.get_CSLevel()}" /> 
-                                                                </h:selectOneMenu>  
-                            
-                                                                &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowTtlStud" title="Click to show total enrolment student" value="Show" action="#{maintainSchoolDetails.retrieveTtlEnrolStud()}" disabled="#{maintainSchoolDetails.disabledEnrol}" styleClass="buttonShowStyle">
-                                                                    <f:ajax execute="@form" render="txtNewCSLevel" />
-                                                                </h:commandButton>
-                            
-                                                            </th>
-                            
-                                                            <th align="right"> 
-                                                                <h:outputText id="lblTotalEnrolStud" value="Total Student : "  styleClass="lblStyle"/> </th>
-                            
-                                                            <th align="left">
-                                                                <h:inputText title="Total enrolment student"  id="txtEnrolStud" value="#{maintainSchoolDetails.ttlEnrolStud}" disabled="#{maintainSchoolDetails.disabledCommYear}" styleClass="txtboxSmallestStyle" required="required" size="5"/>
-                                                            </th>
-                                                        </tr>   -->
                         </table>
 
                         <table border="1" cellpadding="10px" cellspacing="0" width="800px" align="center">
@@ -204,12 +181,14 @@
                             </tr>
 
                             <!--datatable-->
-                            <ui:repeat value="#{maintainSchoolDetails.cslevelList}" var="released">
-                                <tr>
-                                    <td colspan="2" align="center"><h:outputText styleClass="lblStyle" value="#{released.cslevelNew}"/></td>
-                                    <td colspan="2" align="center"><h:outputText styleClass="lblStyle" value="#{released.totalStudNew}"/></td>
-                                </tr>
-                            </ui:repeat>
+                            <h:panelGroup id="dataTableStudNum">
+                                <ui:repeat value="#{maintainSchoolDetails.cslevelList}" var="released">
+                                    <tr>
+                                        <td colspan="2" id="row1" align="center"><h:outputText id="lblCSLevelNewOutput" styleClass="lblStyle" value="#{released.cslevelNew}"/></td>
+                                        <td colspan="2" id="row2" align="center"><h:outputText id="lblTotalStudentNewOutput" styleClass="lblStyle" value="#{released.totalStudNew}"/></td>
+                                    </tr>
+                                </ui:repeat>
+                            </h:panelGroup>
                         </table>
 
                     </fieldset>

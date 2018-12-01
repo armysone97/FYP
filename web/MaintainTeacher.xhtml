@@ -60,8 +60,10 @@
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> 
                             <h:selectOneMenu title="Select state" disabled="#{maintainTeacher.disabledButton}" value="#{maintainTeacher.state}" styleClass="ddlStyle">
                                 <f:selectItems value="#{maintainTeacher.get_state()}" />
+                                <!--valuechangelistener-->
+                                <f:ajax listener="#{maintainTeacher.stateChanged()}" render="ddlSchoolList ddlYearList ddlTeacherList"/>
                             </h:selectOneMenu>
-                            &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;    <h:commandButton title="Click to show school" id="btnShowList111" disabled="#{maintainTeacher.disabledButton}" value="Show" styleClass="buttonShowStyle"/>
+                            <!--&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;    <h:commandButton title="Click to show school" id="btnShowList111" disabled="#{maintainTeacher.disabledButton}" value="Show" styleClass="buttonShowStyle"/>-->
 
                         </th>
                     </tr>   
@@ -72,15 +74,17 @@
                         </th>
                         <th colspan="2" align="left">
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu title="Select school" disabled="#{maintainTeacher.disabledButton}"  styleClass="ddlStyle" value="#{maintainTeacher.school}">
+                            <h:selectOneMenu id="ddlSchoolList" title="Select school" disabled="#{maintainTeacher.disabledButton}"  styleClass="ddlStyle" value="#{maintainTeacher.school}">
                                 <f:selectItems value="#{maintainTeacher.get_school()}"/> 
+                                <!--valuechangelistener-->
+                                <f:ajax listener="#{maintainTeacher.schoolChanged()}" render="ddlYearList ddlTeacherList"/>
                             </h:selectOneMenu>  
                         </th>
                     </tr> 
 
-                    <tr>
-                        <th colspan="4" align="right"><h:commandButton id="btnConfirm" title="Click to show year" value="Confirm" action="#{maintainTeacher.controlDisabledStatus()}" disabled="#{maintainTeacher.disabledButton}" styleClass="buttonStyle" /></th>
-                    </tr> 
+                    <!--                    <tr>
+                                            <th colspan="4" align="right"><h:commandButton id="btnConfirm" title="Click to show year" value="Confirm" action="#{maintainTeacher.controlDisabledStatus()}" disabled="#{maintainTeacher.disabledButton}" styleClass="buttonStyle" /></th>
+                                        </tr> -->
 
                     <tr>
                         <th><label>&nbsp;</label></th>
@@ -91,11 +95,13 @@
                         <th colspan="2" align="left">
                             <h:outputText id="lblYear" value="Year : "  styleClass="lblStyle"/>
 
-                            <h:selectOneMenu title="Selct year" value="#{maintainTeacher.year}" disabled="#{maintainTeacher.disabledButton}"  styleClass="ddlSmallerSpecialStyle">
+                            <h:selectOneMenu id="ddlYearList" title="Selct year" value="#{maintainTeacher.year}" disabled="#{maintainTeacher.disabledButton}"  styleClass="ddlSmallerSpecialStyle">
                                 <f:selectItems value="#{maintainTeacher.get_year()}"  /> 
+                                <!--valuechangelistener-->
+                                <f:ajax listener="#{maintainTeacher.yearChanged()}" render="ddlTeacherList"/>
                             </h:selectOneMenu> 
 
-                            &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList222" title="Click to show teacher"  value="Show" action="#{maintainTeacher.calculateCommYear()}" disabled="#{maintainTeacher.disabledButton}" styleClass="buttonShowStyle"/>
+<!--                            &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList222" title="Click to show teacher"  value="Show" action="#{maintainTeacher.calculateCommYear()}" disabled="#{maintainTeacher.disabledButton}" styleClass="buttonShowStyle"/>-->
                         </th>
 
                         <th align="right"> 
@@ -124,7 +130,7 @@
                             <th colspan="2" align="left">
                                 <h:outputText id="lblTeacher" value="Teacher : "  styleClass="lblStyle"/>
 
-                                <h:selectOneMenu title="Select teacher" value="#{maintainTeacher.teacher}" styleClass="ddlStyle" disabled="#{maintainTeacher.disabledButton}">
+                                <h:selectOneMenu id="ddlTeacherList" title="Select teacher" value="#{maintainTeacher.teacher}" styleClass="ddlStyle" disabled="#{maintainTeacher.disabledButton}">
                                     <f:selectItems value="#{maintainTeacher.get_teacher()}"  /> 
                                 </h:selectOneMenu> 
 
@@ -138,24 +144,24 @@
                             </th>
                         </tr>   
 
-<!--                        <tr>
-                            <th colspan="2" align="left"> 
-                                <h:outputText id="lblCSLevel" value="CS Level : "  styleClass="lblStyle"/>
-
-                                <h:selectOneMenu title="Select CS level" styleClass="ddlStyle" value="#{maintainTeacher.cslevel}" disabled="#{maintainTeacher.disabledButton}">
-                                    <f:selectItems value="#{maintainTeacher.get_CSLevel()}" /> 
-                                </h:selectOneMenu>  
-                                &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList555" title="Click to show Number Enrolment Student"  value="Show" styleClass="buttonShowStyle" disabled="#{maintainTeacher.disabledButton}"/>
-                            </th>
-
-                            <th colspan="2" align="left"> 
-                                <h:outputText  id="lblStudNum" value="Number of Student: "  styleClass="lblStyle"/>
-                                <h:inputText title="Student enrolment number" id="txtStudNum" value="#{maintainTeacher.studNum}" disabled="#{maintainTeacher.disabledTxt}" styleClass="txtboxSmallestStyle" required="required" size="10"/>
-                            </th>
-                        </tr>   -->
+                        <!--                        <tr>
+                                                    <th colspan="2" align="left"> 
+                                                        <h:outputText id="lblCSLevel" value="CS Level : "  styleClass="lblStyle"/>
+                        
+                                                        <h:selectOneMenu title="Select CS level" styleClass="ddlStyle" value="#{maintainTeacher.cslevel}" disabled="#{maintainTeacher.disabledButton}">
+                                                            <f:selectItems value="#{maintainTeacher.get_CSLevel()}" /> 
+                                                        </h:selectOneMenu>  
+                                                        &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList555" title="Click to show Number Enrolment Student"  value="Show" styleClass="buttonShowStyle" disabled="#{maintainTeacher.disabledButton}"/>
+                                                    </th>
+                        
+                                                    <th colspan="2" align="left"> 
+                                                        <h:outputText  id="lblStudNum" value="Number of Student: "  styleClass="lblStyle"/>
+                                                        <h:inputText title="Student enrolment number" id="txtStudNum" value="#{maintainTeacher.studNum}" disabled="#{maintainTeacher.disabledTxt}" styleClass="txtboxSmallestStyle" required="required" size="10"/>
+                                                    </th>
+                                                </tr>   -->
                     </table>
-                    
-                    
+
+
 
                     <table border="1" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
@@ -164,7 +170,7 @@
                             <th colspan="2" align="center">
                                 <h:outputText id="lblNoEnrolNew" value="Number of Student"  styleClass="lblStyle" escape="false"/>
                             </th>
-                         </tr>
+                        </tr>
 
                         <!--datatable-->
                         <ui:repeat value="#{maintainTeacher.cslevelList}" var="released">
@@ -216,9 +222,11 @@
                             <td align="left" colspan="2">
                                 <h:selectOneMenu title="Select Teacher ID and Name" styleClass="ddlSpecialOneStyle" disabled="#{maintainTeacher.disabledNewTeacherIDName}" value="#{maintainTeacher.newTeacherIDName}">
                                     <f:selectItems value="#{maintainTeacher.get_newTeacherIDName()}" /> 
+                                    <!--valuechangelistener-->
+                                    <f:ajax listener="#{maintainTeacher.teacherIDNameChanged()}" render="ddlCSLevelListNew"/>
                                 </h:selectOneMenu>  
 
-                                &nbsp; &nbsp; &nbsp; <h:commandButton id="btnShowList88" title="Click to show CS Level" action="#{maintainTeacher.showTeacherName()}"  value="Show" styleClass="buttonShowStyle" disabled="#{maintainTeacher.disabledNewTeacherIDName}"/>
+                                <!--&nbsp; &nbsp; &nbsp; <h:commandButton id="btnShowList88" title="Click to show CS Level" action="#{maintainTeacher.showTeacherName()}"  value="Show" styleClass="buttonShowStyle" disabled="#{maintainTeacher.disabledNewTeacherIDName}"/>-->
 
 
                             </td>   
@@ -267,7 +275,7 @@
 
                             <td align="left">
                                 <!--<h:outputText id="txtNewTeacherCSLevel" title="New teacher's CS level" value="#{maintainTeacher.newTeacherCSLevel}" styleClass="lblStyle"/>-->
-                                <h:selectOneMenu title="Select CS level" styleClass="ddlSmallSpecialStyle" value="#{maintainTeacher.newTeacherCSLevel}" disabled="#{maintainTeacher.disabledNewTeacher}" >
+                                <h:selectOneMenu id="ddlCSLevelListNew" title="Select CS level" styleClass="ddlSmallSpecialStyle" value="#{maintainTeacher.newTeacherCSLevel}" disabled="#{maintainTeacher.disabledNewTeacher}" >
                                     <f:selectItems value="#{maintainTeacher.get_newCSLevel()}" /> 
                                 </h:selectOneMenu>  
                             </td>  

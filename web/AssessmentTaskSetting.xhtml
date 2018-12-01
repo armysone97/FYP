@@ -29,7 +29,7 @@
                         </p:submenu>
                     </p:submenu>
 
-                   <p:submenu label="SCHOOL MANAGEMENT">
+                    <p:submenu label="SCHOOL MANAGEMENT">
                         <p:submenu label="Maintain School">
                             <p:menuitem title="Click to redirect to Add New School page" value="Add New School" action="#{maintainSchoolDetails.goToNextPage()}" />
                             <p:menuitem title="Click to redirect to View or Edit School page" value="View/Edit School" action="#{maintainSchoolMenu.goToNextPage()}" />
@@ -57,9 +57,11 @@
 
                             <h:selectOneMenu title="Select year" styleClass="ddlStyle" value="#{assessmentTaskSetting.year}">
                                 <f:selectItems value="#{assessmentTaskSetting.get_year()}" /> 
+                                <!--valuechangelistener-->
+                                <f:ajax listener="#{assessmentTaskSetting.yearChanged()}" render="ddlCSLevelList txtProject txtPractical txtCollaboration txtGroupwork btnReset btnConfirm"/>
                             </h:selectOneMenu>  
 
-                            &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList" title="Click to show CS level" value="Show CS Level" styleClass="buttonSpecialStyle"/>
+                            <!--&nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList" title="Click to show CS level" value="Show CS Level" styleClass="buttonSpecialStyle"/>-->
 
                         </th>
                     </tr>   
@@ -71,10 +73,12 @@
                             <h:outputText id="lblCSLevel" value="CS Level : "  styleClass="lblStyle"/>
 
                             <h:selectOneMenu title="Select CS level" styleClass="ddlStyle" value="#{assessmentTaskSetting.cslevel}">
-                                <f:selectItems value="#{assessmentTaskSetting.get_CSLevel()}" /> 
+                                <f:selectItems id="ddlCSLevelList" value="#{assessmentTaskSetting.get_CSLevel()}" /> 
+                                <!--valuechangelistener-->
+                                <f:ajax listener="#{assessmentTaskSetting.CSLevelChanged()}" render="txtProject txtPractical txtCollaboration txtGroupwork btnReset btnConfirm"/>
                             </h:selectOneMenu>  
 
-                            &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList111" title="Click to show assessment"  value="Confirm" action="#{assessmentTaskSetting.assessmentList()}" styleClass="buttonStyle"/>
+                            <!--&nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList111" title="Click to show assessment"  value="Confirm" action="#{assessmentTaskSetting.assessmentList()}" styleClass="buttonStyle"/>-->
 
                         </th>
                     </tr>   

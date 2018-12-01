@@ -47,6 +47,7 @@ public class CSLevelSetting {
 
     public CSLevelSetting() {
         this.year = 2018;
+        this.cslevel = "CS Level 1";
         this.disabledDDL = false;
         this.disabledProject = true;
         this.disabledCollaboration = true;
@@ -56,6 +57,8 @@ public class CSLevelSetting {
         this.disabledNewCS = true;
         this.disabledButton = false;
         this.counterReset = 0;
+        
+        assessmentList();
     }
 
     public Boolean getDisabledReset() {
@@ -910,6 +913,8 @@ public class CSLevelSetting {
         disabledNewCS = true;
         disabledButton = false;
         disabledReset = true;
+        
+         assessmentList();
     }
 
     //reset newCSLevel
@@ -919,6 +924,17 @@ public class CSLevelSetting {
         context.addMessage(null, new FacesMessage("Reset successful!"));
 
         newcslevelname = null;
+    }
+
+    //valuechangelistener purpose
+    public void yearChanged() {
+        cslevel = "CS Level 1";
+        get_CSLevel();
+        assessmentList();
+    }
+
+    public void CSLevelChanged() {
+        assessmentList();
     }
 
 }

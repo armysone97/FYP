@@ -847,6 +847,8 @@ public class MaintainSchoolDetails {
 
                 disabledEnrol = true;
 //                context.addMessage(null, new FacesMessage("yy"));
+                
+                counterDataTable = 0;
                 break;
             case 1:
 //                context.addMessage(null, new FacesMessage("zz"));
@@ -867,7 +869,7 @@ public class MaintainSchoolDetails {
         this.disabledCommYear = true;
 //        this.year = 2018;
         this.counterReset = 0;
-//        this.counterDataTable = 0;
+        this.counterDataTable = 0;
 
         switch (MaintainSchoolMenu.getGlobalCounter()) {
             case 0: //add
@@ -901,6 +903,9 @@ public class MaintainSchoolDetails {
                 schoolDetailsList(schoolID);
 
                 this.disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
+                
+                callCSLevel();
+                
                 break;
             case 2:
                 MaintainSchoolMenu.setGlobalAction("View");
@@ -914,6 +919,8 @@ public class MaintainSchoolDetails {
 
                 addButtonName = "New";
                 disabledEnrol = false;
+                 callCSLevel();
+                 
                 break;
 
             default: //direct come in without going maintainschoolmenu, so the globalcounter is null, not 0
@@ -1175,6 +1182,11 @@ public class MaintainSchoolDetails {
         }
 
         return cslevelList;
+    }
+    
+    //valuechangelistener purpose
+    public void yearChanged(){
+        callCSLevel();
     }
 
 }

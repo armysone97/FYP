@@ -198,6 +198,8 @@ public class EvaluatorPersonalDetails {
     
     //save evaluator personal details
     public void evaluatorData() {
+        
+        
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");

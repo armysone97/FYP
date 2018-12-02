@@ -950,12 +950,13 @@ public class EvaluatorWorkloadAllocation {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO workloadallocation (WA_ID, workloadAssigned, teacherCSMapID, staffID) VALUES (?, ?, ?, ?)");
+            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO workloadallocation (WA_ID, workloadAssigned, assessment, teacherCSMapID, staffID) VALUES (?, ?, ?, ?, ?)");
 
             statement.setString(1, waID);
             statement.setDouble(2, Double.valueOf(result));
-            statement.setString(3, teacherCSMap_ID);
-            statement.setString(4, staff_ID);
+            statement.setString(3, assType);
+            statement.setString(4, teacherCSMap_ID);
+            statement.setString(5, staff_ID);
 
             statement.executeUpdate();
             statement.close();

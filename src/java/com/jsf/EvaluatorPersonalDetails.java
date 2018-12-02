@@ -6,6 +6,7 @@
 package com.jsf;
 
 import java.sql.*;
+import java.util.*;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -35,6 +36,10 @@ public class EvaluatorPersonalDetails {
     private String rdID;
     private String wlID;
     private int counterReset; //growl purpose
+    
+    private List<String> branch_list = new ArrayList<>();
+    private List<String> faculty_list = new ArrayList<>();
+    private List<String> status_list = new ArrayList<>();
 
     public EvaluatorPersonalDetails() {
         this.counterReset = 0;
@@ -104,6 +109,93 @@ public class EvaluatorPersonalDetails {
         this.workloadLimit = workloadLimit;
     }
 
+    public void setBranch_list(List<String> branch_list) {
+        this.branch_list = branch_list;
+    }
+
+    public void setFaculty_list(List<String> faculty_list) {
+        this.faculty_list = faculty_list;
+    }
+
+    public void setStatus_list(List<String> status_list) {
+        this.status_list = status_list;
+    }
+    
+    public List<String> get_BranchList() {
+
+        branch_list.clear();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT branch FROM branch");
+
+            while (rs.next()) {
+                branch_list.add(rs.getString("branch"));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return branch_list;
+    }
+    
+    public List<String> get_FacultyList() {
+
+        faculty_list.clear();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT faculty FROM faculty");
+
+            while (rs.next()) {
+                faculty_list.add(rs.getString("faculty"));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return faculty_list;
+    }
+    
+    public List<String> get_StatusList() {
+
+        status_list.clear();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT status FROM status");
+
+            while (rs.next()) {
+                status_list.add(rs.getString("status"));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return status_list;
+    }
+    
     //save evaluator personal details
     public void evaluatorData() {
         try {

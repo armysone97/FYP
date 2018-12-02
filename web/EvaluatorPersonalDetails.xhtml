@@ -90,9 +90,7 @@
 
                         <th align="left">
                             <h:selectOneMenu styleClass="ddlSpecialStyle" value="#{evaluatorPersonalDetails.branch}">
-                                <f:selectItem itemValue = "Kuala Lumpur Main Campus" itemLabel = "Kuala Lumpur Main Campus" /> 
-                                <f:selectItem itemValue = "Perak Branch Campus" itemLabel = "Perak Branch Campus" /> 
-                                <f:selectItem itemValue = "Penang Branch Campus" itemLabel = "Penang Branch Campus" /> 
+                                <f:selectItems value="#{evaluatorPersonalDetails.get_BranchList()}" />
                             </h:selectOneMenu>  
                         </th></tr> 
 
@@ -106,13 +104,7 @@
                         <th align="left">
 
                             <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorPersonalDetails.faculty}">
-                                <f:selectItem itemValue = "FOCS" itemLabel = "FOCS" /> 
-                                <f:selectItem itemValue = "FOAS" itemLabel = "FOAS" /> 
-                                <f:selectItem itemValue = "FOBE" itemLabel = "FOBE" /> 
-                                <f:selectItem itemValue = "FSSH" itemLabel = "FSSH" /> 
-                                <f:selectItem itemValue = "FAFB" itemLabel = "FAFB" />
-                                <f:selectItem itemValue = "FOET" itemLabel = "FOET" />
-                                <f:selectItem itemValue = "FCCI" itemLabel = "FCCI" />
+                                <f:selectItems value="#{evaluatorPersonalDetails.get_FacultyList()}" />
                             </h:selectOneMenu>  
                         </th></tr> 
 
@@ -142,9 +134,7 @@
 
                         <th align="left">
                             <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorPersonalDetails.status}">
-                                <f:selectItem itemValue = "Available" itemLabel = "Available" /> 
-                                <f:selectItem itemValue = "Resign" itemLabel = "Resign" /> 
-                                <f:selectItem itemValue = "Retired" itemLabel = "Retired" /> 
+                                <f:selectItems value="#{evaluatorPersonalDetails.get_StatusList()}" />
                             </h:selectOneMenu> 
                         </th></tr> 
 

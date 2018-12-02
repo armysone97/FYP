@@ -184,55 +184,22 @@
                     </tr> 
                 </table>
 
-                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">    
-                    <tr>
-                        <th><label>&nbsp;</label></th>
-                        <th><label>&nbsp;</label></th> 
-                    </tr>
-
-                <!--    <tr>
-                        <th colspan="3" align="left"> <h:commandButton id="btnReset" value="Reset" styleClass="buttonStyle"/></th>
-                        <th align="right"><h:commandButton id="btnAdd" value="Add" styleClass="buttonStyle" action="{evaluatorWorkloadAllocation.get_WorkloadList()}"/></th>
-                    </tr> 
-
-                      <tr>
-                          <th colspan="3" align="right"><input id="smallButton" type="reset" value="Reset" class="button" /><br /></th>
-                          <th align="right"><input onclick="listView()" id="smallButton" type="submit" value="Add" class="button" /><br /></th>
-                      </tr> -->
-                </table>
+                
 
             </h:form>
         </div>
 
         <h:form>
-            <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
-
-            <!--    <tr>
-                    <th align="left"><h:outputText id="lblWorkloadList" value="Workload List"  styleClass="lblStyle"/></th>
-                </tr> 
-                               <tr>
-                                    <th align="left">
-                                    <h:selectOneListbox styleClass="ddlListViewStyle"> 
-                                        <f:selectItem itemValue = "1" itemLabel = "" /> 
-                                        <f:selectItem itemValue = "2" itemLabel = "" /> 
-                                    </h:selectOneListbox>   
-                                    </th>
-                                </tr> -->
-
-            </table>
 
             <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">    
-                <tr>
-                    <th><label>&nbsp;</label></th>
-                    <th><label>&nbsp;</label></th> 
-                    <th><label>&nbsp;</label></th>
-                    <th><label>&nbsp;</label></th> 
-                </tr>
+                
 
-                <tr>
+                <tr>      
                     <th colspan="4" align="right"><h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.addWorkload()}"/></th>
                 </tr> 
             </table>
+            
+            
         </h:form>
     </h:body>
 </html>

@@ -161,7 +161,7 @@
                                     &nbsp;&nbsp;&nbsp;      <h:selectOneMenu title="Select year"  value="#{maintainSchoolDetails.year}" styleClass="ddlSmallSpecialStyle" disabled="#{maintainSchoolDetails.disabledEnrol}">
                                         <f:selectItems value="#{maintainSchoolDetails.get_year()}"  />
                                         <!--valuechangelistener-->
-                                        <f:ajax listener="#{rateSetting.yearChanged()}" render="dataTableStudNum lblCSLevelNewOutput lblTotalStudentNewOutput row1 row2"/>
+                                        <!--<f:ajax listener="#{rateSetting.yearChanged()}" render="dataTableStudNum lblCSLevelNewOutput lblTotalStudentNewOutput row1 row2"/>-->
                                     </h:selectOneMenu> 
 
                                     &nbsp;&nbsp;&nbsp;    <h:commandButton title="Click to show CS level"  id="btnShowllk" action="#{maintainSchoolDetails.callCSLevel()}"  value="Show" styleClass="buttonShowStyle" disabled="#{maintainSchoolDetails.disabledEnrol}">

@@ -9,16 +9,17 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <!--datatable-->
-                <table>
-                    <ui:repeat value="{rate.rateList}" var="released">
-                        <tr>
-                            <th><h:outputText value="{released.rateID}"/></th>
-                            <th><h:outputText value="{released.numSampleAss}"/></th>
-                        </tr>
-                    </ui:repeat>
-                </table>
         <h:form>
+            <!--datatable-->
+            <table>
+                <ui:repeat value="#{rate.rateList}" var="released">
+                    <tr>
+                        <th><h:outputText value="#{released.rateID}"/></th>
+                        <th><h:outputText value="#{released.numSampleAss}"/></th>
+                    </tr>
+                </ui:repeat>
+            </table>
+
             <p:growl id="messages"/> 
 
             <!--valuechangelistener-->

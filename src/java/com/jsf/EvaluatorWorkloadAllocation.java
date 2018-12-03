@@ -269,6 +269,7 @@ public class EvaluatorWorkloadAllocation {
         
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT teacherCSMapID, assessment FROM workloadallocation WHERE staffID = ?");
             st.setString(1, staffID);
             ResultSet rs = st.executeQuery();

@@ -1017,6 +1017,23 @@ public class EvaluatorWorkloadAllocation {
         counterReset = 0;
     }
 
+    //valuechangelistener purpose
+    public void evaluatorChanged(){
+        get_EvaluatorList();
+    }
+    
+    public void schoolChanged(){
+        get_SchoolList();
+    }
+    
+    public void csLevelChanged(){
+        get_CSLevelList();
+    }
+    
+    public void teacherChanged(){
+        get_TeacherList();
+    }
+    
     public void main(String args[]) {
 
     }

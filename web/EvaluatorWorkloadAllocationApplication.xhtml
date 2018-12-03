@@ -57,11 +57,12 @@
 
                         <th align="right">
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> </th>
-                        <th align="left">   <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.evaluator}">
+                            <th align="left">   <h:selectOneMenu id="ddlEvaluatorList" styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.evaluator}">
 
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_EvaluatorList()}"/>
+                                <f:ajax listener="#{evaluatorWorkloadAllocation.evaluatorChanged()}" render="txtWorkloadLimit"/>
                             </h:selectOneMenu>  
-                            &nbsp;&nbsp;&nbsp;         <h:commandButton id="btnShow" value="Confirm" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.retrieveWorkloadLimit()}"/>
+                            
 
                         </th>
                     </tr>  
@@ -73,11 +74,11 @@
                         <th align="right">
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/> </th>
                         <th align="left">
-                            <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.school}">
+                            <h:selectOneMenu id="ddlSchoolList" styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.school}">
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_SchoolList()}" />
+                                <f:ajax listener="#{evaluatorWorkloadAllocation.schoolChanged()}" render="ddlCSLevel"/>
                             </h:selectOneMenu>  
-                            &nbsp;&nbsp;&nbsp;         <h:commandButton id="btnSchool" value="Confirm" styleClass="buttonStyle"/>
-
+                            
                         </th>
                     </tr> 
 
@@ -87,11 +88,11 @@
                         <th align="right">
                             <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/> </th>
                         <th align="left">   
-                            <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.csLevel}">
+                            <h:selectOneMenu id="ddlCSLevel" styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.csLevel}">
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_CSLevelList()}" />
+                                <f:ajax listener="#{evaluatorWorkloadAllocation.csLevelChanged()}" render="ddlTeacherList"/>
                             </h:selectOneMenu>  
-                            &nbsp;&nbsp;&nbsp;         <h:commandButton id="btnCSLevel" value="Confirm" styleClass="buttonStyle" />
-
+                            
                         </th>
                     </tr>   
 
@@ -103,11 +104,11 @@
                         <th align="right">
                             <h:outputText id="simbol4" value=": "  styleClass="lblStyle"/> </th>
                         <th align="left"> 
-                            <h:selectOneMenu styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.teacher}">
+                            <h:selectOneMenu id="ddlTeacherList" styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.teacher}">
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_TeacherList()}" />
+                                <f:ajax listener="#{evaluatorWorkloadAllocation.teacherChanged()}" render="txtTotalStudent"/>
                             </h:selectOneMenu>  
-                            &nbsp;&nbsp;&nbsp;      <h:commandButton id="btnTry" value="Show" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.retrieveTotalStudent()}"/>
-                        </th>
+                            </th>
                     </tr> 
 
                     <tr>

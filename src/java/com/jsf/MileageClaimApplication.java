@@ -142,7 +142,6 @@ public class MileageClaimApplication {
         this.workload_list = workload_list;
     }
     
-    
     public void defaultStaffList() {
         switch (Login.getGlobalCounter()) {
             case 1:

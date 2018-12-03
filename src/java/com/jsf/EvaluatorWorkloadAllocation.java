@@ -322,7 +322,7 @@ public class EvaluatorWorkloadAllocation {
 
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
                 PreparedStatement st = con.prepareStatement("SELECT teacherID, schoolCSMapID FROM teachercsmap WHERE teacherCSMapID = ?");
                 st.setString(1, teacherCSMapList[i]);
                 ResultSet rs = st.executeQuery();
@@ -353,7 +353,7 @@ public class EvaluatorWorkloadAllocation {
 
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
                 PreparedStatement st = con.prepareStatement("SELECT schoolID, CSLevelID FROM schoolcsmap WHERE schoolCSMapID = ?");
                 st.setString(1, schoolCSMapList[i]);
                 ResultSet rs = st.executeQuery();
@@ -382,7 +382,7 @@ public class EvaluatorWorkloadAllocation {
 
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
                 PreparedStatement st = con.prepareStatement("SELECT schoolName FROM school WHERE schoolID = ?");
                 st.setString(1, schoolIDList[i]);
                 ResultSet rs = st.executeQuery();
@@ -407,7 +407,7 @@ public class EvaluatorWorkloadAllocation {
 
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
                 PreparedStatement st = con.prepareStatement("SELECT teacherName FROM teacher WHERE teacherID = ?");
                 st.setString(1, teacherIDList[i]);
                 ResultSet rs = st.executeQuery();
@@ -1248,6 +1248,8 @@ public class EvaluatorWorkloadAllocation {
         result = "0.0";
 
         counterReset = 0;
+        
+        MaintainSchoolMenu.setGlobalCounter(0);
     }
 
     //valuechangelistener purpose

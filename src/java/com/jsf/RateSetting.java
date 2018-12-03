@@ -387,6 +387,8 @@ public class RateSetting {
         mileageRate = "0.00";
 
         counterReset = 0;
+        
+        MaintainSchoolMenu.setGlobalCounter(0);
 
         //set default disabled
         disabledTxt = true;

@@ -1077,6 +1077,8 @@ public class MaintainAssessmentTask {
         cslevel = "CS Level 1";
 
         counterReset = 0;
+        
+        MaintainSchoolMenu.setGlobalCounter(0);
 
         //set default disabled
         disabledtxt = true;

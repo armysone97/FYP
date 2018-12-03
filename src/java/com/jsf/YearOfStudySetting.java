@@ -548,10 +548,10 @@ public class YearOfStudySetting {
 
         switch (verifyCounter) {
             case 0:
-                context.addMessage(null, new FacesMessage("Add Year Of Study CS Map Setting for year " + year + " with commercial year " + yearComm + " not successful!"));
+                context.addMessage(null, new FacesMessage("Add Year Of Study CS Map Setting for year " + year + " with commencement year " + yearComm + " not successful!"));
                 break;
             case 1:
-                context.addMessage(null, new FacesMessage("Add Year Of Study CS Map Setting for year " + year + " with commercial year " + yearComm + " successful!"));
+                context.addMessage(null, new FacesMessage("Add Year Of Study CS Map Setting for year " + year + " with commencement year " + yearComm + " successful!"));
                 break;
         }
     }
@@ -695,7 +695,7 @@ public class YearOfStudySetting {
         return scID;
     }
 
-    //auto add school cs map in db based on commercial year
+    //auto add school cs map in db based on commencement year
     public void autoAddSchoolCSMap(int numYearComm, String[] CSIDListDuplicate) { //if need redirect to another xhtml, need change void to String and return keyword
 
         //1. find commYear (eg. 2016) from school table and compare with numYearComm
@@ -763,10 +763,10 @@ public class YearOfStudySetting {
 
 //         switch (verifyCounter) {
 //            case 0:
-//                context.addMessage(null, new FacesMessage("Add School CS Map Setting for year " + year + " with commercial year " + yearComm + " not successful!"));
+//                context.addMessage(null, new FacesMessage("Add School CS Map Setting for year " + year + " with commencement year " + yearComm + " not successful!"));
 //                break;
 //            case 1:
-//                context.addMessage(null, new FacesMessage("Add School CS Map Setting for year " + year + " with commercial year " + yearComm + " successful!"));
+//                context.addMessage(null, new FacesMessage("Add School CS Map Setting for year " + year + " with commencement year " + yearComm + " successful!"));
 //                break;
 //        }
 
@@ -803,6 +803,8 @@ public class YearOfStudySetting {
         standard6 = "CS Level 1";
 
         counterReset = 0;
+        
+        MaintainSchoolMenu.setGlobalCounter(0);
 
         //set default disabled
         disabledDDL = false;

@@ -702,6 +702,8 @@ public class AssessmentMinSetting {
         disabledPractical = true;
         disabledGroupwork = true;
         disabledReset = true;
+        
+        MaintainSchoolMenu.setGlobalCounter(0);
 
         assessmentList();
     }

@@ -89,7 +89,7 @@ public class MaintainTeacher {
         this.disabledNewTeacherIDName = true;
         this.newTeacherID = null;
         this.newTeacherName = null;
-        this.newTeacherIDName = null;
+        this.newTeacherIDName = "TH1 - Teoh Wei Ran";
         this.newCount = 0;
         this.counterReset = 0;
         this.counterDataTable = 0;
@@ -591,6 +591,8 @@ public class MaintainTeacher {
                     teacherName = retriveTeacherName(teacherID);
                     newTeacherIDName_list.add(teacherID + " - " + teacherName);
                 }
+                
+                get_newCSLevel();
 
                 break;
             case 2: //add new
@@ -782,10 +784,10 @@ public class MaintainTeacher {
 
         switch (newCount) {
             case 1: //select (before select teacherID and Name)
-                for (int i = 0; i < CSLevelIDList.length; i++) {
-                    newCSLevel_list.add(matchCSLevelName(CSLevelIDList[i]));
-                }
-                break;
+//                for (int i = 0; i < CSLevelIDList.length; i++) {
+//                    newCSLevel_list.add(matchCSLevelName(CSLevelIDList[i]));
+//                }
+//                break;
             case 3: //select (after select teacherID and Name)
 
 //        for (int i = 0; i < CSLevelIDList.length; i++) {
@@ -2608,6 +2610,8 @@ public class MaintainTeacher {
         disabledNewTeacherIDName = true;
 
         counterDataTable = 0;
+        
+        MaintainSchoolMenu.setGlobalCounter(0);
     }
 
     //reset newTeacher

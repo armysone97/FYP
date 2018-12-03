@@ -236,6 +236,8 @@ public class EvaluatorPersonalDetails {
             System.out.println("Error: " + ex);
         }
         
+        
+        
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -249,6 +251,7 @@ public class EvaluatorPersonalDetails {
                 if(staffID.equals(staff_ID) && roleID.equals(rolesID)) {
                     
                     check = false;
+                    break;
                 }
                 else{
                     check = true;
@@ -271,6 +274,7 @@ public class EvaluatorPersonalDetails {
     
     //save evaluator personal details
     public void evaluatorData() {
+        
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");

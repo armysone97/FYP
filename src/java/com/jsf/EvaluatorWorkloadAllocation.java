@@ -311,11 +311,11 @@ public class EvaluatorWorkloadAllocation {
             System.out.println("Error: " + ex);
         }
         
+        int tmp1 = 0;
+        int tmp2 = 0;
         for (int i = 0; i < workload_Count; i++) {
             String teacherIDTmp = "";
             String schoolCSMapIDTmp = "";
-            int tmp1 = 0;
-            int tmp2 = 0;
 
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -342,11 +342,11 @@ public class EvaluatorWorkloadAllocation {
             }
         }
         
+        int tmp3 = 0;
+        int tmp4 = 0;
         for (int i = 0; i < workload_Count; i++) {
             String schoolIDTmp = "";
             String csLevelIDTmp = "";
-            int tmp3 = 0;
-            int tmp4 = 0;
 
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -373,9 +373,9 @@ public class EvaluatorWorkloadAllocation {
             }
         }
         
+        int tmp5 = 0;
         for (int i = 0; i < workload_Count; i++) {
             String schoolNameTmp = "";
-            int tmp5 = 0;
 
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -398,9 +398,9 @@ public class EvaluatorWorkloadAllocation {
             }
         }
         
+        int tmp6 = 0;
         for (int i = 0; i < workload_Count; i++) {
             String teacherNameTmp = "";
-            int tmp6 = 0;
 
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");

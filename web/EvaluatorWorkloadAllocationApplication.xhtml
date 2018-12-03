@@ -58,7 +58,7 @@
 
                         <th align="right">
                             <h:outputText id="simbol134" value=": "  styleClass="lblStyle"/> </th>
-                            <th align="left">   <h:selectOneMenu id="ddlEvaluatorList" styleClass="ddlSpecialOneStyle" value="#{evaluatorWorkloadAllocation.evaluator}">
+                            <th align="left">   <h:selectOneMenu id="ddlEvaluatorList" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.evaluator}">
                                 <f:selectItem itemValue="" itemLabel="" />
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_EvaluatorList()}"/>
                                 <f:ajax listener="#{evaluatorWorkloadAllocation.evaluatorChanged()}" render="txtWorkloadLimit txtTtlWorkloadAssigned"/>
@@ -75,7 +75,7 @@
                         <th align="right">
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/> </th>
                         <th align="left">
-                            <h:selectOneMenu id="ddlSchoolList" styleClass="ddlSpecialOneStyle" value="#{evaluatorWorkloadAllocation.school}">
+                            <h:selectOneMenu id="ddlSchoolList" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.school}">
                                 <f:selectItem itemValue="" itemLabel="" />
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_SchoolList()}" />
                                 <f:ajax listener="#{evaluatorWorkloadAllocation.schoolChanged()}" render="ddlCSLevel"/>
@@ -90,7 +90,7 @@
                         <th align="right">
                             <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/> </th>
                         <th align="left">   
-                            <h:selectOneMenu id="ddlCSLevel" styleClass="ddlSpecialOneStyle" value="#{evaluatorWorkloadAllocation.csLevel}">
+                            <h:selectOneMenu id="ddlCSLevel" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.csLevel}">
                                 <f:selectItem itemValue="" itemLabel="" />
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_CSLevelList()}" />
                                 <f:ajax listener="#{evaluatorWorkloadAllocation.csLevelChanged()}" render="ddlTeacherList"/>
@@ -107,7 +107,7 @@
                         <th align="right">
                             <h:outputText id="simbol4" value=": "  styleClass="lblStyle"/> </th>
                         <th align="left"> 
-                            <h:selectOneMenu id="ddlTeacherList" styleClass="ddlSpecialOneStyle" value="#{evaluatorWorkloadAllocation.teacher}">
+                            <h:selectOneMenu id="ddlTeacherList" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.teacher}">
                                 <f:selectItem itemValue="" itemLabel="" />
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_TeacherList()}" />
                                 <f:ajax listener="#{evaluatorWorkloadAllocation.teacherChanged()}" render="txtTotalStudent"/>
@@ -131,7 +131,7 @@
                             <h:outputText id="simbol51222" value=": "  styleClass="lblStyle"/> </th>
 
                         <th align="left">
-                            <h:selectOneMenu id="ddlAssessment" styleClass="ddlSpecialOneStyle" value="#{evaluatorWorkloadAllocation.assType}">
+                            <h:selectOneMenu id="ddlAssessment" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.assType}">
                                 <f:selectItem itemValue="" itemLabel="" />
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_AssessmentList()}"/>
                                 <f:ajax listener="#{evaluatorWorkloadAllocation.assessmentChanged()}" render="txtWorkloadAssigned"/>
@@ -218,8 +218,8 @@
                 
                 <ui:repeat value="#{evaluatorWorkloadAllocation.workloadList}" var="released">
                     <tr>
-                        <td colspan="2"><h:outputText value="#{released.evaluator_DT}" styleClass="lblStyle" /></td>
-                        <td colspan="2"><h:outputText value="#{released.assessment_DT}" styleClass="lblStyle" /></td>
+                        <td colspan="2"><h:outputText value="#{released.evaluator_DT}" styleClass="lblSpecialStyle" /></td>
+                        <td colspan="2"><h:outputText value="#{released.assessment_DT}" styleClass="lblSpecialStyle" /></td>
                     </tr>
                 </ui:repeat>
                      

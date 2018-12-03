@@ -1031,8 +1031,11 @@ public class EvaluatorWorkloadAllocation {
     }
     
     public void teacherChanged(){
-        
         retrieveTotalStudent();
+    }
+    
+    public void assessmentChanged(){
+        retrieveNumSamAss();
     }
     
     public void main(String args[]) {

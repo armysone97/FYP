@@ -60,7 +60,7 @@
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{rateSetting.yearChanged()}" render="MaxNumSampleAss HourlyRateMasterTrainer HourlyRateEvaluator RateOfMileage btnReset btnConfirm"/>
                             </h:selectOneMenu>  
-                            &nbsp;&nbsp;&nbsp;  <h:commandButton id="btnShow" value="Show" title="Click to show rate" styleClass="buttonStyle" action="#{rateSetting.settingList()}"/>
+                            <!--&nbsp;&nbsp;&nbsp;  <h:commandButton id="btnShow" value="Show" title="Click to show rate" styleClass="buttonStyle" action="#{rateSetting.settingList()}"/>-->
                         </th>
                     </tr>   
 
@@ -86,7 +86,7 @@
 
                     <tr>
                         <th rowspan="2" align="left">
-                            <h:outputText id="lblHourlyRate" value="Set Hourly Rate "  styleClass="lblStyle"/>
+                            <h:outputText id="lblHourlyRate" value="Set hourly rate "  styleClass="lblStyle"/>
                         </th>
 
                         <th rowspan="2" align="left">

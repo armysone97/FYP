@@ -72,8 +72,8 @@
 
                             <h:outputText id="lblCSLevel" value="CS Level : "  styleClass="lblStyle"/>
 
-                            <h:selectOneMenu title="Select CS level" styleClass="ddlStyle" value="#{assessmentTaskSetting.cslevel}">
-                                <f:selectItems id="ddlCSLevelList" value="#{assessmentTaskSetting.get_CSLevel()}" /> 
+                            <h:selectOneMenu id="ddlCSLevelList" title="Select CS level" styleClass="ddlStyle" value="#{assessmentTaskSetting.cslevel}">
+                                <f:selectItems value="#{assessmentTaskSetting.get_CSLevel()}" /> 
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{assessmentTaskSetting.CSLevelChanged()}" render="txtProject txtPractical txtCollaboration txtGroupwork btnReset btnConfirm"/>
                             </h:selectOneMenu>  

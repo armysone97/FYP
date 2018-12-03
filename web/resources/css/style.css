@@ -185,3 +185,12 @@ and open the template in the editor.
     height: 40px;
     font-family: Georgia;
 }
+
+/*MileageClaim*/
+.ddlSpecialThreeStyle{
+    font-size: 18pt;
+    column-width: 10px;
+    width: 400px;
+    height: 40px;
+    font-family: Georgia;
+}

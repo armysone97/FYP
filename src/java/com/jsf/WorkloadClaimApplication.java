@@ -324,6 +324,10 @@ public class WorkloadClaimApplication {
         context.addMessage(null, new FacesMessage("Added successful!"));
         
     }
+    
+    public void roleChanged(){
+        retrieveHourlyRate();
+    }
 
     //navigation bar purpose
     public String goToNextPage() {
@@ -340,19 +344,6 @@ public class WorkloadClaimApplication {
 
         FacesContext context = FacesContext.getCurrentInstance();
 
-//        switch (counterReset) {
-//            case 0:
-//                context.addMessage(null, new FacesMessage("Reset successful!"));
-//                break;
-//        }
-
-        //set default value
-//        staffID = null;
-//        name = null;
-//        branch = null;
-//        faculty = null;
-//        staffID = Login.getGlobalStaffID();
-//        retrievePersonalDetails();
         role = null;
         hourlyRate = "0.0";
         workHours = "0.0";

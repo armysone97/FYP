@@ -44,7 +44,7 @@
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                            <h:inputText id="txtStaffID" value="#{workloadClaimApplication.staffID}" styleClass="txtboxSmallSpecialStyle" required="required" size="35"/>
+                            <h:inputText id="txtStaffID" disabled="true" value="#{workloadClaimApplication.staffID}" styleClass="txtboxSmallSpecialStyle" required="required" size="35"/>
 
                         </th>
                     </tr> 
@@ -55,7 +55,7 @@
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                            <h:inputText id="txtName" styleClass="txtboxSpecialStyle" required="required" size="35" value="#{workloadClaimApplication.name}"/>
+                            <h:inputText id="txtName" disabled="true" styleClass="txtboxSpecialStyle" required="required" size="35" value="#{workloadClaimApplication.name}"/>
                         </th>
 
                     </tr> 
@@ -67,7 +67,7 @@
                             <h:outputText id="simbol4" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                            <h:inputText id="txtBranch" styleClass="txtboxSpecialStyle" required="required" size="35" value="#{workloadClaimApplication.branch}"/>
+                            <h:inputText id="txtBranch" disabled="true" styleClass="txtboxSpecialStyle" required="required" size="35" value="#{workloadClaimApplication.branch}"/>
                         </th>
                     </tr> 
 
@@ -78,7 +78,7 @@
                             <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                            <h:inputText id="txtFaculty" styleClass="txtboxSmallSpecialStyle" required="required" size="35" value="#{workloadClaimApplication.faculty}"/>
+                            <h:inputText id="txtFaculty" disabled="true" styleClass="txtboxSmallSpecialStyle" required="required" size="35" value="#{workloadClaimApplication.faculty}"/>
                         </th>
                     </tr> 
 
@@ -93,6 +93,7 @@
                             <h:selectOneRadio layout="lineDirection" styleClass="radiobuttonStyle" value="#{workloadClaimApplication.role}"> 
                                 <f:selectItem itemValue = "Evaluator" itemLabel = "Evaluator" /> 
                                 <f:selectItem itemValue = "Master Trainer" itemLabel = "Master Trainer" /> 
+                                <f:ajax listener="#{workloadClaimApplication.roleChanged()}" render="txtHourlyRate"/>
                             </h:selectOneRadio>
                             
                         </th>
@@ -107,8 +108,7 @@
 
                         <th align="left">
                             <h:outputText id="simbol10" value="RM "  styleClass="lblStyle"/>
-                            <h:inputText id="txtHourlyRate" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{workloadClaimApplication.hourlyRate}"/>
-                            &nbsp;&nbsp;&nbsp;         <h:commandButton id="btnRate" value="Confirm" styleClass="buttonStyle" action="#{workloadClaimApplication.retrieveHourlyRate()}"/>
+                            <h:inputText id="txtHourlyRate" disabled="true" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{workloadClaimApplication.hourlyRate}"/>
 
                         </th>
                     </tr> 
@@ -121,7 +121,7 @@
                         </th>
 
                         <th align="left">
-                            <h:inputText id="txtTotalWorkload" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{workloadClaimApplication.workHours}"/>
+                            <h:inputText id="txtTotalWorkload" disabled="true" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{workloadClaimApplication.workHours}"/>
                             <h:outputText id="hr1" value=" hours"  styleClass="lblStyle"/>
                         </th>
                     </tr> 
@@ -135,7 +135,7 @@
 
                         <th align="left">
                             <h:outputText id="simbol9" value="RM "  styleClass="lblStyle"/>
-                            <h:inputText id="txtTotal" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{workloadClaimApplication.result}"/>
+                            <h:inputText id="txtTotal" disabled="true" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{workloadClaimApplication.result}"/>
                         </th>
                     </tr> 
 

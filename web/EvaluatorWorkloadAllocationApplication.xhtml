@@ -75,6 +75,7 @@
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/> </th>
                         <th align="left">
                             <h:selectOneMenu id="ddlSchoolList" styleClass="ddlStyle" value="#{evaluatorWorkloadAllocation.school}">
+                                <f:selectItem itemValue="" itemLabel=""/>
                                 <f:selectItems value="#{evaluatorWorkloadAllocation.get_SchoolList()}" />
                                 <f:ajax listener="#{evaluatorWorkloadAllocation.schoolChanged()}" render="ddlCSLevel"/>
                             </h:selectOneMenu>  

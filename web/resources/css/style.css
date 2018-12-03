@@ -69,6 +69,13 @@ and open the template in the editor.
     font-family: Georgia;
 }
 
+.txtboxSmallSpecialStyle {
+    font-size: 18pt;
+    height: 35px;
+    width : 100px;
+    font-family: Georgia;
+}
+
 .textAreaStyle{
     font-size: 18pt;
     text-align: center;
@@ -100,6 +107,7 @@ and open the template in the editor.
     font-size: 18pt;
     font-family: Georgia;
 }
+
 
 /*Login*/
 .buttonLoginStyle{
@@ -153,12 +161,6 @@ and open the template in the editor.
     font-family: Georgia;
 }
 
-.txtboxSmallSpecialStyle {
-    font-size: 18pt;
-    height: 35px;
-    width : 100px;
-    font-family: Georgia;
-}
 
 /*RateSetting*/
 .txtboxSmallestSpecialStyle {

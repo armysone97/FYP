@@ -16,7 +16,7 @@
                 <p:growl id="messages"/> <!--Error message purpose-->
 
                 <br />
-                
+
                 <!--Top Navigation Bar-->
                 <p:menubar styleClass="NavigationBar">
                     <p:submenu label="STEM CS MANAGEMENT">
@@ -29,7 +29,7 @@
                         </p:submenu>
                     </p:submenu>
 
-               <p:submenu label="SCHOOL MANAGEMENT">
+                    <p:submenu label="SCHOOL MANAGEMENT">
                         <p:submenu label="Maintain School">
                             <p:menuitem title="Click to redirect to Add New School page" value="Add New School" action="#{maintainSchoolDetails.goToNextPage()}" />
                             <p:menuitem title="Click to redirect to View or Edit School page" value="View/Edit School" action="#{maintainSchoolMenu.goToNextPage()}" />
@@ -48,164 +48,192 @@
 
                 <br />
                 <br />
-               
-                <table border="0" cellpadding="10px" cellspacing="0" width="700px" align="center" style="float: left;">
-                    <tr>
-                        <th align="left"> 
-                            <h:outputText id="lblEvaluator" value="Evaluator"  styleClass="lblStyle"/>
-                        </th>
 
+                <fieldset style="display: inline-block">
+                    <!--                    <legend id="teacherDetails" align="left">
+                                            <h:outputText id="lblSchoolTeacherDetails" value="View Teacher Details"  styleClass="lblStyle"/>          
+                    
+                                        </legend>-->
 
-                        <th align="right">
-                            <h:outputText id="simbol134" value=": "  styleClass="lblStyle"/> </th>
-                            <th align="left">   <h:selectOneMenu id="ddlEvaluatorList" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.evaluator}">
-                                <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="#{evaluatorWorkloadAllocation.get_EvaluatorList()}"/>
-                                <f:ajax listener="#{evaluatorWorkloadAllocation.evaluatorChanged()}" render="txtWorkloadLimit txtTtlWorkloadAssigned"/>
-                            </h:selectOneMenu>  
-                            
-
-                        </th>
-                    </tr>  
-
-                    <tr>
-                        <th align="left"> 
-                            <h:outputText id="lblSchool" value="Select School"  styleClass="lblStyle"/>
-                        </th>
-                        <th align="right">
-                            <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/> </th>
-                        <th align="left">
-                            <h:selectOneMenu id="ddlSchoolList" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.school}">
-                                <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="#{evaluatorWorkloadAllocation.get_SchoolList()}" />
-                                <f:ajax listener="#{evaluatorWorkloadAllocation.schoolChanged()}" render="ddlCSLevel"/>
-                            </h:selectOneMenu>  
-                            
-                        </th>
-                    </tr> 
-
-                    <tr>
-                        <th align="left"> 
-                            <h:outputText id="lblCSLevel" value="CS Level "  styleClass="lblStyle"/></th>
-                        <th align="right">
-                            <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/> </th>
-                        <th align="left">   
-                            <h:selectOneMenu id="ddlCSLevel" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.csLevel}">
-                                <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="#{evaluatorWorkloadAllocation.get_CSLevelList()}" />
-                                <f:ajax listener="#{evaluatorWorkloadAllocation.csLevelChanged()}" render="ddlTeacherList"/>
-                            </h:selectOneMenu>  
-                            
-                        </th>
-                    </tr>   
-
-
-                    <tr>
-                        <th align="left"> 
-                            <h:outputText id="lblTeacher" value="Select Teacher"  styleClass="lblStyle"/>
-                        </th>
-                        <th align="right">
-                            <h:outputText id="simbol4" value=": "  styleClass="lblStyle"/> </th>
-                        <th align="left"> 
-                            <h:selectOneMenu id="ddlTeacherList" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.teacher}">
-                                <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="#{evaluatorWorkloadAllocation.get_TeacherList()}" />
-                                <f:ajax listener="#{evaluatorWorkloadAllocation.teacherChanged()}" render="txtTotalStudent"/>
-                            </h:selectOneMenu>  
+                    <table border="0" cellpadding="10px" cellspacing="0" width="700px" align="center" style="float: left;">
+                        <tr>
+                            <th align="left"> 
+                                <h:outputText id="lblEvaluator" value="Evaluator"  styleClass="lblStyle"/>
                             </th>
-                    </tr> 
-
-                    <tr>
-                        <th align="left"> <h:outputText id="lblTotalStudent" value="Total Student"  styleClass="lblStyle"/></th>
-                        <th align="right">
-                            <h:outputText id="simbol5" value=": "  styleClass="lblStyle"/> </th>
-
-                        <th align="left">
-                            <h:inputText id="txtTotalStudent" disabled="true" value="#{evaluatorWorkloadAllocation.totalStudent}" styleClass="txtboxSmallestStyle" required="required" size="5"/>
-                        </th>
-                    </tr> 
-
-                    <tr>
-                        <th align="left"> <h:outputText id="lblAssessmentType" value="Assessment Type"  styleClass="lblStyle"/></th>
-                        <th align="right">
-                            <h:outputText id="simbol51222" value=": "  styleClass="lblStyle"/> </th>
-
-                        <th align="left">
-                            <h:selectOneMenu id="ddlAssessment" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.assType}">
-                                <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="#{evaluatorWorkloadAllocation.get_AssessmentList()}"/>
-                                <f:ajax listener="#{evaluatorWorkloadAllocation.assessmentChanged()}" render="txtWorkloadAssigned"/>
-                            </h:selectOneMenu>  
-                          <!--&nbsp;&nbsp;&nbsp;   <h:commandButton id="btnTest122" value="Calculate" styleClass="buttonStyle" action="{evaluatorWorkloadAllocation.retrieveNumSamAss()}"/>-->
-                        </th>
-                    </tr> 
-
-                    <tr>
-                        <th align="left"> <h:outputText id="lblWorkloadAssigned" value="Workload Assigned"  styleClass="lblStyle"/></th>
-
-                        <th align="left">
-                            <h:outputText id="simbol7" value=": "  styleClass="lblStyle"/>
-                        </th>
-
-                        <th align="left">
-                            <h:inputText id="txtWorkloadAssigned" disabled="true" styleClass="txtboxSmallestStyle" required="required" size="35" value="#{evaluatorWorkloadAllocation.result}"/>
-                            <h:outputText id="hr2" value=" hours"  styleClass="lblStyle"/>
-                        </th>
-                    </tr> 
-
-                </table>   
 
 
-                <table border="0" cellpadding="10px" cellspacing="0" width="600px" align="center" style="float: right;">
-                    <tr>
-                        <th align="left"> 
-                            <h:outputText id="lblWorkloadLimit" value="Workload Limit"  styleClass="lblStyle"/>
-                            <!--<h:outputText id="simbol6" value=": "  styleClass="lblStyle"/>-->
+                            <th align="right">
+                                <h:outputText id="simbol134" value=": "  styleClass="lblStyle"/> </th>
+                            <th align="left">   <h:selectOneMenu id="ddlEvaluatorList" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.evaluator}">
+                                    <f:selectItem itemValue="" itemLabel="" />
+                                    <f:selectItems value="#{evaluatorWorkloadAllocation.get_EvaluatorList()}"/>
+                                    <f:ajax listener="#{evaluatorWorkloadAllocation.evaluatorChanged()}" render="txtWorkloadLimit txtTtlWorkloadAssigned"/>
+                                </h:selectOneMenu>  
 
-                        </th>
 
-                       <th align="right">
-                            <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> </th>
+                            </th>
+                        </tr>  
+
+                        <tr>
+                            <th align="left"> 
+                                <h:outputText id="lblSchool" value="Select School"  styleClass="lblStyle"/>
+                            </th>
+                            <th align="right">
+                                <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/> </th>
+                            <th align="left">
+                                <h:selectOneMenu id="ddlSchoolList" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.school}">
+                                    <f:selectItem itemValue="" itemLabel="" />
+                                    <f:selectItems value="#{evaluatorWorkloadAllocation.get_SchoolList()}" />
+                                    <f:ajax listener="#{evaluatorWorkloadAllocation.schoolChanged()}" render="ddlCSLevel"/>
+                                </h:selectOneMenu>  
+
+                            </th>
+                        </tr> 
+
+                        <tr>
+                            <th align="left"> 
+                                <h:outputText id="lblCSLevel" value="CS Level "  styleClass="lblStyle"/></th>
+                            <th align="right">
+                                <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/> </th>
+                            <th align="left">   
+                                <h:selectOneMenu id="ddlCSLevel" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.csLevel}">
+                                    <f:selectItem itemValue="" itemLabel="" />
+                                    <f:selectItems value="#{evaluatorWorkloadAllocation.get_CSLevelList()}" />
+                                    <f:ajax listener="#{evaluatorWorkloadAllocation.csLevelChanged()}" render="ddlTeacherList"/>
+                                </h:selectOneMenu>  
+
+                            </th>
+                        </tr>   
+
+
+                        <tr>
+                            <th align="left"> 
+                                <h:outputText id="lblTeacher" value="Select Teacher"  styleClass="lblStyle"/>
+                            </th>
+                            <th align="right">
+                                <h:outputText id="simbol4" value=": "  styleClass="lblStyle"/> </th>
+                            <th align="left"> 
+                                <h:selectOneMenu id="ddlTeacherList" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.teacher}">
+                                    <f:selectItem itemValue="" itemLabel="" />
+                                    <f:selectItems value="#{evaluatorWorkloadAllocation.get_TeacherList()}" />
+                                    <f:ajax listener="#{evaluatorWorkloadAllocation.teacherChanged()}" render="txtTotalStudent"/>
+                                </h:selectOneMenu>  
+                            </th>
+                        </tr> 
+
+                        <tr>
+                            <th align="left"> <h:outputText id="lblTotalStudent" value="Total Student"  styleClass="lblStyle"/></th>
+                            <th align="right">
+                                <h:outputText id="simbol5" value=": "  styleClass="lblStyle"/> </th>
+
+                            <th align="left">
+                                <h:inputText id="txtTotalStudent" disabled="true" value="#{evaluatorWorkloadAllocation.totalStudent}" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                            </th>
+                        </tr> 
+
+                        <tr>
+                            <th align="left"> <h:outputText id="lblAssessmentType" value="Assessment Type"  styleClass="lblStyle"/></th>
+                            <th align="right">
+                                <h:outputText id="simbol51222" value=": "  styleClass="lblStyle"/> </th>
+
+                            <th align="left">
+                                <h:selectOneMenu id="ddlAssessment" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.assType}">
+                                    <f:selectItem itemValue="" itemLabel="" />
+                                    <f:selectItems value="#{evaluatorWorkloadAllocation.get_AssessmentList()}"/>
+                                    <f:ajax listener="#{evaluatorWorkloadAllocation.assessmentChanged()}" render="txtWorkloadAssigned"/>
+                                </h:selectOneMenu>  
+                                <!--&nbsp;&nbsp;&nbsp;   <h:commandButton id="btnTest122" value="Calculate" styleClass="buttonStyle" action="{evaluatorWorkloadAllocation.retrieveNumSamAss()}"/>-->
+                            </th>
+                        </tr> 
+
+                        <tr>
+                            <th align="left"> <h:outputText id="lblWorkloadAssigned" value="Workload Assigned"  styleClass="lblStyle"/></th>
+
+                            <th align="left">
+                                <h:outputText id="simbol7" value=": "  styleClass="lblStyle"/>
+                            </th>
+
+                            <th align="left">
+                                <h:inputText id="txtWorkloadAssigned" disabled="true" styleClass="txtboxSmallestStyle" required="required" size="35" value="#{evaluatorWorkloadAllocation.result}"/>
+                                <h:outputText id="hr2" value=" hours"  styleClass="lblStyle"/>
+                            </th>
+                        </tr> 
+
+                    </table>   
+
+
+                    <table border="0" cellpadding="10px" cellspacing="0" width="600px" align="center" style="float: right;">
+                        <tr>
+                            <th align="left"> 
+                                <h:outputText id="lblWorkloadLimit" value="Workload Limit"  styleClass="lblStyle"/>
+                                <!--<h:outputText id="simbol6" value=": "  styleClass="lblStyle"/>-->
+
+                            </th>
+
+                            <th align="right">
+                                <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> </th>
                             <th align="left">  
-                            <h:inputText id="txtWorkloadLimit" disabled="true" value="#{evaluatorWorkloadAllocation.workloadLimit}" styleClass="txtboxSmallestStyle" required="required" size="35"/>
-                            <h:outputText id="hr1" value=" hours"  styleClass="lblStyle"/>
-                        </th>
-                    </tr> 
+                                <h:inputText id="txtWorkloadLimit" disabled="true" value="#{evaluatorWorkloadAllocation.workloadLimit}" styleClass="txtboxSmallestStyle" required="required" size="35"/>
+                                <h:outputText id="hr1" value=" hours"  styleClass="lblStyle"/>
+                            </th>
+                        </tr> 
+
+                        <tr>
+                            <th align="left"> 
+                                <h:outputText id="lblTtlWorkloadAssigned" value="Total Workload Assigned"  styleClass="lblStyle"/>
+                                <!--<h:outputText id="simbol227" value=": "  styleClass="lblStyle"/>-->
+
+                            </th>
+
+                            <th align="right">
+                                <h:outputText id="simbol123" value=": "  styleClass="lblStyle"/> </th>
+                            <th align="left">  
+                                <h:inputText id="txtTtlWorkloadAssigned" disabled="true" styleClass="txtboxSmallestStyle" value="#{evaluatorWorkloadAllocation.totalWorkloadAssigned}" required="required" size="35"/>
+                                <h:outputText id="hr222" value=" hours"  styleClass="lblStyle"/>
+                            </th>
+                        </tr> 
+                    </table>
 
                     <tr>
-                        <th align="left"> 
-                            <h:outputText id="lblTtlWorkloadAssigned" value="Total Workload Assigned"  styleClass="lblStyle"/>
-                            <!--<h:outputText id="simbol227" value=": "  styleClass="lblStyle"/>-->
-
-                        </th>
-
-                         <th align="right">
-                            <h:outputText id="simbol123" value=": "  styleClass="lblStyle"/> </th>
-                            <th align="left">  
-                            <h:inputText id="txtTtlWorkloadAssigned" disabled="true" styleClass="txtboxSmallestStyle" value="#{evaluatorWorkloadAllocation.totalWorkloadAssigned}" required="required" size="35"/>
-                            <h:outputText id="hr222" value=" hours"  styleClass="lblStyle"/>
-                        </th>
-                    </tr> 
-                </table>
-
+                        <th><label>&nbsp;</label></th>
+                        <th><label>&nbsp;</label></th> 
+                    </tr>
                 
 
-            </h:form>
-        </div>
 
-        <h:form>
+                <!--<h:form>-->
 
-            <table border="0" cellpadding="10px" cellspacing="0" width="1300px" align="center">    
+               
+                    <table border="0" cellpadding="10px" cellspacing="0" width="1300px" align="center">    
+                        <tr>
+                            <th><label>&nbsp;</label></th>
+                            <th><label>&nbsp;</label></th> 
+                        </tr>
+
+                        <tr>      
+                            <th colspan="5" align="right"><h:commandButton id="btnShowEVList" value="Show List" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.callStatus()}"/>
+                                &nbsp;&nbsp;&nbsp; <h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.validationCheck()}"/>
+                            </th>
+                        </tr> 
+                    </table>
+                    
+                    </fieldset>
                 
+                 <table border="0" cellpadding="10px" cellspacing="0" width="1300px" align="center">    
+                        <tr>
+                            <th><label>&nbsp;</label></th>
+                            <th><label>&nbsp;</label></th> 
+                        </tr>
 
-                <tr>      
-                    <th colspan="5" align="right"><h:commandButton id="btnShowEVList" value="Show List" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.callStatus()}"/>
-                        &nbsp;&nbsp;&nbsp; <h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.validationCheck()}"/>
-               </th>
-                </tr> 
-            </table>
-           
-            <table border="1" cellpadding="10px" cellspacing="0" width="800px">
+                    </table>
+                
+                 <fieldset>
+                    <legend id="workloadList">
+                        <h:outputText id="lblWorkloadList" value="Workload List"  styleClass="lblStyle"/>          
+
+                    </legend>
+
+                    <table border="1" cellpadding="10px" cellspacing="0" width="800px">
 
                         <tr>
                             <th colspan="2" align="center">
@@ -221,19 +249,20 @@
                                 <h:outputText id="lblAssessmentList" value="Assessment"  styleClass="lblStyle" escape="false"/>
                             </th>
                         </tr>
-                
-                <ui:repeat value="#{evaluatorWorkloadAllocation.workloadList}" var="released">
-                    <tr>
-                        <td colspan="2"><h:outputText value="#{released.school_DT}" styleClass="lblSpecialStyle" /></td>
-                        <td colspan="2"><h:outputText value="#{released.csLevel_DT}" styleClass="lblSpecialStyle" /></td>
-                        <td colspan="2"><h:outputText value="#{released.teacher_DT}" styleClass="lblSpecialStyle" /></td>
-                        <td colspan="2"><h:outputText value="#{released.assessment_DT}" styleClass="lblSpecialStyle" /></td>
-                    </tr>
-                </ui:repeat>
-                     
+
+                        <ui:repeat value="#{evaluatorWorkloadAllocation.workloadList}" var="released">
+                            <tr>
+                                <td colspan="2"><h:outputText value="#{released.school_DT}" styleClass="lblSpecialStyle" /></td>
+                                <td colspan="2"><h:outputText value="#{released.csLevel_DT}" styleClass="lblSpecialStyle" /></td>
+                                <td colspan="2"><h:outputText value="#{released.teacher_DT}" styleClass="lblSpecialStyle" /></td>
+                                <td colspan="2"><h:outputText value="#{released.assessment_DT}" styleClass="lblSpecialStyle" /></td>
+                            </tr>
+                        </ui:repeat>
+
                     </table>
-            
-        </h:form>
+                </fieldset>
+            </h:form>
+        </div>
     </h:body>
 </html>
 

@@ -40,8 +40,11 @@ public class EvaluatorWorkloadAllocation {
     private String result;
     private String schoolID;
     private String totalWorkloadAssigned;
+    private double ttlWorkloadAssign;
     private int workloadCount;
     private String waID;
+    private double ttlWorkload_Assign;
+    private String total;
 
     private List<String> evaluator_list = new ArrayList<>();
     private List<String> school_list = new ArrayList<>();
@@ -1104,7 +1107,6 @@ public class EvaluatorWorkloadAllocation {
 
             while (rs.next()) {
                 String teacherCSMapIDDB = rs.getString("teacherCSMapID");
-                //String staffIDDB = rs.getString("staffID");
                 String assessment_Type = rs.getString("assessment");
 
                 if (teacherCSMap_ID.equals(teacherCSMapIDDB) && assType.equals(assessment_Type)) {
@@ -1133,33 +1135,76 @@ public class EvaluatorWorkloadAllocation {
         FacesContext context = FacesContext.getCurrentInstance();
         //insert workload allocation
         if(((Double.valueOf(result))+(Double.valueOf(totalWorkloadAssigned))) <= Double.valueOf(workloadLimit)){
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO workloadallocation (WA_ID, workloadAssigned, assessment, teacherCSMapID, staffID) VALUES (?, ?, ?, ?, ?)");
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO workloadallocation (WA_ID, workloadAssigned, assessment, teacherCSMapID, staffID) VALUES (?, ?, ?, ?, ?)");
 
-            statement.setString(1, waID);
-            statement.setDouble(2, Double.valueOf(result));
-            statement.setString(3, assType);
-            statement.setString(4, teacherCSMap_ID);
-            statement.setString(5, staff_ID);
+                statement.setString(1, waID);
+                statement.setDouble(2, Double.valueOf(result));
+                statement.setString(3, assType);
+                statement.setString(4, teacherCSMap_ID);
+                statement.setString(5, staff_ID);
 
-            statement.executeUpdate();
-            statement.close();
-            con.close();
+                statement.executeUpdate();
+                statement.close();
+                con.close();
 
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
-        }
-        
-        context.addMessage(null, new FacesMessage("Added successfully!"));
+            } 
+            catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+            
+            //retrieve ttlWorkloadAssigned
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = con.prepareStatement("SELECT ttlWorkloadAssigned FROM workloadlimit WHERE staffID = ? AND year = ?");
+                st.setString(1, staff_ID);
+                st.setInt(2, year);
+                ResultSet rs = st.executeQuery();
 
-        reset();
+                while (rs.next()) {
+                    ttlWorkloadAssign = rs.getDouble("ttlWorkloadAssigned");
+                }
+
+                st.close();
+                con.close();
+
+            } 
+            catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+            
+            ttlWorkload_Assign = Double.valueOf(result) + ttlWorkloadAssign;
+            
+            total = String.format("%.2f", ttlWorkload_Assign);
+            
+            //update ttlWorkloadAssigned in db
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = (PreparedStatement) con.prepareStatement("UPDATE workloadlimit SET ttlWorkloadAssigned = ? WHERE staffID = ? AND year = ?");
+                st.setString(1, total);
+                st.setString(2, staffID);
+                st.setInt(3, year);
+                st.executeUpdate();
+
+                st.close();
+                con.close();
+
+            } 
+            catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+            
+            context.addMessage(null, new FacesMessage("Added successfully!"));
+            reset();
         }
         else{
             context.addMessage(null, new FacesMessage("Workload limit exceed!"));
             reset();
-        }
+            }
     }
     
     //display data table

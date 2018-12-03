@@ -42,7 +42,7 @@ public class WorkloadClaimApplication {
 
     public WorkloadClaimApplication() {
         this.counterReset = 0;
-        this.year = 2018;
+        this.year = 2017;
         this.hourlyRate = "0.0";
         this.workHours = "0.0";
         this.result = "0.0";

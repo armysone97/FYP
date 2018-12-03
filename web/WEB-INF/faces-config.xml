@@ -19,12 +19,18 @@
     
     <navigation-rule>
         <from-view-id>/Login.xhtml</from-view-id>
+        
+                <navigation-case>
+            <from-action>#{login.verifyUser()}</from-action>
+            <from-outcome>ProfileManagement</from-outcome>
+            <to-view-id>/ProfileManagement.xhtml</to-view-id>
+        </navigation-case>
 
-        <navigation-case>
+<!--        <navigation-case>
             <from-action>#{login.verifyUser()}</from-action>
             <from-outcome>WorkloadClaimApplication</from-outcome>
             <to-view-id>/WorkloadClaimApplication.xhtml</to-view-id>
-        </navigation-case>
+        </navigation-case>-->
         <navigation-case>
             <from-action>#{login.verifyUser()}</from-action>
             <from-outcome>CSLevelSetting</from-outcome>
@@ -148,6 +154,12 @@
             <from-action>#{generateReport.goToNextPage()}</from-action>
             <from-outcome>GenerateReport</from-outcome>
             <to-view-id>/GenerateReport.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-action>#{profileManagement.goToNextPage()}</from-action>
+            <from-outcome>ProfileManagement</from-outcome>
+            <to-view-id>/ProfileManagement.xhtml</to-view-id>
         </navigation-case>
 </faces-config>
 

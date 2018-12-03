@@ -201,7 +201,8 @@ public class Login {
                     context.addMessage(null, new FacesMessage("Login Successful!"));
 
                 } else if (role.equals("Evaluator")) {
-                    nextPage = "WorkloadClaimApplication";
+//                    nextPage = "WorkloadClaimApplication";
+                    nextPage = "ProfileManagement";
                     globalStaffID = username;
                     globalCounter = 1;
 
@@ -295,7 +296,7 @@ public class Login {
         globalStaffID = null;
         counterReset = 0;
         globalCounter = 0;
-        
+
         MaintainSchoolMenu.setGlobalCounter(0);
     }
 

@@ -195,7 +195,7 @@
                 
 
                 <tr>      
-                    <th colspan="5" align="right"><h:commandButton id="btnShowEVList" value="Show List" styleClass="buttonStyle"/>
+                    <th colspan="5" align="right"><h:commandButton id="btnShowEVList" value="Show List" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.callStatus()}"/>
                         &nbsp;&nbsp;&nbsp; <h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.validationCheck()}"/>
                </th>
                 </tr> 
@@ -214,8 +214,8 @@
                 
                 <ui:repeat value="#{evaluatorWorkloadAllocation.workloadList}" var="released">
                     <tr>
-                        <th><h:outputText value="#{released.staffID}"/></th>
-                        <th><h:outputText value="#{released.assessment}"/></th>
+                        <th><h:outputText value="#{released.evaluator_DT}"/></th>
+                        <th><h:outputText value="#{released.assessment_DT}"/></th>
                     </tr>
                 </ui:repeat>
                      

@@ -216,6 +216,10 @@ public class EvaluatorWorkloadAllocation {
         return listWorkload;
     }
     
+    public void callStatus() {
+        getWorkloadList();
+    }
+    
     //display data
     public ArrayList getWorkloadList() {
         

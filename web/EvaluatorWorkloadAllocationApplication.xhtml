@@ -209,7 +209,13 @@
 
                         <tr>
                             <th colspan="2" align="center">
-                                <h:outputText id="lblEvaluatorList" value="Evaluator"  styleClass="lblStyle" escape="false"/>
+                                <h:outputText id="lblSchoolList" value="School"  styleClass="lblStyle" escape="false"/>
+                            </th>
+                            <th colspan="2" align="center">
+                                <h:outputText id="lblCSLevelList" value="CS Level"  styleClass="lblStyle" escape="false"/>
+                            </th>
+                            <th colspan="2" align="center">
+                                <h:outputText id="lblTeacherList" value="Teacher"  styleClass="lblStyle" escape="false"/>
                             </th>
                             <th colspan="2" align="center">
                                 <h:outputText id="lblAssessmentList" value="Assessment"  styleClass="lblStyle" escape="false"/>
@@ -218,7 +224,9 @@
                 
                 <ui:repeat value="#{evaluatorWorkloadAllocation.workloadList}" var="released">
                     <tr>
-                        <td colspan="2"><h:outputText value="#{released.evaluator_DT}" styleClass="lblSpecialStyle" /></td>
+                        <td colspan="2"><h:outputText value="#{released.school_DT}" styleClass="lblSpecialStyle" /></td>
+                        <td colspan="2"><h:outputText value="#{released.csLevel_DT}" styleClass="lblSpecialStyle" /></td>
+                        <td colspan="2"><h:outputText value="#{released.teacher_DT}" styleClass="lblSpecialStyle" /></td>
                         <td colspan="2"><h:outputText value="#{released.assessment_DT}" styleClass="lblSpecialStyle" /></td>
                     </tr>
                 </ui:repeat>

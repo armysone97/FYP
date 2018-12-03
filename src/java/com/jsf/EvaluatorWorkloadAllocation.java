@@ -65,6 +65,7 @@ public class EvaluatorWorkloadAllocation {
     private int workload_Count;
     private String evaluator_DT = "";
     private String assessment_DT = "";
+    private String staffID_DT;
 
     public EvaluatorWorkloadAllocation(String evaluator, String school) {
         super();
@@ -232,7 +233,7 @@ public class EvaluatorWorkloadAllocation {
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-                staffID = rs.getString("staffID");
+                staffID_DT = rs.getString("staffID");
             }
 
             rs.close();
@@ -247,7 +248,7 @@ public class EvaluatorWorkloadAllocation {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM workloadallocation WHERE staffID = ?");
-            st.setString(1, staffID);
+            st.setString(1, staffID_DT);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {

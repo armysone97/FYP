@@ -772,24 +772,6 @@ public class EvaluatorWorkloadAllocation {
         return teacher_list;
     }
 
-//    public void addEvaluator(){
-//        
-//        try{
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-//            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO testing (school) VALUES (?)");
-//                      
-//            statement.setString(1, evaluator);
-//            
-//            statement.executeUpdate();
-//            statement.close();
-//            con.close();
-//            
-//        }catch(Exception ex){
-//            System.out.println("Error: " + ex);
-//        }
-//        
-//    }
     public List<String> get_AssessmentList() {
 
         assessment_list.clear();
@@ -813,6 +795,18 @@ public class EvaluatorWorkloadAllocation {
         }
 
         return assessment_list;
+    }
+    
+    //check validation
+    public void validationCheck(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        if(evaluator == "" || school == "" || csLevel == "" || teacher == "" || assType == ""){
+            context.addMessage(null, new FacesMessage("All field are required to fill in!"));
+        }
+        else{
+            addWorkload();
+        }
     }
     
     public void addWorkload(){
@@ -942,9 +936,49 @@ public class EvaluatorWorkloadAllocation {
             System.out.println("Error: " + ex);
         }
         
-        //verify workload limit
-        //verifyWorkloadLimit = workloadAssigned+(Double.valueOf(totalWorkloadAssigned));
+        checkDuplicateRecord();
+    }
+    
+    //check duplicate record
+    public void checkDuplicateRecord(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        boolean check = false;
         
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT teacherCSMapID, staffID, assessment FROM workloadallocation");
+
+            while (rs.next()) {
+                String teacherCSMapIDDB = rs.getString("teacherCSMapID");
+                String staffIDDB = rs.getString("staffID");
+                String assessment_Type = rs.getString("assessment");
+
+                if (teacherCSMap_ID.equals(teacherCSMapIDDB) && staff_ID.equals(staffIDDB) && assType.equals(assessment_Type)) {
+                    check = false;
+                    break;
+                }else{
+                    check = true;
+                }
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        if(check == true){
+            saveWorkloadAllocation();
+        }else{
+            context.addMessage(null, new FacesMessage("Record already existed!"));
+        }
+    }
+    
+    public void saveWorkloadAllocation(){
+        FacesContext context = FacesContext.getCurrentInstance();
         //insert workload allocation
         if(((Double.valueOf(result))+(Double.valueOf(totalWorkloadAssigned))) <= Double.valueOf(workloadLimit)){
         try {

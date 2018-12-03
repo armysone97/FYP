@@ -6,6 +6,8 @@
 package com.jsf;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -33,6 +35,8 @@ public class MileageClaimApplication {
     private double totalClaim;
     private int year;
     private String result;
+    private String workload;
+    private List<String> workload_list = new ArrayList<>();
     
     private int counterReset;
     
@@ -125,6 +129,19 @@ public class MileageClaimApplication {
     public void setResult(String result) {
         this.result = result;
     }
+
+    public String getWorkload() {
+        return workload;
+    }
+
+    public void setWorkload(String workload) {
+        this.workload = workload;
+    }
+
+    public void setWorkload_list(List<String> workload_list) {
+        this.workload_list = workload_list;
+    }
+    
     
     public void defaultStaffList() {
         switch (Login.getGlobalCounter()) {
@@ -133,6 +150,32 @@ public class MileageClaimApplication {
                 retrievePersonalDetails();
                 break;
         }
+    }
+    
+    public List<String> get_WorkloadList() {
+
+        workload_list.clear();
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliant=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT specialID FROM workloadallocation WHERE staffID = ?");
+            st.setString(1, staffID);
+            ResultSet rs = st.executeQuery();
+            
+            while (rs.next()) {
+                workload_list.add(rs.getString("specialID"));
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return workload_list;
     }
     
      public void retrievePersonalDetails() {

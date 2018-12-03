@@ -43,7 +43,7 @@
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                            <h:inputText id="txtStaffID" value="#{mileageClaimApplication.staffID}" styleClass="txtboxSmallSpecialStyle" required="required" size="35"/>
+                            <h:inputText id="txtStaffID" disabled="true" value="#{mileageClaimApplication.staffID}" styleClass="txtboxSmallSpecialStyle" required="required" size="35"/>
                         </th>
                     </tr> 
 
@@ -53,37 +53,23 @@
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                            <h:inputText id="txtName" value="#{mileageClaimApplication.name}" styleClass="txtboxStyle" required="required" size="35"/>
+                            <h:inputText id="txtName" disabled="true" value="#{mileageClaimApplication.name}" styleClass="txtboxStyle" required="required" size="35"/>
                         </th>
 
                     </tr> 
+                    
                     <tr>
-                        <th align="left"> <h:outputText id="lblRoles" value="Roles"  styleClass="lblStyle"/></th>
-
-                        <th align="right">
-                            <h:outputText id="simbol6x" value=": "  styleClass="lblStyle"/>
-                        </th>
-
-                        <th align="left"> 
-
-                            <h:selectOneRadio layout="lineDirection" styleClass="radiobuttonStyle" value="#{mileageClaimApplication.role}"> 
-                                <f:selectItem itemValue = "Evaluator" itemLabel = "Evaluator" /> 
-                                <f:selectItem itemValue = "Master Trainer" itemLabel = "Master Trainer" /> 
-                            </h:selectOneRadio>
-
-                        </th>
-                    </tr> 
-
-                    <tr>
-                        <th align="left"> <h:outputText id="lblRate" value="Rate"  styleClass="lblStyle"/></th>
+                        <th align="left"> <h:outputText id="lblWorkload" value="Workload"  styleClass="lblStyle"/></th>
 
                         <th align="right">
                             <h:outputText id="simbol5" value=": "  styleClass="lblStyle"/>
                         </th>
 
                         <th align="left">
-                            <h:outputText id="simbol10" value="RM "  styleClass="lblStyle"/>
-                            <h:inputText id="txtHourlyRate" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{mileageClaimApplication.rate}"/>
+                            <h:selectOneMenu styleClass="ddlSpecialStyle" value="#{mileageClaimApplication.workload}">
+                                <f:selectItem itemValue="" itemLabel="" />
+                                <f:selectItems value="#{mileageClaimApplication.get_WorkloadList()}" />
+                            </h:selectOneMenu>  
                         </th>
                     </tr> 
 
@@ -143,6 +129,19 @@
 
 
                     <tr>
+                        <th align="left"> <h:outputText id="lblRate" value="Rate"  styleClass="lblStyle"/></th>
+
+                        <th align="right">
+                            <h:outputText id="simbol5" value=": "  styleClass="lblStyle"/>
+                        </th>
+
+                        <th align="left">
+                            <h:outputText id="simbol10" value="RM "  styleClass="lblStyle"/>
+                            <h:inputText id="txtHourlyRate" disabled="true" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{mileageClaimApplication.rate}"/>
+                        </th>
+                    </tr> 
+                    
+                    <tr>
                         <th align="left"> <h:outputText id="lblTotal" value="Total"  styleClass="lblStyle"/></th>
 
                         <th align="right">
@@ -151,7 +150,7 @@
 
                         <th align="left">
                             <h:outputText id="simbol14" value="RM "  styleClass="lblStyle"/>
-                            <h:inputText id="txtTotal" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{mileageClaimApplication.result}"/>
+                            <h:inputText id="txtTotal" disabled="true" styleClass="txtboxSmallSpecialStyle" required="required" size="5" value="#{mileageClaimApplication.result}"/>
                         </th>
                     </tr> 
 

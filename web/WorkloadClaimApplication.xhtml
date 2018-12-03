@@ -93,7 +93,7 @@
                             <h:selectOneRadio layout="lineDirection" styleClass="radiobuttonStyle" value="#{workloadClaimApplication.role}"> 
                                 <f:selectItem itemValue = "Evaluator" itemLabel = "Evaluator" /> 
                                 <f:selectItem itemValue = "Master Trainer" itemLabel = "Master Trainer" /> 
-                                <f:ajax listener="#{workloadClaimApplication.roleChanged()}" render="txtHourlyRate"/>
+                                <f:ajax listener="#{workloadClaimApplication.roleChanged()}" render="txtHourlyRate txtTotal"/>
                             </h:selectOneRadio>
                             
                         </th>
@@ -141,9 +141,8 @@
 
                     <tr>
                         <th colspan="3" align="right">
-                            <h:commandButton id="btnCal" value="Calculate" styleClass="buttonStyle" action="#{workloadClaimApplication.calculateWorkloadClaim()}" />
-                        &nbsp;&nbsp;&nbsp;
-                        <h:commandButton id="btnSave" value="Confirm" styleClass="buttonStyle" action="#{workloadClaimApplication.addWorkloadClaim()}"/></th>
+                            
+                        <h:commandButton id="btnSave" value="Confirm" styleClass="buttonStyle" action="#{workloadClaimApplication.verifyValidation()}"/></th>
                     </tr>    
                 </table>   
             </h:form>

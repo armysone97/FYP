@@ -31,8 +31,12 @@ public class WorkloadClaimApplication {
     private double totalClaim;
     private int year;
     private String result;
-
     private int counterReset;
+    private double sumWorkloadDB;
+    private double sumTotalClaimDB;
+    private double diffTotalWorkload;
+    private int claimCount;
+    private String specialCount;
     
     //for add workload claim
     private int workloadClaimCount;
@@ -42,7 +46,7 @@ public class WorkloadClaimApplication {
 
     public WorkloadClaimApplication() {
         this.counterReset = 0;
-        this.year = 2017;
+        this.year = 2018;
         this.hourlyRate = "0.0";
         this.workHours = "0.0";
         this.result = "0.0";
@@ -159,13 +163,38 @@ public class WorkloadClaimApplication {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT SUM(workloadAssigned) FROM workloadallocation WHERE staffID = ?");
+            PreparedStatement st = con.prepareStatement("SELECT ttlWorkloadAssigned FROM workloadlimit WHERE staffID = ? AND year = ?");
+            st.setString(1, staffID);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+            
+            while(rs.next()){
+                sumWorkloadDB = Double.valueOf(rs.getString("ttlWorkloadAssigned"));
+            }
+            
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        //retrieve workload claim
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT SUM(totalWorkload) FROM workloadclaim WHERE staffID = ?");
             st.setString(1, staffID);
             ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                setWorkHours(String.format("%.2f", rs.getDouble("SUM(workloadAssigned)")));
+            
+            while(rs.next()){
+                sumTotalClaimDB = Double.valueOf(rs.getString("SUM(totalWorkload)"));
             }
+
+//            while (rs.next()) {
+//                setWorkHours(String.format("%.2f", rs.getDouble("SUM(workloadAssigned)")));
+//            }
 
             rs.close();
             st.close();
@@ -173,6 +202,14 @@ public class WorkloadClaimApplication {
 
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
+        }
+        
+        diffTotalWorkload = sumWorkloadDB - sumTotalClaimDB;
+        
+        if(String.valueOf(sumTotalClaimDB) == null){
+            setWorkHours(String.format("%.2f", sumWorkloadDB));
+        }else{
+            setWorkHours(String.format("%.2f", diffTotalWorkload));
         }
 
     }
@@ -233,11 +270,20 @@ public class WorkloadClaimApplication {
         result = String.format("%.2f", totalClaim);
     }
     
-    //save workload claim
-    public void addWorkloadClaim(){
-        
+    //verify validation
+    public void verifyValidation(){
         FacesContext context = FacesContext.getCurrentInstance();
         
+        if(role == null){
+            context.addMessage(null, new FacesMessage("All field are required to fill in!"));
+        }
+        else{
+            addWorkloadClaim();
+        }
+    }
+    
+    //save workload claim
+    public void addWorkloadClaim(){
         //count workload claim index
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -260,6 +306,14 @@ public class WorkloadClaimApplication {
         workloadClaimCount = workloadClaimCount + 1;
         wcID = "WC" + Integer.toString(workloadClaimCount);
         
+        validateRole();
+    }
+    
+    //validate role
+    public void validateRole(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        boolean check = true;
+        
         //retrieve role ID
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -279,7 +333,44 @@ public class WorkloadClaimApplication {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+        
+        //check role
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT roleID, staffID FROM evaluatorroledetails");
+            ResultSet rs = st.executeQuery();
 
+            while (rs.next()) {
+                String roles = rs.getString("roleID");
+                String staffsID = rs.getString("staffID");
+
+                if(role_ID.equals(roles) && staffID.equals(staffsID)) {
+                    check = true;
+                    break;
+                }
+                else{
+                    check = false;
+                }
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        if(check == true){
+            saveRecord();
+        }else{
+            context.addMessage(null, new FacesMessage("Incorrect role!"));
+        }
+    }
+    
+    public void saveRecord(){
+        FacesContext context = FacesContext.getCurrentInstance();
         //retrieve rdID
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -301,32 +392,62 @@ public class WorkloadClaimApplication {
             System.out.println("Error: " + ex);
         }
         
-        //insert worload claim
+        //unique year record
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO workloadclaim (WC_ID, totalWorkload, totalWorkloadClaim, year, RD_ID) VALUES (?, ?, ?, ?, ?)");
+            PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM workloadclaim WHERE staffID = ?");
+            st.setString(1, staffID);
+            ResultSet rs = st.executeQuery();
 
-            statement.setString(1, wcID);
-            statement.setDouble(2, Double.valueOf(workHours));
-            statement.setDouble(3, Double.valueOf(result));
-            statement.setInt(4, year);
-            statement.setString(5, rdID);
+            while (rs.next()) {
+                claimCount = rs.getInt("COUNT(*)");
+            }
 
-            statement.executeUpdate();
-            statement.close();
+            rs.close();
+            st.close();
             con.close();
 
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
         
-        context.addMessage(null, new FacesMessage("Added successful!"));
+        claimCount = claimCount + 1;
+        specialCount = String.valueOf(year) + "-" + Integer.toString(claimCount);
         
+        if(result.equals("0.00")){
+            context.addMessage(null, new FacesMessage("No workload to be claim!"));
+        }else{
+            //insert worload claim
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO workloadclaim (WC_ID, totalWorkload, totalWorkloadClaim, year, RD_ID, staffID, claimCount) VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+                statement.setString(1, wcID);
+                statement.setDouble(2, Double.valueOf(workHours));
+                statement.setDouble(3, Double.valueOf(result));
+                statement.setInt(4, year);
+                statement.setString(5, rdID);
+                statement.setString(6, staffID);
+                statement.setString(7, specialCount);
+
+                statement.executeUpdate();
+                statement.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+
+            context.addMessage(null, new FacesMessage("Added successful!"));
+            reset();
+        }
     }
     
     public void roleChanged(){
         retrieveHourlyRate();
+        calculateWorkloadClaim();
     }
 
     //navigation bar purpose
@@ -348,7 +469,7 @@ public class WorkloadClaimApplication {
         hourlyRate = "0.0";
         workHours = "0.0";
         totalClaim = 0;
-        result = "0.0";
+        result = "0.00";
         year = 2018;
 
         counterReset = 0;

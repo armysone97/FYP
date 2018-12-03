@@ -59,7 +59,7 @@
                         <th align="right">
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> </th>
                         <th align="left">  
-                            <h:selectOneMenu title="Select state" value="#{maintainSchoolMenu.state}" styleClass="ddlStyle">
+                            <h:selectOneMenu title="Select state" value="#{maintainSchoolMenu.state}" styleClass="ddlSpecialTwoStyle">
                                 <f:selectItems value="#{maintainSchoolMenu.get_state()}" />
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{maintainSchoolMenu.stateChanged()}" render="ddlSchoolList"/>
@@ -74,7 +74,7 @@
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                            <h:selectOneMenu id="ddlSchoolList" title="Select school" styleClass="ddlStyle" value="#{maintainSchoolMenu.school}">
+                            <h:selectOneMenu id="ddlSchoolList" title="Select school" styleClass="ddlSpecialTwoStyle" value="#{maintainSchoolMenu.school}">
                                 <f:selectItems value="#{maintainSchoolMenu.get_school()}"/> 
                             </h:selectOneMenu>  
                         </th>

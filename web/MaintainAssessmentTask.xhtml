@@ -57,7 +57,7 @@
                         </th>
                         <th align="left">
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu title="Select state" value="#{maintainAssessmentTask.state}" styleClass="ddlStyle">
+                            <h:selectOneMenu title="Select state" value="#{maintainAssessmentTask.state}" styleClass="ddlSpecialTwoStyle">
                                 <f:selectItems  value="#{maintainAssessmentTask.get_state()}" /> 
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{maintainAssessmentTask.stateChanged()}" render="ddlSchoolList ddlYearList ddlTeacherList"/>   
@@ -72,7 +72,7 @@
                         </th>
                         <th align="left">
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu id="ddlSchoolList" title="Select school"  styleClass="ddlStyle" value="#{maintainAssessmentTask.school}">
+                            <h:selectOneMenu id="ddlSchoolList" title="Select school"  styleClass="ddlSpecialTwoStyle" value="#{maintainAssessmentTask.school}">
                                 <f:selectItems value="#{maintainAssessmentTask.get_school()}"/>   
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{maintainAssessmentTask.schoolChanged()}" render="ddlYearList ddlTeacherList"/>
@@ -87,7 +87,7 @@
                         </th>
                         <th align="left">
                             <h:outputText id="simbol3" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu id="ddlTeacherList" title="Select teacher"  styleClass="ddlStyle" value="#{maintainAssessmentTask.teacher}">
+                            <h:selectOneMenu id="ddlTeacherList" title="Select teacher"  styleClass="ddlSpecialTwoStyle" value="#{maintainAssessmentTask.teacher}">
                                 <f:selectItems value="#{maintainAssessmentTask.get_teacher()}"  /> 
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{maintainAssessmentTask.teacherChanged()}" render="ddlYearList"/>

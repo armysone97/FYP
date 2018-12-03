@@ -58,7 +58,7 @@
                         </th>
                         <th colspan="2" align="left">
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu title="Select state" disabled="#{maintainTeacher.disabledButton}" value="#{maintainTeacher.state}" styleClass="ddlStyle">
+                            <h:selectOneMenu title="Select state" disabled="#{maintainTeacher.disabledButton}" value="#{maintainTeacher.state}" styleClass="ddlSpecialTwoStyle">
                                 <f:selectItems value="#{maintainTeacher.get_state()}" />
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{maintainTeacher.stateChanged()}" render="ddlSchoolList ddlYearList ddlTeacherList"/>
@@ -74,7 +74,7 @@
                         </th>
                         <th colspan="2" align="left">
                             <h:outputText id="simbol2" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu id="ddlSchoolList" title="Select school" disabled="#{maintainTeacher.disabledButton}"  styleClass="ddlStyle" value="#{maintainTeacher.school}">
+                            <h:selectOneMenu id="ddlSchoolList" title="Select school" disabled="#{maintainTeacher.disabledButton}"  styleClass="ddlSpecialTwoStyle" value="#{maintainTeacher.school}">
                                 <f:selectItems value="#{maintainTeacher.get_school()}"/> 
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{maintainTeacher.schoolChanged()}" render="ddlYearList ddlTeacherList"/>

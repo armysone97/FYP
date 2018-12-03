@@ -81,6 +81,7 @@ public class EvaluatorWorkloadAllocation {
         this.totalWorkloadAssigned = "0.0";
         this.result = "0";
         this.verifyWorkloadLimit = 0;
+        this.workloadList = null;
     }
 
     public String getTotalWorkloadAssigned() {
@@ -985,10 +986,10 @@ public class EvaluatorWorkloadAllocation {
 
             while (rs.next()) {
                 String teacherCSMapIDDB = rs.getString("teacherCSMapID");
-                String staffIDDB = rs.getString("staffID");
+                //String staffIDDB = rs.getString("staffID");
                 String assessment_Type = rs.getString("assessment");
 
-                if (teacherCSMap_ID.equals(teacherCSMapIDDB) && staff_ID.equals(staffIDDB) && assType.equals(assessment_Type)) {
+                if (teacherCSMap_ID.equals(teacherCSMapIDDB) && assType.equals(assessment_Type)) {
                     check = false;
                     break;
                 }else{

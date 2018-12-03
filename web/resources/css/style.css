@@ -194,3 +194,12 @@ and open the template in the editor.
     height: 40px;
     font-family: Georgia;
 }
+
+/*MileageClaim*/
+.ddlSpecialFourStyle{
+    font-size: 18pt;
+    column-width: 10px;
+    width: 600px;
+    height: 40px;
+    font-family: Georgia;
+}

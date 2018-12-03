@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -28,12 +29,12 @@ public class ProfileManagement {
     private Connection con;
     private String evaName;
     private String staffID;
-    private Integer contactNum;
+    private String contactNum;
     private String branch;
     private String faculty;
     private String role;
     private String status;
-    private Integer workloadLimit;
+    private int workloadLimit;
     private String roleID;
     private Integer evaCount;
     private Integer workloadLimitCount;
@@ -45,8 +46,41 @@ public class ProfileManagement {
     private List<String> faculty_list = new ArrayList<>();
     private List<String> status_list = new ArrayList<>();
 
+    private boolean disabledTxt, disabledButtonEdit, disabledButtonConfirm;
+    private int counterWL, counterWL1;
+
     public ProfileManagement() {
         this.counterReset = 0;
+        this.disabledTxt = true;
+        this.disabledButtonEdit = false;
+        this.disabledButtonConfirm = true;
+        this.counterWL = 0;
+        this.workloadLimit = 0;
+        this.counterWL1 = 0;
+    }
+
+    public boolean isDisabledButtonEdit() {
+        return disabledButtonEdit;
+    }
+
+    public void setDisabledButtonEdit(boolean disabledButtonEdit) {
+        this.disabledButtonEdit = disabledButtonEdit;
+    }
+
+    public boolean isDisabledButtonConfirm() {
+        return disabledButtonConfirm;
+    }
+
+    public void setDisabledButtonConfirm(boolean disabledButtonConfirm) {
+        this.disabledButtonConfirm = disabledButtonConfirm;
+    }
+
+    public boolean isDisabledTxt() {
+        return disabledTxt;
+    }
+
+    public void setDisabledTxt(boolean disabledTxt) {
+        this.disabledTxt = disabledTxt;
     }
 
     public String getEvaName() {
@@ -65,11 +99,11 @@ public class ProfileManagement {
         this.staffID = staffID;
     }
 
-    public Integer getContactNum() {
+    public String getContactNum() {
         return contactNum;
     }
 
-    public void setContactNum(Integer contactNum) {
+    public void setContactNum(String contactNum) {
         this.contactNum = contactNum;
     }
 
@@ -105,11 +139,11 @@ public class ProfileManagement {
         this.status = status;
     }
 
-    public Integer getWorkloadLimit() {
+    public int getWorkloadLimit() {
         return workloadLimit;
     }
 
-    public void setWorkloadLimit(Integer workloadLimit) {
+    public void setWorkloadLimit(int workloadLimit) {
         this.workloadLimit = workloadLimit;
     }
 
@@ -201,28 +235,34 @@ public class ProfileManagement {
     }
 
     public void defaultStaffList() {
+
+        this.workloadLimit = 0;
         switch (Login.getGlobalCounter()) {
             case 1:
                 this.staffID = Login.getGlobalStaffID();
                 retrievePersonalDetails();
+                retrieveRole();
+                retrieveWorkloadLimit();
                 break;
         }
     }
-    
-     public void retrievePersonalDetails() {
+
+    public void retrievePersonalDetails() {
 
         //retrieve personal details
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT name, campus, faculty FROM evaluatorpersonaldetails WHERE staffID = ?");
+            PreparedStatement st = con.prepareStatement("SELECT name, campus, faculty, contactNo, status FROM evaluatorpersonaldetails WHERE staffID = ?");
             st.setString(1, staffID);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-                setEvaName(rs.getString("name"));
-                setBranch(rs.getString("campus"));
-                setFaculty(rs.getString("faculty"));
+                evaName = rs.getString("name");
+                branch = rs.getString("campus");
+                faculty = rs.getString("faculty");
+                contactNum = rs.getString("contactNo");
+                status = rs.getString("status");
             }
 
             rs.close();
@@ -232,7 +272,212 @@ public class ProfileManagement {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-     }
+
+    }
+
+    public void retrieveWorkloadLimit() {
+        workloadLimit = 0;
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT workloadLimit FROM workloadlimit WHERE staffID = ?");
+            st.setString(1, staffID);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                workloadLimit = rs.getInt("workloadLimit");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+    }
+
+    //count role in db
+    public int get_roleCount() {
+
+        int count = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT roleID FROM evaluatorroledetails WHERE staffID = ?");
+            st.setString(1, staffID);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                count++;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return count;
+    }
+
+    public String matchRoleID(String roleID) {
+
+        String roleType = "";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT roleType FROM roles WHERE roleID = ?");
+            st.setString(1, roleID);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                roleType = rs.getString("roleType");
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        return roleType;
+
+    }
+
+    public void retrieveRole() {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        int count = 0;
+
+        Boolean verify = false;
+        Boolean verify1 = false;
+        String roleTypes = "";
+//        String nextPage = "";
+
+        int lengthRoleList = get_roleCount();
+
+        String[] roleList = new String[lengthRoleList];
+        int tmp = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+
+            PreparedStatement st = con.prepareStatement("SELECT roleID FROM evaluatorroledetails WHERE staffID = ?");
+            st.setString(1, staffID);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                count += 1;
+                roleList[tmp] = rs.getString("roleID");
+                tmp++;
+
+                verify1 = true;
+
+            }
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        for (int i = 0; i < roleList.length; i++) {
+            String roleIDFromDB = matchRoleID(roleList[i]);
+            if (roleIDFromDB.equals("Admin")) {
+                role = "Master Trainer";
+                break;
+            } else if (roleIDFromDB.equals("Evaluator")) {
+                role = "Evaluator";
+            } else if (roleIDFromDB.equals("Master Trainer")) {
+                role = "Master Trainer";
+                break;
+            }
+        }
+    }
+
+    public void editProfile() {
+        disabledTxt = false;
+        disabledButtonEdit = true;
+        disabledButtonConfirm = false;
+    }
+
+    //check validation
+    public void validationCheck() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (contactNum == null || workloadLimit == 0) {
+            context.addMessage(null, new FacesMessage("All field are required to fill in!"));
+        } else {
+            updateProfile();
+        }
+    }
+
+    public void updateProfile() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        int verifyCounter = 0;
+
+        if (!contactNum.matches("-?\\d+")) { // any positive or negetive integer or not!
+            context.addMessage(null, new FacesMessage("Contact Number must be in integer only! Please try again!"));
+        } else {
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE evaluatorpersonaldetails SET campus = ?, faculty = ?, contactNo = ?, status = ?, password = ? WHERE staffID = ?");
+
+                //update school
+                statement.setString(1, branch);
+                statement.setString(2, faculty);
+                statement.setString(3, contactNum);
+                statement.setString(4, status);
+                statement.setString(5, contactNum);
+                statement.setString(6, staffID);
+                statement.executeUpdate();
+
+                verifyCounter = 1;
+
+                statement.close();
+                con.close();
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
+
+        switch (verifyCounter) {
+            case 0:
+                context.addMessage(null, new FacesMessage("Update evaluator name " + evaName + " not successful!"));
+                break;
+            case 1:
+                context.addMessage(null, new FacesMessage("Update evaluator name " + evaName + " successful!"));
+                disabledTxt = true;
+                disabledButtonEdit = false;
+                disabledButtonConfirm = true;
+                updateWorkloadLimit();
+                break;
+        }
+    }
+
+    public void updateWorkloadLimit() {
+       
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE workloadlimit SET workloadLimit = ? WHERE staffID = ?");
+
+            //update school
+            statement.setInt(1, workloadLimit);
+            statement.setString(2, staffID);
+            statement.executeUpdate();
+
+            statement.close();
+            con.close();
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+    }
 
     //navigation bar purpose
     public String goToNextPage() {
@@ -261,7 +506,7 @@ public class ProfileManagement {
         faculty = "FOCS";
         role = null;
         status = "Available";
-        workloadLimit = null;
+        workloadLimit = 0;
 
         counterReset = 0;
         MaintainSchoolMenu.setGlobalCounter(0);

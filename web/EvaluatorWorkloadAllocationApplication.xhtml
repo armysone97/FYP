@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <h:head>
         <title>STEM CS Validation Programme</title>
         <h:outputStylesheet name="css/style.css" />
@@ -120,7 +121,7 @@
                             <h:outputText id="simbol5" value=": "  styleClass="lblStyle"/> </th>
 
                         <th align="left">
-                            <h:inputText id="txtTotalStudent" value="#{evaluatorWorkloadAllocation.totalStudent}" styleClass="txtboxSmallestStyle" required="required" size="5"/>
+                            <h:inputText id="txtTotalStudent" disabled="true" value="#{evaluatorWorkloadAllocation.totalStudent}" styleClass="txtboxSmallestStyle" required="required" size="5"/>
                         </th>
                     </tr> 
 
@@ -147,7 +148,7 @@
                         </th>
 
                         <th align="left">
-                            <h:inputText id="txtWorkloadAssigned" styleClass="txtboxSmallestStyle" required="required" size="35" value="#{evaluatorWorkloadAllocation.result}"/>
+                            <h:inputText id="txtWorkloadAssigned" disabled="true" styleClass="txtboxSmallestStyle" required="required" size="35" value="#{evaluatorWorkloadAllocation.result}"/>
                             <h:outputText id="hr2" value=" hours"  styleClass="lblStyle"/>
                         </th>
                     </tr> 
@@ -164,7 +165,7 @@
                         </th>
 
                         <th align="left">
-                            <h:inputText id="txtWorkloadLimit" value="#{evaluatorWorkloadAllocation.workloadLimit}" styleClass="txtboxSmallestStyle" required="required" size="35"/>
+                            <h:inputText id="txtWorkloadLimit" disabled="true" value="#{evaluatorWorkloadAllocation.workloadLimit}" styleClass="txtboxSmallestStyle" required="required" size="35"/>
                             <h:outputText id="hr1" value=" hours"  styleClass="lblStyle"/>
                         </th>
                     </tr> 
@@ -177,7 +178,7 @@
                         </th>
 
                         <th align="left">
-                            <h:inputText id="txtTtlWorkloadAssigned" styleClass="txtboxSmallestStyle" value="#{evaluatorWorkloadAllocation.totalWorkloadAssigned}" required="required" size="35"/>
+                            <h:inputText id="txtTtlWorkloadAssigned" disabled="true" styleClass="txtboxSmallestStyle" value="#{evaluatorWorkloadAllocation.totalWorkloadAssigned}" required="required" size="35"/>
                             <h:outputText id="hr222" value=" hours"  styleClass="lblStyle"/>
                         </th>
                     </tr> 
@@ -195,7 +196,7 @@
 
                 <tr>      
                     <th colspan="5" align="right"><h:commandButton id="btnShowEVList" value="Show List" styleClass="buttonStyle"/>
-                 &nbsp;&nbsp;&nbsp; <h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.addWorkload()}"/>
+                        &nbsp;&nbsp;&nbsp; <h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{evaluatorWorkloadAllocation.validationCheck()}"/>
                </th>
                 </tr> 
             </table>
@@ -203,18 +204,20 @@
             <table border="1" cellpadding="10px" cellspacing="0" width="800px">
 
                         <tr>
-                            <th colspan="2" align="center"><h:outputText id="lblSchoolList" value="School"  styleClass="lblStyle"/></th>
                             <th colspan="2" align="center">
-                                <h:outputText id="lblCSLevelList" value="CS Level"  styleClass="lblStyle" escape="false"/>
-                            </th>
-                            <th colspan="2" align="center">
-                                <h:outputText id="lblTeacherList" value="Teacher"  styleClass="lblStyle" escape="false"/>
+                                <h:outputText id="lblEvaluatorList" value="Evaluator"  styleClass="lblStyle" escape="false"/>
                             </th>
                             <th colspan="2" align="center">
                                 <h:outputText id="lblAssessmentList" value="Assessment"  styleClass="lblStyle" escape="false"/>
                             </th>
                         </tr>
-
+                
+                <ui:repeat value="#{evaluatorWorkloadAllocation.workloadList}" var="released">
+                    <tr>
+                        <th><h:outputText value="#{released.staffID}"/></th>
+                        <th><h:outputText value="#{released.assessment}"/></th>
+                    </tr>
+                </ui:repeat>
                      
                     </table>
             

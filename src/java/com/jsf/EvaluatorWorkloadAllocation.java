@@ -27,7 +27,6 @@ public class EvaluatorWorkloadAllocation {
 
     private Connection con;
     private String evaluator;
-    //private String takeEvaluator;
     private String staffID;
     private String school;
     private String csLevel;
@@ -43,10 +42,7 @@ public class EvaluatorWorkloadAllocation {
     private String totalWorkloadAssigned;
     private int workloadCount;
     private String waID;
-//    private String testing;
 
-//    private String name;
-//    private String schoolName;
     private List<String> evaluator_list = new ArrayList<>();
     private List<String> school_list = new ArrayList<>();
     private List<String> cslevel_list = new ArrayList<>();
@@ -62,6 +58,13 @@ public class EvaluatorWorkloadAllocation {
     private String teacherCSMap_ID;
     private String staff_ID;
     private double verifyWorkloadLimit;
+    
+    //datatable
+    private ArrayList workloadList = null;
+    private EvaluatorWorkloadAllocation evaWAobj1 = null;
+    private int workload_Count;
+    private String evaluator_DT = "";
+    private String assessment_DT = "";
 
     public EvaluatorWorkloadAllocation(String evaluator, String school) {
         super();
@@ -86,14 +89,7 @@ public class EvaluatorWorkloadAllocation {
     public void setTotalWorkloadAssigned(String totalWorkloadAssigned) {
         this.totalWorkloadAssigned = totalWorkloadAssigned;
     }
-
-//    public String getTesting() {
-//        return testing;
-//    }
-//
-//    public void setTesting(String testing) {
-//        this.testing = testing;
-//    }
+    
     public int getWorkloadLimit() {
         return workloadLimit;
     }
@@ -162,6 +158,22 @@ public class EvaluatorWorkloadAllocation {
         this.result = result;
     }
 
+    public String getEvaluator_DT() {
+        return evaluator_DT;
+    }
+
+    public void setEvaluator_DT(String evaluator_DT) {
+        this.evaluator_DT = evaluator_DT;
+    }
+
+    public String getAssessment_DT() {
+        return assessment_DT;
+    }
+
+    public void setAssessment_DT(String assessment_DT) {
+        this.assessment_DT = assessment_DT;
+    }
+
     public void setWorkloadAssigned(double workloadAssigned) {
         this.workloadAssigned = workloadAssigned;
     }
@@ -186,6 +198,10 @@ public class EvaluatorWorkloadAllocation {
         this.assessment_list = assessment_list;
     }
 
+    public void setWorkloadList(ArrayList workloadList) {
+        this.workloadList = workloadList;
+    }
+
     public double getVerifyWorkloadLimit() {
         return verifyWorkloadLimit;
     }
@@ -198,6 +214,83 @@ public class EvaluatorWorkloadAllocation {
         List<EvaluatorWorkloadAllocation> listWorkload = new ArrayList<EvaluatorWorkloadAllocation>();
 
         return listWorkload;
+    }
+    
+    //display data
+    public ArrayList getWorkloadList() {
+        
+        //retrieve staff ID
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT staffID FROM evaluatorpersonaldetails WHERE name = ?");
+            st.setString(1, evaluator);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                staffID = rs.getString("staffID");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+    
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM workloadallocation WHERE staffID = ?");
+            st.setString(1, staffID);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                workload_Count = rs.getInt("COUNT(*)");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        String[] evaluatorList = new String[workload_Count];
+        String[] assessmentList = new String[workload_Count];
+        int tmp = 0;
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT staffID, assessment FROM workloadallocation");
+
+            while (rs.next()) {
+                evaluatorList[tmp] = rs.getString("staffID");
+                assessmentList[tmp] = rs.getString("assessment");
+                tmp++;
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        workloadList = new ArrayList();
+
+        for (int i = 0; i < workload_Count; i++) {
+            evaWAobj1 = new EvaluatorWorkloadAllocation();
+            evaWAobj1.setEvaluator_DT(evaluatorList[i]);
+            evaWAobj1.setAssessment_DT(assessmentList[i]);
+            workloadList.add(evaWAobj1);
+        }
+        
+        return workloadList;
     }
 
     //retrieve total number of student
@@ -477,35 +570,7 @@ public class EvaluatorWorkloadAllocation {
         return school_list;
     }
 
-//    public void verifySchoolID(){
-//        
-//        schoolName = this.school;
-//        
-//        try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-//            Statement st = con.createStatement();
-//            ResultSet rs = st.executeQuery("SELECT schoolName, schoolID FROM school");
-//            //context.addMessage(null, new FacesMessage("yyy"));
-//            while (rs.next()) {
-//                if (schoolName.equals("schoolName")) {
-//                    schoolID = rs.getString("schoolID");
-////                    scID = rs.getString("schoolID");
-////                    context.addMessage(null, new FacesMessage("xxxx" + scID));
-//                   
-//                    break;
-//
-//                }
-//            }
-//
-//            rs.close();
-//            st.close();
-//            con.close();
-//
-//        } catch (Exception ex) {
-//            System.out.println("Error: " + ex);
-//        }
-//    }
+
     public List<String> get_CSLevelList() {
 
 //        FacesContext context = FacesContext.getCurrentInstance();
@@ -553,27 +618,6 @@ public class EvaluatorWorkloadAllocation {
             System.out.println("Error: " + ex);
         }
 
-//        try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-//            Statement st = con.createStatement();
-//            //ResultSet rs = st.executeQuery("SELECT school.schoolID, school.schoolName, schoolcsmap.CSLevelID FROM school INNER JOIN schoolcsmap ON school.schoolID = schoolcsmap.schoolID");
-//            //ResultSet rs = st.executeQuery("SELECT CSLevelID FROM schoolcsmap WHERE schoolID = ?");
-//            //st.setString(1, schoolID);
-////            ResultSet rs = st.executeQuery();
-//            ResultSet rs = st.executeQuery("SELECT CSLevelName FROM cslevel");
-//
-//            while (rs.next()) {
-//                cslevel_list.add(rs.getString("CSLevelName"));
-//            }
-//
-//            rs.close();
-//            st.close();
-//            con.close();
-//
-//        } catch (Exception ex) {
-//            System.out.println("Error: " + ex);
-//        }
         return cslevel_list;
     }
 
@@ -663,25 +707,7 @@ public class EvaluatorWorkloadAllocation {
             System.out.println("Error: " + ex);
         }
 
-        //retrieve CSLevelID based on CSLevelName that is selected by user in ddl
-//        try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-//            PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM cslevel WHERE CSLevelName = ?");
-//            st.setString(1, csLevel);
-//            ResultSet rs = st.executeQuery();
-//
-//            while (rs.next()) {
-//                CSLevelIDFromDB = rs.getString("CSLevelID");
-//            }
-//
-//            rs.close();
-//            st.close();
-//            con.close();
-//
-//        } catch (Exception ex) {
-//            System.out.println("Error: " + ex);
-//        }
+
         int schoolCSMapListCount = retrieveSchoolCSMapIDCount(schoolIDFromDB);
         String[] schoolCSMapIDListDuplicate = new String[schoolCSMapListCount];
 
@@ -801,8 +827,9 @@ public class EvaluatorWorkloadAllocation {
     public void validationCheck(){
         FacesContext context = FacesContext.getCurrentInstance();
         
-        if(evaluator == "" || school == "" || csLevel == "" || teacher == "" || assType == ""){
+        if(evaluator == null || school == null || csLevel == null || teacher == null || assType == null){
             context.addMessage(null, new FacesMessage("All field are required to fill in!"));
+            reset();
         }
         else{
             addWorkload();
@@ -1036,6 +1063,7 @@ public class EvaluatorWorkloadAllocation {
 //        }
 
         //set default value
+        evaluator = null;
         school = null;
         csLevel = null;
         teacher = null;

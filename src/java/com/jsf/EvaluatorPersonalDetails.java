@@ -24,7 +24,7 @@ public class EvaluatorPersonalDetails {
     private Connection con;
     private String evaName;
     private String staffID;
-    private int contactNum;
+    private Integer contactNum;
     private String branch;
     private String faculty;
     private String role;
@@ -61,11 +61,11 @@ public class EvaluatorPersonalDetails {
         this.staffID = staffID;
     }
 
-    public int getContactNum() {
+    public Integer getContactNum() {
         return contactNum;
     }
 
-    public void setContactNum(int contactNum) {
+    public void setContactNum(Integer contactNum) {
         this.contactNum = contactNum;
     }
 
@@ -196,10 +196,81 @@ public class EvaluatorPersonalDetails {
         return status_list;
     }
     
+    //check validation
+    public void validationCheck(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        if(evaName == null || staffID == null || contactNum == null || role == null || workloadLimit == null){
+            context.addMessage(null, new FacesMessage("All field are required to fill in!"));
+        }
+        else{
+            duplicateRecordCheck();
+        }
+    }
+    
+    //check duplicate record
+    public void duplicateRecordCheck(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        boolean check = false;
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT * FROM roles");
+
+            while (rs.next()) {
+                String role_ID = rs.getString("roleID");
+                String role_Type = rs.getString("roleType");
+
+                if (role.equals(role_Type)) {
+                    roleID = role_ID;
+                    break;
+                }
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT roleID, staffID FROM evaluatorroledetails");
+
+            while (rs.next()) {
+                String staff_ID = rs.getString("staffID");
+                String rolesID = rs.getString("roleID");
+
+                if(staffID.equals(staff_ID) && roleID.equals(rolesID)) {
+                    
+                    check = false;
+                }
+                else{
+                    check = true;
+                }
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        if(check == true){
+            evaluatorData();
+        }else{
+            context.addMessage(null, new FacesMessage("Record already existed!"));
+        }
+    }
+    
     //save evaluator personal details
     public void evaluatorData() {
-        
-        
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/testing?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -380,17 +451,17 @@ public class EvaluatorPersonalDetails {
         //set default value
         evaName = null;
         staffID = null;
-        contactNum = 0;
+        contactNum = null;
         branch = "Kuala Lumpur Main Campus";
         faculty = "FOCS";
         role = null;
         status = "Available";
-        workloadLimit = 0;
+        workloadLimit = null;
 
         counterReset = 0;
     }
 
-    public void main(String args[]) {
-        evaluatorData();
-    }
+//    public void main(String args[]) {
+//        evaluatorData();
+//    }
 }

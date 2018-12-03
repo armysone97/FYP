@@ -52,21 +52,30 @@
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
                     <tr>
                         <th align="left"> 
-                            <h:outputText id="lblType" value="Report Type"  styleClass="lblStyle"/>
+                            <h:outputText id="lblReport" value="Report Type"  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> 
                             <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{generateReport.reportType}">
-                                <f:selectItem itemValue = "type1" itemLabel = "ABC" /> 
-                                <f:selectItem itemValue = "type2" itemLabel = "DEF" /> 
-                                <f:selectItem itemValue = "type3" itemLabel = "GHI" /> 
-                                <f:selectItem itemValue = "type4" itemLabel = "JKL" /> 
+                                <f:selectItem itemValue="" itemLabel="" />
+                                <f:selectItems value="#{generateReport.get_ReportList()}" />
                             </h:selectOneMenu>  
-                            &nbsp;&nbsp;&nbsp; <h:commandButton id="btnConfirm" value="View" styleClass="buttonStyle"/>
+                            </th>
+                    </tr>  
+                    
+                    <tr>
+                        <th align="left"> 
+                            <h:outputText id="lblYear2" value="Year"  styleClass="lblStyle"/>
+                        </th>
+                        <th align="left">
+                            <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> 
+                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{generateReport.year}">
+                                <f:selectItem itemValue="" itemLabel="" />
+                                <f:selectItems value="#{generateReport.get_YearList()}" />
+                            </h:selectOneMenu>  
+                            &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" action="#{generateReport.callStatus()}"/>
                         </th>
                     </tr>   
-
-
 
                     <tr>
                         <th><label>&nbsp;</label></th>
@@ -79,14 +88,33 @@
                     <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
                         <tr>
                             <th colspan="2" align="center"> 
-                                <h:outputText id="lblType" value="Example Report"  styleClass="lblStyle"/>
+                                <h:outputText id="lblReportTitle" value="#{generateReport.reportTitle}"  styleClass="lblStyle"/>
                             </th>
                         </tr>
                     </table>
                     
                      <table border="1" cellpadding="10px" cellspacing="0" width="800px">
-                        <ui:repeat value="#{evaluatorWorkloadAllocation.workloadList}" var="released">
+                         <tr>
+                            <th colspan="2" align="center">
+                                <h:outputText id="lblNumber" value="No."  styleClass="lblStyle" escape="false"/>
+                            </th>
+                            <th colspan="2" align="center">
+                                <h:outputText id="lblSchoolListReport" value="School"  styleClass="lblStyle" escape="false"/>
+                            </th>
+                            <th colspan="2" align="center">
+                                <h:outputText id="lblCSLevelListReport" value="CS Level"  styleClass="lblStyle" escape="false"/>
+                            </th>
+                            <th colspan="2" align="center">
+                                <h:outputText id="lblTeacherListReport" value="Teacher"  styleClass="lblStyle" escape="false"/>
+                            </th>
+                             <th colspan="2" align="center">
+                                <h:outputText id="lblAssessmentListReport" value="Assessment"  styleClass="lblStyle" escape="false"/>
+                            </th>
+                        </tr>
+                         
+                         <ui:repeat value="#{generateReport.workloadList}" var="released">
                             <tr>
+                                <td colspan="2"><h:outputText value="#{released.number_DT}" styleClass="lblSpecialStyle" /></td>
                                 <td colspan="2"><h:outputText value="#{released.school_DT}" styleClass="lblSpecialStyle" /></td>
                                 <td colspan="2"><h:outputText value="#{released.csLevel_DT}" styleClass="lblSpecialStyle" /></td>
                                 <td colspan="2"><h:outputText value="#{released.teacher_DT}" styleClass="lblSpecialStyle" /></td>

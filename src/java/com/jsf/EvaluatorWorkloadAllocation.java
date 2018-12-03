@@ -1023,15 +1023,16 @@ public class EvaluatorWorkloadAllocation {
     }
     
     public void schoolChanged(){
-        get_SchoolList();
-    }
-    
-    public void csLevelChanged(){
         get_CSLevelList();
     }
     
-    public void teacherChanged(){
+    public void csLevelChanged(){
         get_TeacherList();
+    }
+    
+    public void teacherChanged(){
+        
+        retrieveTotalStudent();
     }
     
     public void main(String args[]) {

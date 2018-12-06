@@ -56,9 +56,9 @@
                         </th>
                         <th align="left">
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{generateReport.reportType}">
+                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="">
                                 <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="#{generateReport.get_ReportList()}" />
+                                <f:selectItems value="" />
                             </h:selectOneMenu>  
                             </th>
                     </tr>  
@@ -69,9 +69,9 @@
                         </th>
                         <th align="left">
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{generateReport.year}">
+                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="">
                                 <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="#{generateReport.get_YearList()}" />
+                                <f:selectItems value="" />
                             </h:selectOneMenu>  
                             &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" action="#{generateReport.callStatus()}"/>
                         </th>

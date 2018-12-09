@@ -245,7 +245,7 @@ public class MileageClaimApplication {
      //check duplicate record
      public void check_DuplicateRecord(){
         FacesContext context = FacesContext.getCurrentInstance();
-        boolean check = false;
+        boolean check = true;
         
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

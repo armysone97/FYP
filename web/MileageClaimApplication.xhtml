@@ -62,7 +62,7 @@
                         <th align="left"> <h:outputText id="lblWorkload" value="Workload"  styleClass="lblStyle"/></th>
 
                         <th align="right">
-                            <h:outputText id="simbol5" value=": "  styleClass="lblStyle"/>
+                            <h:outputText id="simbol55" value=": "  styleClass="lblStyle"/>
                         </th>
 
                         <th align="left">
@@ -158,7 +158,7 @@
                         <th colspan="3" align="right">
                             <h:commandButton id="btnCal" value="Calculate" styleClass="buttonStyle" action="#{mileageClaimApplication.calculateMileageClaim()}"/>
                         &nbsp;&nbsp;&nbsp;
-                        <h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{mileageClaimApplication.validation_Check()}"/></th>
+                        <h:commandButton id="btnConfirm" value="Confirm" styleClass="buttonStyle" action="#{mileageClaimApplication.check_DuplicateRecord()}"/></th>
                     </tr> 
                 </table>   
             </h:form>

@@ -158,8 +158,9 @@ public class MileageClaimApplication {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliant=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT specialID FROM workloadallocation WHERE staffID = ?");
+            PreparedStatement st = con.prepareStatement("SELECT specialID FROM workloadallocation WHERE staffID = ? AND (assessment = 'Collaboration' OR assessment = 'Groupwork') AND year = ?");
             st.setString(1, staffID);
+            st.setInt(2, year);
             ResultSet rs = st.executeQuery();
             
             while (rs.next()) {
@@ -228,6 +229,57 @@ public class MileageClaimApplication {
         result = String.format("%.2f", totalClaim);
      }
      
+     //check validation
+    public void validation_Check(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        if(workload == null || mileage == 0.0 || totalClaim == 0.0){
+            context.addMessage(null, new FacesMessage("All field are required to fill in!"));
+            reset();
+        }
+        else{
+            check_DuplicateRecord();
+        }
+    }
+     
+     //check duplicate record
+     public void check_DuplicateRecord(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        boolean check = false;
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT year, staffID, claimRecord FROM mileageclaimprocessing");
+
+            while (rs.next()) {
+                int yearDB = rs.getInt("year");
+                String staffIDDB = rs.getString("staffID");
+                String record_Type = rs.getString("claimRecord");
+
+                if (year == yearDB && staffID.equals(staffIDDB) && workload.equals(record_Type)) {
+                    check = false;
+                    break;
+                }else{
+                    check = true;
+                }
+            }
+
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        if(check == true){
+            addMileageClaim();
+        }else{
+            context.addMessage(null, new FacesMessage("Record already existed!"));
+        }
+    }
+     
      //add mileage claim
      public void addMileageClaim(){
          FacesContext context = FacesContext.getCurrentInstance();
@@ -254,11 +306,10 @@ public class MileageClaimApplication {
         mcID = "MC" + Integer.toString(mileageClaimCount);
         
         //insert mileage claim
-        
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO mileageclaimprocessing (MC_ID, toll, parking, accomodation, mileage, totalMileageClaim, year, staffID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO mileageclaimprocessing (MC_ID, toll, parking, accomodation, mileage, totalMileageClaim, year, staffID, claimRecord) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             statement.setString(1, mcID);
             statement.setDouble(2, toll);
@@ -268,6 +319,7 @@ public class MileageClaimApplication {
             statement.setDouble(6, totalClaim);
             statement.setInt(7, year);
             statement.setString(8, staffID);
+            statement.setString(9, workload);
 
             statement.executeUpdate();
             statement.close();

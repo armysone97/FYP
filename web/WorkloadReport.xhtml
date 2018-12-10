@@ -62,9 +62,9 @@
                         </th>
                         <th align="left">
                             <h:outputText id="simbol23" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{generateReport.evaluator}">
+                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{workloadReport.school}">
                                 <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="#{generateReport.get_EvaluatorList()}" />
+                                <f:selectItems value="#{workloadReport.get_SchoolList()}" />
                             </h:selectOneMenu>  
                             </th>
                     </tr>   
@@ -75,11 +75,11 @@
                         </th>
                         <th align="left">
                             <h:outputText id="simbol111" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{generateReport.year}">
+                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{workloadReport.year}">
                                 <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="#{generateReport.get_YearList()}" />
+                                <f:selectItems value="#{workloadReport.get_YearList()}" />
                             </h:selectOneMenu>  
-                          &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" action="#{generateReport.callEvaluatorWorkload()}" />
+                            &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" />
                         
                         </th>
                     </tr>   

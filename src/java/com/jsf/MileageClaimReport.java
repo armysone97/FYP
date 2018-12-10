@@ -150,8 +150,84 @@ public class MileageClaimReport {
             System.out.println("Error: " + ex);
         }
         
-        String[] claimRecordList = new String[mileageClaimCount];
+        //retrieve mcID
+        String[] mcIDList = new String[mileageClaimCount];
         int tmp = 0;
+        
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT MC_ID FROM mileageclaimprocessing WHERE staffID = ? AND year = ?");
+            st.setString(1, staffID);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                mcIDList[tmp] = rs.getString("MC_ID");
+                tmp++;
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        String[] tollList = new String[mileageClaimCount];
+        String[] parkingList = new String[mileageClaimCount];
+        String[] accomodationList = new String[mileageClaimCount];
+        String[] mileageList = new String[mileageClaimCount];
+        String[] ttlMileageClaimList = new String[mileageClaimCount];
+        String[] claimRecordList = new String[mileageClaimCount];
+        
+        int tmp1 = 0;
+        int tmp2 = 0;
+        int tmp3 = 0;
+        int tmp4 = 0;
+        int tmp5 = 0;
+        int tmp6 = 0;
+        
+        for (int i = 0; i < mileageClaimCount; i++) {
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = con.prepareStatement("SELECT toll, parking, accomodation, mileage, totalMileageClaim, claimRecord FROM mileageclaimprocessing WHERE MC_ID = ?");
+                st.setString(1, mcIDList[i]);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+                    tollList[tmp1] = rs.getString("toll");
+                    tmp1++;
+                    
+                    parkingList[tmp2] = rs.getString("parking");
+                    tmp2++;
+                    
+                    accomodationList[tmp3] = rs.getString("accomodation");
+                    tmp3++;
+                    
+                    mileageList[tmp4] = rs.getString("mileage");
+                    tmp4++;
+                    
+                    ttlMileageClaimList[tmp5] = rs.getString("totalMileageClaim");
+                    tmp5++;
+                    
+                    claimRecordList[tmp6] = rs.getString("claimRecord");
+                    tmp6++;
+                }
+
+                st.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
+        
+        
+    //    int tmp2 = 0;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -179,8 +255,8 @@ public class MileageClaimReport {
 
         for (int i = 0; i < mileageClaimCount; i++) {
             String[] parts = claimRecordList[i].split(" - ");
-            schoolNameList[i] = parts[0];
-            assessmentList[i] = parts[1];
+            schoolNameList[i] = parts[1];
+            assessmentList[i] = parts[0];
         }
         
         return mileageClaimList;

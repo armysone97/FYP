@@ -387,15 +387,108 @@ public class WorkloadReport {
                 ResultSet rs = st.executeQuery();
 
                 while (rs.next()) {
-//                    teacherCSMapIDTmp = rs.getString("teacherCSMapID");
                     assessmentList[tmp3] = rs.getString("assessment");
                     tmp3++;
                     
                     teachercsIDList[tmp4] = rs.getString("teacherCSMapID");
                     tmp4++;
                     
-                    staffIDList[tmp3] = rs.getString("staffID");
+                    staffIDList[tmp5] = rs.getString("staffID");
                     tmp5++;
+                }
+
+                st.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
+        
+        String[] staffNameList = new String[waIDCount];
+        int tmp6 = 0;
+        
+        for (int i = 0; i < waIDCount; i++) {
+//            String teacherCSMapIDTmp = "";
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = con.prepareStatement("SELECT name FROM evaluatorpersonaldetails WHERE staffID = ?");
+                st.setString(1, staffIDList[i]);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+                    staffNameList[tmp3] = rs.getString("name");
+                    tmp6++;
+                }
+
+                st.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
+        
+        String[] teacherIDList = new String[waIDCount];
+        String[] schoolCSMapList = new String[waIDCount];
+        
+        int tmp7 = 0;
+        int tmp8 = 0;
+        for (int i = 0; i < waIDCount; i++) {
+            String teacherIDTmp = "";
+            String schoolCSMapIDTmp = "";
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = con.prepareStatement("SELECT teacherID, schoolCSMapID FROM teachercsmap WHERE teacherCSMapID = ?");
+                st.setString(1, teachercsIDList[i]);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+                    teacherIDTmp = rs.getString("teacherID");
+                    teacherIDList[tmp7] = teacherIDTmp;
+                    tmp7++;
+
+                    schoolCSMapIDTmp = rs.getString("schoolCSMapID");
+                    schoolCSMapList[tmp8] = schoolCSMapIDTmp;
+                    tmp8++;
+                }
+
+                st.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
+        
+        String[] schoolIDDBList = new String[waIDCount];
+        String[] csLevelIDList = new String[waIDCount];
+        
+        int tmp9 = 0;
+        int tmp10 = 0;
+        for (int i = 0; i < waIDCount; i++) {
+            String schoolIDTmp = "";
+            String csLevelIDTmp = "";
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = con.prepareStatement("SELECT schoolID, CSLevelID FROM schoolcsmap WHERE schoolCSMapID = ?");
+                st.setString(1, schoolCSMapList[i]);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+                    schoolIDTmp = rs.getString("schoolID");
+                    schoolIDList[tmp3] = schoolIDTmp;
+                    tmp3++;
+
+                    csLevelIDTmp = rs.getString("CSLevelID");
+                    csLevelIDList[tmp4] = csLevelIDTmp;
+                    tmp4++;
                 }
 
                 st.close();

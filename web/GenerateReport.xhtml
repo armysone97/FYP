@@ -40,11 +40,19 @@
 
                     <p:menuitem title="Click to redirect to Evaluator Personal Details page" value="EVALUATOR MANAGEMENT" action="#{evaluatorPersonalDetails.goToNextPage()}" />
                     <p:menuitem title="Click to redirect to Workload Allocation page" value="WORKLOAD ALLOCATION" action="#{evaluatorWorkloadAllocation.goToNextPage()}" />
-                    <p:menuitem title="Click to redirect to Generate Report page" value="REPORT" action="#{generateReport.goToNextPage()}" />
+                    <!--<p:menuitem title="Click to redirect to Generate Report page" value="REPORT" action="{generateReport.goToNextPage()}" />-->
+
+                    <p:submenu label="REPORT">
+                        <p:menuitem title="Click to redirect to School Workload Allocation Report page" value="School Workload Allocation Report" action="#{workloadReport.goToNextPage()}" />
+                        <p:menuitem title="Click to redirect to Evaluator Workload Allocation Report page" value="Evaluator Workload Allocation Report" action="#{generateReport.goToNextPage()}" />
+                        <p:menuitem title="Click to redirect to Workload Claim Report page" value="Workload Claim Report" action="#{workloadClaimReport.goToNextPage()}" />
+                        <p:menuitem title="Click to redirect to Mileage Claim Report page" value="Mileage Claim Report" action="#{mileageClaimReport.goToNextPage()}" />
+                    </p:submenu>
+
                     <p:menuitem title="Click to Log Out" style="position: absolute; right: 12px;" value="LOG OUT" action="#{login.goToNextPage()}" />
                 </p:menubar>
 
-                <h1>REPORT</h1>
+                <h1>EVALUATOR WORKLOAD ALLOCATION REPORT</h1>
 
                 <br />
                 <br />
@@ -60,9 +68,9 @@
                                 <f:selectItem itemValue="" itemLabel="" />
                                 <f:selectItems value="#{generateReport.get_ReportList()}" />
                             </h:selectOneMenu>  
-                            </th>
+                        </th>
                     </tr>  
-                    
+
                     <tr>
                         <th align="left"> 
                             <h:outputText id="lblYear2" value="Year"  styleClass="lblStyle"/>
@@ -73,10 +81,10 @@
                                 <f:selectItem itemValue="" itemLabel="" />
                                 <f:selectItems value="#{generateReport.get_YearList()}" />
                             </h:selectOneMenu>  
-                          
+
                         </th>
                     </tr>   
-                    
+
                     <tr>
                         <th align="left"> 
                             <h:outputText id="lblSort" value="Sort By"  styleClass="lblStyle"/>
@@ -106,9 +114,9 @@
                             </th>
                         </tr>
                     </table>
-                    
-                     <table border="1" cellpadding="10px" cellspacing="0" width="800px">
-                         <tr>
+
+                    <table border="1" cellpadding="10px" cellspacing="0" width="800px">
+                        <tr>
                             <th colspan="2" align="center">
                                 <h:outputText id="lblNumber" value="No."  styleClass="lblStyle" escape="false"/>
                             </th>
@@ -121,12 +129,12 @@
                             <th colspan="2" align="center">
                                 <h:outputText id="lblTeacherListReport" value="Teacher"  styleClass="lblStyle" escape="false"/>
                             </th>
-                             <th colspan="2" align="center">
+                            <th colspan="2" align="center">
                                 <h:outputText id="lblAssessmentListReport" value="Assessment"  styleClass="lblStyle" escape="false"/>
                             </th>
                         </tr>
-                         
-                         <ui:repeat value="#{generateReport.evaluatorWorkloadList}" var="released">
+
+                        <ui:repeat value="#{generateReport.evaluatorWorkloadList}" var="released">
                             <tr>
                                 <td colspan="2"><h:outputText value="#{released.number_DT}" styleClass="lblSpecialStyle" /></td>
                                 <td colspan="2"><h:outputText value="#{released.school_DT}" styleClass="lblSpecialStyle" /></td>

@@ -413,6 +413,7 @@ public class GenerateReport {
 //        reportType = "";
         
         counterReset = 0;
+        MaintainSchoolMenu.setGlobalCounter(0);
     }
     
     

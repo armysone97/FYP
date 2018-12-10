@@ -58,7 +58,7 @@
 
                     <tr>
                         <th align="left"> 
-                            <h:outputText id="lblSort" value="School List"  styleClass="lblStyle"/>
+                            <h:outputText id="lblSchoolListView" value="School List"  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
                             <h:outputText id="simbol23" value=": "  styleClass="lblStyle"/> 
@@ -79,11 +79,17 @@
                                 <f:selectItem itemValue="" itemLabel="" />
                                 <f:selectItems value="#{workloadReport.get_YearList()}" />
                             </h:selectOneMenu>  
-                            &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" />
+                            &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" action="#{workloadReport.callWorkload()}"/>
                         
                         </th>
                     </tr>   
                     
+                    <tr>
+                        <th align="left"> 
+                            <h:outputText id="lblSort" value="#{workloadReport.schoolWorkloadList}"  styleClass="lblStyle"/>
+                        </th>
+                        
+                    </tr>   
                     
 
                     <tr>

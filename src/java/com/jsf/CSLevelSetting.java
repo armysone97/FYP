@@ -859,6 +859,9 @@ public class CSLevelSetting {
 
                     newcslevelname = null;
                     newcslevelid = null;
+                     counterReset = 1;
+                     
+                    reset();
                     break;
             }
         }

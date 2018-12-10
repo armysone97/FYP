@@ -356,7 +356,46 @@ public class WorkloadReport {
 //                    teacherCSMapIDTmp = rs.getString("teacherCSMapID");
                     waIDList[tmp2] = rs.getString("WA_ID");
                     //                   teacherIDList[tmp1] = teacherCSMapIDTmp;
-                    tmp1++;
+                    tmp2++;
+                }
+
+                st.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
+        
+        String[] assessmentList = new String[waIDCount];
+        String[] teachercsIDList = new String[waIDCount];
+        String[] staffIDList = new String[waIDCount];
+        
+        int tmp3 = 0;
+        int tmp4 = 0;
+        int tmp5 = 0;
+        
+        for (int i = 0; i < waIDCount; i++) {
+//            String teacherCSMapIDTmp = "";
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = con.prepareStatement("SELECT assessment, teacherCSMapID, staffID FROM workloadallocation WHERE WA_ID = ? AND year = ?");
+                st.setString(1, waIDList[i]);
+                st.setInt(2, year);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+//                    teacherCSMapIDTmp = rs.getString("teacherCSMapID");
+                    assessmentList[tmp3] = rs.getString("assessment");
+                    tmp3++;
+                    
+                    teachercsIDList[tmp4] = rs.getString("teacherCSMapID");
+                    tmp4++;
+                    
+                    staffIDList[tmp3] = rs.getString("staffID");
+                    tmp5++;
                 }
 
                 st.close();

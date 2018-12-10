@@ -29,6 +29,7 @@ public class MileageClaimReport {
     private int year;
     private String evaluator;
     private String staffID;
+    private int mileageClaimCount;
     private int counterReset;
     
     private List<String> year_list = new ArrayList<>();
@@ -107,7 +108,7 @@ public class MileageClaimReport {
     }
     
     //retrieve evaluator workload
-    public ArrayList getWorkloadClaimList() {
+    public ArrayList getMileageClaimList() {
         //retrieve staff ID
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -118,6 +119,27 @@ public class MileageClaimReport {
 
             while (rs.next()) {
                 staffID = rs.getString("staffID");
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        //count amt workload claim
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM mileageclaimprocessing WHERE staffID = ? AND year = ?");
+            st.setString(1, staffID);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                mileageClaimCount = rs.getInt("COUNT(*)");
             }
 
             rs.close();

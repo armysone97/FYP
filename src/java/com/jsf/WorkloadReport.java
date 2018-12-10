@@ -41,7 +41,11 @@ public class WorkloadReport {
 
     private ArrayList schoolWorkloadList = null;
     private WorkloadReport workloadRepobj1 = null;
-    private String school_DT = "";
+    private int number_DT = 0;
+    private String evaluator_DT = "";
+    private String csLevel_DT = "";
+    private String teacher_DT = "";
+    private String assessment_DT = "";
 
     public WorkloadReport() {
         this.counterReset = 0;
@@ -56,20 +60,52 @@ public class WorkloadReport {
         return school;
     }
 
-    public String getSchool_DT() {
-        return school_DT;
-    }
-
     public String getTest() {
         return test;
     }
 
-    public void setTest(String test) {
-        this.test = test;
+    public int getNumber_DT() {
+        return number_DT;
     }
 
-    public void setSchool_DT(String school_DT) {
-        this.school_DT = school_DT;
+    public void setNumber_DT(int number_DT) {
+        this.number_DT = number_DT;
+    }
+
+    public String getEvaluator_DT() {
+        return evaluator_DT;
+    }
+
+    public void setEvaluator_DT(String evaluator_DT) {
+        this.evaluator_DT = evaluator_DT;
+    }
+
+    public String getCsLevel_DT() {
+        return csLevel_DT;
+    }
+
+    public void setCsLevel_DT(String csLevel_DT) {
+        this.csLevel_DT = csLevel_DT;
+    }
+
+    public String getTeacher_DT() {
+        return teacher_DT;
+    }
+
+    public void setTeacher_DT(String teacher_DT) {
+        this.teacher_DT = teacher_DT;
+    }
+
+    public String getAssessment_DT() {
+        return assessment_DT;
+    }
+
+    public void setAssessment_DT(String assessment_DT) {
+        this.assessment_DT = assessment_DT;
+    }
+
+    public void setTest(String test) {
+        this.test = test;
     }
 
     public void setSchool(String school) {
@@ -419,7 +455,7 @@ public class WorkloadReport {
                 ResultSet rs = st.executeQuery();
 
                 while (rs.next()) {
-                    staffNameList[tmp3] = rs.getString("name");
+                    staffNameList[tmp6] = rs.getString("name");
                     tmp6++;
                 }
 
@@ -465,13 +501,11 @@ public class WorkloadReport {
             }
         }
         
-        String[] schoolIDDBList = new String[waIDCount];
         String[] csLevelIDList = new String[waIDCount];
         
         int tmp9 = 0;
-        int tmp10 = 0;
+        
         for (int i = 0; i < waIDCount; i++) {
-            String schoolIDTmp = "";
             String csLevelIDTmp = "";
 
             try {
@@ -482,13 +516,36 @@ public class WorkloadReport {
                 ResultSet rs = st.executeQuery();
 
                 while (rs.next()) {
-                    schoolIDTmp = rs.getString("schoolID");
-                    schoolIDList[tmp3] = schoolIDTmp;
-                    tmp3++;
-
                     csLevelIDTmp = rs.getString("CSLevelID");
-                    csLevelIDList[tmp4] = csLevelIDTmp;
-                    tmp4++;
+                    csLevelIDList[tmp9] = csLevelIDTmp;
+                    tmp9++;
+                }
+
+                st.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
+        
+        String[] teacherNameList = new String[waIDCount];
+        int tmp10 = 0;
+        
+        for (int i = 0; i < waIDCount; i++) {
+            String teacherNameTmp = "";
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = con.prepareStatement("SELECT teacherName FROM teacher WHERE teacherID = ?");
+                st.setString(1, teacherIDList[i]);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+                    teacherNameTmp = rs.getString("teacherName");
+                    teacherNameList[tmp10] = teacherNameTmp;
+                    tmp10++;
                 }
 
                 st.close();
@@ -503,7 +560,11 @@ public class WorkloadReport {
 
         for (int i = 0; i < schoolID_Count; i++) {
             workloadRepobj1 = new WorkloadReport();
-            workloadRepobj1.setSchool_DT(schoolIDList[i]);
+            workloadRepobj1.setNumber_DT(i+1);
+            workloadRepobj1.setEvaluator_DT(staffNameList[i]);
+            workloadRepobj1.setCsLevel_DT(csLevelIDList[i]);
+            workloadRepobj1.setTeacher_DT(teacherNameList[i]);
+            workloadRepobj1.setAssessment_DT(assessmentList[i]);
             schoolWorkloadList.add(workloadRepobj1);
         }
 

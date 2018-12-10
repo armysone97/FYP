@@ -106,7 +106,7 @@
                                 <h:outputText id="lblNumber" value="No."  styleClass="lblStyle" escape="false"/>
                             </th>
                             <th colspan="2" align="center">
-                                <h:outputText id="lblSchoolListReport" value="School"  styleClass="lblStyle" escape="false"/>
+                                <h:outputText id="lblEvaluatorList" value="Evaluator"  styleClass="lblStyle" escape="false"/>
                             </th>
                             <th colspan="2" align="center">
                                 <h:outputText id="lblCSLevelListReport" value="CS Level"  styleClass="lblStyle" escape="false"/>
@@ -119,7 +119,7 @@
                             </th>
                         </tr>
                          
-                         <ui:repeat value="#{generateReport.evaluatorWorkloadList}" var="released">
+                         <ui:repeat value="#{workloadReport.schoolWorkloadList}" var="released">
                             <tr>
                                 <td colspan="2"><h:outputText value="#{released.number_DT}" styleClass="lblSpecialStyle" /></td>
                                 <td colspan="2"><h:outputText value="#{released.school_DT}" styleClass="lblSpecialStyle" /></td>

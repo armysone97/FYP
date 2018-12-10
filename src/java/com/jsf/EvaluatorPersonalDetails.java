@@ -36,7 +36,7 @@ public class EvaluatorPersonalDetails {
     private String rdID;
     private String wlID;
     private int counterReset; //growl purpose
-    
+
     private List<String> branch_list = new ArrayList<>();
     private List<String> faculty_list = new ArrayList<>();
     private List<String> status_list = new ArrayList<>();
@@ -120,7 +120,7 @@ public class EvaluatorPersonalDetails {
     public void setStatus_list(List<String> status_list) {
         this.status_list = status_list;
     }
-    
+
     public List<String> get_BranchList() {
 
         branch_list.clear();
@@ -145,7 +145,7 @@ public class EvaluatorPersonalDetails {
 
         return branch_list;
     }
-    
+
     public List<String> get_FacultyList() {
 
         faculty_list.clear();
@@ -170,7 +170,7 @@ public class EvaluatorPersonalDetails {
 
         return faculty_list;
     }
-    
+
     public List<String> get_StatusList() {
 
         status_list.clear();
@@ -195,27 +195,25 @@ public class EvaluatorPersonalDetails {
 
         return status_list;
     }
-    
+
     //check validation
-    public void validationCheck(){
+    public void validationCheck() {
         FacesContext context = FacesContext.getCurrentInstance();
-        
-        if(evaName == null || staffID == null || contactNum == null || role == null || workloadLimit == null){
+
+        if (evaName == null || staffID == null || contactNum == null || role == null || workloadLimit == null) {
             context.addMessage(null, new FacesMessage("All field are required to fill in!"));
-        }
-        else if(!contactNum.matches("-?\\d+")){
+        } else if (!contactNum.matches("-?\\d+")) {
             context.addMessage(null, new FacesMessage("Contact Number must be in integer only! Please try again!"));
-        }
-        else{
+        } else {
             duplicateRecordCheck();
         }
     }
-    
+
     //check duplicate record
-    public void duplicateRecordCheck(){
+    public void duplicateRecordCheck() {
         FacesContext context = FacesContext.getCurrentInstance();
         boolean check = false;
-        
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -238,7 +236,7 @@ public class EvaluatorPersonalDetails {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -249,12 +247,11 @@ public class EvaluatorPersonalDetails {
                 String staff_ID = rs.getString("staffID");
                 String rolesID = rs.getString("roleID");
 
-                if(staffID.equals(staff_ID) && roleID.equals(rolesID)) {
-                    
+                if (staffID.equals(staff_ID) && roleID.equals(rolesID)) {
+
                     check = false;
                     break;
-                }
-                else{
+                } else {
                     check = true;
                 }
             }
@@ -265,17 +262,17 @@ public class EvaluatorPersonalDetails {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
-        if(check == true){
+
+        if (check == true) {
             evaluatorData();
-        }else{
+        } else {
             context.addMessage(null, new FacesMessage("Record already existed!"));
         }
     }
-    
+
     //save evaluator personal details
     public void evaluatorData() {
-        
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -377,6 +374,28 @@ public class EvaluatorPersonalDetails {
             System.out.println("Error: " + ex);
         }
 
+        if (roleID.equals("RO2")) {
+            evaCount = evaCount + 1;
+            rdID = "RD" + Integer.toString(evaCount);
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO evaluatorroledetails (RD_ID, roleID, staffID) VALUES (?, ?, ?)");
+
+                statement.setString(1, rdID);
+                statement.setString(2, "RO1");
+                statement.setString(3, staffID);
+
+                statement.executeUpdate();
+                statement.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
+
         countWorkloadLimit();
     }
 
@@ -403,9 +422,9 @@ public class EvaluatorPersonalDetails {
     }
 
     public void addWorkloadLimit(Integer workloadLimitCount) {
-        
+
         FacesContext context = FacesContext.getCurrentInstance();
-        
+
         workloadLimitCount = workloadLimitCount + 1;
         wlID = "WL" + Integer.toString(workloadLimitCount);
 
@@ -427,9 +446,9 @@ public class EvaluatorPersonalDetails {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         context.addMessage(null, new FacesMessage("Added successful!"));
-        
+
         reset();
     }
 
@@ -452,7 +471,6 @@ public class EvaluatorPersonalDetails {
 //                context.addMessage(null, new FacesMessage("Reset successful!"));
 //                break;
 //        }
-
         //set default value
         evaName = null;
         staffID = null;

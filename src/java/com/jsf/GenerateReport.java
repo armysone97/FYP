@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -343,6 +344,23 @@ public class GenerateReport {
             } catch (Exception ex) {
                 System.out.println("Error: " + ex);
             }
+        }
+        
+        
+        String[] sortArr = new String[evaWorkloadCount];
+        
+         for (int i = 0; i < evaWorkloadCount; i++) {
+            sortArr[i] = schoolNameList[i] + " - " + csLevelIDList[i] + " - " + teacherNameList[i] + " - " + assessmentList[i];
+        }
+
+        Arrays.sort(sortArr);
+        
+        for (int i = 0; i < evaWorkloadCount; i++) {
+            String[] parts = sortArr[i].split(" - ");
+            schoolNameList[i] = parts[0];
+            csLevelIDList[i] = parts[1];
+            teacherNameList[i] = parts[2];
+            assessmentList[i] = parts[3];
         }
         
         evaluatorWorkloadList = new ArrayList();

@@ -221,15 +221,15 @@ public class WorkloadReport {
 
         return school_list;
     }
-    
+
     public void callWorkload() {
         getSchoolWorkloadList();
     }
 
     public ArrayList getSchoolWorkloadList() {
-        
+
         FacesContext context = FacesContext.getCurrentInstance();
-        
+
         //retrieve staff ID
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -348,7 +348,7 @@ public class WorkloadReport {
                 System.out.println("Error: " + ex);
             }
         }
-        
+
         int waIDCount = 0;
         for (int i = 0; i < teacherCSMapIDCount; i++) {
 
@@ -373,7 +373,7 @@ public class WorkloadReport {
                 System.out.println("Error: " + ex);
             }
         }
-        
+
         String[] waIDList = new String[waIDCount];
         int tmp2 = 0;
 
@@ -402,15 +402,15 @@ public class WorkloadReport {
                 System.out.println("Error: " + ex);
             }
         }
-        
+
         String[] assessmentList = new String[waIDCount];
         String[] teachercsIDList = new String[waIDCount];
         String[] staffIDList = new String[waIDCount];
-        
+
         int tmp3 = 0;
         int tmp4 = 0;
         int tmp5 = 0;
-        
+
         for (int i = 0; i < waIDCount; i++) {
 //            String teacherCSMapIDTmp = "";
 
@@ -425,10 +425,10 @@ public class WorkloadReport {
                 while (rs.next()) {
                     assessmentList[tmp3] = rs.getString("assessment");
                     tmp3++;
-                    
+
                     teachercsIDList[tmp4] = rs.getString("teacherCSMapID");
                     tmp4++;
-                    
+
                     staffIDList[tmp5] = rs.getString("staffID");
                     tmp5++;
                 }
@@ -440,10 +440,10 @@ public class WorkloadReport {
                 System.out.println("Error: " + ex);
             }
         }
-        
+
         String[] staffNameList = new String[waIDCount];
         int tmp6 = 0;
-        
+
         for (int i = 0; i < waIDCount; i++) {
 //            String teacherCSMapIDTmp = "";
 
@@ -466,10 +466,10 @@ public class WorkloadReport {
                 System.out.println("Error: " + ex);
             }
         }
-        
+
         String[] teacherIDList = new String[waIDCount];
         String[] schoolCSMapList = new String[waIDCount];
-        
+
         int tmp7 = 0;
         int tmp8 = 0;
         for (int i = 0; i < waIDCount; i++) {
@@ -500,11 +500,11 @@ public class WorkloadReport {
                 System.out.println("Error: " + ex);
             }
         }
-        
+
         String[] csLevelIDList = new String[waIDCount];
-        
+
         int tmp9 = 0;
-        
+
         for (int i = 0; i < waIDCount; i++) {
             String csLevelIDTmp = "";
 
@@ -528,10 +528,10 @@ public class WorkloadReport {
                 System.out.println("Error: " + ex);
             }
         }
-        
+
         String[] teacherNameList = new String[waIDCount];
         int tmp10 = 0;
-        
+
         for (int i = 0; i < waIDCount; i++) {
             String teacherNameTmp = "";
 
@@ -555,12 +555,28 @@ public class WorkloadReport {
                 System.out.println("Error: " + ex);
             }
         }
-        
+
+        String[] sortArr = new String[waIDCount];
+
+        for (int i = 0; i < waIDCount; i++) {
+            sortArr[i] = staffNameList[i] + " - " + csLevelIDList[i] + " - " + teacherNameList[i] + " - " + assessmentList[i];
+        }
+
+        Arrays.sort(sortArr);
+
+        for (int i = 0; i < waIDCount; i++) {
+            String[] parts = sortArr[i].split(" - ");
+            staffNameList[i] = parts[0];
+            csLevelIDList[i] = parts[1];
+            teacherNameList[i] = parts[2];
+            assessmentList[i] = parts[3];
+        }
+
         schoolWorkloadList = new ArrayList();
 
         for (int i = 0; i < waIDCount; i++) {
             workloadRepobj1 = new WorkloadReport();
-            workloadRepobj1.setNumber_DT(i+1);
+            workloadRepobj1.setNumber_DT(i + 1);
             workloadRepobj1.setEvaluator_DT(staffNameList[i]);
             workloadRepobj1.setCsLevel_DT(csLevelIDList[i]);
             workloadRepobj1.setTeacher_DT(teacherNameList[i]);

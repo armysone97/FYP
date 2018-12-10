@@ -230,6 +230,7 @@ public class WorkloadClaimReport {
             workClaimRepobj1.setTtlWorkloadClaim_DT("RM" + totalWorkloadClaimList[i]);
             workloadClaimList.add(workClaimRepobj1);
         }
+        
         return workloadClaimList;
     }
     

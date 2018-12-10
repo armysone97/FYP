@@ -244,7 +244,7 @@ public class EvaluatorWorkloadAllocation {
     
     //display data
     public ArrayList getWorkloadList() {
-        
+
         //retrieve staff ID
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -1235,7 +1235,6 @@ public class EvaluatorWorkloadAllocation {
 //        }
 
         //set default value
-        evaluator = null;
         school = null;
         csLevel = null;
         teacher = null;
@@ -1247,6 +1246,7 @@ public class EvaluatorWorkloadAllocation {
         totalWorkloadAssigned = null;
         year = 2018;
         result = "0.0";
+        workloadList = null;
 
         counterReset = 0;
         

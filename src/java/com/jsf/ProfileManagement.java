@@ -34,6 +34,7 @@ public class ProfileManagement {
     private String faculty;
     private String role;
     private String status;
+    private int year;
     private int workloadLimit;
     private String roleID;
     private Integer evaCount;
@@ -57,6 +58,7 @@ public class ProfileManagement {
         this.counterWL = 0;
         this.workloadLimit = 0;
         this.counterWL1 = 0;
+        this.year = 2018;
     }
 
     public boolean isDisabledButtonEdit() {
@@ -408,10 +410,39 @@ public class ProfileManagement {
     //check validation
     public void validationCheck() {
         FacesContext context = FacesContext.getCurrentInstance();
+        
+        String ttlWorkloadDB = "";
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
 
-        if (contactNum == null || workloadLimit == 0) {
+            PreparedStatement st = con.prepareStatement("SELECT ttlWorkloadAssigned FROM workloadlimit WHERE staffID = ? AND year = ?");
+            st.setString(1, staffID);
+            st.setInt(2, year);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                ttlWorkloadDB = rs.getString("ttlWorkloadAssigned");
+            }
+            
+            rs.close();
+            st.close();
+            con.close();
+            
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        if (contactNum == "" || workloadLimit == 0 || branch == null || faculty == null || status == null) {
             context.addMessage(null, new FacesMessage("All field are required to fill in!"));
-        } else {
+        } 
+        else if(workloadLimit < Double.valueOf(ttlWorkloadDB)){
+            context.addMessage(null, new FacesMessage("Workload limit invalid!"));
+        }
+        else if (!(String.valueOf(workloadLimit)).matches("-?\\d+")) {
+            context.addMessage(null, new FacesMessage("Workload Limit must be in integer only! Please try again!"));
+        }
+        else {
             updateProfile();
         }
     }

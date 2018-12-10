@@ -182,16 +182,16 @@ public class WorkloadClaimReport {
         }
         
         String[] claimCountList = new String[workloadClaimCount];
-        String[] totalWorkloadList = new String[workloadClaimCount];
-        String[] totalWorkloadClaimList = new String[workloadClaimCount];
+        Double[] totalWorkloadList = new Double[workloadClaimCount];
+        Double[] totalWorkloadClaimList = new Double[workloadClaimCount];
         
         int tmp = 0;
         int tmp1 = 0;
         int tmp2 = 0;
         
         String claimCountTmp = "";
-        String totalWorkloadTmp = "";
-        String totalWorkloadClaimTmp = "";
+        double totalWorkloadTmp = 0.0;
+        double totalWorkloadClaimTmp = 0.0;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -205,11 +205,11 @@ public class WorkloadClaimReport {
                 claimCountList[tmp] = claimCountTmp;
                 tmp++;
 
-                totalWorkloadTmp = rs.getString("totalWorkload");
+                totalWorkloadTmp = rs.getDouble("totalWorkload");
                 totalWorkloadList[tmp1] = totalWorkloadTmp;
                 tmp1++;
                 
-                totalWorkloadClaimTmp = rs.getString("totalWorkloadClaim");
+                totalWorkloadClaimTmp = rs.getDouble("totalWorkloadClaim");
                 totalWorkloadClaimList[tmp2] = totalWorkloadClaimTmp;
                 tmp2++;
             }
@@ -226,8 +226,8 @@ public class WorkloadClaimReport {
         for (int i = 0; i < workloadClaimCount; i++) {
             workClaimRepobj1 = new WorkloadClaimReport();
             workClaimRepobj1.setClaimCount_DT(claimCountList[i]);
-            workClaimRepobj1.setTtlWorkload_DT(totalWorkloadList[i]);
-            workClaimRepobj1.setTtlWorkloadClaim_DT("RM" + totalWorkloadClaimList[i]);
+            workClaimRepobj1.setTtlWorkload_DT(String.format("%.2f", totalWorkloadList[i]));
+            workClaimRepobj1.setTtlWorkloadClaim_DT("RM" + String.format("%.2f", totalWorkloadClaimList[i]));
             workloadClaimList.add(workClaimRepobj1);
         }
         

@@ -252,11 +252,11 @@ public class MileageClaimReport {
             System.out.println("Error: " + ex);
         }
         
-        String[] tollList = new String[mileageClaimCount];
-        String[] parkingList = new String[mileageClaimCount];
-        String[] accomodationList = new String[mileageClaimCount];
-        String[] mileageList = new String[mileageClaimCount];
-        String[] ttlMileageClaimList = new String[mileageClaimCount];
+        Double[] tollList = new Double[mileageClaimCount];
+        Double[] parkingList = new Double[mileageClaimCount];
+        Double[] accomodationList = new Double[mileageClaimCount];
+        Double[] mileageList = new Double[mileageClaimCount];
+        Double[] ttlMileageClaimList = new Double[mileageClaimCount];
         String[] claimRecordList = new String[mileageClaimCount];
         
         int tmp1 = 0;
@@ -276,19 +276,19 @@ public class MileageClaimReport {
                 ResultSet rs = st.executeQuery();
 
                 while (rs.next()) {
-                    tollList[tmp1] = rs.getString("toll");
+                    tollList[tmp1] = rs.getDouble("toll");
                     tmp1++;
                     
-                    parkingList[tmp2] = rs.getString("parking");
+                    parkingList[tmp2] = rs.getDouble("parking");
                     tmp2++;
                     
-                    accomodationList[tmp3] = rs.getString("accomodation");
+                    accomodationList[tmp3] = rs.getDouble("accomodation");
                     tmp3++;
                     
-                    mileageList[tmp4] = rs.getString("mileage");
+                    mileageList[tmp4] = rs.getDouble("mileage");
                     tmp4++;
                     
-                    ttlMileageClaimList[tmp5] = rs.getString("totalMileageClaim");
+                    ttlMileageClaimList[tmp5] = rs.getDouble("totalMileageClaim");
                     tmp5++;
                     
                     claimRecordList[tmp6] = rs.getString("claimRecord");
@@ -324,11 +324,11 @@ public class MileageClaimReport {
             String[] parts = sortArr[i].split(" - ");
             schoolNameList[i] = parts[0];
             assessmentList[i] = parts[1];
-            tollList[i] = parts[2];
-            parkingList[i] = parts[3];
-            accomodationList[i] = parts[4];
-            mileageList[i] = parts[5];
-            ttlMileageClaimList[i] = parts[6];
+            tollList[i] = Double.valueOf(parts[2]);
+            parkingList[i] = Double.valueOf(parts[3]);
+            accomodationList[i] = Double.valueOf(parts[4]);
+            mileageList[i] = Double.valueOf(parts[5]);
+            ttlMileageClaimList[i] = Double.valueOf(parts[6]);
         }
         
         mileageClaimList = new ArrayList();
@@ -338,11 +338,11 @@ public class MileageClaimReport {
             mileageClaimRepobj1.setNumber_DT(i + 1);
             mileageClaimRepobj1.setSchool_DT(schoolNameList[i]);
             mileageClaimRepobj1.setAssessment_DT(assessmentList[i]);
-            mileageClaimRepobj1.setToll_DT("RM" + tollList[i]);
-            mileageClaimRepobj1.setParking_DT("RM" + parkingList[i]);
-            mileageClaimRepobj1.setAccomodation_DT("RM" + accomodationList[i]);
-            mileageClaimRepobj1.setMileage_DT(mileageList[i]);
-            mileageClaimRepobj1.setTtlMileage_DT("RM" + ttlMileageClaimList[i]);
+            mileageClaimRepobj1.setToll_DT("RM" + String.format("%.2f", tollList[i]));
+            mileageClaimRepobj1.setParking_DT("RM" + String.format("%.2f", parkingList[i]));
+            mileageClaimRepobj1.setAccomodation_DT("RM" + String.format("%.2f", accomodationList[i]));
+            mileageClaimRepobj1.setMileage_DT(String.format("%.2f", mileageList[i]));
+            mileageClaimRepobj1.setTtlMileage_DT("RM" + String.format("%.2f", ttlMileageClaimList[i]));
             mileageClaimList.add(mileageClaimRepobj1);
         }
         

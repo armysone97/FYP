@@ -200,7 +200,7 @@ public class EvaluatorPersonalDetails {
     public void validationCheck() {
         FacesContext context = FacesContext.getCurrentInstance();
 
-        if (evaName == null || staffID == null || contactNum == null || role == null || workloadLimit == null) {
+        if (evaName == null || staffID == null || contactNum == null || branch == null || faculty == null || role == null || status == null || workloadLimit == null) {
             context.addMessage(null, new FacesMessage("All field are required to fill in!"));
         } else if (!contactNum.matches("-?\\d+")) {
             context.addMessage(null, new FacesMessage("Contact Number must be in integer only! Please try again!"));

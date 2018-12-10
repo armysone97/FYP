@@ -47,9 +47,9 @@ public class WorkloadClaimApplication {
     public WorkloadClaimApplication() {
         this.counterReset = 0;
         this.year = 2018;
-        this.hourlyRate = "0.0";
+        this.hourlyRate = "0.00";
         this.workHours = "0.0";
-        this.result = "0.0";
+        this.result = "0.00";
 //        this.staffID = Login.getGlobalStaffID();
 //        retrievePersonalDetails();
     }
@@ -466,7 +466,7 @@ public class WorkloadClaimApplication {
         FacesContext context = FacesContext.getCurrentInstance();
 
         role = null;
-        hourlyRate = "0.0";
+        hourlyRate = "0.00";
         workHours = "0.0";
         totalClaim = 0;
         result = "0.00";

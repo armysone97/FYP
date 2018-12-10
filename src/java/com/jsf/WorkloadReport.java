@@ -558,7 +558,7 @@ public class WorkloadReport {
         
         schoolWorkloadList = new ArrayList();
 
-        for (int i = 0; i < schoolID_Count; i++) {
+        for (int i = 0; i < waIDCount; i++) {
             workloadRepobj1 = new WorkloadReport();
             workloadRepobj1.setNumber_DT(i+1);
             workloadRepobj1.setEvaluator_DT(staffNameList[i]);

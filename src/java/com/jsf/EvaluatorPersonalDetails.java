@@ -457,10 +457,10 @@ public class EvaluatorPersonalDetails {
         evaName = null;
         staffID = null;
         contactNum = null;
-        branch = "Kuala Lumpur Main Campus";
-        faculty = "FOCS";
+        branch = null;
+        faculty = null;
         role = null;
-        status = "Available";
+        status = null;
         workloadLimit = null;
 
         counterReset = 0;

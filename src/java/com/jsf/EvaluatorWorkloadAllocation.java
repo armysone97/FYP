@@ -80,7 +80,7 @@ public class EvaluatorWorkloadAllocation {
     public EvaluatorWorkloadAllocation() {
         super();
         this.counterReset = 0;
-        this.year = 2017;
+        this.year = 2018;
         this.workloadAssigned = 0;
         this.totalWorkloadAssigned = "0.0";
         this.result = "0";
@@ -1245,7 +1245,7 @@ public class EvaluatorWorkloadAllocation {
         workloadMin = 0;
         workloadAssigned = 0;
         totalWorkloadAssigned = null;
-        year = 2017;
+        year = 2018;
         result = "0.0";
         workloadList = null;
 

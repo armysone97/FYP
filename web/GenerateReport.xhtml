@@ -69,8 +69,7 @@
                                 <f:selectItem itemValue="" itemLabel="" />
                                 <f:selectItems value="#{generateReport.get_EvaluatorList()}" />
                             </h:selectOneMenu>  
-                            &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" action="#{generateReport.callEvaluatorWorkload()}" />
-                        </th>
+                           </th>
                     </tr>  
                     
                     <tr>
@@ -83,7 +82,8 @@
                                 <f:selectItem itemValue="" itemLabel="" />
                                 <f:selectItems value="#{generateReport.get_YearList()}" />
                             </h:selectOneMenu>  
-
+ &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" action="#{generateReport.callEvaluatorWorkload()}" />
+                        
                         </th>
                     </tr>   
 
@@ -94,7 +94,7 @@
 
                 </table> 
 
-                <fieldset style="display: inline-block">
+                <fieldset id="showTable" style="display: inline-block">
                     <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
                         <tr>
                             <th colspan="2" align="center"> 

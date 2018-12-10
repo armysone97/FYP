@@ -58,6 +58,19 @@
 
                     <tr>
                         <th align="left"> 
+                            <h:outputText id="lblSort" value="School List"  styleClass="lblStyle"/>
+                        </th>
+                        <th align="left">
+                            <h:outputText id="simbol23" value=": "  styleClass="lblStyle"/> 
+                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{generateReport.evaluator}">
+                                <f:selectItem itemValue="" itemLabel="" />
+                                <f:selectItems value="#{generateReport.get_EvaluatorList()}" />
+                            </h:selectOneMenu>  
+                            </th>
+                    </tr>   
+                    
+                    <tr>
+                        <th align="left"> 
                             <h:outputText id="lblYear2" value="Year"  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
@@ -66,23 +79,12 @@
                                 <f:selectItem itemValue="" itemLabel="" />
                                 <f:selectItems value="#{generateReport.get_YearList()}" />
                             </h:selectOneMenu>  
-                          
+                          &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" action="#{generateReport.callEvaluatorWorkload()}" />
+                        
                         </th>
                     </tr>   
                     
-                    <tr>
-                        <th align="left"> 
-                            <h:outputText id="lblSort" value="Sort By"  styleClass="lblStyle"/>
-                        </th>
-                        <th align="left">
-                            <h:outputText id="simbol23" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{generateReport.evaluator}">
-                                <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="#{generateReport.get_EvaluatorList()}" />
-                            </h:selectOneMenu>  
-                            &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" action="#{generateReport.callEvaluatorWorkload()}" />
-                        </th>
-                    </tr>   
+                    
 
                     <tr>
                         <th><label>&nbsp;</label></th>

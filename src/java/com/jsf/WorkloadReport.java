@@ -239,6 +239,7 @@ public class WorkloadReport {
             
         }
 
+        return schoolWorkloadList;
     }
 
     //navigation bar purpose

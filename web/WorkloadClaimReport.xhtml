@@ -58,14 +58,15 @@
 
                     <tr>
                         <th align="left"> 
-                            <h:outputText id="lblSort" value="School List"  styleClass="lblStyle"/>
+                            <h:outputText id="lblSort" value="Evaluator List"  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
                             <h:outputText id="simbol23" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="">
+                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{workloadClaimReport.evaluator}">
                                 <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="#{generateReport.get_EvaluatorList()}" />
-                            </h:selectOneMenu>  
+                                <f:selectItems value="#{workloadClaimReport.get_EvaluatorList()}" />
+                            </h:selectOneMenu> 
+                            
                             </th>
                     </tr>
                     
@@ -75,12 +76,12 @@
                         </th>
                         <th align="left">
                             <h:outputText id="simbol111" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{generateReport.year}">
+                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{workloadClaimReport.year}">
                                 <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="#{generateReport.get_YearList()}" />
+                                <f:selectItems value="#{workloadClaimReport.get_YearList()}" />
                             </h:selectOneMenu>  
-                          &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" action="#{generateReport.callEvaluatorWorkload()}" />
-                        
+                            &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" action="#{workloadClaimReport.callWorkloadClaim()}" />
+         
                         </th>
                     </tr>   
                     
@@ -108,26 +109,18 @@
                                 <h:outputText id="lblNumber" value="No."  styleClass="lblStyle" escape="false"/>
                             </th>
                             <th colspan="2" align="center">
-                                <h:outputText id="lblSchoolListReport" value="School"  styleClass="lblStyle" escape="false"/>
+                                <h:outputText id="lblTotalWorkloadHoursReport" value="Workload Hours"  styleClass="lblStyle" escape="false"/>
                             </th>
                             <th colspan="2" align="center">
-                                <h:outputText id="lblCSLevelListReport" value="CS Level"  styleClass="lblStyle" escape="false"/>
-                            </th>
-                            <th colspan="2" align="center">
-                                <h:outputText id="lblTeacherListReport" value="Teacher"  styleClass="lblStyle" escape="false"/>
-                            </th>
-                             <th colspan="2" align="center">
-                                <h:outputText id="lblAssessmentListReport" value="Assessment"  styleClass="lblStyle" escape="false"/>
+                                <h:outputText id="lblTotalWorkloadClaimReport" value="Workload Claim"  styleClass="lblStyle" escape="false"/>
                             </th>
                         </tr>
                          
-                         <ui:repeat value="#{generateReport.evaluatorWorkloadList}" var="released">
+                         <ui:repeat value="#{workloadClaimReport.workloadClaimList}" var="released">
                             <tr>
-                                <td colspan="2"><h:outputText value="#{released.number_DT}" styleClass="lblSpecialStyle" /></td>
-                                <td colspan="2"><h:outputText value="#{released.school_DT}" styleClass="lblSpecialStyle" /></td>
-                                <td colspan="2"><h:outputText value="#{released.csLevel_DT}" styleClass="lblSpecialStyle" /></td>
-                                <td colspan="2"><h:outputText value="#{released.teacher_DT}" styleClass="lblSpecialStyle" /></td>
-                                <td colspan="2"><h:outputText value="#{released.assessment_DT}" styleClass="lblSpecialStyle" /></td>
+                                <td colspan="2"><h:outputText value="#{released.claimCount_DT}" styleClass="lblSpecialStyle" /></td>
+                                <td colspan="2"><h:outputText value="#{released.ttlWorkload_DT}" styleClass="lblSpecialStyle" /></td>
+                                <td colspan="2"><h:outputText value="#{released.ttlWorkloadClaim_DT}" styleClass="lblSpecialStyle" /></td>
                             </tr>
                         </ui:repeat>
 

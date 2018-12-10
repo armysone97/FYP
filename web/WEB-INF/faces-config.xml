@@ -156,6 +156,25 @@
             <to-view-id>/GenerateReport.xhtml</to-view-id>
         </navigation-case>
         
+         <navigation-case>
+            <from-action>#{workloadClaimReport.goToNextPage()}</from-action>
+            <from-outcome>WorkloadClaimReport</from-outcome>
+            <to-view-id>/WorkloadClaimReport</to-view-id>
+        </navigation-case>
+        
+          <navigation-case>
+            <from-action>#{mileageClaimReport.goToNextPage()}</from-action>
+            <from-outcome>MileageClaimReport</from-outcome>
+            <to-view-id>/MileageClaimReport</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+            <from-action>#{workloadReport.goToNextPage()}</from-action>
+            <from-outcome>WorkloadReport</from-outcome>
+            <to-view-id>/WorkloadReport</to-view-id>
+        </navigation-case>
+        
+        
         <navigation-case>
             <from-action>#{profileManagement.goToNextPage()}</from-action>
             <from-outcome>ProfileManagement</from-outcome>

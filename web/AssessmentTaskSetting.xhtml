@@ -40,7 +40,12 @@
 
                     <p:menuitem title="Click to redirect to Evaluator Personal Details page" value="EVALUATOR MANAGEMENT" action="#{evaluatorPersonalDetails.goToNextPage()}" />
                     <p:menuitem title="Click to redirect to Workload Allocation page" value="WORKLOAD ALLOCATION" action="#{evaluatorWorkloadAllocation.goToNextPage()}" />
-                    <p:menuitem title="Click to redirect to Generate Report page" value="REPORT" action="#{generateReport.goToNextPage()}" />
+                     <p:submenu label="REPORT">
+                        <p:menuitem title="Click to redirect to School Workload Allocation Report page" value="School Workload Allocation Report" action="#{workloadReport.goToNextPage()}" />
+                        <p:menuitem title="Click to redirect to Evaluator Workload Allocation Report page" value="Evaluator Workload Allocation Report" action="#{generateReport.goToNextPage()}" />
+                        <p:menuitem title="Click to redirect to Workload Claim Report page" value="Workload Claim Report" action="#{workloadClaimReport.goToNextPage()}" />
+                        <p:menuitem title="Click to redirect to Mileage Claim Report page" value="Mileage Claim Report" action="#{mileageClaimReport.goToNextPage()}" />
+                    </p:submenu>
                     <p:menuitem title="Click to Log Out" style="position: absolute; right: 12px;" value="LOG OUT" action="#{login.goToNextPage()}" />
                 </p:menubar>
 

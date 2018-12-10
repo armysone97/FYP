@@ -28,7 +28,6 @@ import javax.faces.context.FacesContext;
 public class GenerateReport {
     
     private Connection con;
-    private String reportType;
     private int year;
     private String evaluator;
     private String staffID;
@@ -43,17 +42,12 @@ public class GenerateReport {
     private String assessment_DT = "";
     
     private int counterReset;
-    
-    private List<String> report_list = new ArrayList<>();
+
     private List<String> year_list = new ArrayList<>();
     private List<String> evaluator_list = new ArrayList<>();
     
     public GenerateReport() {
         this.counterReset = 0;
-    }
-
-    public String getReportType() {
-        return reportType;
     }
 
     public int getYear() {
@@ -112,14 +106,6 @@ public class GenerateReport {
         this.year = year;
     }
 
-    public void setReportType(String reportType) {
-        this.reportType = reportType;
-    }
-
-    public void setReport_list(List<String> report_list) {
-        this.report_list = report_list;
-    }
-
     public void setYear_list(List<String> year_list) {
         this.year_list = year_list;
     }
@@ -130,19 +116,6 @@ public class GenerateReport {
 
     public void setEvaluatorWorkloadList(ArrayList evaluatorWorkloadList) {
         this.evaluatorWorkloadList = evaluatorWorkloadList;
-    }
-    
-    //display report type
-    public List<String> get_ReportList() {
-
-        report_list.clear();
-        
-        report_list.add("School Workload Allocation Report");
-        report_list.add("Evaluator Workload Allocation Report");
-        report_list.add("Workload Claim Report");
-        report_list.add("Mileage Claim Report");
-
-        return report_list;
     }
     
     //display year list
@@ -413,6 +386,7 @@ public class GenerateReport {
 //        reportType = "";
         
         counterReset = 0;
+        MaintainSchoolMenu.setGlobalCounter(0);
     }
     
     

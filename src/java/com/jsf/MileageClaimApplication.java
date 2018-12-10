@@ -47,7 +47,11 @@ public class MileageClaimApplication {
     public MileageClaimApplication() {
         this.counterReset = 0;
         this.year = 2018;
-        this.result = "0.0";
+        this.toll = 0.00;
+        this.parking = 0.00;
+        this.accomodation = 0.00;
+        this.mileage = 0.00;
+        this.result = "0.00";
     }
 
     public String getStaffID() {
@@ -233,9 +237,10 @@ public class MileageClaimApplication {
     public void validation_Check(){
         FacesContext context = FacesContext.getCurrentInstance();
         
-        if(workload == null || mileage == 0.0 || totalClaim == 0.0){
+        if(workload == null || mileage == 0.0){
             context.addMessage(null, new FacesMessage("All field are required to fill in!"));
-            reset();
+        }else if(totalClaim == 0.0){
+            context.addMessage(null, new FacesMessage("Click 'CALCULATE' to check total claim!"));
         }
         else{
             check_DuplicateRecord();
@@ -358,13 +363,13 @@ public class MileageClaimApplication {
 //        name = null;
         role = null;
         rate = "0.0";
-        toll = 0;
-        parking = 0;
-        accomodation = 0;
-        mileage = 0;
-        totalClaim = 0;
+        toll = 0.00;
+        parking = 0.00;
+        accomodation = 0.00;
+        mileage = 0.00;
+        totalClaim = 0.00;
         year = 2018;
-        result = "0.0";
+        result = "0.00";
 
         counterReset = 0;
     }

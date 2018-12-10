@@ -80,7 +80,7 @@ public class EvaluatorWorkloadAllocation {
     public EvaluatorWorkloadAllocation() {
         super();
         this.counterReset = 0;
-        this.year = 2018;
+        this.year = 2017;
         this.workloadAssigned = 0;
         this.totalWorkloadAssigned = "0.0";
         this.result = "0";
@@ -268,8 +268,9 @@ public class EvaluatorWorkloadAllocation {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM workloadallocation WHERE staffID = ?");
+            PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM workloadallocation WHERE staffID = ? AND year = ?");
             st.setString(1, staffID);
+            st.setInt(2, year);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -1244,7 +1245,7 @@ public class EvaluatorWorkloadAllocation {
         workloadMin = 0;
         workloadAssigned = 0;
         totalWorkloadAssigned = null;
-        year = 2018;
+        year = 2017;
         result = "0.0";
         workloadList = null;
 

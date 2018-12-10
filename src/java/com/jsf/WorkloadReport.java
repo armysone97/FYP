@@ -37,7 +37,7 @@ public class WorkloadReport {
 
     private List<String> year_list = new ArrayList<>();
     private List<String> school_list = new ArrayList<>();
-    
+
     private ArrayList schoolWorkloadList = null;
 
     public WorkloadReport() {
@@ -69,7 +69,6 @@ public class WorkloadReport {
         this.year_list = year_list;
     }
 
-    
     //display year
     public List<String> get_YearList() {
         year_list.clear();
@@ -101,7 +100,7 @@ public class WorkloadReport {
         }
         return j;
     }
-   
+
     //retrive school list
     public List<String> get_SchoolList() {
         school_list.clear();
@@ -128,7 +127,6 @@ public class WorkloadReport {
 
         String[] specialIDList = new String[specialID_Count];
         int tmp = 0;
-                       
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -157,18 +155,18 @@ public class WorkloadReport {
             schoolNameList[i] = parts[1];
 //            school_list.add(parts[1]);
         }
-        
+
         Arrays.sort(schoolNameList);//sorting array  
         int length = specialIDList.length;
         length = removeDuplicateElementsString(schoolNameList, length);
-        
+
         for (int i = 0; i < length; i++) {
             school_list.add(schoolNameList[i]);
         }
 
         return school_list;
     }
-    
+
     public ArrayList getSchoolWorkloadList() {
         //retrieve staff ID
         try {
@@ -189,7 +187,7 @@ public class WorkloadReport {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         //count schoolID
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -210,10 +208,10 @@ public class WorkloadReport {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         String[] schoolIDList = new String[schoolID_Count];
         int tmp = 0;
-                       
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliant=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -234,11 +232,12 @@ public class WorkloadReport {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
-        String[] schoolIDList = new String[schoolID_Count];
-        int tmp1 = 0;
+
+//        String[] teacherCSMapIDList = new String[schoolID_Count];
+//        int tmp1 = 0;
+        int teacherCSMapIDCount = 0;
         for (int i = 0; i < schoolID_Count; i++) {
-            
+
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -247,8 +246,36 @@ public class WorkloadReport {
                 ResultSet rs = st.executeQuery();
 
                 while (rs.next()) {
-                    teacherCSMapIDTmp = rs.getString("teacherCSMapID");
- //                   teacherIDList[tmp1] = teacherCSMapIDTmp;
+                    teacherCSMapIDCount = teacherCSMapIDCount + rs.getInt("COUNT(*)");
+                    //                   teacherIDList[tmp1] = teacherCSMapIDTmp;
+//                    tmp1++;
+                }
+
+                st.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
+
+        String[] teacherCSMapIDList = new String[teacherCSMapIDCount];
+        int tmp1 = 0;
+
+        for (int i = 0; i < schoolID_Count; i++) {
+//            String teacherCSMapIDTmp = "";
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = con.prepareStatement("SELECT teacherCSMapID FROM teachercsmap WHERE schoolCSMapID = ?");
+                st.setString(1, schoolIDList[i]);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+//                    teacherCSMapIDTmp = rs.getString("teacherCSMapID");
+                    teacherCSMapIDList[tmp1] = rs.getString("teacherCSMapID");
+                    //                   teacherIDList[tmp1] = teacherCSMapIDTmp;
                     tmp1++;
                 }
 
@@ -259,31 +286,6 @@ public class WorkloadReport {
                 System.out.println("Error: " + ex);
             }
         }
-        
-//        int tmp1 = 0;
-//        for (int i = 0; i < schoolID_Count; i++) {
-//            String teacherCSMapIDTmp = "";
-//
-//            try {
-//                Class.forName("com.mysql.cj.jdbc.Driver");
-//                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-//                PreparedStatement st = con.prepareStatement("SELECT teacherCSMapID FROM teachercsmap WHERE schoolCSMapID = ?");
-//                st.setString(1, schoolIDList[i]);
-//                ResultSet rs = st.executeQuery();
-//
-//                while (rs.next()) {
-//                    teacherCSMapIDTmp = rs.getString("teacherCSMapID");
-// //                   teacherIDList[tmp1] = teacherCSMapIDTmp;
-//                    tmp1++;
-//                }
-//
-//                st.close();
-//                con.close();
-//
-//            } catch (Exception ex) {
-//                System.out.println("Error: " + ex);
-//            }
-//        }
 
         return schoolWorkloadList;
     }

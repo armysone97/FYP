@@ -17,6 +17,14 @@ and open the template in the editor.
     font-weight: bold;
 }
 
+.bodyStyle{
+    background-color: #000000;
+}
+
+.formStyle{
+    background-color: #ccffff;
+}
+
 /* Normal Style*/
 .radiobuttonStyle { 
     font-size: 18pt;

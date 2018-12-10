@@ -697,10 +697,12 @@ public class MaintainSchoolDetails {
 
         switch (editButtonName) {
             case "Edit":
-                MaintainSchoolMenu.setGlobalCounter(1);
+                
+                MaintainSchoolMenu.setGlobalCounter(3);
                 editSchool();
                 break;
             case "Update":
+                MaintainSchoolMenu.setGlobalCounter(2);
                 updateSchool();
                 break;
         }
@@ -709,6 +711,8 @@ public class MaintainSchoolDetails {
     public void editSchool() {
         //reset page
 //        disabledTxt = false;
+
+
         disabledCommYear = true;
         disabledStatus = false;
 //        editButtonName = "Update";
@@ -719,6 +723,9 @@ public class MaintainSchoolDetails {
 //        ttlEnrolStud = 0;
 //        cslevel = null;
 //        year = 0;
+
+// FacesContext context = FacesContext.getCurrentInstance();
+//                 context.addMessage(null, new FacesMessage("x: " + schoolID + name + MaintainSchoolMenu.getGlobalCounter()));
     }
 
     public void updateSchool() {
@@ -920,6 +927,30 @@ public class MaintainSchoolDetails {
                 addButtonName = "New";
                 disabledEnrol = false;
                  callCSLevel();
+                 
+                break;
+                
+                 case 3:
+//                MaintainSchoolMenu.setGlobalAction("Update");
+//                    disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
+//                name = MaintainSchoolMenu.getGlobalAction();
+                
+                 disabledCommYear = true;
+        disabledStatus = false;
+//        editButtonName = "Update";
+//        disabledAddButton = true;
+        MaintainSchoolMenu.setGlobalAction("Update");
+        disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
+        disabledEnrol = true;
+//
+//                disabledTxt = false;
+//                disabledAddButton = true;
+//                disabledEditButton = false;
+//                disabledResetButton = false;
+//
+//                addButtonName = "New";
+//                disabledEnrol = false;
+//                 callCSLevel();
                  
                 break;
 

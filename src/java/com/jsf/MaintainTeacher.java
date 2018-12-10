@@ -538,12 +538,24 @@ public class MaintainTeacher {
 
 //        newTeacherSchoolName = "schoolxx: " + newCount;
         switch (newCount) {
+            case 0:
+                newTeacherIDName_list.add("---");
+                break;
             case 1: //select
+//                newTeacherIDName_list.add(" - lkjmmmmmmm");
+//                break;
             case 3: //select
                 int allTeacherIDListCount = retrieveAllTeacherIDCount();
                 String[] allTeacherIDListDuplicate = new String[allTeacherIDListCount];
 
                 allTeacherIDListDuplicate = showAllTeacher(allTeacherIDListCount); //get all teacher
+                
+//                     for (int i = 0; i < allTeacherIDListDuplicate.length; i++) {
+
+//                    newTeacherID_list.add(teacherIDNotInSC[i]);
+//  newTeacherIDName_list.add(allTeacherIDListCount + " - lkk");
+//   newTeacherIDName_list.add(" - lkj");
+//                }
 
                 int teacherIDNotInSCCount = retrieveTeacherIDNotInSCCount(allTeacherIDListDuplicate);
                 String[] teacherIDNotInSC = new String[teacherIDNotInSCCount];
@@ -553,6 +565,7 @@ public class MaintainTeacher {
                 for (int i = 0; i < teacherIDNotInSC.length; i++) {
 
 //                    newTeacherID_list.add(teacherIDNotInSC[i]);
+//  newTeacherIDName_list.add(teacherIDNotInSC[i] + " - lkk");
                 }
 
                 int teacherIDForSchoolCount = retrieveTeacherIDFromSchoolLength();
@@ -592,7 +605,7 @@ public class MaintainTeacher {
                     newTeacherIDName_list.add(teacherID + " - " + teacherName);
                 }
                 
-                get_newCSLevel();
+//                get_newCSLevel();
 
                 break;
             case 2: //add new
@@ -601,6 +614,8 @@ public class MaintainTeacher {
 //                newTeacherIDName_list.add(autoGenerateTeacherID());
                 newTeacherIDName_list.add("---");
                 break;
+            default:
+                newTeacherIDName_list.add("---");
         }
         return newTeacherIDName_list;
 
@@ -753,6 +768,7 @@ public class MaintainTeacher {
 
     public List<String> get_newCSLevel() {
         newCSLevel_list.clear();
+        
         String schoolID = matchSchoolID();
         int countSchoolCSMapID = countSchoolCSMapIDNew(schoolID);
 
@@ -787,13 +803,20 @@ public class MaintainTeacher {
 //                for (int i = 0; i < CSLevelIDList.length; i++) {
 //                    newCSLevel_list.add(matchCSLevelName(CSLevelIDList[i]));
 //                }
+//                int countSchoolCSMapID1x = countSchoolCSMapIDNew1(schoolCSMapIDList);
+//                 newCSLevel_list.add(countSchoolCSMapID1x + "xxxxdsxx");
+                
+//                FacesContext context = FacesContext.getCurrentInstance();
+//                context.addMessage(null, new FacesMessage("zz : " + countSchoolCSMapID + " : yy")); 
+                        
+                
 //                break;
             case 3: //select (after select teacherID and Name)
 
 //        for (int i = 0; i < CSLevelIDList.length; i++) {
 //            newCSLevel_list.add(CSLevelIDList[i]);
 //        }
-                FacesContext context = FacesContext.getCurrentInstance();
+              
 //                context.addMessage(null, new FacesMessage("xx : " + newTeacherIDName + " : yy"));
                 String schoolCSMapID = "";
                 int countSchoolCSMapID1 = countSchoolCSMapIDNew1(schoolCSMapIDList);
@@ -2371,6 +2394,7 @@ public class MaintainTeacher {
     public void selectNewTeacher() {
 
         newCount = 1;
+        newTeacherIDName = "TH1 - Teoh Wei Ran";
 
         // newTeacherID = "TH21";
 //        newTeacherStatus = "Available";
@@ -2575,6 +2599,10 @@ public class MaintainTeacher {
                 context.addMessage(null, new FacesMessage("Reset successful!"));
                 break;
         }
+        
+
+       disabledStatus = true;
+       temp = null;
 
         //set default value
         state = "Pulau Pinang";

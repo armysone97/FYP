@@ -24,7 +24,7 @@ public class EvaluatorPersonalDetails {
     private Connection con;
     private String evaName;
     private String staffID;
-    private Integer contactNum;
+    private String contactNum;
     private String branch;
     private String faculty;
     private String role;
@@ -61,11 +61,11 @@ public class EvaluatorPersonalDetails {
         this.staffID = staffID;
     }
 
-    public Integer getContactNum() {
+    public String getContactNum() {
         return contactNum;
     }
 
-    public void setContactNum(Integer contactNum) {
+    public void setContactNum(String contactNum) {
         this.contactNum = contactNum;
     }
 
@@ -203,6 +203,9 @@ public class EvaluatorPersonalDetails {
         if(evaName == null || staffID == null || contactNum == null || role == null || workloadLimit == null){
             context.addMessage(null, new FacesMessage("All field are required to fill in!"));
         }
+        else if(!contactNum.matches("-?\\d+")){
+            context.addMessage(null, new FacesMessage("Contact Number must be in integer only! Please try again!"));
+        }
         else{
             duplicateRecordCheck();
         }
@@ -282,7 +285,7 @@ public class EvaluatorPersonalDetails {
             statement.setString(2, evaName);
             statement.setString(3, branch);
             statement.setString(4, faculty);
-            statement.setInt(5, contactNum);
+            statement.setString(5, contactNum);
             statement.setString(6, status);
             statement.setString(7, staffID);
             statement.setString(8, String.valueOf(contactNum));

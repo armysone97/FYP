@@ -19,7 +19,7 @@ import javax.faces.context.FacesContext;
 
 /**
  *
- * @author hsuhong1210
+ * @author ruenyenchin
  */
 @ManagedBean
 @SessionScoped

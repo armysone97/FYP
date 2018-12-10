@@ -56,9 +56,9 @@
                         </th>
                         <th align="left">
                             <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="">
+                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{generateReport.reportType}">
                                 <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="" />
+                                <f:selectItems value="#{generateReport.get_ReportList()}" />
                             </h:selectOneMenu>  
                             </th>
                     </tr>  
@@ -68,12 +68,26 @@
                             <h:outputText id="lblYear2" value="Year"  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
-                            <h:outputText id="simbol1" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="">
+                            <h:outputText id="simbol111" value=": "  styleClass="lblStyle"/> 
+                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{generateReport.year}">
                                 <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="" />
+                                <f:selectItems value="#{generateReport.get_YearList()}" />
                             </h:selectOneMenu>  
-                            &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" />
+                          
+                        </th>
+                    </tr>   
+                    
+                    <tr>
+                        <th align="left"> 
+                            <h:outputText id="lblSort" value="Sort By"  styleClass="lblStyle"/>
+                        </th>
+                        <th align="left">
+                            <h:outputText id="simbol23" value=": "  styleClass="lblStyle"/> 
+                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{generateReport.evaluator}">
+                                <f:selectItem itemValue="" itemLabel="" />
+                                <f:selectItems value="#{generateReport.get_EvaluatorList()}" />
+                            </h:selectOneMenu>  
+                            &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" action="#{generateReport.callEvaluatorWorkload()}" />
                         </th>
                     </tr>   
 
@@ -88,7 +102,7 @@
                     <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
                         <tr>
                             <th colspan="2" align="center"> 
-                                <h:outputText id="lblReportTitle" value="#{generateReport.reportTitle}"  styleClass="lblStyle"/>
+                                <h:outputText id="lblReportTitle" value="REPORT"  styleClass="lblStyle"/>
                             </th>
                         </tr>
                     </table>
@@ -112,7 +126,7 @@
                             </th>
                         </tr>
                          
-                         <ui:repeat value="#{generateReport.workloadList}" var="released">
+                         <ui:repeat value="#{generateReport.evaluatorWorkloadList}" var="released">
                             <tr>
                                 <td colspan="2"><h:outputText value="#{released.number_DT}" styleClass="lblSpecialStyle" /></td>
                                 <td colspan="2"><h:outputText value="#{released.school_DT}" styleClass="lblSpecialStyle" /></td>

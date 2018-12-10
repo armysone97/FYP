@@ -313,6 +313,60 @@ public class WorkloadReport {
             }
         }
         
+        int waIDCount = 0;
+        for (int i = 0; i < teacherCSMapIDCount; i++) {
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM workloadallocation WHERE teacherCSMapID = ? AND year = ?");
+                st.setString(1, teacherCSMapIDList[i]);
+                st.setInt(2, year);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+                    waIDCount = waIDCount + rs.getInt("COUNT(*)");
+                    //                   teacherIDList[tmp1] = teacherCSMapIDTmp;
+//                    tmp1++;
+                }
+
+                st.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
+        
+        String[] waIDList = new String[waIDCount];
+        int tmp2 = 0;
+
+        for (int i = 0; i < teacherCSMapIDCount; i++) {
+//            String teacherCSMapIDTmp = "";
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = con.prepareStatement("SELECT WA_ID FROM workloadallocation WHERE teacherCSMapID = ? AND year = ?");
+                st.setString(1, teacherCSMapIDList[i]);
+                st.setInt(2, year);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+//                    teacherCSMapIDTmp = rs.getString("teacherCSMapID");
+                    waIDList[tmp2] = rs.getString("WA_ID");
+                    //                   teacherIDList[tmp1] = teacherCSMapIDTmp;
+                    tmp1++;
+                }
+
+                st.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+        }
+        
         schoolWorkloadList = new ArrayList();
 
         for (int i = 0; i < schoolID_Count; i++) {

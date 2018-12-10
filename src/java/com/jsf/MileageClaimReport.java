@@ -37,6 +37,14 @@ public class MileageClaimReport {
     
     private ArrayList mileageClaimList = null;
     private MileageClaimReport mileageClaimRepobj1 = null;
+    private int number_DT = 0;
+    private String toll_DT = "";
+    private String parking_DT = "";
+    private String accomodation_DT = "";
+    private String mileage_DT = "";
+    private String ttlMileage_DT = "";
+    private String assessment_DT = "";
+    private String school_DT = "";
 
     public MileageClaimReport() {
         this.counterReset = 0;
@@ -45,6 +53,70 @@ public class MileageClaimReport {
 
     public int getYear() {
         return year;
+    }
+
+    public int getNumber_DT() {
+        return number_DT;
+    }
+
+    public void setNumber_DT(int number_DT) {
+        this.number_DT = number_DT;
+    }
+
+    public String getToll_DT() {
+        return toll_DT;
+    }
+
+    public void setToll_DT(String toll_DT) {
+        this.toll_DT = toll_DT;
+    }
+
+    public String getParking_DT() {
+        return parking_DT;
+    }
+
+    public void setParking_DT(String parking_DT) {
+        this.parking_DT = parking_DT;
+    }
+
+    public String getAccomodation_DT() {
+        return accomodation_DT;
+    }
+
+    public void setAccomodation_DT(String accomodation_DT) {
+        this.accomodation_DT = accomodation_DT;
+    }
+
+    public String getMileage_DT() {
+        return mileage_DT;
+    }
+
+    public void setMileage_DT(String mileage_DT) {
+        this.mileage_DT = mileage_DT;
+    }
+
+    public String getTtlMileage_DT() {
+        return ttlMileage_DT;
+    }
+
+    public void setTtlMileage_DT(String ttlMileage_DT) {
+        this.ttlMileage_DT = ttlMileage_DT;
+    }
+
+    public String getAssessment_DT() {
+        return assessment_DT;
+    }
+
+    public void setAssessment_DT(String assessment_DT) {
+        this.assessment_DT = assessment_DT;
+    }
+
+    public String getSchool_DT() {
+        return school_DT;
+    }
+
+    public void setSchool_DT(String school_DT) {
+        this.school_DT = school_DT;
     }
 
     public void setYear(int year) {
@@ -105,6 +177,10 @@ public class MileageClaimReport {
         }
         
         return evaluator_list;
+    }
+    
+    public void callMileage() {
+        getMileageClaimList();
     }
     
     //retrieve evaluator workload
@@ -226,30 +302,6 @@ public class MileageClaimReport {
             }
         }
         
-        
-    //    int tmp2 = 0;
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliant=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT claimRecord FROM mileageclaimprocessing WHERE year = ? AND staffID = ?");
-            st.setInt(1, year);
-            st.setString(2, staffID);
-            ResultSet rs = st.executeQuery();
-
-            while (rs.next()) {
-                claimRecordList[tmp] = rs.getString("claimRecord");
-                tmp++;
-            }
-
-            rs.close();
-            st.close();
-            con.close();
-
-        } catch (Exception ex) {
-            System.out.println("Error: " + ex);
-        }
-        
         String[] schoolNameList = new String[mileageClaimCount];
         String[] assessmentList = new String[mileageClaimCount];
 
@@ -257,6 +309,21 @@ public class MileageClaimReport {
             String[] parts = claimRecordList[i].split(" - ");
             schoolNameList[i] = parts[1];
             assessmentList[i] = parts[0];
+        }
+        
+        mileageClaimList = new ArrayList();
+
+        for (int i = 0; i < mileageClaimCount; i++) {
+            mileageClaimRepobj1 = new MileageClaimReport();
+            mileageClaimRepobj1.setNumber_DT(i + 1);
+            mileageClaimRepobj1.setSchool_DT(schoolNameList[i]);
+            mileageClaimRepobj1.setAssessment_DT(assessmentList[i]);
+            mileageClaimRepobj1.setToll_DT("RM" + tollList[i]);
+            mileageClaimRepobj1.setParking_DT("RM" + parkingList[i]);
+            mileageClaimRepobj1.setAccomodation_DT("RM" + accomodationList[i]);
+            mileageClaimRepobj1.setMileage_DT(mileageList[i]);
+            mileageClaimRepobj1.setTtlMileage_DT("RM" + ttlMileageClaimList[i]);
+            mileageClaimList.add(mileageClaimRepobj1);
         }
         
         return mileageClaimList;

@@ -56,34 +56,35 @@
 
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
-
+<tr>
+                        <th align="left"> 
+                            <h:outputText id="lblSort" value="Evaluator"  styleClass="lblStyle"/>
+                        </th>
+                        <th align="left">
+                            <h:outputText id="simbol23" value=": "  styleClass="lblStyle"/> 
+                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{mileageClaimReport.evaluator}">
+                                <f:selectItem itemValue="" itemLabel="" />
+                                <f:selectItems value="#{mileageClaimReport.get_EvaluatorList()}" />
+                            </h:selectOneMenu>  
+                            </th>
+                    </tr>  
+                    
                     <tr>
                         <th align="left"> 
                             <h:outputText id="lblYear2" value="Year"  styleClass="lblStyle"/>
                         </th>
                         <th align="left">
                             <h:outputText id="simbol111" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{generateReport.year}">
+                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{mileageClaimReport.year}">
                                 <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="#{generateReport.get_YearList()}" />
+                                <f:selectItems value="#{mileageClaimReport.get_YearList()}" />
                             </h:selectOneMenu>  
-
+                            &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" action="#{mileageClaimReport.callMileage()}" />
+                        
                         </th>
                     </tr>   
 
-                    <tr>
-                        <th align="left"> 
-                            <h:outputText id="lblSort" value="Sort By"  styleClass="lblStyle"/>
-                        </th>
-                        <th align="left">
-                            <h:outputText id="simbol23" value=": "  styleClass="lblStyle"/> 
-                            <h:selectOneMenu styleClass="ddlSpecialThreeStyle" value="#{generateReport.evaluator}">
-                                <f:selectItem itemValue="" itemLabel="" />
-                                <f:selectItems value="#{generateReport.get_EvaluatorList()}" />
-                            </h:selectOneMenu>  
-                            &nbsp;&nbsp;&nbsp; <h:commandButton id="btnView" value="View" styleClass="buttonStyle" action="#{generateReport.callEvaluatorWorkload()}" />
-                        </th>
-                    </tr>   
+                     
 
                     <tr>
                         <th><label>&nbsp;</label></th>
@@ -109,24 +110,37 @@
                             <th colspan="2" align="center">
                                 <h:outputText id="lblSchoolListReport" value="School"  styleClass="lblStyle" escape="false"/>
                             </th>
-                            <th colspan="2" align="center">
-                                <h:outputText id="lblCSLevelListReport" value="CS Level"  styleClass="lblStyle" escape="false"/>
-                            </th>
-                            <th colspan="2" align="center">
-                                <h:outputText id="lblTeacherListReport" value="Teacher"  styleClass="lblStyle" escape="false"/>
-                            </th>
+
                             <th colspan="2" align="center">
                                 <h:outputText id="lblAssessmentListReport" value="Assessment"  styleClass="lblStyle" escape="false"/>
                             </th>
+                             <th colspan="2" align="center">
+                                <h:outputText id="lblTollReport" value="Toll"  styleClass="lblStyle" escape="false"/>
+                            </th>
+                            <th colspan="2" align="center">
+                                <h:outputText id="lblParkingReport" value="Parking"  styleClass="lblStyle" escape="false"/>
+                            </th>
+                            <th colspan="2" align="center">
+                                <h:outputText id="lblAccomodationReport" value="Accomodation"  styleClass="lblStyle" escape="false"/>
+                            </th>
+                            <th colspan="2" align="center">
+                                <h:outputText id="lblMileageReport" value="Mileage(km)"  styleClass="lblStyle" escape="false"/>
+                            </th>
+                            <th colspan="2" align="center">
+                                <h:outputText id="lblTotalMileageClaimReport" value="Total Mileage Claim"  styleClass="lblStyle" escape="false"/>
+                            </th>
                         </tr>
 
-                        <ui:repeat value="#{generateReport.evaluatorWorkloadList}" var="released">
+                        <ui:repeat value="#{mileageClaimReport.mileageClaimList}" var="released">
                             <tr>
                                 <td colspan="2"><h:outputText value="#{released.number_DT}" styleClass="lblSpecialStyle" /></td>
                                 <td colspan="2"><h:outputText value="#{released.school_DT}" styleClass="lblSpecialStyle" /></td>
-                                <td colspan="2"><h:outputText value="#{released.csLevel_DT}" styleClass="lblSpecialStyle" /></td>
-                                <td colspan="2"><h:outputText value="#{released.teacher_DT}" styleClass="lblSpecialStyle" /></td>
                                 <td colspan="2"><h:outputText value="#{released.assessment_DT}" styleClass="lblSpecialStyle" /></td>
+                                <td colspan="2"><h:outputText value="#{released.toll_DT}" styleClass="lblSpecialStyle" /></td>
+                                <td colspan="2"><h:outputText value="#{released.parking_DT}" styleClass="lblSpecialStyle" /></td>
+                                <td colspan="2"><h:outputText value="#{released.accomodation_DT}" styleClass="lblSpecialStyle" /></td>
+                                <td colspan="2"><h:outputText value="#{released.mileage_DT}" styleClass="lblSpecialStyle" /></td>
+                                <td colspan="2"><h:outputText value="#{released.ttlMileage_DT}" styleClass="lblSpecialStyle" /></td>
                             </tr>
                         </ui:repeat>
 

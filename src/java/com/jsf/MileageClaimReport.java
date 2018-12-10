@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -309,6 +310,25 @@ public class MileageClaimReport {
             String[] parts = claimRecordList[i].split(" - ");
             schoolNameList[i] = parts[1];
             assessmentList[i] = parts[0];
+        }
+        
+         String[] sortArr = new String[mileageClaimCount];
+         
+          for (int i = 0; i < mileageClaimCount; i++) {
+            sortArr[i] = schoolNameList[i] + " - " + assessmentList[i] + " - " + tollList[i] + " - " + parkingList[i] + " - " + accomodationList[i] + " - " + mileageList[i] + " - " + ttlMileageClaimList[i];
+        }
+
+        Arrays.sort(sortArr);
+        
+        for (int i = 0; i < mileageClaimCount; i++) {
+            String[] parts = sortArr[i].split(" - ");
+            schoolNameList[i] = parts[0];
+            assessmentList[i] = parts[1];
+            tollList[i] = parts[2];
+            parkingList[i] = parts[3];
+            accomodationList[i] = parts[4];
+            mileageList[i] = parts[5];
+            ttlMileageClaimList[i] = parts[6];
         }
         
         mileageClaimList = new ArrayList();

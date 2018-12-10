@@ -150,6 +150,39 @@ public class MileageClaimReport {
             System.out.println("Error: " + ex);
         }
         
+        String[] claimRecordList = new String[mileageClaimCount];
+        int tmp = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliant=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT claimRecord FROM mileageclaimprocessing WHERE year = ? AND staffID = ?");
+            st.setInt(1, year);
+            st.setString(2, staffID);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                claimRecordList[tmp] = rs.getString("claimRecord");
+                tmp++;
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+        
+        String[] schoolNameList = new String[mileageClaimCount];
+        String[] assessmentList = new String[mileageClaimCount];
+
+        for (int i = 0; i < mileageClaimCount; i++) {
+            String[] parts = claimRecordList[i].split(" - ");
+            schoolNameList[i] = parts[0];
+            assessmentList[i] = parts[1];
+        }
+        
         return mileageClaimList;
     }
 

@@ -557,8 +557,9 @@ public class EvaluatorWorkloadAllocation {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT workloadLimit FROM workloadlimit WHERE staffID = ?");
+            PreparedStatement st = con.prepareStatement("SELECT workloadLimit FROM workloadlimit WHERE staffID = ? AND year = ?");
             st.setString(1, staffIDFromDB);
+            st.setInt(2, year);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -577,8 +578,9 @@ public class EvaluatorWorkloadAllocation {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT SUM(workloadAssigned) FROM workloadallocation WHERE staffID = ?");
+            PreparedStatement st = con.prepareStatement("SELECT SUM(workloadAssigned) FROM workloadallocation WHERE staffID = ? AND year = ?");
             st.setString(1, staffIDFromDB);
+            st.setInt(2, year);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {

@@ -184,8 +184,9 @@ public class WorkloadClaimApplication {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT SUM(totalWorkload) FROM workloadclaim WHERE staffID = ?");
+            PreparedStatement st = con.prepareStatement("SELECT SUM(totalWorkload) FROM workloadclaim WHERE staffID = ? AND year = ?");
             st.setString(1, staffID);
+            st.setInt(2, year);
             ResultSet rs = st.executeQuery();
             
             while(rs.next()){

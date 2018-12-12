@@ -51,16 +51,18 @@ public class MaintainAssessmentTask {
     private MaintainAssessmentTask numSamAssObj = null;
 
     private int counterDataTable;
-    
+
     //valuechangelistener purpose
-    private String schoolNameDefault;
+    private String schoolNameDefault, teacherNameDefault;
 
     public MaintainAssessmentTask() {
-       this.state = "Pulau Pinang";
+        this.state = "Pulau Pinang";
         this.school = "SJK Air Itam";
         this.year = 2018;
         this.teacher = "Teoh Wei Ran";
         this.schoolNameDefault = "SJK Air Itam";
+        this.teacherNameDefault = "Teoh Wei Ran";
+        this.status = "Available";
         this.studEnrol = 0;
         this.numSampleAss = 0;
         this.disabledtxt = true;
@@ -270,7 +272,7 @@ public class MaintainAssessmentTask {
         FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         String tmp = "";
-        
+
         int schoolNameDefaultCount = 0;
 
         try {
@@ -281,11 +283,11 @@ public class MaintainAssessmentTask {
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-                
+
                 school_list.add(rs.getString("schoolName"));
-                
+
                 //valuechangelistener purpose
-                if(schoolNameDefaultCount == 0){
+                if (schoolNameDefaultCount == 0) {
                     schoolNameDefault = rs.getString("schoolName");
                     schoolNameDefaultCount++;
                 }
@@ -452,6 +454,8 @@ public class MaintainAssessmentTask {
         //this function is to remove duplicate elements in array named "teacherIDListDuplicate"
         length = removeDuplicateElementsString(teacherIDListDuplicate, length);
 
+        int teacherNameDefaultCount = 0;
+        
         //finally due to teacherID is an array, need to get the teacherName in for loop
         //last, add teacherName into ddl
         for (int i = 0; i < length; i++) {
@@ -465,6 +469,12 @@ public class MaintainAssessmentTask {
 
                 while (rs.next()) {
                     teacher_list.add(rs.getString("teacherName"));
+                    
+                       //valuechangelistener purpose
+                    if (teacherNameDefaultCount == 0) {
+                        teacherNameDefault = rs.getString("teacherName");
+                        teacherNameDefaultCount++;
+                    }
                 }
 
                 st.close();
@@ -1077,7 +1087,7 @@ public class MaintainAssessmentTask {
         cslevel = "CS Level 1";
 
         counterReset = 0;
-        
+
         MaintainSchoolMenu.setGlobalCounter(0);
 
         //set default disabled
@@ -1237,6 +1247,21 @@ public class MaintainAssessmentTask {
                         numSampleAssList[i] = numSampleAssConstant;
                     }
                 }
+                
+//                String[] sortArr = new String[csList.length];
+//
+//                for (int i = 0; i < csList.length; i++) {
+//                    sortArr[i] = csList[i] + " - " + studEnrolList[i] + " - " + numSampleAssList[i];
+//                }
+//                
+//                Arrays.sort(sortArr);
+//
+//                for (int i = 0; i < csList.length; i++) {
+//                    String[] parts = sortArr[i].split(" - ");
+//                    csList[i] = parts[0];
+//                    studEnrolList[i] = parts[1]; //cannot work coz int cannot convert to string
+//                    numSampleAssList[i] = parts[2]; //cannot work coz int cannot convert to string
+//                }
 
                 cslevelList = new ArrayList();
 
@@ -1268,22 +1293,41 @@ public class MaintainAssessmentTask {
 
         return cslevelList;
     }
-    
+
     //valuechangelistener purpose
-     public void stateChanged() {
+    public void stateChanged() {
         get_school();
         school = schoolNameDefault;
         get_teacher();
         get_year();
+        
+        teacher = teacherNameDefault;
+        
+        String thID = "";
+        thID = matchTeacherID();
+        
+        status = matchStatus(thID);
     }
 
     public void schoolChanged() {
         get_teacher();
         get_year();
+        
+        teacher = teacherNameDefault;
+        
+        String thID = "";
+        thID = matchTeacherID();
+        
+        status = matchStatus(thID);
     }
-    
-    public void teacherChanged(){
+
+    public void teacherChanged() {
         get_year();
+        
+        String thID = "";
+        thID = matchTeacherID();
+        
+        status = matchStatus(thID);
     }
 
 }

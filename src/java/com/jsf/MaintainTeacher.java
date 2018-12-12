@@ -68,16 +68,18 @@ public class MaintainTeacher {
     private int counterDataTable;
 
     //valuechangelistener purpose
-    private String schoolNameDefault;
+    private String schoolNameDefault, teacherNameDefault;
 //    private int yearDefault;
-    
+
     public MaintainTeacher() {
         this.state = "Pulau Pinang";
         this.school = "SJK Air Itam";
         this.year = 2018;
         this.commYear = 0;
         this.teacher = "Teoh Wei Ran";
+        this.status = "Available";
         this.schoolNameDefault = "SJK Air Itam";
+        this.teacherNameDefault = "Teoh Wei Ran";
 //        this.cslevel = "CS Level 1";
         this.disabledTxt = true;
         this.disabledDdl = true;
@@ -549,14 +551,12 @@ public class MaintainTeacher {
                 String[] allTeacherIDListDuplicate = new String[allTeacherIDListCount];
 
                 allTeacherIDListDuplicate = showAllTeacher(allTeacherIDListCount); //get all teacher
-                
-//                     for (int i = 0; i < allTeacherIDListDuplicate.length; i++) {
 
+//                     for (int i = 0; i < allTeacherIDListDuplicate.length; i++) {
 //                    newTeacherID_list.add(teacherIDNotInSC[i]);
 //  newTeacherIDName_list.add(allTeacherIDListCount + " - lkk");
 //   newTeacherIDName_list.add(" - lkj");
 //                }
-
                 int teacherIDNotInSCCount = retrieveTeacherIDNotInSCCount(allTeacherIDListDuplicate);
                 String[] teacherIDNotInSC = new String[teacherIDNotInSCCount];
 
@@ -604,9 +604,8 @@ public class MaintainTeacher {
                     teacherName = retriveTeacherName(teacherID);
                     newTeacherIDName_list.add(teacherID + " - " + teacherName);
                 }
-                
-//                get_newCSLevel();
 
+//                get_newCSLevel();
                 break;
             case 2: //add new
 //                  newTeacherName = "teacherName";
@@ -768,7 +767,7 @@ public class MaintainTeacher {
 
     public List<String> get_newCSLevel() {
         newCSLevel_list.clear();
-        
+
         String schoolID = matchSchoolID();
         int countSchoolCSMapID = countSchoolCSMapIDNew(schoolID);
 
@@ -805,18 +804,15 @@ public class MaintainTeacher {
 //                }
 //                int countSchoolCSMapID1x = countSchoolCSMapIDNew1(schoolCSMapIDList);
 //                 newCSLevel_list.add(countSchoolCSMapID1x + "xxxxdsxx");
-                
+
 //                FacesContext context = FacesContext.getCurrentInstance();
 //                context.addMessage(null, new FacesMessage("zz : " + countSchoolCSMapID + " : yy")); 
-                        
-                
 //                break;
             case 3: //select (after select teacherID and Name)
 
 //        for (int i = 0; i < CSLevelIDList.length; i++) {
 //            newCSLevel_list.add(CSLevelIDList[i]);
 //        }
-              
 //                context.addMessage(null, new FacesMessage("xx : " + newTeacherIDName + " : yy"));
                 String schoolCSMapID = "";
                 int countSchoolCSMapID1 = countSchoolCSMapIDNew1(schoolCSMapIDList);
@@ -1031,9 +1027,9 @@ public class MaintainTeacher {
 
             while (rs.next()) {
                 school_list.add(rs.getString("schoolName"));
-                
+
                 //valuechangelistener purpose
-                if(schoolNameDefaultCount == 0){
+                if (schoolNameDefaultCount == 0) {
                     schoolNameDefault = rs.getString("schoolName");
                     schoolNameDefaultCount++;
                 }
@@ -1616,6 +1612,8 @@ public class MaintainTeacher {
         //this function is to remove duplicate elements in array named "teacherIDListDuplicate"
         length = removeDuplicateElementsString(teacherIDListDuplicate, length);
 
+        int teacherNameDefaultCount = 0;
+
         //finally due to teacherID is an array, need to get the teacherName in for loop
         //last, add teacherName into ddl
         for (int i = 0; i < length; i++) {
@@ -1629,6 +1627,12 @@ public class MaintainTeacher {
 
                 while (rs.next()) {
                     teacher_list.add(rs.getString("teacherName"));
+
+                    //valuechangelistener purpose
+                    if (teacherNameDefaultCount == 0) {
+                        teacherNameDefault = rs.getString("teacherName");
+                        teacherNameDefaultCount++;
+                    }
                 }
 
                 st.close();
@@ -2599,10 +2603,9 @@ public class MaintainTeacher {
                 context.addMessage(null, new FacesMessage("Reset successful!"));
                 break;
         }
-        
 
-       disabledStatus = true;
-       temp = null;
+        disabledStatus = true;
+        temp = null;
 
         //set default value
         state = "Pulau Pinang";
@@ -2638,7 +2641,7 @@ public class MaintainTeacher {
         disabledNewTeacherIDName = true;
 
         counterDataTable = 0;
-        
+
         MaintainSchoolMenu.setGlobalCounter(0);
     }
 
@@ -2742,6 +2745,20 @@ public class MaintainTeacher {
 
                 }
 
+//                String[] sortArr = new String[csList.length];
+//
+//                for (int i = 0; i < csList.length; i++) {
+//                    sortArr[i] = csList[i] + " - " + studNumList[i];
+//                }
+//
+//                Arrays.sort(sortArr);
+//
+//                for (int i = 0; i < csList.length; i++) {
+//                    String[] parts = sortArr[i].split(" - ");
+//                    csList[i] = parts[0];
+//                    studNumList[i] = parts[1]; //cannot work coz int cannot convert to string
+//                }
+
                 cslevelList = new ArrayList();
 
                 for (int i = 0; i < csList.length; i++) {
@@ -2773,27 +2790,59 @@ public class MaintainTeacher {
     //valuechangelistener purpose
     public void stateChanged() {
         get_school();
-        
+
         school = schoolNameDefault;
-        
+
         controlDisabledStatus();
         get_year();
         calculateCommYear();
         get_teacher();
+
+        teacher = teacherNameDefault;
+
+        String thID = "";
+        thID = matchTeacherID1();
+
+        status = matchStatus(thID);
     }
 
     public void schoolChanged() {
         controlDisabledStatus();
         get_year();
+
+        calculateCommYear();
+        get_teacher();
+
+        teacher = teacherNameDefault;
+
+        String thID = "";
+        thID = matchTeacherID1();
+
+        status = matchStatus(thID);
     }
 
     public void yearChanged() {
         calculateCommYear();
         get_teacher();
+
+        teacher = teacherNameDefault;
+
+        String thID = "";
+        thID = matchTeacherID1();
+
+        status = matchStatus(thID);
     }
-    
-    public void teacherIDNameChanged(){
+
+    public void teacherIDNameChanged() {
         showTeacherName();
+    }
+
+    public void teacherChanged() {
+
+        String thID = "";
+        thID = matchTeacherID1();
+
+        status = matchStatus(thID);
     }
 
 }

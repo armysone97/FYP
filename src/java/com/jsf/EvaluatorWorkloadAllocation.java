@@ -687,7 +687,7 @@ public class EvaluatorWorkloadAllocation {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT schoolName FROM school");
+            ResultSet rs = st.executeQuery("SELECT schoolName FROM school WHERE schoolStatus = 'Active'");
 
             while (rs.next()) {
                 school_list.add(rs.getString("schoolName"));
@@ -908,7 +908,7 @@ public class EvaluatorWorkloadAllocation {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-                PreparedStatement st = con.prepareStatement("SELECT teacherName FROM teacher WHERE teacherID = ?");
+                PreparedStatement st = con.prepareStatement("SELECT teacherName FROM teacher WHERE teacherID = ? AND teacherStatus = 'Available'");
                 st.setString(1, teacherIDListDuplicate[i]);
                 ResultSet rs = st.executeQuery();
 

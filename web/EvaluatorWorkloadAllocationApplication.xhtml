@@ -104,7 +104,7 @@
                                 <h:selectOneMenu id="ddlCSLevel" styleClass="ddlSpecialTwoStyle" value="#{evaluatorWorkloadAllocation.csLevel}">
                                     <f:selectItem itemValue="" itemLabel="" />
                                     <f:selectItems value="#{evaluatorWorkloadAllocation.get_CSLevelList()}" />
-                                    <f:ajax listener="#{evaluatorWorkloadAllocation.csLevelChanged()}" render="ddlTeacherList"/>
+                                    <f:ajax listener="#{evaluatorWorkloadAllocation.csLevelChanged()}" render="ddlTeacherList ddlAssessment"/>
                                 </h:selectOneMenu>  
 
                             </th>

@@ -41,6 +41,7 @@ public class EvaluatorWorkloadAllocation {
     private String waID;
     private double ttlWorkload_Assign;
     private String total;
+    private int assID_count;
 
     private List<String> evaluator_list = new ArrayList<>();
     private List<String> school_list = new ArrayList<>();
@@ -241,7 +242,7 @@ public class EvaluatorWorkloadAllocation {
     //display data table
     public ArrayList getWorkloadList() {
 
-        //retrieve staff ID
+        //retrieve staff ID from db
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -261,6 +262,7 @@ public class EvaluatorWorkloadAllocation {
             System.out.println("Error: " + ex);
         }
         
+        //retrieve count of workload from db
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -289,13 +291,15 @@ public class EvaluatorWorkloadAllocation {
         String[] schoolNameList = new String[workload_Count];
         String[] teacherNameList = new String[workload_Count];
         String[] assessmentList = new String[workload_Count];
-        int tmp = 0;
         
+        //retrieve teachercsmapID and assessment from db
+        int tmp = 0;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT teacherCSMapID, assessment FROM workloadallocation WHERE staffID = ?");
+            PreparedStatement st = con.prepareStatement("SELECT teacherCSMapID, assessment FROM workloadallocation WHERE staffID = ? AND year = ?");
             st.setString(1, staffID);
+            st.setInt(2, year);
             ResultSet rs = st.executeQuery();
             
             while (rs.next()) {
@@ -311,6 +315,7 @@ public class EvaluatorWorkloadAllocation {
             System.out.println("Error: " + ex);
         }
         
+        //retrieve teacherID and schoolcsmapID from db
         int tmp1 = 0;
         int tmp2 = 0;
         for (int i = 0; i < workload_Count; i++) {
@@ -342,6 +347,7 @@ public class EvaluatorWorkloadAllocation {
             }
         }
         
+        //retrieve schoolID and cslevelID from db
         int tmp3 = 0;
         int tmp4 = 0;
         for (int i = 0; i < workload_Count; i++) {
@@ -373,6 +379,7 @@ public class EvaluatorWorkloadAllocation {
             }
         }
         
+        //retrieve schoolname from db
         int tmp5 = 0;
         for (int i = 0; i < workload_Count; i++) {
             String schoolNameTmp = "";
@@ -398,6 +405,7 @@ public class EvaluatorWorkloadAllocation {
             }
         }
         
+        //retrieve teachername from db
         int tmp6 = 0;
         for (int i = 0; i < workload_Count; i++) {
             String teacherNameTmp = "";
@@ -503,8 +511,7 @@ public class EvaluatorWorkloadAllocation {
             System.out.println("Error: " + ex);
         }
 
-        //retrieve teacherCSMapID based on schoolCSMaplID and teacherID which retrieved on above
-        //and get the total number of student
+        //retrieve teacherCSMapID and get the total number of student
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -526,9 +533,9 @@ public class EvaluatorWorkloadAllocation {
         }
     }
 
+    //retrieve workload limit 
     public void retrieveWorkloadLimit() {
 
-        //  workloadLimit = "xx";
         String staffIDFromDB = "";
 
         try {
@@ -928,15 +935,18 @@ public class EvaluatorWorkloadAllocation {
     public List<String> get_AssessmentList() {
 
         assessment_list.clear();
-
+        
+        //count assID
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT assActivityName FROM assessmentactivity");
+            PreparedStatement st = con.prepareStatement("SELECT COUNT(*) FROM assessment WHERE year = ? AND CSLevelID = ?");
+            st.setInt(1, year);
+            st.setString(2, csLevel);
+            ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-                assessment_list.add(rs.getString("assActivityName"));
+                assID_count = rs.getInt("COUNT(*)");
             }
 
             rs.close();
@@ -946,6 +956,51 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
+        
+        String[] assIDList = new String[assID_count];
+        int tmp7 = 0;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliant=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+            PreparedStatement st = con.prepareStatement("SELECT assActivityID FROM assessment WHERE year = ? AND CSLevelID = ?");
+            st.setInt(1, year);
+            st.setString(2, csLevel);
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                assIDList[tmp7] = rs.getString("assActivityID");
+                tmp7++;
+            }
+
+            rs.close();
+            st.close();
+            con.close();
+
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+
+        for (int i = 0; i < assID_count; i++) {
+            school_list.add(assIDList[i]);
+        }
+//        try {
+//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+//            Statement st = con.createStatement();
+//            ResultSet rs = st.executeQuery("SELECT assActivityName FROM assessmentactivity");
+//
+//            while (rs.next()) {
+//                assessment_list.add(rs.getString("assActivityName"));
+//            }
+//
+//            rs.close();
+//            st.close();
+//            con.close();
+//
+//        } catch (Exception ex) {
+//            System.out.println("Error: " + ex);
+//        }
 
         return assessment_list;
     }

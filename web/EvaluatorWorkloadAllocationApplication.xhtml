@@ -242,6 +242,9 @@
 
                         <tr>
                             <th colspan="2" align="center">
+                                <h:outputText id="lblNumberList" value="No."  styleClass="lblStyle" escape="false"/>
+                            </th>
+                            <th colspan="2" align="center">
                                 <h:outputText id="lblSchoolList" value="School"  styleClass="lblStyle" escape="false"/>
                             </th>
                             <th colspan="2" align="center">
@@ -257,6 +260,7 @@
 
                         <ui:repeat value="#{evaluatorWorkloadAllocation.workloadList}" var="released">
                             <tr>
+                                <td colspan="2" align="center"><h:outputText value="#{released.number_DT}" styleClass="lblSpecialStyle" /></td>
                                 <td colspan="2" align="center"><h:outputText value="#{released.school_DT}" styleClass="lblSpecialStyle" /></td>
                                 <td colspan="2" align="center"><h:outputText value="#{released.csLevel_DT}" styleClass="lblSpecialStyle" /></td>
                                 <td colspan="2" align="center"><h:outputText value="#{released.teacher_DT}" styleClass="lblSpecialStyle" /></td>

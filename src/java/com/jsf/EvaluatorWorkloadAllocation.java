@@ -63,6 +63,7 @@ public class EvaluatorWorkloadAllocation {
     private ArrayList workloadList = null;
     private EvaluatorWorkloadAllocation evaWAobj1 = null;
     private int workload_Count;
+    private int number_DT = 0;
     private String school_DT = "";
     private String csLevel_DT = "";
     private String teacher_DT = "";
@@ -187,6 +188,14 @@ public class EvaluatorWorkloadAllocation {
 
     public String getTeacher_DT() {
         return teacher_DT;
+    }
+
+    public int getNumber_DT() {
+        return number_DT;
+    }
+
+    public void setNumber_DT(int number_DT) {
+        this.number_DT = number_DT;
     }
 
     public void setTeacher_DT(String teacher_DT) {
@@ -451,6 +460,7 @@ public class EvaluatorWorkloadAllocation {
 
         for (int i = 0; i < workload_Count; i++) {
             evaWAobj1 = new EvaluatorWorkloadAllocation();
+            evaWAobj1.setNumber_DT(i+1);
             evaWAobj1.setSchool_DT(schoolNameList[i]);
             evaWAobj1.setCsLevel_DT(csLevelIDList[i]);
             evaWAobj1.setTeacher_DT(teacherNameList[i]);
@@ -1240,12 +1250,9 @@ public class EvaluatorWorkloadAllocation {
                 statement.close();
                 con.close();
 
-                context.addMessage(null, new FacesMessage("Added successfully lalalala!"));
             } catch (Exception ex) {
                 System.out.println("Error: " + ex);
             }
-            
-            
 
             //retrieve ttlWorkloadAssigned
             try {

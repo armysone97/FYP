@@ -121,6 +121,7 @@ public class EvaluatorPersonalDetails {
         this.status_list = status_list;
     }
 
+    //retrieve branch from db
     public List<String> get_BranchList() {
 
         branch_list.clear();
@@ -146,6 +147,7 @@ public class EvaluatorPersonalDetails {
         return branch_list;
     }
 
+    //retrieve faculty from db
     public List<String> get_FacultyList() {
 
         faculty_list.clear();
@@ -170,7 +172,8 @@ public class EvaluatorPersonalDetails {
 
         return faculty_list;
     }
-
+    
+    //retrieve status from db
     public List<String> get_StatusList() {
 
         status_list.clear();
@@ -198,6 +201,7 @@ public class EvaluatorPersonalDetails {
 
     //check validation
     public void validationCheck() {
+        
         FacesContext context = FacesContext.getCurrentInstance();
 
         if (evaName == null || staffID == null || contactNum == null || branch == null || faculty == null || role == null || status == null || workloadLimit == null) {
@@ -211,6 +215,7 @@ public class EvaluatorPersonalDetails {
 
     //check duplicate record
     public void duplicateRecordCheck() {
+        
         FacesContext context = FacesContext.getCurrentInstance();
         boolean check = false;
 
@@ -399,6 +404,7 @@ public class EvaluatorPersonalDetails {
         countWorkloadLimit();
     }
 
+    //retrieve workload count from db
     public void countWorkloadLimit() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -421,6 +427,7 @@ public class EvaluatorPersonalDetails {
         addWorkloadLimit(workloadLimitCount);
     }
 
+    //save workload limit to db
     public void addWorkloadLimit(Integer workloadLimitCount) {
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -466,12 +473,6 @@ public class EvaluatorPersonalDetails {
 
         FacesContext context = FacesContext.getCurrentInstance();
 
-//        switch (counterReset) {
-//            case 0:
-//                context.addMessage(null, new FacesMessage("Reset successful!"));
-//                break;
-//        }
-        //set default value
         evaName = null;
         staffID = null;
         contactNum = null;
@@ -484,8 +485,4 @@ public class EvaluatorPersonalDetails {
         counterReset = 0;
         MaintainSchoolMenu.setGlobalCounter(0);
     }
-
-//    public void main(String args[]) {
-//        evaluatorData();
-//    }
 }

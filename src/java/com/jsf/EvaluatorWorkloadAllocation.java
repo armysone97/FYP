@@ -1240,9 +1240,12 @@ public class EvaluatorWorkloadAllocation {
                 statement.close();
                 con.close();
 
+                context.addMessage(null, new FacesMessage("Added successfully lalalala!"));
             } catch (Exception ex) {
                 System.out.println("Error: " + ex);
             }
+            
+            
 
             //retrieve ttlWorkloadAssigned
             try {

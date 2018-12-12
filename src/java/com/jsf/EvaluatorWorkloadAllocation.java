@@ -50,7 +50,7 @@ public class EvaluatorWorkloadAllocation {
     private List<String> assessment_list = new ArrayList<>();
 
     private int counterReset; //growl purpose
-    
+
     //for add workload
     private String school_ID;
     private String schoolCSMap_ID;
@@ -58,7 +58,7 @@ public class EvaluatorWorkloadAllocation {
     private String teacherCSMap_ID;
     private String staff_ID;
     private double verifyWorkloadLimit;
-    
+
     //datatable
     private ArrayList workloadList = null;
     private EvaluatorWorkloadAllocation evaWAobj1 = null;
@@ -92,7 +92,7 @@ public class EvaluatorWorkloadAllocation {
     public void setTotalWorkloadAssigned(String totalWorkloadAssigned) {
         this.totalWorkloadAssigned = totalWorkloadAssigned;
     }
-    
+
     public int getWorkloadLimit() {
         return workloadLimit;
     }
@@ -234,11 +234,11 @@ public class EvaluatorWorkloadAllocation {
 
         return listWorkload;
     }
-    
+
     public void callStatus() {
         getWorkloadList();
     }
-    
+
     //display data table
     public ArrayList getWorkloadList() {
 
@@ -261,7 +261,7 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         //retrieve count of workload from db
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -282,7 +282,7 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         String[] teacherCSMapList = new String[workload_Count];
         String[] schoolCSMapList = new String[workload_Count];
         String[] schoolIDList = new String[workload_Count];
@@ -291,7 +291,7 @@ public class EvaluatorWorkloadAllocation {
         String[] schoolNameList = new String[workload_Count];
         String[] teacherNameList = new String[workload_Count];
         String[] assessmentList = new String[workload_Count];
-        
+
         //retrieve teachercsmapID and assessment from db
         int tmp = 0;
         try {
@@ -301,7 +301,7 @@ public class EvaluatorWorkloadAllocation {
             st.setString(1, staffID);
             st.setInt(2, year);
             ResultSet rs = st.executeQuery();
-            
+
             while (rs.next()) {
                 teacherCSMapList[tmp] = rs.getString("teacherCSMapID");
                 assessmentList[tmp] = rs.getString("assessment");
@@ -314,7 +314,7 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         //retrieve teacherID and schoolcsmapID from db
         int tmp1 = 0;
         int tmp2 = 0;
@@ -346,7 +346,7 @@ public class EvaluatorWorkloadAllocation {
                 System.out.println("Error: " + ex);
             }
         }
-        
+
         //retrieve schoolID and cslevelID from db
         int tmp3 = 0;
         int tmp4 = 0;
@@ -378,7 +378,7 @@ public class EvaluatorWorkloadAllocation {
                 System.out.println("Error: " + ex);
             }
         }
-        
+
         //retrieve schoolname from db
         int tmp5 = 0;
         for (int i = 0; i < workload_Count; i++) {
@@ -404,7 +404,7 @@ public class EvaluatorWorkloadAllocation {
                 System.out.println("Error: " + ex);
             }
         }
-        
+
         //retrieve teachername from db
         int tmp6 = 0;
         for (int i = 0; i < workload_Count; i++) {
@@ -431,6 +431,22 @@ public class EvaluatorWorkloadAllocation {
             }
         }
         
+        String[] sortArr = new String[workload_Count];
+        
+        for (int i = 0; i < workload_Count; i++) {
+            sortArr[i] = schoolNameList[i] + " - " + csLevelIDList[i] + " - " + teacherNameList[i] + " - " + assessmentList[i];
+        }
+
+        Arrays.sort(sortArr);
+        
+         for (int i = 0; i < workload_Count; i++) {
+            String[] parts = sortArr[i].split(" - ");
+            schoolNameList[i] = parts[0];
+            csLevelIDList[i] = parts[1];
+            teacherNameList[i] = parts[2];
+            assessmentList[i] = parts[3];
+        }
+
         workloadList = new ArrayList();
 
         for (int i = 0; i < workload_Count; i++) {
@@ -441,7 +457,7 @@ public class EvaluatorWorkloadAllocation {
             evaWAobj1.setAssessment_DT(assessmentList[i]);
             workloadList.add(evaWAobj1);
         }
-        
+
         return workloadList;
     }
 
@@ -578,7 +594,7 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         //retrieve total workload assign
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -705,7 +721,6 @@ public class EvaluatorWorkloadAllocation {
 
         return school_list;
     }
-
 
     public List<String> get_CSLevelList() {
 
@@ -843,7 +858,6 @@ public class EvaluatorWorkloadAllocation {
             System.out.println("Error: " + ex);
         }
 
-
         int schoolCSMapListCount = retrieveSchoolCSMapIDCount(schoolIDFromDB);
         String[] schoolCSMapIDListDuplicate = new String[schoolCSMapListCount];
 
@@ -937,7 +951,7 @@ public class EvaluatorWorkloadAllocation {
     public List<String> get_AssessmentList() {
 
         assessment_list.clear();
-        
+
         //count assID
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -958,7 +972,7 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         String[] assIDList = new String[assID_count];
         int tmp7 = 0;
 
@@ -984,7 +998,26 @@ public class EvaluatorWorkloadAllocation {
         }
 
         for (int i = 0; i < assID_count; i++) {
-            assessment_list.add(assIDList[i]);
+
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliant=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                PreparedStatement st = con.prepareStatement("SELECT assActivityName FROM assessmentactivity WHERE assActivityID = ?");
+                st.setString(1, assIDList[i]);
+                ResultSet rs = st.executeQuery();
+
+                while (rs.next()) {
+                    assessment_list.add(rs.getString("assActivityName"));
+                }
+
+                rs.close();
+                st.close();
+                con.close();
+
+            } catch (Exception ex) {
+                System.out.println("Error: " + ex);
+            }
+
         }
 //        try {
 //            Class.forName("com.mysql.cj.jdbc.Driver");
@@ -1006,23 +1039,22 @@ public class EvaluatorWorkloadAllocation {
 
         return assessment_list;
     }
-    
+
     //check validation
-    public void validationCheck(){
+    public void validationCheck() {
         FacesContext context = FacesContext.getCurrentInstance();
-        
-        if(evaluator == null || school == null || csLevel == null || teacher == null || assType == null){
+
+        if (evaluator == null || school == null || csLevel == null || teacher == null || assType == null) {
             context.addMessage(null, new FacesMessage("All field are required to fill in!"));
             reset();
-        }
-        else{
+        } else {
             addWorkload();
         }
     }
-    
-    public void addWorkload(){
+
+    public void addWorkload() {
         FacesContext context = FacesContext.getCurrentInstance();
-        
+
         //count workload index
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -1044,7 +1076,7 @@ public class EvaluatorWorkloadAllocation {
 
         workloadCount = workloadCount + 1;
         waID = "WA" + Integer.toString(workloadCount);
-        
+
         //retrieve staffID
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -1064,7 +1096,7 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         //retrieve schoolcsmapID
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -1084,7 +1116,7 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -1105,7 +1137,7 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         //retrieve teacherID
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -1125,7 +1157,7 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         //retrieve teachercsmapID
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -1146,15 +1178,15 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         checkDuplicateRecord();
     }
-    
+
     //check duplicate record
-    public void checkDuplicateRecord(){
+    public void checkDuplicateRecord() {
         FacesContext context = FacesContext.getCurrentInstance();
         boolean check = false;
-        
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -1168,7 +1200,7 @@ public class EvaluatorWorkloadAllocation {
                 if (teacherCSMap_ID.equals(teacherCSMapIDDB) && assType.equals(assessment_Type)) {
                     check = false;
                     break;
-                }else{
+                } else {
                     check = true;
                 }
             }
@@ -1179,18 +1211,18 @@ public class EvaluatorWorkloadAllocation {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
-        if(check == true){
+
+        if (check == true) {
             saveWorkloadAllocation();
-        }else{
+        } else {
             context.addMessage(null, new FacesMessage("Record already existed!"));
         }
     }
-    
-    public void saveWorkloadAllocation(){
+
+    public void saveWorkloadAllocation() {
         FacesContext context = FacesContext.getCurrentInstance();
         //insert workload allocation
-        if(((Double.valueOf(result))+(Double.valueOf(totalWorkloadAssigned))) <= Double.valueOf(workloadLimit)){
+        if (((Double.valueOf(result)) + (Double.valueOf(totalWorkloadAssigned))) <= Double.valueOf(workloadLimit)) {
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -1208,11 +1240,10 @@ public class EvaluatorWorkloadAllocation {
                 statement.close();
                 con.close();
 
-            } 
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 System.out.println("Error: " + ex);
             }
-            
+
             //retrieve ttlWorkloadAssigned
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -1229,15 +1260,14 @@ public class EvaluatorWorkloadAllocation {
                 st.close();
                 con.close();
 
-            } 
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 System.out.println("Error: " + ex);
             }
-            
+
             ttlWorkload_Assign = Double.valueOf(result) + ttlWorkloadAssign;
-            
+
             total = String.format("%.2f", ttlWorkload_Assign);
-            
+
             //update ttlWorkloadAssigned in db
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
@@ -1251,23 +1281,21 @@ public class EvaluatorWorkloadAllocation {
                 st.close();
                 con.close();
 
-            } 
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 System.out.println("Error: " + ex);
             }
-            
+
             context.addMessage(null, new FacesMessage("Added successfully!"));
             reset();
-        }
-        else{
+        } else {
             context.addMessage(null, new FacesMessage("Workload limit exceed!"));
             reset();
-            }
+        }
     }
-    
+
     //display data table
-    public void displayData(){
-        
+    public void displayData() {
+
     }
 
     //navigation bar purpose
@@ -1289,7 +1317,6 @@ public class EvaluatorWorkloadAllocation {
 //                context.addMessage(null, new FacesMessage("Reset successful!"));
 //                break;
 //        }
-
         //set default value
         school = null;
         csLevel = null;
@@ -1305,31 +1332,31 @@ public class EvaluatorWorkloadAllocation {
         workloadList = null;
 
         counterReset = 0;
-        
+
         MaintainSchoolMenu.setGlobalCounter(0);
     }
 
     //valuechangelistener purpose
-    public void evaluatorChanged(){
+    public void evaluatorChanged() {
         get_EvaluatorList();
     }
-    
-    public void schoolChanged(){
+
+    public void schoolChanged() {
         get_CSLevelList();
     }
-    
-    public void csLevelChanged(){
+
+    public void csLevelChanged() {
         get_TeacherList();
     }
-    
-    public void teacherChanged(){
+
+    public void teacherChanged() {
         retrieveTotalStudent();
     }
-    
-    public void assessmentChanged(){
+
+    public void assessmentChanged() {
         retrieveNumSamAss();
     }
-    
+
     public void main(String args[]) {
 
     }

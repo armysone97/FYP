@@ -66,7 +66,7 @@
                             <h:selectOneMenu title="Select state" disabled="#{maintainTeacher.disabledButton}" value="#{maintainTeacher.state}" styleClass="ddlSpecialTwoStyle">
                                 <f:selectItems value="#{maintainTeacher.get_state()}" />
                                 <!--valuechangelistener-->
-                                <f:ajax listener="#{maintainTeacher.stateChanged()}" render="ddlSchoolList ddlYearList ddlTeacherList"/>
+                                <f:ajax listener="#{maintainTeacher.stateChanged()}" render="ddlSchoolList ddlYearList ddlTeacherList txtStatus"/>
                             </h:selectOneMenu>
                             <!--&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;    <h:commandButton title="Click to show school" id="btnShowList111" disabled="#{maintainTeacher.disabledButton}" value="Show" styleClass="buttonShowStyle"/>-->
 
@@ -82,7 +82,7 @@
                             <h:selectOneMenu id="ddlSchoolList" title="Select school" disabled="#{maintainTeacher.disabledButton}"  styleClass="ddlSpecialTwoStyle" value="#{maintainTeacher.school}">
                                 <f:selectItems value="#{maintainTeacher.get_school()}"/> 
                                 <!--valuechangelistener-->
-                                <f:ajax listener="#{maintainTeacher.schoolChanged()}" render="ddlYearList ddlTeacherList"/>
+                                <f:ajax listener="#{maintainTeacher.schoolChanged()}" render="ddlYearList ddlTeacherList txtStatus"/>
                             </h:selectOneMenu>  
                         </th>
                     </tr> 
@@ -103,7 +103,7 @@
                             <h:selectOneMenu id="ddlYearList" title="Selct year" value="#{maintainTeacher.year}" disabled="#{maintainTeacher.disabledButton}"  styleClass="ddlSmallerSpecialStyle">
                                 <f:selectItems value="#{maintainTeacher.get_year()}"  /> 
                                 <!--valuechangelistener-->
-                                <f:ajax listener="#{maintainTeacher.yearChanged()}" render="ddlTeacherList"/>
+                                <f:ajax listener="#{maintainTeacher.yearChanged()}" render="ddlTeacherList txtStatus"/>
                             </h:selectOneMenu> 
 
 <!--                            &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList222" title="Click to show teacher"  value="Show" action="#{maintainTeacher.calculateCommYear()}" disabled="#{maintainTeacher.disabledButton}" styleClass="buttonShowStyle"/>-->
@@ -137,6 +137,8 @@
 
                                 <h:selectOneMenu id="ddlTeacherList" title="Select teacher" value="#{maintainTeacher.teacher}" styleClass="ddlStyle" disabled="#{maintainTeacher.disabledButton}">
                                     <f:selectItems value="#{maintainTeacher.get_teacher()}"  /> 
+                                    <!--valuechangelistener-->
+                                <f:ajax listener="#{maintainTeacher.teacherChanged()}" render="txtStatus"/>
                                 </h:selectOneMenu> 
 
                                 &nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList333" title="Click to show CS level"  value="Show" styleClass="buttonShowStyle" action="#{maintainTeacher.callStatus()}" disabled="#{maintainTeacher.disabledButton}"/>

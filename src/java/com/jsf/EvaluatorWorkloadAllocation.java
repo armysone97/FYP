@@ -5,16 +5,12 @@
  */
 package com.jsf;
 
-import java.io.PrintWriter;
 import java.sql.*;
 import java.util.*;
 import javax.faces.application.FacesMessage;
-//import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-//import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-//import javax.faces.context.FacesContext;
 
 /**
  *
@@ -242,7 +238,7 @@ public class EvaluatorWorkloadAllocation {
         getWorkloadList();
     }
     
-    //display data
+    //display data table
     public ArrayList getWorkloadList() {
 
         //retrieve staff ID

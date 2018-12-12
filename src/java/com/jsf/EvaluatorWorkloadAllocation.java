@@ -982,7 +982,7 @@ public class EvaluatorWorkloadAllocation {
         }
 
         for (int i = 0; i < assID_count; i++) {
-            school_list.add(assIDList[i]);
+            assessment_list.add(assIDList[i]);
         }
 //        try {
 //            Class.forName("com.mysql.cj.jdbc.Driver");

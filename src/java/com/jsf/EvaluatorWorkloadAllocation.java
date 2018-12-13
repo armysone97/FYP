@@ -734,12 +734,8 @@ public class EvaluatorWorkloadAllocation {
 
     public List<String> get_CSLevelList() {
 
-//        FacesContext context = FacesContext.getCurrentInstance();
-//        context.addMessage(null, new FacesMessage("xxxx"));
         cslevel_list.clear();
 
-        // String scID = "";
-        // verifySchoolID();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -1029,23 +1025,6 @@ public class EvaluatorWorkloadAllocation {
             }
 
         }
-//        try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/try1?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-//            Statement st = con.createStatement();
-//            ResultSet rs = st.executeQuery("SELECT assActivityName FROM assessmentactivity");
-//
-//            while (rs.next()) {
-//                assessment_list.add(rs.getString("assActivityName"));
-//            }
-//
-//            rs.close();
-//            st.close();
-//            con.close();
-//
-//        } catch (Exception ex) {
-//            System.out.println("Error: " + ex);
-//        }
 
         return assessment_list;
     }
@@ -1322,12 +1301,6 @@ public class EvaluatorWorkloadAllocation {
 
         FacesContext context = FacesContext.getCurrentInstance();
 
-//        switch (counterReset) {
-//            case 0:
-//                context.addMessage(null, new FacesMessage("Reset successful!"));
-//                break;
-//        }
-        //set default value
         school = null;
         csLevel = null;
         teacher = null;

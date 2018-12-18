@@ -230,7 +230,7 @@
                                 <h:selectOneMenu title="Select Teacher ID and Name" styleClass="ddlSpecialOneStyle" disabled="#{maintainTeacher.disabledNewTeacherIDName}" value="#{maintainTeacher.newTeacherIDName}">
                                     <f:selectItems value="#{maintainTeacher.get_newTeacherIDName()}" /> 
                                     <!--valuechangelistener-->
-                                    <f:ajax listener="#{maintainTeacher.teacherIDNameChanged()}" render="ddlCSLevelListNew"/>
+                                    <f:ajax listener="#{maintainTeacher.teacherIDNameChanged()}" render="ddlCSLevelListNew ddlNewStatus"/>
                                 </h:selectOneMenu>  
 
                                 <!--&nbsp; &nbsp; &nbsp; <h:commandButton id="btnShowList88" title="Click to show CS Level" action="#{maintainTeacher.showTeacherName()}"  value="Show" styleClass="buttonShowStyle" disabled="#{maintainTeacher.disabledNewTeacherIDName}"/>-->
@@ -295,7 +295,7 @@
 
                             <td align="left">
                                 <!--<h:outputText id="txtNewTeacherStatus" title="New teacher status" value="#{maintainTeacher.newTeacherStatus}" styleClass="txtboxSmallStyle"/>-->
-                                <h:selectOneMenu title="Select teacher status" value="#{maintainTeacher.newTeacherStatus}" styleClass="ddlSmallSpecialStyle" disabled="#{maintainTeacher.disabledNewTeacher}" >
+                                <h:selectOneMenu id="ddlNewStatus" title="Select teacher status" value="#{maintainTeacher.newTeacherStatus}" styleClass="ddlSmallSpecialStyle" disabled="#{maintainTeacher.disabledNewTeacher}" >
                                     <f:selectItem itemValue = "Available" itemLabel = "Available" /> 
                                     <f:selectItem itemValue = "Resigned" itemLabel = "Resigned" /> 
                                     <f:selectItem itemValue = "Retired" itemLabel = "Retired" /> 

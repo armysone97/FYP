@@ -12,8 +12,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -23,6 +25,7 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 
+//workload claim report
 public class WorkloadClaimReport {
 
     private Connection con;
@@ -136,6 +139,11 @@ public class WorkloadClaimReport {
     
     public void callWorkloadClaim() {
         getWorkloadClaimList();
+        
+        if(workloadClaimList.isEmpty()){
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("No record to be displayed!"));
+        }
     }
     
     //retrieve evaluator workload

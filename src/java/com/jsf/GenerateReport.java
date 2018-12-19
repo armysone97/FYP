@@ -26,6 +26,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @SessionScoped
 
+//evaluator workload allocation report
 public class GenerateReport {
     
     private Connection con;
@@ -157,6 +158,11 @@ public class GenerateReport {
 
     public void callEvaluatorWorkload() {
         getEvaluatorWorkloadList();
+        
+        if(evaluatorWorkloadList.isEmpty()){
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("No record to be displayed!"));
+        }
     }
     
     //retrieve evaluator workload
@@ -392,16 +398,6 @@ public class GenerateReport {
     public void reset() {
 
         FacesContext context = FacesContext.getCurrentInstance();
-
-//        switch (counterReset) {
-//            case 0:
-//                context.addMessage(null, new FacesMessage("Reset successful!"));
-//                break;
-//        }
-
-        //set default value
-        //year = 2018;
-//        reportType = "";
         
         counterReset = 0;
         MaintainSchoolMenu.setGlobalCounter(0);

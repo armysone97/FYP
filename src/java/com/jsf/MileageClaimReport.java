@@ -13,8 +13,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -24,6 +26,7 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean
 @SessionScoped
 
+//mileage claim report
 public class MileageClaimReport {
     
     private Connection con;
@@ -182,6 +185,11 @@ public class MileageClaimReport {
     
     public void callMileage() {
         getMileageClaimList();
+        
+        if(mileageClaimList.isEmpty()){
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("No record to be displayed!"));
+        }
     }
     
     //retrieve evaluator workload

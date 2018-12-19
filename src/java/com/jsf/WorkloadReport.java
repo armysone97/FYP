@@ -25,6 +25,7 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @SessionScoped
 
+//school workload report
 public class WorkloadReport {
 
     private Connection con;
@@ -224,6 +225,11 @@ public class WorkloadReport {
 
     public void callWorkload() {
         getSchoolWorkloadList();
+        
+        if(schoolWorkloadList.isEmpty()){
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("No record to be displayed!"));
+        }
     }
 
     public ArrayList getSchoolWorkloadList() {

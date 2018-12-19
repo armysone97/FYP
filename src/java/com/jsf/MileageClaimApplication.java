@@ -44,13 +44,9 @@ public class MileageClaimApplication {
     private int mileageClaimCount;
     private String mcID;
 
-    public MileageClaimApplication() {
+    public MileageClaimApplication() {        
         this.counterReset = 0;
         this.year = 2018;
-        this.toll = 0.00;
-        this.parking = 0.00;
-        this.accomodation = 0.00;
-        this.mileage = 0.00;
         this.result = "0.00";
     }
 
@@ -335,6 +331,8 @@ public class MileageClaimApplication {
         }
         
         context.addMessage(null, new FacesMessage("Added successful!"));
+        
+        reset();
      }
     
     //navigation bar purpose
@@ -350,23 +348,15 @@ public class MileageClaimApplication {
     //reset page
     public void reset() {
 
-        FacesContext context = FacesContext.getCurrentInstance();
 
-//        switch (counterReset) {
-//            case 0:
-//                context.addMessage(null, new FacesMessage("Reset successful!"));
-//                break;
-//        }
 
-        //set default value
-//        staffID = null;
-//        name = null;
         role = null;
         rate = "0.0";
+        workload = null;
         toll = 0.00;
-        parking = 0.00;
-        accomodation = 0.00;
-        mileage = 0.00;
+        parking = 0;
+        accomodation = 0;
+        mileage = 0;
         totalClaim = 0.00;
         year = 2018;
         result = "0.00";

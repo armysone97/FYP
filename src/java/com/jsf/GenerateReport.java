@@ -156,6 +156,7 @@ public class GenerateReport {
         return evaluator_list;
     }
 
+    //display data table
     public void callEvaluatorWorkload() {
         getEvaluatorWorkloadList();
         
@@ -219,6 +220,7 @@ public class GenerateReport {
         
         int tmp = 0;
         
+        //retrieve teachercsmapID, assessment
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -246,6 +248,7 @@ public class GenerateReport {
             String teacherIDTmp = "";
             String schoolCSMapIDTmp = "";
 
+            //retrieve teacherID, schoolcsmapID
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -277,6 +280,7 @@ public class GenerateReport {
             String schoolIDTmp = "";
             String csLevelIDTmp = "";
 
+            //retrieve schoolID, cslevelID
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -306,6 +310,7 @@ public class GenerateReport {
         for (int i = 0; i < evaWorkloadCount; i++) {
             String schoolNameTmp = "";
 
+            //retrieve school
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -331,6 +336,7 @@ public class GenerateReport {
         for (int i = 0; i < evaWorkloadCount; i++) {
             String teacherNameTmp = "";
 
+            //retrieve teacher
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -352,7 +358,7 @@ public class GenerateReport {
             }
         }
         
-        
+        //sort data
         String[] sortArr = new String[evaWorkloadCount];
         
          for (int i = 0; i < evaWorkloadCount; i++) {
@@ -402,6 +408,4 @@ public class GenerateReport {
         counterReset = 0;
         MaintainSchoolMenu.setGlobalCounter(0);
     }
-    
-    
 }

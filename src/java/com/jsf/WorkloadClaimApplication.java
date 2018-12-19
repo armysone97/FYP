@@ -50,8 +50,6 @@ public class WorkloadClaimApplication {
         this.hourlyRate = "0.00";
         this.workHours = "0.0";
         this.result = "0.00";
-//        this.staffID = Login.getGlobalStaffID();
-//        retrievePersonalDetails();
     }
 
     public String getStaffID() {
@@ -135,6 +133,7 @@ public class WorkloadClaimApplication {
         }
     }
 
+    //retrieve personal details from db
     public void retrievePersonalDetails() {
 
         //retrieve personal details
@@ -193,10 +192,6 @@ public class WorkloadClaimApplication {
                 sumTotalClaimDB = Double.valueOf(rs.getString("SUM(totalWorkload)"));
             }
 
-//            while (rs.next()) {
-//                setWorkHours(String.format("%.2f", rs.getDouble("SUM(workloadAssigned)")));
-//            }
-
             rs.close();
             st.close();
             con.close();
@@ -205,6 +200,7 @@ public class WorkloadClaimApplication {
             System.out.println("Error: " + ex);
         }
         
+        //calculate existing workload
         diffTotalWorkload = sumWorkloadDB - sumTotalClaimDB;
         
         if(String.valueOf(sumTotalClaimDB) == null){
@@ -212,7 +208,6 @@ public class WorkloadClaimApplication {
         }else{
             setWorkHours(String.format("%.2f", diffTotalWorkload));
         }
-
     }
     
     //retrieve hourly rate
@@ -370,6 +365,7 @@ public class WorkloadClaimApplication {
         }
     }
     
+    //add workload claim record to db
     public void saveRecord(){
         FacesContext context = FacesContext.getCurrentInstance();
         //retrieve rdID
@@ -446,6 +442,7 @@ public class WorkloadClaimApplication {
         }
     }
     
+    //change data when role change
     public void roleChanged(){
         retrieveHourlyRate();
         calculateWorkloadClaim();

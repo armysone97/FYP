@@ -97,6 +97,10 @@ public class WorkloadClaimReport {
         this.year_list = year_list;
     }
 
+    public void setEvaluator_list(List<String> evaluator_list) {
+        this.evaluator_list = evaluator_list;
+    }
+    
     //display year
     public List<String> get_YearList() {
         year_list.clear();
@@ -108,10 +112,6 @@ public class WorkloadClaimReport {
         return year_list;
     }
 
-    public void setEvaluator_list(List<String> evaluator_list) {
-        this.evaluator_list = evaluator_list;
-    }
-    
     //display evaluator list
     public List<String> get_EvaluatorList() {
         evaluator_list.clear();
@@ -137,6 +137,7 @@ public class WorkloadClaimReport {
         return evaluator_list;
     }
     
+    //display data table
     public void callWorkloadClaim() {
         getWorkloadClaimList();
         
@@ -201,6 +202,7 @@ public class WorkloadClaimReport {
         double totalWorkloadTmp = 0.0;
         double totalWorkloadClaimTmp = 0.0;
 
+        //retrieve claimcount, totalworkload, totalworkloadclaim
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");

@@ -351,7 +351,7 @@ public class RateSetting {
                 } else {
 
                     if (!mtHourlyRate.matches("\\d+")) { //verify integer only, if not integer only, means double
-                        //verify digit after decimal point, money maximum 2 decimal places, km maximum 3 decimal places
+                        //verify digit after decimal point, money maximum 2 decimal places
                         String[] parts = mtHourlyRate.split("\\.");
                         mtHourlyRateLength = parts[1];
                     }
@@ -366,8 +366,8 @@ public class RateSetting {
                         mileageRateLength = parts2[1];
                     }
 
-                    if (mtHourlyRateLength.length() > 2 || evHourlyRateLength.length() > 2 || mileageRateLength.length() > 3) {
-                        context.addMessage(null, new FacesMessage("Invalid format! Please try again!"));
+                    if (mtHourlyRateLength.length() > 2 || evHourlyRateLength.length() > 2 || mileageRateLength.length() > 2) {
+                        context.addMessage(null, new FacesMessage("RM must at most 2 decimal places only! Please try again!"));
                     } else {
                         try {
                             Class.forName("com.mysql.cj.jdbc.Driver");

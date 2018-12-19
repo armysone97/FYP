@@ -440,6 +440,7 @@ public class EvaluatorWorkloadAllocation {
             }
         }
         
+        //sort data
         String[] sortArr = new String[workload_Count];
         
         for (int i = 0; i < workload_Count; i++) {

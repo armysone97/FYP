@@ -161,10 +161,12 @@ public class ProfileManagement {
         this.status_list = status_list;
     }
 
+    //retrieve branch list
     public List<String> get_BranchList() {
 
         branch_list.clear();
 
+        //retrieve branch from db
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -186,10 +188,12 @@ public class ProfileManagement {
         return branch_list;
     }
 
+    //retrieve faculty list
     public List<String> get_FacultyList() {
 
         faculty_list.clear();
 
+        //retrieve faculty from db
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -211,10 +215,12 @@ public class ProfileManagement {
         return faculty_list;
     }
 
+    //retrieve status list
     public List<String> get_StatusList() {
 
         status_list.clear();
 
+        //retrieve status from db
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -249,6 +255,7 @@ public class ProfileManagement {
         }
     }
 
+    //retrieve personal details from db
     public void retrievePersonalDetails() {
 
         //retrieve personal details
@@ -277,6 +284,7 @@ public class ProfileManagement {
 
     }
 
+    //retrive workload limit from db
     public void retrieveWorkloadLimit() {
         workloadLimit = 0;
         
@@ -326,6 +334,7 @@ public class ProfileManagement {
         return count;
     }
 
+    //verify role type
     public String matchRoleID(String roleID) {
 
         String roleType = "";
@@ -352,6 +361,7 @@ public class ProfileManagement {
 
     }
 
+    //check role type
     public void retrieveRole() {
 
         FacesContext context = FacesContext.getCurrentInstance();
@@ -360,7 +370,6 @@ public class ProfileManagement {
         Boolean verify = false;
         Boolean verify1 = false;
         String roleTypes = "";
-//        String nextPage = "";
 
         int lengthRoleList = get_roleCount();
 
@@ -401,6 +410,7 @@ public class ProfileManagement {
         }
     }
 
+    //called when edit button selected
     public void editProfile() {
         disabledTxt = false;
         disabledButtonEdit = true;
@@ -447,6 +457,7 @@ public class ProfileManagement {
         }
     }
 
+    //update personal details in db
     public void updateProfile() {
         FacesContext context = FacesContext.getCurrentInstance();
         int verifyCounter = 0;
@@ -491,6 +502,7 @@ public class ProfileManagement {
         }
     }
 
+    //update workload limit in db
     public void updateWorkloadLimit() {
        
         try {
@@ -498,7 +510,6 @@ public class ProfileManagement {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE workloadlimit SET workloadLimit = ? WHERE staffID = ?");
 
-            //update school
             statement.setInt(1, workloadLimit);
             statement.setString(2, staffID);
             statement.executeUpdate();
@@ -524,11 +535,6 @@ public class ProfileManagement {
 
         FacesContext context = FacesContext.getCurrentInstance();
 
-//        switch (counterReset) {
-//            case 0:
-//                context.addMessage(null, new FacesMessage("Reset successful!"));
-//                break;
-//        }
         //set default value
         evaName = null;
         staffID = null;

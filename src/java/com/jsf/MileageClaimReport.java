@@ -162,6 +162,7 @@ public class MileageClaimReport {
     public List<String> get_EvaluatorList() {
         evaluator_list.clear();
         
+        //retrieve evaluator from db
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -183,6 +184,7 @@ public class MileageClaimReport {
         return evaluator_list;
     }
     
+    //display data table
     public void callMileage() {
         getMileageClaimList();
         
@@ -320,7 +322,8 @@ public class MileageClaimReport {
             assessmentList[i] = parts[0];
         }
         
-         String[] sortArr = new String[mileageClaimCount];
+        //sort data
+        String[] sortArr = new String[mileageClaimCount];
          
           for (int i = 0; i < mileageClaimCount; i++) {
             sortArr[i] = schoolNameList[i] + " - " + assessmentList[i] + " - " + tollList[i] + " - " + parkingList[i] + " - " + accomodationList[i] + " - " + mileageList[i] + " - " + ttlMileageClaimList[i];

@@ -151,10 +151,12 @@ public class MileageClaimApplication {
         }
     }
     
+    //retrieve workload list
     public List<String> get_WorkloadList() {
 
         workload_list.clear();
 
+        //retrieve specialID from db
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliant=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -178,7 +180,8 @@ public class MileageClaimApplication {
         return workload_list;
     }
     
-     public void retrievePersonalDetails() {
+    //retrieve personal details from db
+    public void retrievePersonalDetails() {
 
         //retrieve personal details
         try {
@@ -199,9 +202,9 @@ public class MileageClaimApplication {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         //retrieve mileage rate
-         try {
+        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             PreparedStatement st = con.prepareStatement("SELECT mileageRate FROM rate WHERE year = ?");
@@ -221,15 +224,15 @@ public class MileageClaimApplication {
         }
     }
      
-     //calculate total mileage claim
-     public void calculateMileageClaim(){
-         
-        totalClaim = ((Double.valueOf(rate))*mileage)+toll+parking+accomodation;
-        
+    //calculate total mileage claim
+    public void calculateMileageClaim() {
+
+        totalClaim = ((Double.valueOf(rate)) * mileage) + toll + parking + accomodation;
+
         result = String.format("%.2f", totalClaim);
-     }
+    }
      
-     //check validation
+    //check validation
     public void validation_Check(){
         FacesContext context = FacesContext.getCurrentInstance();
         
@@ -243,8 +246,8 @@ public class MileageClaimApplication {
         }
     }
      
-     //check duplicate record
-     public void check_DuplicateRecord(){
+    //check duplicate record
+    public void check_DuplicateRecord(){
         FacesContext context = FacesContext.getCurrentInstance();
         boolean check = true;
         
@@ -281,9 +284,10 @@ public class MileageClaimApplication {
         }
     }
      
-     //add mileage claim
-     public void addMileageClaim(){
+    //add mileage claim
+    public void addMileageClaim(){
          FacesContext context = FacesContext.getCurrentInstance();
+         
          //count mileage claim index
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -333,7 +337,7 @@ public class MileageClaimApplication {
         context.addMessage(null, new FacesMessage("Added successful!"));
         
         reset();
-     }
+    }
     
     //navigation bar purpose
     public String goToNextPage() {
@@ -347,9 +351,6 @@ public class MileageClaimApplication {
 
     //reset page
     public void reset() {
-
-
-
         role = null;
         rate = "0.0";
         workload = null;
@@ -363,6 +364,4 @@ public class MileageClaimApplication {
 
         counterReset = 0;
     }
-    
-    
 }

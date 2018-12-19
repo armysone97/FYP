@@ -589,80 +589,226 @@ public class AssessmentMinSetting {
         int length = 0;
         String tsID = "", assID = "", csID = "", assActivityID = "", assTypeID = "";
 
-        int verifyCounter = 0;
+        int verifyCounter1 = 0, verifyCounter2 = 0, verifyCounter3 = 0, verifyCounter4 = 0;
 
         if (project == 0 && collaboration == 0 && practical == 0 && groupwork == 0) {
             context.addMessage(null, new FacesMessage("At least one of the assessment minutes must be fill in! Please try again!"));
         } else {
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-                PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE assessment SET minPerStud = ? WHERE assID = ?");
-
-                //update project
-                assID = matchCSLevelName(cslevel, "AA1", year);
-
-                if (!assID.isEmpty()) {
-                    statement.setDouble(1, project);
-                    statement.setString(2, assID);
-                    statement.executeUpdate();
-
-                    verifyCounter = 1;
+            //update project
+            assID = matchCSLevelName(cslevel, "AA1", year);
+            if (!assID.isEmpty()) {
+                if (project == 0) {
+                    verifyCounter1 = 0;
+                } else {
+                    verifyCounter1 = 1;
                 }
-
-                //update collaboration
-                assID = matchCSLevelName(cslevel, "AA2", year);
-
-                if (!assID.isEmpty()) {
-                    statement.setDouble(1, collaboration);
-                    statement.setString(2, assID);
-                    statement.executeUpdate();
-
-                    verifyCounter = 1;
+            } else {
+                if (!disabledProject) {
+                    verifyCounter1 = 0;
+                } else {
+                    verifyCounter1 = 1;
                 }
-
-                //update practical
-                assID = matchCSLevelName(cslevel, "AA3", year);
-
-                if (!assID.isEmpty()) {
-                    statement.setDouble(1, practical);
-                    statement.setString(2, assID);
-                    statement.executeUpdate();
-
-                    verifyCounter = 1;
-                }
-
-                //update groupwork
-                assID = matchCSLevelName(cslevel, "AA4", year);
-
-                if (!assID.isEmpty()) {
-                    statement.setDouble(1, groupwork);
-                    statement.setString(2, assID);
-                    statement.executeUpdate();
-
-                    verifyCounter = 1;
-                }
-
-                statement.close();
-                con.close();
-
-            } catch (Exception ex) {
-                System.out.println("Error: " + ex);
             }
 
-            switch (verifyCounter) {
-                case 0:
-                    context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting for year " + year + " not successful!"));
-                    break;
-                case 1:
-                    context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting " + year + " successful!"));
-                    disabledProject = true;
-                    disabledCollaboration = true;
-                    disabledPractical = true;
-                    disabledGroupwork = true;
-                    disabledReset = true;
-                    break;
+            //update collaboration
+            assID = matchCSLevelName(cslevel, "AA2", year);
+
+            if (!assID.isEmpty()) {
+                if (collaboration == 0) {
+                    verifyCounter2 = 0;
+                } else {
+                    verifyCounter2 = 1;
+                }
+            } else {
+                if (!disabledCollaboration) {
+                    verifyCounter2 = 0;
+                } else {
+                    verifyCounter2 = 1;
+                }
             }
+
+            //update practical
+            assID = matchCSLevelName(cslevel, "AA3", year);
+
+            if (!assID.isEmpty()) {
+                if (practical == 0) {
+                    verifyCounter3 = 0;
+                } else {
+                    verifyCounter3 = 1;
+                }
+            } else {
+                if (!disabledPractical) {
+                    verifyCounter3 = 0;
+                } else {
+                    verifyCounter3 = 1;
+                }
+            }
+
+            //update groupwork
+            assID = matchCSLevelName(cslevel, "AA4", year);
+
+            if (!assID.isEmpty()) {
+
+                if (groupwork == 0) {
+                    verifyCounter4 = 0;
+                } else {
+                    verifyCounter4 = 1;
+                }
+            } else {
+                if (!disabledGroupwork) {
+                    verifyCounter4 = 0;
+                } else {
+                    verifyCounter4 = 1;
+                }
+            }
+
+            if (verifyCounter1 == 0 || verifyCounter2 == 0 || verifyCounter3 == 0 || verifyCounter4 == 0) {
+                context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting for year " + year + " not successful! Please fill in whole form!"));
+            } else {
+                context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting " + year + " successful!"));
+                disabledProject = true;
+                disabledCollaboration = true;
+                disabledPractical = true;
+                disabledGroupwork = true;
+                disabledReset = true;
+
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                    PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE assessment SET minPerStud = ? WHERE assID = ?");
+
+                    //update project
+                    assID = matchCSLevelName(cslevel, "AA1", year);
+
+                    if (!assID.isEmpty()) {
+                        statement.setDouble(1, project);
+                        statement.setString(2, assID);
+                        statement.executeUpdate();
+
+                        if (project == 0) {
+                            verifyCounter1 = 0;
+                        } else {
+                            verifyCounter1 = 1;
+                        }
+
+//                    context.addMessage(null, new FacesMessage("1"));
+                    } else {
+                        if (!disabledProject) {
+                            verifyCounter1 = 0;
+//                         context.addMessage(null, new FacesMessage("1a"));
+                        } else {
+                            verifyCounter1 = 1;
+//                         context.addMessage(null, new FacesMessage("1b"));
+                        }
+                    }
+
+                    //update collaboration
+                    assID = matchCSLevelName(cslevel, "AA2", year);
+
+                    if (!assID.isEmpty()) {
+                        statement.setDouble(1, collaboration);
+                        statement.setString(2, assID);
+                        statement.executeUpdate();
+
+                        if (collaboration == 0) {
+                            verifyCounter2 = 0;
+                        } else {
+                            verifyCounter2 = 1;
+                        }
+
+//                    context.addMessage(null, new FacesMessage("2"));
+                    } else {
+                        if (!disabledCollaboration) {
+                            verifyCounter2 = 0;
+//                        context.addMessage(null, new FacesMessage("2a"));
+                        } else {
+                            verifyCounter2 = 1;
+//                         context.addMessage(null, new FacesMessage("2b"));
+                        }
+                    }
+
+                    //update practical
+                    assID = matchCSLevelName(cslevel, "AA3", year);
+
+                    if (!assID.isEmpty()) {
+                        statement.setDouble(1, practical);
+                        statement.setString(2, assID);
+                        statement.executeUpdate();
+
+                        if (practical == 0) {
+                            verifyCounter3 = 0;
+                        } else {
+                            verifyCounter3 = 1;
+                        }
+
+//                    context.addMessage(null, new FacesMessage("3"));
+                    } else {
+                        if (!disabledPractical) {
+                            verifyCounter3 = 0;
+//                        context.addMessage(null, new FacesMessage("3a"));
+                        } else {
+                            verifyCounter3 = 1;
+//                         context.addMessage(null, new FacesMessage("3b"));
+                        }
+                    }
+
+                    //update groupwork
+                    assID = matchCSLevelName(cslevel, "AA4", year);
+
+                    if (!assID.isEmpty()) {
+                        statement.setDouble(1, groupwork);
+                        statement.setString(2, assID);
+                        statement.executeUpdate();
+
+                        if (groupwork == 0) {
+                            verifyCounter4 = 0;
+                        } else {
+                            verifyCounter4 = 1;
+                        }
+
+//                    context.addMessage(null, new FacesMessage("4"));
+                    } else {
+                        if (!disabledGroupwork) {
+                            verifyCounter4 = 0;
+//                             context.addMessage(null, new FacesMessage("4a"));
+                        } else {
+                            verifyCounter4 = 1;
+//                         context.addMessage(null, new FacesMessage("4b"));
+                        }
+                    }
+
+                    statement.close();
+                    con.close();
+
+                } catch (Exception ex) {
+                    System.out.println("Error: " + ex);
+                }
+            }
+
+//                  context.addMessage(null, new FacesMessage(verifyCounter1 + " : " + verifyCounter2  + " : " + verifyCounter3  + " : " + verifyCounter4));
+//            if(verifyCounter1 == 0 || verifyCounter2 == 0 || verifyCounter3 == 0 || verifyCounter4 == 0){
+//                context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting for year " + year + " not successful! Please fill in whole form!"));     
+//            } else{
+//                 context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting " + year + " successful!"));
+//                    disabledProject = true;
+//                    disabledCollaboration = true;
+//                    disabledPractical = true;
+//                    disabledGroupwork = true;
+//                    disabledReset = true;
+//            }
+//            switch (verifyCounter) {
+//                case 0:
+//                    context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting for year " + year + " not successful!"));
+//                    break;
+//                case 1:
+//                    context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting " + year + " successful!"));
+//                    disabledProject = true;
+//                    disabledCollaboration = true;
+//                    disabledPractical = true;
+//                    disabledGroupwork = true;
+//                    disabledReset = true;
+//                    break;
+//            }
         }
     }
 
@@ -702,7 +848,7 @@ public class AssessmentMinSetting {
         disabledPractical = true;
         disabledGroupwork = true;
         disabledReset = true;
-        
+
         MaintainSchoolMenu.setGlobalCounter(0);
 
         assessmentList();

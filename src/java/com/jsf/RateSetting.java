@@ -253,7 +253,6 @@ public class RateSetting {
 
 //        NumberFormat formatter = new DecimalFormat("#0.00");
 //        System.out.println(formatter.format(4.0));
-
         //get data from db
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -314,49 +313,92 @@ public class RateSetting {
         String rtID = "";
 
         int verifyCounter = 0;
+        boolean verifyFormat = false;
 
-        if (numSampleAss == 0 || Double.valueOf(mtHourlyRate) == 0 || Double.valueOf(evHourlyRate) == 0 || Double.valueOf(mileageRate) == 0) {
-            context.addMessage(null, new FacesMessage("Please fill in whole form!"));
-        } else {
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-                PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO rate (rateID, numSampleAss, mtHourlyRate, evHourlyRate, mileageRate, year) VALUES (?, ?, ?, ?, ?, ?)");
+//        //verify integer only
+//        if (!mtHourlyRate.matches("\\d+")) {
+//            context.addMessage(null, new FacesMessage("false"));
+//        } else {
+//            context.addMessage(null, new FacesMessage("true"));
+//        }
+//        context.addMessage(null, new FacesMessage("x: " + mtHourlyRate.length()));
+        String regexStr = "^[0-9\\.]*$";
 
-                //insert rate setting
-                length = autoGenerateID();
-                length = length + 1;
-                rtID = "RT" + Integer.toString(length);
-
-                statement.setString(1, rtID);
-                statement.setInt(2, numSampleAss);
-                statement.setDouble(3, Double.valueOf(mtHourlyRate));
-                statement.setDouble(4, Double.valueOf(evHourlyRate));
-                statement.setDouble(5, Double.valueOf(mileageRate));
-                statement.setInt(6, year);
-
-                statement.executeUpdate();
-                statement.close();
-                con.close();
-
-                verifyCounter = 1;
-
-            } catch (Exception ex) {
-                System.out.println("Error: " + ex);
+        if (numSampleAss == 0 || mtHourlyRate.isEmpty() || evHourlyRate.isEmpty() || mileageRate.isEmpty()) {
+            context.addMessage(null, new FacesMessage("Please fill in whole form! "));
+        } else { //verify double and integer only
+            if (!mtHourlyRate.matches("\\d+") || !evHourlyRate.matches("\\d+") || !mtHourlyRate.matches("\\d+")) { //integer
+                if (!mtHourlyRate.matches(regexStr) || !evHourlyRate.matches(regexStr) || !mileageRate.matches(regexStr)) { //double
+                    verifyFormat = false;
+                } else {
+                    verifyFormat = true;
+                }
+            } else {
+                verifyFormat = true;
             }
 
-            switch (verifyCounter) {
-                case 0:
-                    context.addMessage(null, new FacesMessage("Add Rate Setting for year " + year + " not successful!"));
-                    break;
-                case 1:
-                    context.addMessage(null, new FacesMessage("Add Rate Setting for year " + year + " successful!"));
-                    disabledTxt = true;
-                    break;
-            }
+            if (verifyFormat) { //true
+                if (numSampleAss == 0 || Double.valueOf(mtHourlyRate) == 0 || Double.valueOf(evHourlyRate) == 0 || Double.valueOf(mileageRate) == 0) {
+                    context.addMessage(null, new FacesMessage("Please fill in whole form!"));
+                } else {
 
+                    //verify digit after decimal point, money maximum 2 decimal places, km maximum 3 decimal places
+                    String[] parts = mtHourlyRate.split("\\.");
+                    String mtHourlyRateLength = parts[1];
+
+                    String[] parts1 = evHourlyRate.split("\\.");
+                    String evHourlyRateLength = parts1[1];
+
+                    String[] parts2 = mileageRate.split("\\.");
+                    String mileageRateLength = parts2[1];
+
+                    if (mtHourlyRateLength.length() > 2 || evHourlyRateLength.length() > 2 || mileageRateLength.length() > 3) {
+                        context.addMessage(null, new FacesMessage("Invalid format! Please try again!"));
+                    } else {
+                        try {
+                            Class.forName("com.mysql.cj.jdbc.Driver");
+                            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                            PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO rate (rateID, numSampleAss, mtHourlyRate, evHourlyRate, mileageRate, year) VALUES (?, ?, ?, ?, ?, ?)");
+
+                            //insert rate setting
+                            length = autoGenerateID();
+                            length = length + 1;
+                            rtID = "RT" + Integer.toString(length);
+
+                            statement.setString(1, rtID);
+                            statement.setInt(2, numSampleAss);
+                            statement.setDouble(3, Double.valueOf(mtHourlyRate));
+                            statement.setDouble(4, Double.valueOf(evHourlyRate));
+                            statement.setDouble(5, Double.valueOf(mileageRate));
+                            statement.setInt(6, year);
+
+                            statement.executeUpdate();
+                            statement.close();
+                            con.close();
+
+                            verifyCounter = 1;
+
+                        } catch (Exception ex) {
+                            System.out.println("Error: " + ex);
+                        }
+
+                        switch (verifyCounter) {
+                            case 0:
+                                context.addMessage(null, new FacesMessage("Add Rate Setting for year " + year + " not successful!"));
+                                break;
+                            case 1:
+                                context.addMessage(null, new FacesMessage("Add Rate Setting for year " + year + " successful!"));
+                                disabledTxt = true;
+                                break;
+                        }
+                    }
+
+                }
+
+            } else {
+                context.addMessage(null, new FacesMessage("Format Incorrect, please check again!"));
+            }
         }
-
     }
 
     //navigation bar purpose
@@ -387,15 +429,15 @@ public class RateSetting {
         mileageRate = "0.00";
 
         counterReset = 0;
-        
+
         MaintainSchoolMenu.setGlobalCounter(0);
 
         //set default disabled
         disabledTxt = true;
-        
+
         settingList();
     }
-    
+
     //valuechangelistener purpose
     public void yearChanged() {
         settingList();

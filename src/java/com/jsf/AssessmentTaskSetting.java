@@ -50,8 +50,8 @@ public class AssessmentTaskSetting {
         this.disabledGroupwork = true;
         this.counterReset = 0;
         this.disabledReset = true;
-        
-         assessmentList();
+
+        assessmentList();
     }
 
     public Boolean getDisabledReset() {
@@ -650,99 +650,186 @@ public class AssessmentTaskSetting {
 
         int length = 0;
         String tsID = "", assID = "", csID = "", assActivityID = "", assTypeID = "";
-        int verifyCounter = 0;
+        int verifyCounter1 = 0, verifyCounter2 = 0, verifyCounter3 = 0, verifyCounter4 = 0;
 
         if (project.isEmpty() && collaboration.isEmpty() && practical.isEmpty() && groupwork.isEmpty()) {
             context.addMessage(null, new FacesMessage("At least one of the assessment must be fill in! Please try again!"));
         } else {
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-                PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO task (taskID, taskTitle, assID) VALUES (?, ?, ?)");
-
-                //insert project
-                if (!project.isEmpty()) {
-                    length = autoGenerateID();
-                    length = length + 1;
-                    tsID = "TS" + Integer.toString(length);
-                    assID = matchCSLevelName(cslevel, "AA1", year);
-
-                    statement.setString(1, tsID);
-                    statement.setString(2, project);
-                    statement.setString(3, assID);
-                    statement.executeUpdate();
-
-                    verifyCounter = 1;
+            if (!project.isEmpty()) {
+                verifyCounter1 = 1;
+            } else {
+                if (!disabledProject) {
+                    verifyCounter1 = 0;
+                } else {
+                    verifyCounter1 = 1;
                 }
-
-                //insert collaboration
-                if (!collaboration.isEmpty()) {
-                    length = autoGenerateID();
-                    length = length + 1;
-                    tsID = "TS" + Integer.toString(length);
-                    assID = matchCSLevelName(cslevel, "AA2", year);
-
-//                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
-                    statement.setString(1, tsID);
-                    statement.setString(2, collaboration);
-                    statement.setString(3, assID);
-                    statement.executeUpdate();
-
-                    verifyCounter = 1;
+            }
+            if (!collaboration.isEmpty()) {
+                verifyCounter2 = 1;
+            } else {
+                if (!disabledCollaboration) {
+                    verifyCounter2 = 0;
+                } else {
+                    verifyCounter2 = 1;
                 }
-
-                //insert practical
-                if (!practical.isEmpty()) {
-                    length = autoGenerateID();
-                    length = length + 1;
-                    tsID = "TS" + Integer.toString(length);
-                    assID = matchCSLevelName(cslevel, "AA3", year);
-
-//                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
-                    statement.setString(1, tsID);
-                    statement.setString(2, practical);
-                    statement.setString(3, assID);
-                    statement.executeUpdate();
-
-                    verifyCounter = 1;
-                }
-
-                //insert groupwork
-                if (!groupwork.isEmpty()) {
-                    length = autoGenerateID();
-                    length = length + 1;
-                    tsID = "TS" + Integer.toString(length);
-                    assID = matchCSLevelName(cslevel, "AA4", year);
-
-//                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
-                    statement.setString(1, tsID);
-                    statement.setString(2, groupwork);
-                    statement.setString(3, assID);
-                    statement.executeUpdate();
-
-                    verifyCounter = 1;
-                }
-
-                statement.close();
-                con.close();
-
-            } catch (Exception ex) {
-                System.out.println("Error: " + ex);
             }
 
-            switch (verifyCounter) {
-                case 0:
-                    context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " not successful!"));
-                    break;
-                case 1:
-                    context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " successful!"));
-                    disabledProject = true;
-                    disabledCollaboration = true;
-                    disabledPractical = true;
-                    disabledGroupwork = true;
-                    disabledReset = true;
-                    break;
+            //insert practical
+            if (!practical.isEmpty()) {
+                verifyCounter3 = 1;
+            } else {
+                if (!disabledPractical) {
+                    verifyCounter3 = 0;
+                } else {
+                    verifyCounter3 = 1;
+                }
             }
+
+            //insert groupwork
+            if (!groupwork.isEmpty()) {
+                verifyCounter4 = 1;
+            } else {
+                if (!disabledGroupwork) {
+                    verifyCounter4 = 0;
+                } else {
+                    verifyCounter4 = 1;
+                }
+            }
+
+            if (verifyCounter1 == 0 || verifyCounter2 == 0 || verifyCounter3 == 0 || verifyCounter4 == 0) {
+                context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " not successful! Please fill in whole form!"));
+            } else {
+                context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " successful!"));
+                disabledProject = true;
+                disabledCollaboration = true;
+                disabledPractical = true;
+                disabledGroupwork = true;
+                disabledReset = true;
+
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                    PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO task (taskID, taskTitle, assID) VALUES (?, ?, ?)");
+
+                    //insert project
+                    if (!project.isEmpty()) {
+                        length = autoGenerateID();
+                        length = length + 1;
+                        tsID = "TS" + Integer.toString(length);
+                        assID = matchCSLevelName(cslevel, "AA1", year);
+
+                        statement.setString(1, tsID);
+                        statement.setString(2, project);
+                        statement.setString(3, assID);
+                        statement.executeUpdate();
+
+                        verifyCounter1 = 1;
+                    } else {
+                        if (!disabledProject) {
+                            verifyCounter1 = 0;
+                        } else {
+                            verifyCounter1 = 1;
+                        }
+                    }
+
+                    //insert collaboration
+                    if (!collaboration.isEmpty()) {
+                        length = autoGenerateID();
+                        length = length + 1;
+                        tsID = "TS" + Integer.toString(length);
+                        assID = matchCSLevelName(cslevel, "AA2", year);
+
+//                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
+                        statement.setString(1, tsID);
+                        statement.setString(2, collaboration);
+                        statement.setString(3, assID);
+                        statement.executeUpdate();
+
+                        verifyCounter2 = 1;
+                    } else {
+                        if (!disabledCollaboration) {
+                            verifyCounter2 = 0;
+                        } else {
+                            verifyCounter2 = 1;
+                        }
+                    }
+
+                    //insert practical
+                    if (!practical.isEmpty()) {
+                        length = autoGenerateID();
+                        length = length + 1;
+                        tsID = "TS" + Integer.toString(length);
+                        assID = matchCSLevelName(cslevel, "AA3", year);
+
+//                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
+                        statement.setString(1, tsID);
+                        statement.setString(2, practical);
+                        statement.setString(3, assID);
+                        statement.executeUpdate();
+
+                        verifyCounter3 = 1;
+                    } else {
+                        if (!disabledPractical) {
+                            verifyCounter3 = 0;
+                        } else {
+                            verifyCounter3 = 1;
+                        }
+                    }
+
+                    //insert groupwork
+                    if (!groupwork.isEmpty()) {
+                        length = autoGenerateID();
+                        length = length + 1;
+                        tsID = "TS" + Integer.toString(length);
+                        assID = matchCSLevelName(cslevel, "AA4", year);
+
+//                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
+                        statement.setString(1, tsID);
+                        statement.setString(2, groupwork);
+                        statement.setString(3, assID);
+                        statement.executeUpdate();
+
+                        verifyCounter4 = 1;
+                    } else {
+                        if (!disabledGroupwork) {
+                            verifyCounter4 = 0;
+                        } else {
+                            verifyCounter4 = 1;
+                        }
+                    }
+
+                    statement.close();
+                    con.close();
+
+                } catch (Exception ex) {
+                    System.out.println("Error: " + ex);
+                }
+            }
+
+//            if (verifyCounter1 == 0 || verifyCounter2 == 0 || verifyCounter3 == 0 || verifyCounter4 == 0) {
+//                context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " not successful! Please fill in whole form!"));
+//            } else {
+//                context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " successful!"));
+//                disabledProject = true;
+//                disabledCollaboration = true;
+//                disabledPractical = true;
+//                disabledGroupwork = true;
+//                disabledReset = true;
+//            }
+
+//            switch (verifyCounter) {
+//                case 0:
+//                    context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " not successful!"));
+//                    break;
+//                case 1:
+//                    context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " successful!"));
+//                    disabledProject = true;
+//                    disabledCollaboration = true;
+//                    disabledPractical = true;
+//                    disabledGroupwork = true;
+//                    disabledReset = true;
+//                    break;
+//            }
         }
 
     }
@@ -784,9 +871,9 @@ public class AssessmentTaskSetting {
         disabledPractical = true;
         disabledGroupwork = true;
         disabledReset = true;
-        
+
         MaintainSchoolMenu.setGlobalCounter(0);
-        
+
         assessmentList();
     }
 

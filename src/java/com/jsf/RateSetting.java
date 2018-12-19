@@ -315,6 +315,10 @@ public class RateSetting {
         int verifyCounter = 0;
         boolean verifyFormat = false;
 
+//        double mtHourlyRateFormatted = 0;
+//        double evHourlyRateFormatted = 0;
+//        double mileageRateFormatted = 0;
+
 //        //verify integer only
 //        if (!mtHourlyRate.matches("\\d+")) {
 //            context.addMessage(null, new FacesMessage("false"));
@@ -327,7 +331,7 @@ public class RateSetting {
         if (numSampleAss == 0 || mtHourlyRate.isEmpty() || evHourlyRate.isEmpty() || mileageRate.isEmpty()) {
             context.addMessage(null, new FacesMessage("Please fill in whole form! "));
         } else { //verify double and integer only
-            if (!mtHourlyRate.matches("\\d+") || !evHourlyRate.matches("\\d+") || !mtHourlyRate.matches("\\d+")) { //integer
+            if (!mtHourlyRate.matches("\\d+") || !evHourlyRate.matches("\\d+") || !mileageRate.matches("\\d+")) { //integer
                 if (!mtHourlyRate.matches(regexStr) || !evHourlyRate.matches(regexStr) || !mileageRate.matches(regexStr)) { //double
                     verifyFormat = false;
                 } else {
@@ -337,20 +341,30 @@ public class RateSetting {
                 verifyFormat = true;
             }
 
+            String mtHourlyRateLength = "0";
+            String evHourlyRateLength = "0";
+            String mileageRateLength = "0";
+
             if (verifyFormat) { //true
                 if (numSampleAss == 0 || Double.valueOf(mtHourlyRate) == 0 || Double.valueOf(evHourlyRate) == 0 || Double.valueOf(mileageRate) == 0) {
                     context.addMessage(null, new FacesMessage("Please fill in whole form!"));
                 } else {
 
-                    //verify digit after decimal point, money maximum 2 decimal places, km maximum 3 decimal places
-                    String[] parts = mtHourlyRate.split("\\.");
-                    String mtHourlyRateLength = parts[1];
+                    if (!mtHourlyRate.matches("\\d+")) { //verify integer only, if not integer only, means double
+                        //verify digit after decimal point, money maximum 2 decimal places, km maximum 3 decimal places
+                        String[] parts = mtHourlyRate.split("\\.");
+                        mtHourlyRateLength = parts[1];
+                    }
 
-                    String[] parts1 = evHourlyRate.split("\\.");
-                    String evHourlyRateLength = parts1[1];
+                    if (!evHourlyRate.matches("\\d+")) { //verify integer only, if not integer only, means double
+                        String[] parts1 = evHourlyRate.split("\\.");
+                        evHourlyRateLength = parts1[1];
+                    }
 
-                    String[] parts2 = mileageRate.split("\\.");
-                    String mileageRateLength = parts2[1];
+                    if (!mileageRate.matches("\\d+")) { //verify integer only, if not integer only, means double
+                        String[] parts2 = mileageRate.split("\\.");
+                        mileageRateLength = parts2[1];
+                    }
 
                     if (mtHourlyRateLength.length() > 2 || evHourlyRateLength.length() > 2 || mileageRateLength.length() > 3) {
                         context.addMessage(null, new FacesMessage("Invalid format! Please try again!"));
@@ -364,6 +378,10 @@ public class RateSetting {
                             length = autoGenerateID();
                             length = length + 1;
                             rtID = "RT" + Integer.toString(length);
+
+//                            mtHourlyRateFormatted = Double.valueOf(mtHourlyRate);
+//                            evHourlyRateFormatted = Double.valueOf(evHourlyRate);
+//                            mileageRateFormatted = Double.valueOf(mileageRate);
 
                             statement.setString(1, rtID);
                             statement.setInt(2, numSampleAss);
@@ -389,6 +407,9 @@ public class RateSetting {
                             case 1:
                                 context.addMessage(null, new FacesMessage("Add Rate Setting for year " + year + " successful!"));
                                 disabledTxt = true;
+//                                mtHourlyRate = String.valueOf(mtHourlyRateFormatted);
+//                                evHourlyRate = String.valueOf(evHourlyRateFormatted);
+//                                mileageRate = String.valueOf(mileageRateFormatted);
                                 break;
                         }
                     }
@@ -401,7 +422,7 @@ public class RateSetting {
         }
     }
 
-    //navigation bar purpose
+//navigation bar purpose
     public String goToNextPage() {
 
         counterReset = 1;

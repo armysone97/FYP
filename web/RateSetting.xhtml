@@ -62,6 +62,11 @@
 
                             <h:selectOneMenu title="Select year" styleClass="ddlStyle" value="#{rateSetting.year}">
                                 <f:selectItems value="#{rateSetting.get_year()}"  /> 
+<!--                                <f:selectItem itemLabel="2019" itemValue="2019"  /> 
+                                <f:selectItem itemLabel="2020" itemValue="2020"  /> 
+                                <f:selectItem itemLabel="2021" itemValue="2021"  /> 
+                                <f:selectItem itemLabel="2022" itemValue="2022"  /> 
+                                <f:selectItem itemLabel="2023" itemValue="2023"  /> -->
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{rateSetting.yearChanged()}" render="MaxNumSampleAss HourlyRateMasterTrainer HourlyRateEvaluator RateOfMileage btnReset btnConfirm"/>
                             </h:selectOneMenu>  

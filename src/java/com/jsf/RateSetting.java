@@ -6,14 +6,17 @@
 package com.jsf;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Pattern;
 import javax.faces.application.FacesMessage;
@@ -126,13 +129,20 @@ public class RateSetting {
 
     public Boolean verifyYear() {
 
+//        Calendar now = Calendar.getInstance();
+//        int year = now.get(Calendar.YEAR);
+//        String yearInString = String.valueOf(year);
         Boolean verify = false;
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT rateID FROM rate WHERE year = '2018'");
+//            Statement st = con.createStatement();
+            PreparedStatement st = con.prepareStatement("SELECT rateID FROM rate WHERE year = ?");
+            st.setString(1, systemYear);
+            ResultSet rs = st.executeQuery();
+//            ResultSet rs = st.executeQuery("SELECT rateID FROM rate WHERE year = '2018'");
 
             while (rs.next()) {
 
@@ -152,6 +162,8 @@ public class RateSetting {
 
     //get year from db 
     public List<Integer> get_year() {
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        
         year_list.clear();
         int lengthYearList = get_yearCount();
         int lengthYearListEnhance = 0;
@@ -170,7 +182,8 @@ public class RateSetting {
         if (verifyYear) { //2018 got inside
             //    lengthYearListEnhance = lengthYearList;
         } else {
-            yearListDuplicate[0] = 2018;
+            int yearSystem= Integer.valueOf(systemYear);
+            yearListDuplicate[0] = yearSystem;
             tmp++;
         }
 
@@ -233,9 +246,12 @@ public class RateSetting {
         int tmpYear = 0;
 
         int verifyRecord = 0;
+        
+         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+         int yearSystem = Integer.valueOf(systemYear);
 
         //when page onload, need to show previous(2017) record, so for year and yearComm 2018 temporaily become 2017
-        if (year == 2018) {
+        if (year == yearSystem) {
 
             verifyRecord = verifyRecord();
 
@@ -246,10 +262,74 @@ public class RateSetting {
                 tmpYear = 2017;
                 disabledTxt = false;
             }
-        } else {
+        } 
+//        else if (year == 2019) {
+//
+//            verifyRecord = verifyRecord();
+//
+//            if (verifyRecord > 0) { //means got data inside
+//                tmpYear = year;
+//                disabledTxt = true;
+//            } else {
+//                tmpYear = 2018;
+//                disabledTxt = false;
+//            }
+//        } else if (year == 2020) {
+//
+//            verifyRecord = verifyRecord();
+//
+//            if (verifyRecord > 0) { //means got data inside
+//                tmpYear = year;
+//                disabledTxt = true;
+//            } else {
+//                tmpYear = 2019;
+//                disabledTxt = false;
+//            }
+//        }else if (year == 2021) {
+//
+//            verifyRecord = verifyRecord();
+//
+//            if (verifyRecord > 0) { //means got data inside
+//                tmpYear = year;
+//                disabledTxt = true;
+//            } else {
+//                tmpYear = 2020;
+//                disabledTxt = false;
+//            }
+//        }else if (year == 2022) {
+//
+//            verifyRecord = verifyRecord();
+//
+//            if (verifyRecord > 0) { //means got data inside
+//                tmpYear = year;
+//                disabledTxt = true;
+//            } else {
+//                tmpYear = 2021;
+//                disabledTxt = false;
+//            }
+//        }else if (year == 2023) {
+//
+//            verifyRecord = verifyRecord();
+//
+//            if (verifyRecord > 0) { //means got data inside
+//                tmpYear = year;
+//                disabledTxt = true;
+//            } else {
+//                tmpYear = 2022;
+//                disabledTxt = false;
+//            }
+//        } 
+        else {
             tmpYear = year;
             disabledTxt = true;
         }
+
+//        } else {
+//            tmpYear = year;
+//            disabledTxt = true;
+//        }
+
+//String thisYear = new SimpleDateFormat("yyyy").format(new Date());
 
 //        NumberFormat formatter = new DecimalFormat("#0.00");
 //        System.out.println(formatter.format(4.0));
@@ -318,7 +398,6 @@ public class RateSetting {
 //        double mtHourlyRateFormatted = 0;
 //        double evHourlyRateFormatted = 0;
 //        double mileageRateFormatted = 0;
-
 //        //verify integer only
 //        if (!mtHourlyRate.matches("\\d+")) {
 //            context.addMessage(null, new FacesMessage("false"));
@@ -382,7 +461,6 @@ public class RateSetting {
 //                            mtHourlyRateFormatted = Double.valueOf(mtHourlyRate);
 //                            evHourlyRateFormatted = Double.valueOf(evHourlyRate);
 //                            mileageRateFormatted = Double.valueOf(mileageRate);
-
                             statement.setString(1, rtID);
                             statement.setInt(2, numSampleAss);
                             statement.setDouble(3, Double.valueOf(mtHourlyRate));

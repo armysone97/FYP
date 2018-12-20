@@ -17,34 +17,33 @@ import javax.faces.context.FacesContext;
  *
  * @author ruenyenchin
  */
-
 @ManagedBean
 @SessionScoped
 
 public class MileageClaimApplication {
-    
+
     private Connection con;
     private String staffID;
     private String name;
     private String role;
     private String rate;
-    private double toll;
-    private double parking;
-    private double accomodation;
+    private String toll;
+    private String parking;
+    private String accomodation;
     private double mileage;
     private double totalClaim;
     private int year;
     private String result;
     private String workload;
     private List<String> workload_list = new ArrayList<>();
-    
+
     private int counterReset;
-    
+
     //for add mileage claim
     private int mileageClaimCount;
     private String mcID;
 
-    public MileageClaimApplication() {        
+    public MileageClaimApplication() {
         this.counterReset = 0;
         this.year = 2018;
         this.result = "0.00";
@@ -82,27 +81,27 @@ public class MileageClaimApplication {
         this.rate = rate;
     }
 
-    public double getToll() {
+    public String getToll() {
         return toll;
     }
 
-    public void setToll(double toll) {
+    public void setToll(String toll) {
         this.toll = toll;
     }
 
-    public double getParking() {
+    public String getParking() {
         return parking;
     }
 
-    public void setParking(double parking) {
+    public void setParking(String parking) {
         this.parking = parking;
     }
 
-    public double getAccomodation() {
+    public String getAccomodation() {
         return accomodation;
     }
 
-    public void setAccomodation(double accomodation) {
+    public void setAccomodation(String accomodation) {
         this.accomodation = accomodation;
     }
 
@@ -141,7 +140,7 @@ public class MileageClaimApplication {
     public void setWorkload_list(List<String> workload_list) {
         this.workload_list = workload_list;
     }
-    
+
     public void defaultStaffList() {
         switch (Login.getGlobalCounter()) {
             case 1:
@@ -150,7 +149,7 @@ public class MileageClaimApplication {
                 break;
         }
     }
-    
+
     //retrieve workload list
     public List<String> get_WorkloadList() {
 
@@ -164,7 +163,7 @@ public class MileageClaimApplication {
             st.setString(1, staffID);
             st.setInt(2, year);
             ResultSet rs = st.executeQuery();
-            
+
             while (rs.next()) {
                 workload_list.add(rs.getString("specialID"));
             }
@@ -179,7 +178,7 @@ public class MileageClaimApplication {
 
         return workload_list;
     }
-    
+
     //retrieve personal details from db
     public void retrievePersonalDetails() {
 
@@ -223,34 +222,56 @@ public class MileageClaimApplication {
             System.out.println("Error: " + ex);
         }
     }
-     
+
     //calculate total mileage claim
     public void calculateMileageClaim() {
 
-        totalClaim = ((Double.valueOf(rate)) * mileage) + toll + parking + accomodation;
-
-        result = String.format("%.2f", totalClaim);
-    }
-     
-    //check validation
-    public void validation_Check(){
         FacesContext context = FacesContext.getCurrentInstance();
-        
-        if(workload == null || mileage == 0.0){
-            context.addMessage(null, new FacesMessage("All field are required to fill in!"));
-        }else if(totalClaim == 0.0){
-            context.addMessage(null, new FacesMessage("Click 'CALCULATE' to check total claim!"));
+        String regexStr = "^[0-9\\.]*$";
+        boolean verifyFormat = false;
+
+        if (toll.isEmpty() || parking.isEmpty() || accomodation.isEmpty()) {
+            context.addMessage(null, new FacesMessage("All field are required to fill in! "));
+        } else { //verify double and integer only
+            if (!toll.matches("\\d+") || !parking.matches("\\d+") || !accomodation.matches("\\d+")) { //integer
+                if (!toll.matches(regexStr) || !parking.matches(regexStr) || !accomodation.matches(regexStr)) { //double
+                    verifyFormat = false;
+                } else {
+                    verifyFormat = true;
+                }
+            } else {
+                verifyFormat = true;
+            }
+            
+            if (verifyFormat) { //true
+                totalClaim = ((Double.valueOf(rate)) * mileage) + (Double.valueOf(toll)) + (Double.valueOf(parking)) + (Double.valueOf(accomodation));
+
+                result = String.format("%.2f", totalClaim);
+            } else {
+                context.addMessage(null, new FacesMessage("Invalid format! Please try again!"));
+            }
         }
-        else{
+
+    }
+
+    //check validation
+    public void validation_Check() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        if (workload == null || mileage == 0.0) {
+            context.addMessage(null, new FacesMessage("All field are required to fill in!"));
+        } else if (totalClaim == 0.0) {
+            context.addMessage(null, new FacesMessage("Click 'CALCULATE' to check total claim!"));
+        } else {
             check_DuplicateRecord();
         }
     }
-     
+
     //check duplicate record
-    public void check_DuplicateRecord(){
+    public void check_DuplicateRecord() {
         FacesContext context = FacesContext.getCurrentInstance();
         boolean check = true;
-        
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -265,7 +286,7 @@ public class MileageClaimApplication {
                 if (year == yearDB && staffID.equals(staffIDDB) && workload.equals(record_Type)) {
                     check = false;
                     break;
-                }else{
+                } else {
                     check = true;
                 }
             }
@@ -276,19 +297,19 @@ public class MileageClaimApplication {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
-        if(check == true){
+
+        if (check == true) {
             addMileageClaim();
-        }else{
+        } else {
             context.addMessage(null, new FacesMessage("Record already existed!"));
         }
     }
-     
+
     //add mileage claim
-    public void addMileageClaim(){
-         FacesContext context = FacesContext.getCurrentInstance();
-         
-         //count mileage claim index
+    public void addMileageClaim() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        //count mileage claim index
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -309,7 +330,7 @@ public class MileageClaimApplication {
 
         mileageClaimCount = mileageClaimCount + 1;
         mcID = "MC" + Integer.toString(mileageClaimCount);
-        
+
         //insert mileage claim
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -317,9 +338,9 @@ public class MileageClaimApplication {
             PreparedStatement statement = (PreparedStatement) con.prepareStatement("INSERT INTO mileageclaimprocessing (MC_ID, toll, parking, accomodation, mileage, totalMileageClaim, year, staffID, claimRecord) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             statement.setString(1, mcID);
-            statement.setDouble(2, toll);
-            statement.setDouble(3, parking);
-            statement.setDouble(4, accomodation);
+            statement.setDouble(2, Double.valueOf(toll));
+            statement.setDouble(3, Double.valueOf(parking));
+            statement.setDouble(4, Double.valueOf(accomodation));
             statement.setDouble(5, mileage);
             statement.setDouble(6, totalClaim);
             statement.setInt(7, year);
@@ -333,12 +354,12 @@ public class MileageClaimApplication {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-        
+
         context.addMessage(null, new FacesMessage("Added successful!"));
-        
+
         reset();
     }
-    
+
     //navigation bar purpose
     public String goToNextPage() {
 
@@ -354,9 +375,9 @@ public class MileageClaimApplication {
         role = null;
         rate = "0.0";
         workload = null;
-        toll = 0.00;
-        parking = 0;
-        accomodation = 0;
+        toll = "";
+        parking = "";
+        accomodation = "";
         mileage = 0;
         totalClaim = 0.00;
         year = 2018;

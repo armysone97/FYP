@@ -449,6 +449,9 @@ public class ProfileManagement {
         else if(workloadLimit < Double.valueOf(ttlWorkloadDB)){
             context.addMessage(null, new FacesMessage("Workload limit invalid!"));
         }
+        else if(workloadLimit > 40){
+            context.addMessage(null, new FacesMessage("Maximum workload limit is 40 hours!"));
+        }
         else if (!(String.valueOf(workloadLimit)).matches("-?\\d+")) {
             context.addMessage(null, new FacesMessage("Workload Limit must be in integer only! Please try again!"));
         }

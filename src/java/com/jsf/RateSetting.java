@@ -254,11 +254,9 @@ public class RateSetting {
          String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
          int yearSystem = Integer.valueOf(systemYear);
 
-        //when page onload, need to show previous(2017) record, so for year and yearComm 2018 temporaily become 2017
+        //when page onload, need to show previous record, so for year and yearComm temporaily become previous year
         if (year == yearSystem) {
-
             verifyRecord = verifyRecord();
-
             if (verifyRecord > 0) { //means got data inside
                 tmpYear = year;
                 disabledTxt = true;
@@ -271,16 +269,7 @@ public class RateSetting {
             tmpYear = year;
             disabledTxt = true;
         }
-
-//        } else {
-//            tmpYear = year;
-//            disabledTxt = true;
-//        }
-
-//String thisYear = new SimpleDateFormat("yyyy").format(new Date());
-
-//        NumberFormat formatter = new DecimalFormat("#0.00");
-//        System.out.println(formatter.format(4.0));
+        
         //get data from db
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -291,7 +280,6 @@ public class RateSetting {
 
             while (rs.next()) {
                 numSampleAss = rs.getInt("numSampleAss");
-//                mtHourlyRate = formatter.format(rs.getDouble("mtHourlyRate"));
                 mtHourlyRate = String.format("%.2f", rs.getDouble("mtHourlyRate"));
                 evHourlyRate = String.format("%.2f", rs.getDouble("evHourlyRate"));
                 mileageRate = String.format("%.2f", rs.getDouble("mileageRate"));

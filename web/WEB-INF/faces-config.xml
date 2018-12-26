@@ -3,34 +3,16 @@
               xmlns="http://xmlns.jcp.org/xml/ns/javaee"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
               xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
-
-
-    <!--    <navigation-rule>
-        <from-view-id>/login.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>loginAdmin</from-outcome>
-            <to-view-id>/mainMenuAdmin.xhtml</to-view-id>
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>loginEvaluator</from-outcome>
-            <to-view-id>/mainMenuEvaluator.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>-->
     
     <navigation-rule>
         <from-view-id>/Login.xhtml</from-view-id>
         
-                <navigation-case>
+        <navigation-case>
             <from-action>#{login.verifyUser()}</from-action>
             <from-outcome>ProfileManagement</from-outcome>
             <to-view-id>/ProfileManagement.xhtml</to-view-id>
         </navigation-case>
 
-<!--        <navigation-case>
-            <from-action>#{login.verifyUser()}</from-action>
-            <from-outcome>WorkloadClaimApplication</from-outcome>
-            <to-view-id>/WorkloadClaimApplication.xhtml</to-view-id>
-        </navigation-case>-->
         <navigation-case>
             <from-action>#{login.verifyUser()}</from-action>
             <from-outcome>CSLevelSetting</from-outcome>
@@ -47,7 +29,7 @@
         </navigation-case>
     </navigation-rule>
     
-<!--    <navigation-rule>
+    <!--    <navigation-rule>
         <from-view-id>/MaintainSchoolMenu.xhtml</from-view-id>
         <navigation-case>
             <from-action>#{navigationController.processCSLevelSettingPage()}</from-action>
@@ -56,7 +38,7 @@
         </navigation-case>
     </navigation-rule>-->
     
-<!--    <navigation-rule>
+    <!--    <navigation-rule>
         <from-view-id>/CSLevelSetting.xhtml</from-view-id>
         <navigation-case>
             <from-action>#{cSLevelSetting.goToNextPage()}</from-action>
@@ -65,120 +47,120 @@
         </navigation-case>
     </navigation-rule>-->
     
-     <navigation-case>
-            <from-action>#{login.goToNextPage()}</from-action>
-            <from-outcome>Login</from-outcome>
-            <to-view-id>/Login.xhtml</to-view-id>
-        </navigation-case>
+    <navigation-case>
+        <from-action>#{login.goToNextPage()}</from-action>
+        <from-outcome>Login</from-outcome>
+        <to-view-id>/Login.xhtml</to-view-id>
+    </navigation-case>
     
-        <navigation-case>
-            <from-action>#{cSLevelSetting.goToNextPage()}</from-action>
-            <from-outcome>CSLevelSetting</from-outcome>
-            <to-view-id>/CSLevelSetting.xhtml</to-view-id>
-        </navigation-case>
+    <navigation-case>
+        <from-action>#{cSLevelSetting.goToNextPage()}</from-action>
+        <from-outcome>CSLevelSetting</from-outcome>
+        <to-view-id>/CSLevelSetting.xhtml</to-view-id>
+    </navigation-case>
         
-         <navigation-case>
-            <from-action>#{yearOfStudySetting.goToNextPage()}</from-action>
-            <from-outcome>YearOfStudySetting</from-outcome>
-            <to-view-id>/YearOfStudySetting.xhtml</to-view-id>
-        </navigation-case>
+    <navigation-case>
+        <from-action>#{yearOfStudySetting.goToNextPage()}</from-action>
+        <from-outcome>YearOfStudySetting</from-outcome>
+        <to-view-id>/YearOfStudySetting.xhtml</to-view-id>
+    </navigation-case>
         
-           <navigation-case>
-            <from-action>#{assessmentTaskSetting.goToNextPage()}</from-action>
-            <from-outcome>AssessmentTaskSetting</from-outcome>
-            <to-view-id>/AssessmentTaskSetting.xhtml</to-view-id>
-        </navigation-case>
+    <navigation-case>
+        <from-action>#{assessmentTaskSetting.goToNextPage()}</from-action>
+        <from-outcome>AssessmentTaskSetting</from-outcome>
+        <to-view-id>/AssessmentTaskSetting.xhtml</to-view-id>
+    </navigation-case>
         
-          <navigation-case>
-            <from-action>#{rateSetting.goToNextPage()}</from-action>
-            <from-outcome>RateSetting</from-outcome>
-            <to-view-id>/RateSetting.xhtml</to-view-id>
-        </navigation-case>
+    <navigation-case>
+        <from-action>#{rateSetting.goToNextPage()}</from-action>
+        <from-outcome>RateSetting</from-outcome>
+        <to-view-id>/RateSetting.xhtml</to-view-id>
+    </navigation-case>
         
-         <navigation-case>
-            <from-action>#{assessmentMinSetting.goToNextPage()}</from-action>
-            <from-outcome>AssessmentMinSetting</from-outcome>
-            <to-view-id>/AssessmentMinSetting.xhtml</to-view-id>
-        </navigation-case>
-        
-        
-          <navigation-case>
-            <from-action>#{maintainSchoolDetails.goToNextPage()}</from-action>
-            <from-outcome>MaintainSchoolDetails</from-outcome>
-            <to-view-id>/MaintainSchoolDetails.xhtml</to-view-id>
-        </navigation-case>
-        
-          <navigation-case>
-            <from-action>#{maintainSchoolMenu.goToNextPage()}</from-action>
-            <from-outcome>MaintainSchoolMenu</from-outcome>
-            <to-view-id>/MaintainSchoolMenu.xhtml</to-view-id>
-        </navigation-case>
-        
-         <navigation-case>
-            <from-action>#{maintainTeacher.goToNextPage()}</from-action>
-            <from-outcome>MaintainTeacher</from-outcome>
-            <to-view-id>/MaintainTeacher.xhtml</to-view-id>
-        </navigation-case>
-        
-         <navigation-case>
-            <from-action>#{maintainAssessmentTask.goToNextPage()}</from-action>
-            <from-outcome>MaintainAssessmentTask</from-outcome>
-            <to-view-id>/MaintainAssessmentTask.xhtml</to-view-id>
-        </navigation-case>
-        
-        <navigation-case>
-            <from-action>#{evaluatorPersonalDetails.goToNextPage()}</from-action>
-            <from-outcome>EvaluatorPersonalDetails</from-outcome>
-            <to-view-id>/EvaluatorPersonalDetails.xhtml</to-view-id>
-        </navigation-case>
-        
-          <navigation-case>
-            <from-action>#{evaluatorWorkloadAllocation.goToNextPage()}</from-action>
-            <from-outcome>EvaluatorWorkloadAllocationApplication</from-outcome>
-            <to-view-id>/EvaluatorWorkloadAllocationApplication.xhtml</to-view-id>
-        </navigation-case>
-        
-         <navigation-case>
-            <from-action>#{workloadClaimApplication.goToNextPage()}</from-action>
-            <from-outcome>WorkloadClaimApplication</from-outcome>
-            <to-view-id>/WorkloadClaimApplication.xhtml</to-view-id>
-        </navigation-case>
-        
-          <navigation-case>
-            <from-action>#{mileageClaimApplication.goToNextPage()}</from-action>
-            <from-outcome>MileageClaimApplication</from-outcome>
-            <to-view-id>/MileageClaimApplication.xhtml</to-view-id>
-        </navigation-case>
-        
-         <navigation-case>
-            <from-action>#{generateReport.goToNextPage()}</from-action>
-            <from-outcome>GenerateReport</from-outcome>
-            <to-view-id>/GenerateReport.xhtml</to-view-id>
-        </navigation-case>
-        
-         <navigation-case>
-            <from-action>#{workloadClaimReport.goToNextPage()}</from-action>
-            <from-outcome>WorkloadClaimReport</from-outcome>
-            <to-view-id>/WorkloadClaimReport</to-view-id>
-        </navigation-case>
-        
-          <navigation-case>
-            <from-action>#{mileageClaimReport.goToNextPage()}</from-action>
-            <from-outcome>MileageClaimReport</from-outcome>
-            <to-view-id>/MileageClaimReport</to-view-id>
-        </navigation-case>
-        
-        <navigation-case>
-            <from-action>#{workloadReport.goToNextPage()}</from-action>
-            <from-outcome>WorkloadReport</from-outcome>
-            <to-view-id>/WorkloadReport</to-view-id>
-        </navigation-case>
+    <navigation-case>
+        <from-action>#{assessmentMinSetting.goToNextPage()}</from-action>
+        <from-outcome>AssessmentMinSetting</from-outcome>
+        <to-view-id>/AssessmentMinSetting.xhtml</to-view-id>
+    </navigation-case>
         
         
-        <navigation-case>
-            <from-action>#{profileManagement.goToNextPage()}</from-action>
-            <from-outcome>ProfileManagement</from-outcome>
-            <to-view-id>/ProfileManagement.xhtml</to-view-id>
-        </navigation-case>
+    <navigation-case>
+        <from-action>#{maintainSchoolDetails.goToNextPage()}</from-action>
+        <from-outcome>MaintainSchoolDetails</from-outcome>
+        <to-view-id>/MaintainSchoolDetails.xhtml</to-view-id>
+    </navigation-case>
+        
+    <navigation-case>
+        <from-action>#{maintainSchoolMenu.goToNextPage()}</from-action>
+        <from-outcome>MaintainSchoolMenu</from-outcome>
+        <to-view-id>/MaintainSchoolMenu.xhtml</to-view-id>
+    </navigation-case>
+        
+    <navigation-case>
+        <from-action>#{maintainTeacher.goToNextPage()}</from-action>
+        <from-outcome>MaintainTeacher</from-outcome>
+        <to-view-id>/MaintainTeacher.xhtml</to-view-id>
+    </navigation-case>
+        
+    <navigation-case>
+        <from-action>#{maintainAssessmentTask.goToNextPage()}</from-action>
+        <from-outcome>MaintainAssessmentTask</from-outcome>
+        <to-view-id>/MaintainAssessmentTask.xhtml</to-view-id>
+    </navigation-case>
+        
+    <navigation-case>
+        <from-action>#{evaluatorPersonalDetails.goToNextPage()}</from-action>
+        <from-outcome>EvaluatorPersonalDetails</from-outcome>
+        <to-view-id>/EvaluatorPersonalDetails.xhtml</to-view-id>
+    </navigation-case>
+        
+    <navigation-case>
+        <from-action>#{evaluatorWorkloadAllocation.goToNextPage()}</from-action>
+        <from-outcome>EvaluatorWorkloadAllocationApplication</from-outcome>
+        <to-view-id>/EvaluatorWorkloadAllocationApplication.xhtml</to-view-id>
+    </navigation-case>
+        
+    <navigation-case>
+        <from-action>#{workloadClaimApplication.goToNextPage()}</from-action>
+        <from-outcome>WorkloadClaimApplication</from-outcome>
+        <to-view-id>/WorkloadClaimApplication.xhtml</to-view-id>
+    </navigation-case>
+        
+    <navigation-case>
+        <from-action>#{mileageClaimApplication.goToNextPage()}</from-action>
+        <from-outcome>MileageClaimApplication</from-outcome>
+        <to-view-id>/MileageClaimApplication.xhtml</to-view-id>
+    </navigation-case>
+        
+    <navigation-case>
+        <from-action>#{generateReport.goToNextPage()}</from-action>
+        <from-outcome>GenerateReport</from-outcome>
+        <to-view-id>/GenerateReport.xhtml</to-view-id>
+    </navigation-case>
+        
+    <navigation-case>
+        <from-action>#{workloadClaimReport.goToNextPage()}</from-action>
+        <from-outcome>WorkloadClaimReport</from-outcome>
+        <to-view-id>/WorkloadClaimReport</to-view-id>
+    </navigation-case>
+        
+    <navigation-case>
+        <from-action>#{mileageClaimReport.goToNextPage()}</from-action>
+        <from-outcome>MileageClaimReport</from-outcome>
+        <to-view-id>/MileageClaimReport</to-view-id>
+    </navigation-case>
+        
+    <navigation-case>
+        <from-action>#{workloadReport.goToNextPage()}</from-action>
+        <from-outcome>WorkloadReport</from-outcome>
+        <to-view-id>/WorkloadReport</to-view-id>
+    </navigation-case>
+        
+        
+    <navigation-case>
+        <from-action>#{profileManagement.goToNextPage()}</from-action>
+        <from-outcome>ProfileManagement</from-outcome>
+        <to-view-id>/ProfileManagement.xhtml</to-view-id>
+    </navigation-case>
 </faces-config>
 

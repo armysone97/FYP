@@ -531,17 +531,6 @@ public class MaintainSchoolDetails {
 
                         MaintainSchoolMenu.setGlobalCounter(2);
 
-//                    MaintainSchoolMenu.setGlobalAction("View");
-////                    disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
-//name = MaintainSchoolMenu.getGlobalAction();
-//
-//                    disabledTxt = true;
-//                    disabledAddButton = false;
-//                    disabledEditButton = false;
-//                    disabledResetButton = true;
-//
-//                    addButtonName = "New";
-//                    disabledEnrol = false;
                         counterCSLevel(numYearComm);
 
                     } catch (Exception ex) {

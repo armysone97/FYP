@@ -175,7 +175,6 @@ public class YearOfStudySetting {
 
         int[] yearListDuplicate = new int[lengthYearList + 1];
 
-//        FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         int tmp = 0;
 
@@ -222,7 +221,6 @@ public class YearOfStudySetting {
 
         CSLevel_list.clear();
 
-//        FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         String tmp = "";
 
@@ -231,7 +229,6 @@ public class YearOfStudySetting {
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT CSLevelName FROM cslevel");
-            // ResultSet rs = st.executeQuery("SELECT CSLevelID FROM assessment WHERE year='2017'");
 
             while (rs.next()) {
                 CSLevel_list.add(rs.getString("CSLevelName"));
@@ -274,9 +271,9 @@ public class YearOfStudySetting {
     public int verifyRecord() {
 
         int count = 0;
-        
+
         int yearCommTmp = year - yearComm;
-        
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -303,7 +300,6 @@ public class YearOfStudySetting {
     //get year of study cs map list when page onload and when button click based on year and yearComm
     public void yearOfStudyCSMapList() {
 
-//        FacesContext context = FacesContext.getCurrentInstance();
         int tmpYear = 0, tmpyearComm;
         int numYearComm = 0;
         int verifyRecord = 0;
@@ -315,26 +311,19 @@ public class YearOfStudySetting {
 
         //when page onload, need to show previous(2017) record, 
         //so for year and yearComm 2018 which have not record in db temporaily become 2017
-//        if (year == yearSystem && yearComm == yearSystem) {
-            verifyRecord = verifyRecord();
+        verifyRecord = verifyRecord();
 
-            if (verifyRecord > 0) {
-                tmpYear = year;
-                tmpyearComm = yearComm;
-                disabledDDL = true;
-            } else {
-                tmpYear = yearSystem - 1;
-                tmpyearComm = yearComm - 1;
-                disabledDDL = false;
-            }
-//        } else {
-//            tmpYear = year;
-//            tmpyearComm = yearComm;
-//            disabledDDL = true;
-//        }
+        if (verifyRecord > 0) {
+            tmpYear = year;
+            tmpyearComm = yearComm;
+            disabledDDL = true;
+        } else {
+            tmpYear = yearSystem - 1;
+            tmpyearComm = yearComm - 1;
+            disabledDDL = false;
+        }
 
         numYearComm = tmpYear - tmpyearComm;
-//        context.addMessage(null, new FacesMessage(year + " : " + yearComm + " : " + tmpYear + " : " + tmpyearComm + " : " + numYearComm));
 
         //get data from db
         try {
@@ -371,8 +360,6 @@ public class YearOfStudySetting {
                         standard6 = csname;
                         break;
                 }
-
-//                context.addMessage(null, new FacesMessage("x : " + csid + " : " + csname + " : " + yosid));
             }
 
             rs.close();
@@ -460,7 +447,6 @@ public class YearOfStudySetting {
             cslevelid = matchCSLevelName(standard1);
             yosID = "YO1";
 
-//            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
             statement.setString(1, ycID);
             statement.setString(2, cslevelid);
             statement.setString(3, yosID);
@@ -468,7 +454,6 @@ public class YearOfStudySetting {
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
 
-            //   autoAddSchoolCSMap(numYearComm, cslevelid);
             //insert standard 2
             length = autoGenerateID();
             length = length + 1;
@@ -476,7 +461,6 @@ public class YearOfStudySetting {
             cslevelid = matchCSLevelName(standard2);
             yosID = "YO2";
 
-//            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
             statement.setString(1, ycID);
             statement.setString(2, cslevelid);
             statement.setString(3, yosID);
@@ -484,7 +468,6 @@ public class YearOfStudySetting {
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
 
-            //   autoAddSchoolCSMap(numYearComm, cslevelid);
             //insert standard 3
             length = autoGenerateID();
             length = length + 1;
@@ -492,7 +475,6 @@ public class YearOfStudySetting {
             cslevelid = matchCSLevelName(standard3);
             yosID = "YO3";
 
-//            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
             statement.setString(1, ycID);
             statement.setString(2, cslevelid);
             statement.setString(3, yosID);
@@ -500,7 +482,6 @@ public class YearOfStudySetting {
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
 
-            //   autoAddSchoolCSMap(numYearComm, cslevelid);
             //insert standard 4
             length = autoGenerateID();
             length = length + 1;
@@ -508,7 +489,6 @@ public class YearOfStudySetting {
             cslevelid = matchCSLevelName(standard4);
             yosID = "YO4";
 
-//            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
             statement.setString(1, ycID);
             statement.setString(2, cslevelid);
             statement.setString(3, yosID);
@@ -516,7 +496,6 @@ public class YearOfStudySetting {
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
 
-            // autoAddSchoolCSMap(numYearComm, cslevelid);
             //insert standard 5
             length = autoGenerateID();
             length = length + 1;
@@ -524,7 +503,6 @@ public class YearOfStudySetting {
             cslevelid = matchCSLevelName(standard5);
             yosID = "YO5";
 
-//            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
             statement.setString(1, ycID);
             statement.setString(2, cslevelid);
             statement.setString(3, yosID);
@@ -532,7 +510,6 @@ public class YearOfStudySetting {
             statement.setInt(5, numYearComm);
             statement.executeUpdate();
 
-            // autoAddSchoolCSMap(numYearComm, cslevelid);
             //insert standard 6
             length = autoGenerateID();
             length = length + 1;
@@ -540,7 +517,6 @@ public class YearOfStudySetting {
             cslevelid = matchCSLevelName(standard6);
             yosID = "YO6";
 
-//            context.addMessage(null, new FacesMessage(ycID + " : " + cslevelid + " : " + yosID + " : " + numYearComm + " : " + year));
             statement.setString(1, ycID);
             statement.setString(2, cslevelid);
             statement.setString(3, yosID);
@@ -555,7 +531,6 @@ public class YearOfStudySetting {
 
             counterCSLevel(numYearComm);
 
-            // autoAddSchoolCSMap(numYearComm, cslevelid);
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
@@ -774,15 +749,6 @@ public class YearOfStudySetting {
         }
 
         FacesContext context = FacesContext.getCurrentInstance();
-
-//         switch (verifyCounter) {
-//            case 0:
-//                context.addMessage(null, new FacesMessage("Add School CS Map Setting for year " + year + " with commencement year " + yearComm + " not successful!"));
-//                break;
-//            case 1:
-//                context.addMessage(null, new FacesMessage("Add School CS Map Setting for year " + year + " with commencement year " + yearComm + " successful!"));
-//                break;
-//        }
     }
 
     //navigation bar purpose

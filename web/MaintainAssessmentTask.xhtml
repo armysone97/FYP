@@ -67,7 +67,6 @@
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{maintainAssessmentTask.stateChanged()}" render="ddlSchoolList ddlYearList ddlTeacherList txtStatus"/>   
                             </h:selectOneMenu>  
-                            <!--&nbsp;&nbsp;&nbsp;   <h:commandButton title="Click to show school" id="btnTest" value="Show School" styleClass="buttonSpecialStyle"/>-->
                         </th>
                     </tr>   
 
@@ -82,7 +81,6 @@
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{maintainAssessmentTask.schoolChanged()}" render="ddlYearList ddlTeacherList txtStatus"/>
                             </h:selectOneMenu>  
-                            <!--&nbsp;&nbsp;&nbsp;   <h:commandButton title="Click to show teacher" id="btnTest1" value="Show Teacher" styleClass="buttonSpecialStyle"/>-->
                         </th>
                     </tr> 
 
@@ -97,17 +95,9 @@
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{maintainAssessmentTask.teacherChanged()}" render="ddlYearList txtStatus"/>
                             </h:selectOneMenu>  
-                            <!--&nbsp;&nbsp;&nbsp;    <h:commandButton title="Click to show year" id="btnShowList444" value="Show Year" styleClass="buttonSpecialStyle"/>-->
-
                         </th>
                     </tr> 
                 </table>
-
-                <!--                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
-                                    <tr>
-                                        <th colspan="3" align="right"><h:commandButton title="Click to confirm" id="btnConfirmxx" value="Confirm" styleClass="buttonStyle"/></th>
-                                    </tr> 
-                                </table>   -->
 
                 <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
                     <tr>
@@ -132,34 +122,11 @@
                         </th>
                     </tr>   
 
-                    <!--                    <tr>
-                                            <th colspan="4" align="left">  
-                                                <h:outputText id="lblCSLevelddd" value="CS Level : "  styleClass="lblStyle"/>
-                    
-                                                <h:selectOneMenu title="Select CS level" styleClass="ddlStyle" value="#{maintainAssessmentTask.cslevel}">
-                                                    <f:selectItems value="#{maintainAssessmentTask.get_CSLevel()}" /> 
-                                                </h:selectOneMenu>  
-                                                &nbsp;&nbsp;&nbsp;    <h:commandButton title="Click to show student enrol number and numple sample assessment" id="btnShowList333" value="Show" styleClass="buttonShowStyle"/>
-                                            </th>
-                                        </tr>   -->
-
                     <tr>
                         <th><label>&nbsp;</label></th>
                         <th><label>&nbsp;</label></th> 
                     </tr>
                 </table >  
-                <!--                <table border="1" cellpadding="10px" cellspacing="0" width="800px" align="center">
-                                    <tr>
-                                        <th align="center"><h:outputText id="lblNoEnrol" value="Student enrollment number"  styleClass="lblStyle"/></th>
-                                        <th align="center"><h:outputText id="lblNoAss" value="Number of Sample Assessment"  styleClass="lblStyle"/></th>
-                
-                                    </tr>
-                
-                                    <tr>
-                                        <th align="center"><h:inputText id="txtEnrol1" title="Enter student enrolment number" disabled="#{maintainAssessmentTask.disabledtxt}"  value="#{maintainAssessmentTask.studEnrol}" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
-                                        <th align="center"><h:inputText id="txtAss1" title="Enter number sample assessment" disabled="#{maintainAssessmentTask.disabledtxt}" value="#{maintainAssessmentTask.numSampleAss}" styleClass="txtboxSmallestStyle" required="required" size="5"/></th>
-                                    </tr> 
-                                </table>-->
 
                 <table border="1" cellpadding="10px" cellspacing="0" width="800px" align="center">
 
@@ -181,19 +148,6 @@
                         </tr>
                     </ui:repeat>
                 </table>
-
-                <!--                <table border="0" cellpadding="10px" cellspacing="0" width="800px" align="center">
-                
-                                    <tr>
-                                        <th><label>&nbsp;</label></th>
-                                        <th><label>&nbsp;</label></th> 
-                                    </tr>
-                
-                                    <tr>
-                                        <th colspan="3" align="left"> <h:commandButton id="btnResetxx" title="Click to reset" value="Reset" action="#{maintainAssessmentTask.reset()}" styleClass="buttonStyle" disabled="#{maintainAssessmentTask.disabledNumSampleAss}"/></th>
-                                        <th align="right"><h:commandButton id="btnConfirm" title="Click to confirm" value="Confirm" styleClass="buttonStyle" action="#{maintainAssessmentTask.updateNumSampleAss()}" disabled="#{maintainAssessmentTask.disabledNumSampleAss}"/></th>
-                                    </tr>  
-                                </table>   -->
             </h:form>
         </div>
     </h:body>

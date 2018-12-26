@@ -44,8 +44,8 @@ public class AssessmentTaskSetting {
 
     public AssessmentTaskSetting() {
         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-          int yearSystem = Integer.valueOf(systemYear);
-          
+        int yearSystem = Integer.valueOf(systemYear);
+
         this.year = yearSystem;
         this.cslevel = "CS Level 1";
         this.disabledProject = true;
@@ -224,8 +224,8 @@ public class AssessmentTaskSetting {
         int tmp = 0;
 
         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-          int yearSystem = Integer.valueOf(systemYear);
-          
+        int yearSystem = Integer.valueOf(systemYear);
+
         yearListDuplicate[0] = yearSystem;
 
         try {
@@ -306,7 +306,6 @@ public class AssessmentTaskSetting {
             st.setInt(1, year);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                // CSLevel_list.add(rs.getString("CSLevelID"));
                 CSLevelIDListDuplicate[tmpCount] = rs.getString("CSLevelID");
                 tmpCount++;
             }
@@ -327,8 +326,6 @@ public class AssessmentTaskSetting {
         length = removeDuplicateElementsString(CSLevelIDListDuplicate, length);
 
         for (int i = 0; i < length; i++) {
-            //CSLevel_list.add(CSLevelIDListDuplicate[i]);
-
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -391,7 +388,6 @@ public class AssessmentTaskSetting {
             st.setString(3, assActivityID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                // CSLevel_list.add(rs.getString("CSLevelID"));
                 assID = rs.getString("assID");
             }
 
@@ -542,9 +538,9 @@ public class AssessmentTaskSetting {
 
         int verifyRecord = 0;
         String csid1 = "", assid1 = "";
-        
-          String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-          int yearSystem = Integer.valueOf(systemYear);
+
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
 
         //when page onload, need to show previous(2017) record, so for year and yearComm 2018 temporaily become 2017
         if (year == yearSystem) {
@@ -637,9 +633,6 @@ public class AssessmentTaskSetting {
         }
 
         groupwork = tasktitle;
-
-        //  groupwork = tmpYear + "x";
-        //   practical = csid + " : " + assactivityid + " : " + assid;
     }
 
     //add year of study cs map in db
@@ -738,7 +731,6 @@ public class AssessmentTaskSetting {
                         tsID = "TS" + Integer.toString(length);
                         assID = matchCSLevelName(cslevel, "AA2", year);
 
-//                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
                         statement.setString(1, tsID);
                         statement.setString(2, collaboration);
                         statement.setString(3, assID);
@@ -760,7 +752,6 @@ public class AssessmentTaskSetting {
                         tsID = "TS" + Integer.toString(length);
                         assID = matchCSLevelName(cslevel, "AA3", year);
 
-//                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
                         statement.setString(1, tsID);
                         statement.setString(2, practical);
                         statement.setString(3, assID);
@@ -782,7 +773,6 @@ public class AssessmentTaskSetting {
                         tsID = "TS" + Integer.toString(length);
                         assID = matchCSLevelName(cslevel, "AA4", year);
 
-//                context.addMessage(null, new FacesMessage(tsID + " : " + assID));
                         statement.setString(1, tsID);
                         statement.setString(2, groupwork);
                         statement.setString(3, assID);
@@ -804,38 +794,12 @@ public class AssessmentTaskSetting {
                     System.out.println("Error: " + ex);
                 }
             }
-
-//            if (verifyCounter1 == 0 || verifyCounter2 == 0 || verifyCounter3 == 0 || verifyCounter4 == 0) {
-//                context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " not successful! Please fill in whole form!"));
-//            } else {
-//                context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " successful!"));
-//                disabledProject = true;
-//                disabledCollaboration = true;
-//                disabledPractical = true;
-//                disabledGroupwork = true;
-//                disabledReset = true;
-//            }
-
-//            switch (verifyCounter) {
-//                case 0:
-//                    context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " not successful!"));
-//                    break;
-//                case 1:
-//                    context.addMessage(null, new FacesMessage("Add Task Setting for year " + year + " successful!"));
-//                    disabledProject = true;
-//                    disabledCollaboration = true;
-//                    disabledPractical = true;
-//                    disabledGroupwork = true;
-//                    disabledReset = true;
-//                    break;
-//            }
         }
 
     }
 
     //navigation bar purpose
     public String goToNextPage() {
-//          FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ajax Update"));
 
         counterReset = 1;
 
@@ -853,9 +817,9 @@ public class AssessmentTaskSetting {
                 context.addMessage(null, new FacesMessage("Reset successful!"));
                 break;
         }
-        
-         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-          int yearSystem = Integer.valueOf(systemYear);
+
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
 
         //set default value
         year = yearSystem;

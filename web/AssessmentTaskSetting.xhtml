@@ -40,7 +40,7 @@
 
                     <p:menuitem title="Click to redirect to Evaluator Personal Details page" value="EVALUATOR MANAGEMENT" action="#{evaluatorPersonalDetails.goToNextPage()}" />
                     <p:menuitem title="Click to redirect to Workload Allocation page" value="WORKLOAD ALLOCATION" action="#{evaluatorWorkloadAllocation.goToNextPage()}" />
-                     <p:submenu label="REPORT">
+                    <p:submenu label="REPORT">
                         <p:menuitem title="Click to redirect to School Workload Allocation Report page" value="School Workload Allocation Report" action="#{workloadReport.goToNextPage()}" />
                         <p:menuitem title="Click to redirect to Evaluator Workload Allocation Report page" value="Evaluator Workload Allocation Report" action="#{generateReport.goToNextPage()}" />
                         <p:menuitem title="Click to redirect to Workload Claim Report page" value="Workload Claim Report" action="#{workloadClaimReport.goToNextPage()}" />
@@ -65,15 +65,11 @@
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{assessmentTaskSetting.yearChanged()}" render="ddlCSLevelList txtProject txtPractical txtCollaboration txtGroupwork btnReset btnConfirm"/>
                             </h:selectOneMenu>  
-
-                            <!--&nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList" title="Click to show CS level" value="Show CS Level" styleClass="buttonSpecialStyle"/>-->
-
                         </th>
                     </tr>   
 
                     <tr>
                         <th colspan="4" align="left"> 
-
 
                             <h:outputText id="lblCSLevel" value="CS Level : "  styleClass="lblStyle"/>
 
@@ -82,9 +78,6 @@
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{assessmentTaskSetting.CSLevelChanged()}" render="txtProject txtPractical txtCollaboration txtGroupwork btnReset btnConfirm"/>
                             </h:selectOneMenu>  
-
-                            <!--&nbsp;&nbsp;&nbsp;    <h:commandButton id="btnShowList111" title="Click to show assessment"  value="Confirm" action="#{assessmentTaskSetting.assessmentList()}" styleClass="buttonStyle"/>-->
-
                         </th>
                     </tr>   
 

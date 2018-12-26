@@ -25,7 +25,6 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean
 @SessionScoped
-//@ViewScoped
 
 public class MaintainSchoolMenu {
 
@@ -171,7 +170,6 @@ public class MaintainSchoolMenu {
         int count = 1;
         int tmp = 0;
 
-        // stateListDuplicate[0] = 2018;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -282,9 +280,6 @@ public class MaintainSchoolMenu {
                     break;
             }
         }
-
-//        MaintainSchoolDetails.tryaa();
-//        return nextPage;
         return "aabbc";
     }
 
@@ -307,8 +302,6 @@ public class MaintainSchoolMenu {
                 context.addMessage(null, new FacesMessage("Reset successful!"));
                 break;
         }
-        
-//         context.addMessage(null, new FacesMessage("xxaa"));
 
         //set default value
         state = "Pulau Pinang";
@@ -323,9 +316,9 @@ public class MaintainSchoolMenu {
         counterReset = 0;
 
     }
-    
+
     //valuechangelistener purpose
-    public void stateChanged(){
+    public void stateChanged() {
         get_school();
     }
 

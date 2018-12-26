@@ -46,9 +46,9 @@ public class RateSetting {
 
     public RateSetting() {
         //system date
-         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-         int yearSystem = Integer.valueOf(systemYear);
-         
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
         this.year = yearSystem;
         this.disabledTxt = true;
         this.counterReset = 0;
@@ -133,23 +133,17 @@ public class RateSetting {
 
     public Boolean verifyYear() {
 
-//        Calendar now = Calendar.getInstance();
-//        int year = now.get(Calendar.YEAR);
-//        String yearInString = String.valueOf(year);
         Boolean verify = false;
         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-//            Statement st = con.createStatement();
             PreparedStatement st = con.prepareStatement("SELECT rateID FROM rate WHERE year = ?");
             st.setString(1, systemYear);
             ResultSet rs = st.executeQuery();
-//            ResultSet rs = st.executeQuery("SELECT rateID FROM rate WHERE year = '2018'");
 
             while (rs.next()) {
-
                 verify = true;
             }
 
@@ -169,7 +163,7 @@ public class RateSetting {
         year_list.clear();
         int lengthYearList = get_yearCount();
         int lengthYearListEnhance = 0;
-        
+
         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
 
         Boolean verifyYear = verifyYear();
@@ -184,7 +178,6 @@ public class RateSetting {
         int tmp = 0;
 
         if (verifyYear) { //2018 got inside
-            //    lengthYearListEnhance = lengthYearList;
         } else {
             int yearSystem = Integer.valueOf(systemYear);
             yearListDuplicate[0] = yearSystem;
@@ -193,7 +186,6 @@ public class RateSetting {
 
         int count = 1;
 
-//        yearListDuplicate[0] = 2018;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -250,9 +242,9 @@ public class RateSetting {
         int tmpYear = 0;
 
         int verifyRecord = 0;
-        
-         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-         int yearSystem = Integer.valueOf(systemYear);
+
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
 
         //when page onload, need to show previous record, so for year and yearComm temporaily become previous year
         if (year == yearSystem) {
@@ -264,12 +256,11 @@ public class RateSetting {
                 tmpYear = yearSystem - 1;
                 disabledTxt = false;
             }
-        }
-        else {
+        } else {
             tmpYear = year;
             disabledTxt = true;
         }
-        
+
         //get data from db
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -292,8 +283,6 @@ public class RateSetting {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-
-        // changeDDLDisabled();
     }
 
     //auto generate rate ID
@@ -331,16 +320,6 @@ public class RateSetting {
         int verifyCounter = 0;
         boolean verifyFormat = false;
 
-//        double mtHourlyRateFormatted = 0;
-//        double evHourlyRateFormatted = 0;
-//        double mileageRateFormatted = 0;
-//        //verify integer only
-//        if (!mtHourlyRate.matches("\\d+")) {
-//            context.addMessage(null, new FacesMessage("false"));
-//        } else {
-//            context.addMessage(null, new FacesMessage("true"));
-//        }
-//        context.addMessage(null, new FacesMessage("x: " + mtHourlyRate.length()));
         String regexStr = "^[0-9\\.]*$";
 
         if (numSampleAss == 0 || mtHourlyRate.isEmpty() || evHourlyRate.isEmpty() || mileageRate.isEmpty()) {
@@ -394,9 +373,6 @@ public class RateSetting {
                             length = length + 1;
                             rtID = "RT" + Integer.toString(length);
 
-//                            mtHourlyRateFormatted = Double.valueOf(mtHourlyRate);
-//                            evHourlyRateFormatted = Double.valueOf(evHourlyRate);
-//                            mileageRateFormatted = Double.valueOf(mileageRate);
                             statement.setString(1, rtID);
                             statement.setInt(2, numSampleAss);
                             statement.setDouble(3, Double.valueOf(mtHourlyRate));
@@ -421,9 +397,6 @@ public class RateSetting {
                             case 1:
                                 context.addMessage(null, new FacesMessage("Add Rate Setting for year " + year + " successful!"));
                                 disabledTxt = true;
-//                                mtHourlyRate = String.valueOf(mtHourlyRateFormatted);
-//                                evHourlyRate = String.valueOf(evHourlyRateFormatted);
-//                                mileageRate = String.valueOf(mileageRateFormatted);
                                 break;
                         }
                     }
@@ -455,9 +428,9 @@ public class RateSetting {
                 context.addMessage(null, new FacesMessage("Reset successful!"));
                 break;
         }
-        
-         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-         int yearSystem = Integer.valueOf(systemYear);
+
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
 
         //set default value
         year = yearSystem;

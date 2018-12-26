@@ -28,25 +28,7 @@
             <to-view-id>/MaintainSchoolDetails.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
-    
-    <!--    <navigation-rule>
-        <from-view-id>/MaintainSchoolMenu.xhtml</from-view-id>
-        <navigation-case>
-            <from-action>#{navigationController.processCSLevelSettingPage()}</from-action>
-            <from-outcome>CSLevelSetting</from-outcome>
-            <to-view-id>/CSLevelSetting.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>-->
-    
-    <!--    <navigation-rule>
-        <from-view-id>/CSLevelSetting.xhtml</from-view-id>
-        <navigation-case>
-            <from-action>#{cSLevelSetting.goToNextPage()}</from-action>
-            <from-outcome>MainMenuAdmin</from-outcome>
-            <to-view-id>/MainMenuAdmin.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>-->
-    
+ 
     <navigation-case>
         <from-action>#{login.goToNextPage()}</from-action>
         <from-outcome>Login</from-outcome>

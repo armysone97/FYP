@@ -46,7 +46,7 @@ public class AssessmentMinSetting {
     public AssessmentMinSetting() {
         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
         int yearSystem = Integer.valueOf(systemYear);
-        
+
         this.year = yearSystem;
         this.cslevel = "CS Level 1";
         this.disabledProject = true;
@@ -306,7 +306,6 @@ public class AssessmentMinSetting {
             st.setInt(1, year);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                // CSLevel_list.add(rs.getString("CSLevelID"));
                 CSLevelIDListDuplicate[tmpCount] = rs.getString("CSLevelID");
                 tmpCount++;
             }
@@ -327,8 +326,6 @@ public class AssessmentMinSetting {
         length = removeDuplicateElementsString(CSLevelIDListDuplicate, length);
 
         for (int i = 0; i < length; i++) {
-            //CSLevel_list.add(CSLevelIDListDuplicate[i]);
-
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -365,7 +362,6 @@ public class AssessmentMinSetting {
             st.setString(3, assActivityID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                // CSLevel_list.add(rs.getString("CSLevelID"));
                 assID = rs.getString("assID");
             }
 
@@ -467,7 +463,6 @@ public class AssessmentMinSetting {
             st.setString(2, CSID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                // CSLevel_list.add(rs.getString("CSLevelID"));
                 minPerStud = rs.getInt("minPerStud");
             }
 
@@ -494,7 +489,7 @@ public class AssessmentMinSetting {
 
         String csid1 = "";
         int minPerStud1 = 0;
-        
+
         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
         int yearSystem = Integer.valueOf(systemYear);
 
@@ -588,7 +583,6 @@ public class AssessmentMinSetting {
 
         groupwork = minPerStud;
 
-        //   practical = csid + " : " + assactivityid + " : " + assid;
     }
 
 //add year of study cs map in db
@@ -701,14 +695,11 @@ public class AssessmentMinSetting {
                             verifyCounter1 = 1;
                         }
 
-//                    context.addMessage(null, new FacesMessage("1"));
                     } else {
                         if (!disabledProject) {
                             verifyCounter1 = 0;
-//                         context.addMessage(null, new FacesMessage("1a"));
                         } else {
                             verifyCounter1 = 1;
-//                         context.addMessage(null, new FacesMessage("1b"));
                         }
                     }
 
@@ -725,15 +716,11 @@ public class AssessmentMinSetting {
                         } else {
                             verifyCounter2 = 1;
                         }
-
-//                    context.addMessage(null, new FacesMessage("2"));
                     } else {
                         if (!disabledCollaboration) {
                             verifyCounter2 = 0;
-//                        context.addMessage(null, new FacesMessage("2a"));
                         } else {
                             verifyCounter2 = 1;
-//                         context.addMessage(null, new FacesMessage("2b"));
                         }
                     }
 
@@ -750,15 +737,11 @@ public class AssessmentMinSetting {
                         } else {
                             verifyCounter3 = 1;
                         }
-
-//                    context.addMessage(null, new FacesMessage("3"));
                     } else {
                         if (!disabledPractical) {
                             verifyCounter3 = 0;
-//                        context.addMessage(null, new FacesMessage("3a"));
                         } else {
                             verifyCounter3 = 1;
-//                         context.addMessage(null, new FacesMessage("3b"));
                         }
                     }
 
@@ -775,15 +758,11 @@ public class AssessmentMinSetting {
                         } else {
                             verifyCounter4 = 1;
                         }
-
-//                    context.addMessage(null, new FacesMessage("4"));
                     } else {
                         if (!disabledGroupwork) {
                             verifyCounter4 = 0;
-//                             context.addMessage(null, new FacesMessage("4a"));
                         } else {
                             verifyCounter4 = 1;
-//                         context.addMessage(null, new FacesMessage("4b"));
                         }
                     }
 
@@ -794,31 +773,6 @@ public class AssessmentMinSetting {
                     System.out.println("Error: " + ex);
                 }
             }
-
-//                  context.addMessage(null, new FacesMessage(verifyCounter1 + " : " + verifyCounter2  + " : " + verifyCounter3  + " : " + verifyCounter4));
-//            if(verifyCounter1 == 0 || verifyCounter2 == 0 || verifyCounter3 == 0 || verifyCounter4 == 0){
-//                context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting for year " + year + " not successful! Please fill in whole form!"));     
-//            } else{
-//                 context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting " + year + " successful!"));
-//                    disabledProject = true;
-//                    disabledCollaboration = true;
-//                    disabledPractical = true;
-//                    disabledGroupwork = true;
-//                    disabledReset = true;
-//            }
-//            switch (verifyCounter) {
-//                case 0:
-//                    context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting for year " + year + " not successful!"));
-//                    break;
-//                case 1:
-//                    context.addMessage(null, new FacesMessage("Update Assessment Minutes Setting " + year + " successful!"));
-//                    disabledProject = true;
-//                    disabledCollaboration = true;
-//                    disabledPractical = true;
-//                    disabledGroupwork = true;
-//                    disabledReset = true;
-//                    break;
-//            }
         }
     }
 
@@ -841,7 +795,7 @@ public class AssessmentMinSetting {
                 context.addMessage(null, new FacesMessage("Reset successful!"));
                 break;
         }
-        
+
         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
         int yearSystem = Integer.valueOf(systemYear);
 

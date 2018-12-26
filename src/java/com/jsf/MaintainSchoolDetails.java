@@ -368,17 +368,12 @@ public class MaintainSchoolDetails {
         int statusOfYearLength = 0;
 
         int lengthYearList = get_yearCount();
-//        if (lengthYearList == 0) {
-//            lengthYearList = 1;
-//            statusOfYearLength = 1;
-//        }
 
         int[] yearListDuplicate = new int[lengthYearList];
 
         int count = 1;
         int tmp = 0;
 
-        // yearListDuplicate[0] = 2018;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -401,11 +396,6 @@ public class MaintainSchoolDetails {
             System.out.println(yearListDuplicate[i]);
         }
 
-//        if (statusOfYearLength == 1) {
-//            yearListDuplicate[0] = 2018;
-//            year_list.add(2018);
-//        }
-//        else {
         Arrays.sort(yearListDuplicate);//sorting array  
         int length = yearListDuplicate.length;
         length = removeDuplicateElements(yearListDuplicate, length);
@@ -414,7 +404,6 @@ public class MaintainSchoolDetails {
         for (int i = 0; i < length; i++) {
             year_list.add(yearListDuplicate[i]);
         }
-//        }
 
         return year_list;
     }
@@ -428,7 +417,6 @@ public class MaintainSchoolDetails {
                 newSchool();
                 break;
             case "Confirm":
-                // ttlEnrolStud = 67890;
                 addSchool();
                 break;
         }
@@ -666,9 +654,6 @@ public class MaintainSchoolDetails {
     //auto add school cs map in db based on commercial year
     public void autoAddSchoolCSMap(int numYearComm, String[] CSIDListDuplicate) { //if need redirect to another xhtml, need change void to String and return keyword
 
-        //1. find commYear (eg. 2016) from school table and compare with numYearComm
-        // int lengthCommYearList = get_commYearCount();
-        //   String[] schoolListDuplicate = new String[lengthCommYearList];
         int tmp = 0;
 
         String scID = "", shID = "", csID = "";
@@ -705,15 +690,6 @@ public class MaintainSchoolDetails {
                 System.out.println("Error: " + ex);
             }
         }
-
-//        switch (verifyCounter) {
-//            case 0:
-//                context.addMessage(null, new FacesMessage("School CS Map for school " + name + " automatic added not successful!"));
-//                break;
-//            case 1:
-//                context.addMessage(null, new FacesMessage("School CS Map for school " + name + " automatic added successful!"));
-//                break;
-//        }
     }
 
     //change button action when click the button
@@ -734,21 +710,11 @@ public class MaintainSchoolDetails {
 
     public void editSchool() {
         //reset page
-//        disabledTxt = false;
-
         disabledCommYear = true;
         disabledStatus = false;
-//        editButtonName = "Update";
-//        disabledAddButton = true;
         MaintainSchoolMenu.setGlobalAction("Update");
         disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
         disabledEnrol = true;
-//        ttlEnrolStud = 0;
-//        cslevel = null;
-//        year = 0;
-
-// FacesContext context = FacesContext.getCurrentInstance();
-//                 context.addMessage(null, new FacesMessage("x: " + schoolID + name + MaintainSchoolMenu.getGlobalCounter()));
     }
 
     public void updateSchool() {
@@ -768,94 +734,54 @@ public class MaintainSchoolDetails {
             if (!contactNo.matches("-?\\d+")) { // any positive or negetive integer or not!
                 context.addMessage(null, new FacesMessage("Contact Number must be in integer only! Please try again!"));
             } else {
-//                String schoolContactNoTmp = "", schoolNameTmp = "";
-//                boolean verifyAvailable = false;
-//
-//                try {
-//                    Class.forName("com.mysql.cj.jdbc.Driver");
-//                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-//                    Statement st = con.createStatement();
-//                    ResultSet rs = st.executeQuery("SELECT schoolName, schoolContactNo FROM school");
-//
-//                    while (rs.next()) {
-//                        schoolNameTmp = rs.getString("schoolName");
-//                        schoolContactNoTmp = rs.getString("schoolContactNo");
-//
-//                        if (name.equals(schoolNameTmp) && contactNo.equals(schoolContactNoTmp)) {
-//                            verifyAvailable = true;
-//                            break;
-//                        }
-//                    }
-//
-//                    st.close();
-//                    con.close();
-//
-//                } catch (Exception ex) {
-//                    System.out.println("Error: " + ex);
-//                }
-//
-//                if (verifyAvailable) {
-//                    context.addMessage(null, new FacesMessage("School " + name + " with contact number " + contactNo + " is existed! Please try again!"));
-//                } else {
-                    try {
-                        Class.forName("com.mysql.cj.jdbc.Driver");
-                        con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-                        PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE school SET schoolName = ?, schoolAddress = ?, schoolState = ?, schoolContactNo = ?, schoolStatus = ? WHERE schoolID = ?");
+                try {
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
+                    PreparedStatement statement = (PreparedStatement) con.prepareStatement("UPDATE school SET schoolName = ?, schoolAddress = ?, schoolState = ?, schoolContactNo = ?, schoolStatus = ? WHERE schoolID = ?");
 
-                        //update school
-                        statement.setString(1, name);
-                        statement.setString(2, address);
-                        statement.setString(3, state);
-                        statement.setString(4, contactNo);
-                        statement.setString(5, status);
-                        statement.setString(6, schoolID);
-                        statement.executeUpdate();
+                    //update school
+                    statement.setString(1, name);
+                    statement.setString(2, address);
+                    statement.setString(3, state);
+                    statement.setString(4, contactNo);
+                    statement.setString(5, status);
+                    statement.setString(6, schoolID);
+                    statement.executeUpdate();
 
-                        statement.close();
-                        con.close();
+                    statement.close();
+                    con.close();
 
-                        verifyCounter = 1;
-
-                        int[] yearListDuplicate = new int[2];
-                        yearListDuplicate[0] = 2222;
-                        yearListDuplicate[1] = 3333;
-
-//                    testing = yearListDuplicate[0] + "\n" + yearListDuplicate[1]; //output: 2222 3333
-//            for (int i = 0; i < 2; i++) {
-//                testing = yearListDuplicate[i] + "x";
-//            }
-                    } catch (Exception ex) {
-                        System.out.println("Error: " + ex);
-                    }
-
-                    switch (verifyCounter) {
-                        case 0:
-                            context.addMessage(null, new FacesMessage("Update school name " + name + " not successful!"));
-                            break;
-                        case 1:
-                            context.addMessage(null, new FacesMessage("Update school name " + name + " successful!"));
-
-                            disabledAddButton = false;
-                            disabledEditButton = false;
-                            editButtonName = "Edit";
-//                        disabledTxt = true;
-                            disabledStatus = true;
-                            MaintainSchoolMenu.setGlobalAction("View");
-                            disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
-
-                            disabledAddButton = false;
-                            disabledEditButton = false;
-
-                            disabledEnrol = false;
-
-                            break;
-                    }
+                    verifyCounter = 1;
+                } catch (Exception ex) {
+                    System.out.println("Error: " + ex);
                 }
-//            }
+
+                switch (verifyCounter) {
+                    case 0:
+                        context.addMessage(null, new FacesMessage("Update school name " + name + " not successful!"));
+                        break;
+                    case 1:
+                        context.addMessage(null, new FacesMessage("Update school name " + name + " successful!"));
+
+                        disabledAddButton = false;
+                        disabledEditButton = false;
+                        editButtonName = "Edit";
+                        disabledStatus = true;
+                        MaintainSchoolMenu.setGlobalAction("View");
+                        disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
+
+                        disabledAddButton = false;
+                        disabledEditButton = false;
+
+                        disabledEnrol = false;
+
+                        break;
+                }
+            }
         }
     }
-    //navigation bar purpose
 
+    //navigation bar purpose
     public String goToNextPage() {
 
         counterReset = 1;
@@ -872,14 +798,12 @@ public class MaintainSchoolDetails {
         switch (counterReset) {
             case 0:
                 context.addMessage(null, new FacesMessage("Reset successful!"));
-//                context.addMessage(null, new FacesMessage("x: " + MaintainSchoolMenu.getGlobalCounter()));
                 break;
         }
 
         //set default value
         switch (MaintainSchoolMenu.getGlobalCounter()) {
             case 0: //add
-//                year = 2018;
                 state = "Johor";
                 disabledTxt = false;
                 schoolID = autoGenerateID();
@@ -910,12 +834,9 @@ public class MaintainSchoolDetails {
                 disabledEditButton = true;
 
                 disabledEnrol = true;
-//                context.addMessage(null, new FacesMessage("yy"));
-
                 counterDataTable = 0;
                 break;
             case 1:
-//                context.addMessage(null, new FacesMessage("zz"));
                 break;
 
         }
@@ -927,11 +848,8 @@ public class MaintainSchoolDetails {
 
         FacesContext context = FacesContext.getCurrentInstance();
 
-//        context.addMessage(null, new FacesMessage("xx"));
-//        context.addMessage(null, new FacesMessage("xx: " + MaintainSchoolMenu.getGlobalCounter()));
         this.disabledStatus = true;
         this.disabledCommYear = true;
-//        this.year = 2018;
         this.counterReset = 0;
         this.counterDataTable = 0;
 
@@ -967,7 +885,6 @@ public class MaintainSchoolDetails {
                 this.addButtonName = "New";
                 this.disabledResetButton = true;
 
-//                MaintainSchoolMenu.setGlobalCounter(0);
                 schoolDetailsList(schoolID);
 
                 this.disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
@@ -977,8 +894,6 @@ public class MaintainSchoolDetails {
                 break;
             case 2:
                 MaintainSchoolMenu.setGlobalAction("View");
-//                    disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
-//                name = MaintainSchoolMenu.getGlobalAction();
 
                 disabledTxt = true;
                 disabledAddButton = false;
@@ -992,27 +907,12 @@ public class MaintainSchoolDetails {
                 break;
 
             case 3:
-//                MaintainSchoolMenu.setGlobalAction("Update");
-//                    disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
-//                name = MaintainSchoolMenu.getGlobalAction();
 
                 disabledCommYear = true;
                 disabledStatus = false;
-//        editButtonName = "Update";
-//        disabledAddButton = true;
                 MaintainSchoolMenu.setGlobalAction("Update");
                 disabledTxt = actionSelectionDisable(MaintainSchoolMenu.getGlobalAction());
                 disabledEnrol = true;
-//
-//                disabledTxt = false;
-//                disabledAddButton = true;
-//                disabledEditButton = false;
-//                disabledResetButton = false;
-//
-//                addButtonName = "New";
-//                disabledEnrol = false;
-//                 callCSLevel();
-
                 break;
 
             default: //direct come in without going maintainschoolmenu, so the globalcounter is null, not 0
@@ -1029,15 +929,11 @@ public class MaintainSchoolDetails {
                 this.addButtonName = "Confirm";
                 this.editButtonName = "Edit";
                 this.disabledResetButton = false;
-//                this.counterDataTable = 0;
-
                 MaintainSchoolMenu.setGlobalCounter(0);
         }
     }
 
     public void callCSLevel() {
-//      get_CSLevel();
-
         counterDataTable = 1;
 
         getCslevelList();
@@ -1076,7 +972,6 @@ public class MaintainSchoolDetails {
 
         CSLevel_list.clear();
 
-//       testing = year + schoolID;
         int CSIDListCount = retrieveCSIDCount();
         String[] CSIDList = new String[CSIDListCount];
 
@@ -1091,7 +986,6 @@ public class MaintainSchoolDetails {
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
-                //                CSLevel_list.add(rs.getString("CSLevelID"));
                 CSIDList[tmp] = rs.getString("CSLevelID");
                 tmp++;
             }
@@ -1115,9 +1009,6 @@ public class MaintainSchoolDetails {
                 ResultSet rs = st.executeQuery();
 
                 while (rs.next()) {
-//                    totalStudent = rs.getInt("numSampleAss");
-//                    teacherIDListDuplicate[tmp1] = rs.getString("teacherID");
-//                    tmp1++;
                     CSLevel_list.add(rs.getString("CSLevelName"));
                 }
 
@@ -1190,9 +1081,6 @@ public class MaintainSchoolDetails {
         FacesContext context = FacesContext.getCurrentInstance();
 
         if (counterDataTable == 1) {
-//            context.addMessage(null, new FacesMessage("mmm"));
-//            context.addMessage(null, new FacesMessage(schoolID + year));
-
             int CSIDListCount = retrieveCSIDCount();
 
             if (CSIDListCount > 0) {
@@ -1210,7 +1098,6 @@ public class MaintainSchoolDetails {
                     ResultSet rs = st.executeQuery();
 
                     while (rs.next()) {
-                        //                CSLevel_list.add(rs.getString("CSLevelID"));
                         CSIDList[tmp] = rs.getString("CSLevelID");
                         totalStudList[tmp] = rs.getInt("ttlEnrolStud");
                         tmp++;
@@ -1238,9 +1125,7 @@ public class MaintainSchoolDetails {
                         ResultSet rs = st.executeQuery();
 
                         while (rs.next()) {
-//                    CSLevel_list.add(rs.getString("CSLevelName"));
                             CSNameList[i] = rs.getString("CSLevelName");
-//                         context.addMessage(null, new FacesMessage(CSNameList[i] + " : x"));
                         }
 
                         rs.close();
@@ -1267,7 +1152,6 @@ public class MaintainSchoolDetails {
                 totalStudObj.setTotalStudNew(0);
                 cslevelList.add(totalStudObj);
             }
-//            counterDataTable = 0;
         } else {
             cslevelList = new ArrayList();
             totalStudObj = new MaintainSchoolDetails();

@@ -239,7 +239,6 @@ public class MaintainAssessmentTask {
         int count = 1;
         int tmp = 0;
 
-        // stateListDuplicate[0] = 2018;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -373,7 +372,6 @@ public class MaintainAssessmentTask {
 
         teacher_list.clear();
 
-        //   FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         String tmp = "";
 
@@ -551,7 +549,6 @@ public class MaintainAssessmentTask {
 
         year_list.clear();
 
-        //  int statusOfYearLength = 0;
         String schoolID = matchSchoolID();
 
         int lengthYearList = get_yearCount(schoolID);
@@ -862,7 +859,6 @@ public class MaintainAssessmentTask {
 
         CSLevel_list.clear();
 
-        // status = "xxx";
         //1. add button beside teacher, then use teacherID to find db teachercsmap
         //2. if got data, then declare array get schoolcsmap
         //3. go to schoolcsmap find csID, and go cs table find csName 
@@ -873,7 +869,6 @@ public class MaintainAssessmentTask {
         String[] scList = new String[scListLength]; //3. declare school cs map id array
         scList = matchSchoolCSMapID1(thID, scListLength); //4. find school cs map id based on teacher id
 
-        //   status = thID + " x";
         int year1 = 0, tmpCount = 0;
         Boolean verify = false;
 
@@ -902,21 +897,15 @@ public class MaintainAssessmentTask {
             }
         }
 
-        //    String[] scListNew = new String[tmpCount]; 
-        //    tmp = "verify: " + verify + " thID: " + thID;
         int csListLength = countCSID(scList); //2. declare school cs map id array length
         String[] csList = new String[csListLength]; //3. declare cs id array
         String csID = "", csName = "";
         int tmp1 = 0;
 
-        //   scList = matchSchoolCSMapID1(thID, scListLength); //4. find school cs map id based on teacher id
-        //    if (verify && year != 2018) {
         status = matchStatus(thID);
-        //  disabledTxt = true;
-        //  disabledDdl = true;
+
         //1. use school cs map id array and year go find cs id
         for (int i = 0; i < scList.length; i++) {
-            //  status = "xxy" + i;
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -931,13 +920,6 @@ public class MaintainAssessmentTask {
 
                     csList[tmp1] = csName;
                     tmp1++;
-
-                    //   CSLevel_list.add(csName);
-                    if (cslevel.equals(csName)) {
-                        //     status = "thID : " + thID + " scList[i] : " + scList[i];
-                        //studEnrol = matchStudNum(thID, scList[i]);
-                        //numSampleAss = matchAssNum(thID, scList[i]);
-                    }
                 }
 
                 st.close();
@@ -1098,7 +1080,6 @@ public class MaintainAssessmentTask {
     public String matchSchoolCSMapIDNew(String csID) {
 
         String scID = "", schoolID = "";
-//        csID = matchCSLevelID();
         schoolID = matchSchoolID();
 
         try {
@@ -1148,11 +1129,11 @@ public class MaintainAssessmentTask {
         return CSID;
     }
 
-   public void disabledOrEnable123() {
-       
-       String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-         int yearSystem = Integer.valueOf(systemYear);
-       
+    public void disabledOrEnable123() {
+
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
         if (year == yearSystem) {
             disabledNumSampleAss = false;
         } else {
@@ -1173,7 +1154,6 @@ public class MaintainAssessmentTask {
             String[] scList = new String[scListLength]; //3. declare school cs map id array
             scList = matchSchoolCSMapID1(thID, scListLength); //4. find school cs map id based on teacher id
 
-            //   status = thID + " x";
             int year1 = 0, tmpCount = 0;
             Boolean verify = false;
 
@@ -1261,20 +1241,6 @@ public class MaintainAssessmentTask {
                     }
                 }
 
-//                String[] sortArr = new String[csList.length];
-//
-//                for (int i = 0; i < csList.length; i++) {
-//                    sortArr[i] = csList[i] + " - " + studEnrolList[i] + " - " + numSampleAssList[i];
-//                }
-//                
-//                Arrays.sort(sortArr);
-//
-//                for (int i = 0; i < csList.length; i++) {
-//                    String[] parts = sortArr[i].split(" - ");
-//                    csList[i] = parts[0];
-//                    studEnrolList[i] = parts[1]; //cannot work coz int cannot convert to string
-//                    numSampleAssList[i] = parts[2]; //cannot work coz int cannot convert to string
-//                }
                 cslevelList = new ArrayList();
 
                 for (int i = 0; i < csList.length; i++) {

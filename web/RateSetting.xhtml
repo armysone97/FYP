@@ -41,7 +41,7 @@
 
                     <p:menuitem title="Click to redirect to Evaluator Personal Details page" value="EVALUATOR MANAGEMENT" action="#{evaluatorPersonalDetails.goToNextPage()}" />
                     <p:menuitem title="Click to redirect to Workload Allocation page" value="WORKLOAD ALLOCATION" action="#{evaluatorWorkloadAllocation.goToNextPage()}" />
-                   <p:submenu label="REPORT">
+                    <p:submenu label="REPORT">
                         <p:menuitem title="Click to redirect to School Workload Allocation Report page" value="School Workload Allocation Report" action="#{workloadReport.goToNextPage()}" />
                         <p:menuitem title="Click to redirect to Evaluator Workload Allocation Report page" value="Evaluator Workload Allocation Report" action="#{generateReport.goToNextPage()}" />
                         <p:menuitem title="Click to redirect to Workload Claim Report page" value="Workload Claim Report" action="#{workloadClaimReport.goToNextPage()}" />
@@ -65,7 +65,6 @@
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{rateSetting.yearChanged()}" render="MaxNumSampleAss HourlyRateMasterTrainer HourlyRateEvaluator RateOfMileage btnReset btnConfirm"/>
                             </h:selectOneMenu>  
-                            <!--&nbsp;&nbsp;&nbsp;  <h:commandButton id="btnShow" value="Show" title="Click to show rate" styleClass="buttonStyle" action="#{rateSetting.settingList()}"/>-->
                         </th>
                     </tr>   
 

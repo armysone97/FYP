@@ -70,7 +70,6 @@ public class MaintainTeacher {
 
     //valuechangelistener purpose
     private String schoolNameDefault, teacherNameDefault;
-//    private int yearDefault;
 
     public MaintainTeacher() {
         this.state = "Pulau Pinang";
@@ -85,7 +84,6 @@ public class MaintainTeacher {
         this.status = "Available";
         this.schoolNameDefault = "SJK Air Itam";
         this.teacherNameDefault = "Teoh Wei Ran";
-//        this.cslevel = "CS Level 1";
         this.disabledTxt = true;
         this.disabledDdl = true;
         this.disabledStatus = true;
@@ -335,15 +333,12 @@ public class MaintainTeacher {
     }
 
     public int retrieveTeacherIDFromSchoolLength() {
-//         disabledDdl = true;
-//        disabledTxt = true;
 
         String teacherIDFromDB = "", schoolIDFromDB = "", schoolCSMapIDFromDB = "";
         int countArr = 0;
 
         int tmpCount = 0, tmpCount1 = 0;
 
-        //   FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         String tmp = "";
 
@@ -384,7 +379,6 @@ public class MaintainTeacher {
                 schoolCSMapIDFromDB = rs.getString("schoolCSMapID");
                 schoolCSMapIDListDuplicate[tmpCount] = schoolCSMapIDFromDB;
                 tmpCount++;
-//                verifyTeacherRecord = true;
             }
 
             st.close();
@@ -414,7 +408,6 @@ public class MaintainTeacher {
                     teacherIDTmp = rs.getString("teacherID");
                     teacherIDListDuplicate[tmpCount1] = teacherIDTmp;
                     tmpCount1++;
-//                    verifyTeacherRecord = true;
                 }
 
                 st.close();
@@ -437,9 +430,6 @@ public class MaintainTeacher {
     }
 
     public String[] retrieveTeacherIDFromSchool() {
-//         disabledDdl = true;
-//        disabledTxt = true;
-
         String teacherIDFromDB = "", schoolIDFromDB = "", schoolCSMapIDFromDB = "";
         int countArr = 0;
 
@@ -447,7 +437,6 @@ public class MaintainTeacher {
 
         teacher_list.clear();
 
-        //   FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         String tmp = "";
 
@@ -488,7 +477,6 @@ public class MaintainTeacher {
                 schoolCSMapIDFromDB = rs.getString("schoolCSMapID");
                 schoolCSMapIDListDuplicate[tmpCount] = schoolCSMapIDFromDB;
                 tmpCount++;
-//                verifyTeacherRecord = true;
             }
 
             st.close();
@@ -518,7 +506,6 @@ public class MaintainTeacher {
                     teacherIDTmp = rs.getString("teacherID");
                     teacherIDListDuplicate[tmpCount1] = teacherIDTmp;
                     tmpCount1++;
-//                    verifyTeacherRecord = true;
                 }
 
                 st.close();
@@ -543,36 +530,22 @@ public class MaintainTeacher {
     public List<String> get_newTeacherIDName() { //select
         newTeacherIDName_list.clear();
 
-//        newTeacherSchoolName = "schoolxx: " + newCount;
         switch (newCount) {
             case 0:
                 newTeacherIDName_list.add("---");
                 newTeacherIDName = "---";
                 break;
             case 1: //select
-//                newTeacherIDName_list.add(" - lkjmmmmmmm");
-//                break;
             case 3: //select
                 int allTeacherIDListCount = retrieveAllTeacherIDCount();
                 String[] allTeacherIDListDuplicate = new String[allTeacherIDListCount];
 
                 allTeacherIDListDuplicate = showAllTeacher(allTeacherIDListCount); //get all teacher
 
-//                     for (int i = 0; i < allTeacherIDListDuplicate.length; i++) {
-//                    newTeacherID_list.add(teacherIDNotInSC[i]);
-//  newTeacherIDName_list.add(allTeacherIDListCount + " - lkk");
-//   newTeacherIDName_list.add(" - lkj");
-//                }
                 int teacherIDNotInSCCount = retrieveTeacherIDNotInSCCount(allTeacherIDListDuplicate);
                 String[] teacherIDNotInSC = new String[teacherIDNotInSCCount];
 
                 teacherIDNotInSC = showTeacherNotInSC(allTeacherIDListDuplicate, teacherIDNotInSCCount); //get teacher which not in db
-
-                for (int i = 0; i < teacherIDNotInSC.length; i++) {
-
-//                    newTeacherID_list.add(teacherIDNotInSC[i]);
-//  newTeacherIDName_list.add(teacherIDNotInSC[i] + " - lkk");
-                }
 
                 int teacherIDForSchoolCount = retrieveTeacherIDFromSchoolLength();
 
@@ -586,16 +559,12 @@ public class MaintainTeacher {
                 Arrays.sort(teacherIDNotInSC);
                 for (int i = 0; i < teacherIDNotInSC.length; i++) {
 
-                    //        String teacherName = retriveTeacherName(teacherIDNotInSC[i]);
                     finalTeacherID[i] = teacherIDNotInSC[i];
-//                    newTeacherID_list.add(teacherIDNotInSC[i]);
-//                    newTeacherID_list.add(finalTeacherID[i]);
                 }
 
                 int teacherIDCounter = 0;
                 teacherIDCounter = teacherIDNotInSC.length;
 
-//                newTeacherSchoolName = teacherIDFromSchool.length + " : " + teacherIDForSchoolCount + " schoolzz: " + teacherIDCounter + " : " + finalTeacherIDCount;
                 for (int i = 0; i < teacherIDForSchoolCount; i++) {
                     finalTeacherID[teacherIDCounter] = teacherIDFromSchool[i];
                     teacherIDCounter++;
@@ -611,12 +580,8 @@ public class MaintainTeacher {
                     newTeacherIDName_list.add(teacherID + " - " + teacherName);
                 }
 
-//                get_newCSLevel();
                 break;
             case 2: //add new
-//                  newTeacherName = "teacherName";
-//                newTeacherSchoolName = "schoolyy";
-//                newTeacherIDName_list.add(autoGenerateTeacherID());
                 newTeacherIDName_list.add("---");
                 break;
             default:
@@ -629,73 +594,12 @@ public class MaintainTeacher {
     public List<String> get_newTeacherID() { //add new
         newTeacherID_list.clear();
 
-//        newTeacherSchoolName = "schoolxx: " + newCount;
         switch (newCount) {
             case 1: //select
             case 3: //select
-//                int allTeacherIDListCount = retrieveAllTeacherIDCount();
-//                String[] allTeacherIDListDuplicate = new String[allTeacherIDListCount];
-//
-//                allTeacherIDListDuplicate = showAllTeacher(allTeacherIDListCount); //get all teacher
-//
-//                int teacherIDNotInSCCount = retrieveTeacherIDNotInSCCount(allTeacherIDListDuplicate);
-//                String[] teacherIDNotInSC = new String[teacherIDNotInSCCount];
-//
-//                teacherIDNotInSC = showTeacherNotInSC(allTeacherIDListDuplicate, teacherIDNotInSCCount); //get teacher which not in db
-//
-//                for (int i = 0; i < teacherIDNotInSC.length; i++) {
-//
-////                    newTeacherID_list.add(teacherIDNotInSC[i]);
-//                }
-//
-//                int teacherIDForSchoolCount = retrieveTeacherIDFromSchoolLength();
-//
-//                int finalTeacherIDCount = teacherIDNotInSCCount + teacherIDForSchoolCount;
-//
-//                String[] finalTeacherID = new String[finalTeacherIDCount];
-//                String[] teacherIDFromSchool = new String[teacherIDForSchoolCount];
-//
-//                teacherIDFromSchool = retrieveTeacherIDFromSchool();
-//
-//                Arrays.sort(teacherIDNotInSC);
-//                for (int i = 0; i < teacherIDNotInSC.length; i++) {
-//
-//                    //        String teacherName = retriveTeacherName(teacherIDNotInSC[i]);
-//                    finalTeacherID[i] = teacherIDNotInSC[i];
-////                    newTeacherID_list.add(teacherIDNotInSC[i]);
-////                    newTeacherID_list.add(finalTeacherID[i]);
-//                }
-//
-//                int teacherIDCounter = 0;
-//                teacherIDCounter = teacherIDNotInSC.length;
-//
-////                newTeacherSchoolName = teacherIDFromSchool.length + " : " + teacherIDForSchoolCount + " schoolzz: " + teacherIDCounter + " : " + finalTeacherIDCount;
-//                for (int i = 0; i < teacherIDForSchoolCount; i++) {
-//                    finalTeacherID[teacherIDCounter] = teacherIDFromSchool[i];
-//                    teacherIDCounter++;
-//                }
-//
-//                Arrays.sort(finalTeacherID);
-//
-//                for (int i = 0; i < finalTeacherID.length; i++) {
-//                    newTeacherID_list.add(finalTeacherID[i]);
-//                }
-
-//               
-//                if (newTeacherIDName.isEmpty()) {
                 newTeacherID_list.add("---");
-//                newTeacherID_list.add(newTeacherIDName);
-//                } else {
-//                    String[] parts = newTeacherIDName.split(" - ");
-//                    newTeacherID = parts[0];
-//                    newTeacherName = parts[1];
-//                }
-
-//
                 break;
             case 2: //add new
-//                  newTeacherName = "teacherName";
-//                newTeacherSchoolName = "schoolyy";
                 newTeacherID_list.add(autoGenerateTeacherID());
                 break;
         }
@@ -733,7 +637,6 @@ public class MaintainTeacher {
     public int countSchoolCSMapIDNew1(String[] schoolCSMapIDList) {
 
         int count = 0;
-//        Boolean verifyTrue = false;
 
         String[] parts = newTeacherIDName.split(" - ");
         String newTeacherID1 = parts[0];
@@ -767,7 +670,6 @@ public class MaintainTeacher {
         }
         FacesContext context = FacesContext.getCurrentInstance();
 
-//        context.addMessage(null, new FacesMessage(count + " hhh: " + newTeacherID1));
         return count;
     }
 
@@ -805,21 +707,7 @@ public class MaintainTeacher {
 
         switch (newCount) {
             case 1: //select (before select teacherID and Name)
-//                for (int i = 0; i < CSLevelIDList.length; i++) {
-//                    newCSLevel_list.add(matchCSLevelName(CSLevelIDList[i]));
-//                }
-//                int countSchoolCSMapID1x = countSchoolCSMapIDNew1(schoolCSMapIDList);
-//                 newCSLevel_list.add(countSchoolCSMapID1x + "xxxxdsxx");
-
-//                FacesContext context = FacesContext.getCurrentInstance();
-//                context.addMessage(null, new FacesMessage("zz : " + countSchoolCSMapID + " : yy")); 
-//                break;
             case 3: //select (after select teacherID and Name)
-
-//        for (int i = 0; i < CSLevelIDList.length; i++) {
-//            newCSLevel_list.add(CSLevelIDList[i]);
-//        }
-//                context.addMessage(null, new FacesMessage("xx : " + newTeacherIDName + " : yy"));
                 String schoolCSMapID = "";
                 int countSchoolCSMapID1 = countSchoolCSMapIDNew1(schoolCSMapIDList);
                 String[] schoolCSMapIDList1 = new String[countSchoolCSMapID1];
@@ -827,14 +715,11 @@ public class MaintainTeacher {
 
                 int tmp1 = 0;
 
-//        Boolean verifyTrue = false;
                 String[] parts = newTeacherIDName.split(" - ");
                 String newTeacherID1 = parts[0];
 
-//                 context.addMessage(null, new FacesMessage(newTeacherID1 + "zz : " + countSchoolCSMapID1 + " : yy"));
                 for (int i = 0; i < schoolCSMapIDList.length; i++) {
 
-//                    context.addMessage(null, new FacesMessage("hhh"));
                     Boolean verifyTrue = false;
                     try {
                         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -845,9 +730,6 @@ public class MaintainTeacher {
                         ResultSet rs = st.executeQuery();
 
                         while (rs.next()) {
-//                    schoolCSMapIDList1[tmp1] = rs.getString("schoolCSMapID");
-//                    tmp1++;
-//                            context.addMessage(null, new FacesMessage("mmm"));
                             verifyTrue = true;
                         }
 
@@ -861,8 +743,6 @@ public class MaintainTeacher {
                     if (!verifyTrue) {
                         schoolCSMapIDList1[tmp1] = schoolCSMapIDList[i];
                         CSLevelIDList1[tmp1] = CSLevelIDList[i];
-
-//                        context.addMessage(null, new FacesMessage("zz : " + schoolCSMapIDList1[tmp1] + " : yy"));
                         tmp1++;
                     }
                 }
@@ -906,9 +786,6 @@ public class MaintainTeacher {
         String newTeacherID1 = parts[0];
         String newTeacherName1 = parts[1];
 
-//        String teacherName = retriveTeacherName(newTeacherID);
-//
-//        newTeacherName = teacherName;
         String teacherStatus = retriveTeacherStatus(newTeacherID1);
 
         newTeacherStatus = teacherStatus;
@@ -965,8 +842,6 @@ public class MaintainTeacher {
     //get year from db 
     public List<String> get_state() {
 
-        //  disabledDdl = true;
-        //  disabledTxt = true;
         state_list.clear();
 
         int lengthYearList = get_stateCount();
@@ -977,7 +852,6 @@ public class MaintainTeacher {
         int count = 1;
         int tmp = 0;
 
-        // stateListDuplicate[0] = 2018;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -1014,7 +888,6 @@ public class MaintainTeacher {
     //get school list and put inside ddl based on the state that is selected by user in ddl
     public List<String> get_school() {
 
-        //disabledStatus = true;
         disabledTxt = true;
 
         school_list.clear();
@@ -1185,14 +1058,12 @@ public class MaintainTeacher {
 
         year_list.clear();
 
-        //  int statusOfYearLength = 0;
         String schoolID = matchSchoolID1();
 
         int lengthYearList = get_yearCount(schoolID);
         int lengthYearListEnhance = 0;
 
         FacesContext context = FacesContext.getCurrentInstance();
-//        context.addMessage(null, new FacesMessage("xxxyyy " + schoolID + " : x"));
 
         Boolean verifyRecord = verifyRecord(schoolID);
 
@@ -1201,10 +1072,8 @@ public class MaintainTeacher {
 
         if (verifyRecord) { //means got 2018 data 
             lengthYearListEnhance = lengthYearList;
-//            context.addMessage(null, new FacesMessage("bbb"));
         } else {
             lengthYearListEnhance = lengthYearList + 1;
-//            context.addMessage(null, new FacesMessage("ccc"));
         }
 
         int[] yearListDuplicate = new int[lengthYearListEnhance];
@@ -1212,20 +1081,13 @@ public class MaintainTeacher {
         int tmp = 0;
 
         if (verifyRecord) { //means got 2018 data 
-            //  lengthYearListEnhance = lengthYearList;
         } else {
             yearListDuplicate[0] = yearSystem;
             tmp++;
         }
 
-//        if (lengthYearList == 0) {
-//            lengthYearList = 1;
-//       //     statusOfYearLength = 1;
-//        }
-//        FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
 
-        // yearListDuplicate[0] = 2018;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -1248,10 +1110,6 @@ public class MaintainTeacher {
             System.out.println(yearListDuplicate[i]);
         }
 
-        //  if (statusOfYearLength == 1) {
-        //        yearListDuplicate[0] = 2018;
-        //        year_list.add(2018);
-        //  } else {
         Arrays.sort(yearListDuplicate);//sorting array  
         int length = yearListDuplicate.length;
         length = removeDuplicateElements(yearListDuplicate, length);
@@ -1260,7 +1118,6 @@ public class MaintainTeacher {
         for (int i = 0; i < length; i++) {
             year_list.add(yearListDuplicate[i]);
         }
-        //    }
 
         return year_list;
     }
@@ -1509,7 +1366,6 @@ public class MaintainTeacher {
 
         teacher_list.clear();
 
-        //   FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         String tmp = "";
 
@@ -1550,7 +1406,6 @@ public class MaintainTeacher {
                 schoolCSMapIDFromDB = rs.getString("schoolCSMapID");
                 schoolCSMapIDListDuplicate[tmpCount] = schoolCSMapIDFromDB;
                 tmpCount++;
-//                verifyTeacherRecord = true;
             }
 
             st.close();
@@ -1580,7 +1435,6 @@ public class MaintainTeacher {
                     teacherIDTmp = rs.getString("teacherID");
                     teacherIDListDuplicate[tmpCount1] = teacherIDTmp;
                     tmpCount1++;
-//                    verifyTeacherRecord = true;
                 }
 
                 st.close();
@@ -1591,32 +1445,6 @@ public class MaintainTeacher {
             }
         }
 
-//        if (!verifyTeacherRecord) {
-//
-//            //  newTeacherName = "";
-//            // newTeacherName = "xx";
-//            int allTeacherIDListCount = retrieveAllTeacherIDCount();
-//            String[] allTeacherIDListDuplicate = new String[allTeacherIDListCount];
-//
-//            allTeacherIDListDuplicate = showAllTeacher(allTeacherIDListCount); //get all teacher
-//
-//            int teacherIDNotInSCCount = retrieveTeacherIDNotInSCCount(allTeacherIDListDuplicate);
-//            String[] teacherIDNotInSC = new String[teacherIDNotInSCCount];
-//
-//            teacherIDNotInSC = showTeacherNotInSC(allTeacherIDListDuplicate, teacherIDNotInSCCount); //get teacher which not in db
-//
-//            Arrays.sort(teacherIDNotInSC);
-//
-//            for (int i = 0; i < teacherIDNotInSC.length; i++) {
-//
-//                String teacherName = retriveTeacherName(teacherIDNotInSC[i]);
-//
-//                teacher_list.add(teacherName);
-//            }
-//
-//        } else {
-        //     newTeacherName = "";
-        //     newTeacherName = "yy";
         //sorting array 
         Arrays.sort(teacherIDListDuplicate);
 
@@ -1656,7 +1484,6 @@ public class MaintainTeacher {
             }
 
         }
-//        }
 
         return teacher_list;
     }
@@ -1666,13 +1493,6 @@ public class MaintainTeacher {
         disabledDdl = true;
         disabledTxt = true;
 
-//        if (year == 2018) {
-//            disabledTxt = false;
-//            disabledDdl = false;
-//        } else {
-//            disabledTxt = true;
-//            disabledDdl = true;
-//        }
         String schoolID = matchSchoolID();
 
         commYear = 0;
@@ -1688,7 +1508,6 @@ public class MaintainTeacher {
 
             while (rs.next()) {
                 numYearComm = rs.getInt("commYearCS");
-                //   tmp++;
             }
 
             st.close();
@@ -1700,7 +1519,6 @@ public class MaintainTeacher {
 
         commYear = year - numYearComm;
 
-        // tmp = "commYear012: " + commYear + " numYearComm20182017: " + numYearComm + " year: " + year;
     }
 
     //count csID in db
@@ -1939,8 +1757,6 @@ public class MaintainTeacher {
             }
         }
 
-        //    String[] scListNew = new String[tmpCount]; 
-        //    tmp = "verify: " + verify + " thID: " + thID;
         int csListLength = countCSID(scList); //2. declare school cs map id array length
         String[] csList = new String[csListLength]; //3. declare school cs map id array
         String csID = "", csName = "";
@@ -1948,15 +1764,11 @@ public class MaintainTeacher {
         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
         int yearSystem = Integer.valueOf(systemYear);
 
-        //   scList = matchSchoolCSMapID1(thID, scListLength); //4. find school cs map id based on teacher id
         if ((verify && year != yearSystem) || (verify && year == yearSystem)) {
 
             status = matchStatus(thID);
             disabledDdl = false;
-            //  newTeacherName = year1 + "x";
 
-            //  disabledTxt = true;
-            //  disabledDdl = true;
             //1. use school cs map id array and year go find cs id
             for (int i = 0; i < scList.length; i++) {
                 try {
@@ -1973,7 +1785,6 @@ public class MaintainTeacher {
                         CSLevel_list.add(csName);
 
                         if (cslevel.equals(csName)) {
-//                            String thID = matchTeacherID();
                             studNum = matchStudNum(scList[i], thID);
 
                             disabledTxt = true;
@@ -1988,76 +1799,7 @@ public class MaintainTeacher {
                 }
 
             }
-
-            //    temp = "studNum: " + studNum + " status: " + status + " csID: " + csID + " cslevel: " + cslevel;
         }
-//        else {
-//
-//            disabledDdl = false;
-//            disabledTxt = false;
-//
-//            //  newTeacherName = year1 + "y";
-//            //disabledTxt = false;
-//            // disabledDdl = false;
-//            int lengthCSIDList = get_csCount();
-//
-//            String[] CSIDListDuplicate = new String[lengthCSIDList];
-//            int tmp = 0;
-//
-//            try {
-//                Class.forName("com.mysql.cj.jdbc.Driver");
-//                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-//                PreparedStatement st = con.prepareStatement("SELECT CSLevelID FROM yearofstudycsmap WHERE numYearComm = ? AND year = ?");
-//                st.setInt(1, commYear);
-//                st.setInt(2, year);
-//                ResultSet rs = st.executeQuery();
-//
-//                while (rs.next()) {
-//                    CSIDListDuplicate[tmp] = rs.getString("CSLevelID");
-//                    tmp++;
-//                }
-//
-//                st.close();
-//                con.close();
-//
-//            } catch (Exception ex) {
-//                System.out.println("Error: " + ex);
-//            }
-//
-//            Arrays.sort(CSIDListDuplicate);//sorting array  
-//            int length = CSIDListDuplicate.length;
-//            length = removeDuplicateElementsString(CSIDListDuplicate, length);
-//
-//            String[] CSNameList = new String[length];
-//            int tmp1 = 0;
-//
-//            //printing array elements  
-//            for (int i = 0; i < length; i++) {
-//                try {
-//                    Class.forName("com.mysql.cj.jdbc.Driver");
-//                    con = DriverManager.getConnection("jdbc:mysql://localhost:3306/stemcsdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-//                    PreparedStatement st = con.prepareStatement("SELECT CSLevelName FROM cslevel WHERE CSLevelID = ?");
-//                    st.setString(1, CSIDListDuplicate[i]);
-//                    ResultSet rs = st.executeQuery();
-//
-//                    while (rs.next()) {
-//                        CSNameList[tmp1] = rs.getString("CSLevelName");
-//                        tmp1++;
-//                    }
-//
-//                    st.close();
-//                    con.close();
-//
-//                } catch (Exception ex) {
-//                    System.out.println("Error: " + ex);
-//                }
-//            }
-//
-//            for (int i = 0; i < length; i++) {
-//                CSLevel_list.add(CSNameList[i]);
-//            }
-//        }
-
         return CSLevel_list;
     }
 
@@ -2197,30 +1939,6 @@ public class MaintainTeacher {
         return thID;
     }
 
-//    public int matchStudNum(String scID, String thID) {
-//        int studNum = 0;
-//
-//        try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
-//            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-//            PreparedStatement st = con.prepareStatement("SELECT enrolStudNum FROM teachercsmap WHERE schoolCSMapID = ? AND teacherID = ?");
-//            st.setString(1, scID);
-//            st.setString(2, thID);
-//            ResultSet rs = st.executeQuery();
-//
-//            while (rs.next()) {
-//                studNum = rs.getInt("enrolStudNum");
-//            }
-//
-//            st.close();
-//            con.close();
-//
-//        } catch (Exception ex) {
-//            System.out.println("Error: " + ex);
-//        }
-//
-//        return studNum;
-//    }
     public int matchNumSampleAss(String scID, String newTeacherID) {
 
         int num = 0;
@@ -2243,13 +1961,9 @@ public class MaintainTeacher {
             System.out.println("Error: " + ex);
         }
 
-//        int studEnrol = matchStudNum(scID, newTeacherID);
         if (newTeacherStudNum < num) {
             num = newTeacherStudNum;
         }
-//         else {
-//            num = numSampleAssConstant;
-//        }
 
         return num;
 
@@ -2264,9 +1978,6 @@ public class MaintainTeacher {
         thID = matchTeacherID();
         numSampleAss = matchNumSampleAss(scID, thID);
 
-//        updateTeacher(thID);
-        //   tmp = "tcID : " + tcID + " scID : " + scID + " thID : " + thID + " numSampleAss : " + numSampleAss;
-        //insert teachercsmap
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
@@ -2283,14 +1994,6 @@ public class MaintainTeacher {
             con.close();
 
             updateTtlEnrolStud(scID);
-
-//
-//            disabledTxt = true;
-//            disabledAddButton = false;
-//            disabledEditButton = false;
-//
-//            addButtonName = "New";
-//            counterCSLevel(numYearComm);
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
@@ -2347,7 +2050,6 @@ public class MaintainTeacher {
         //then original ttlstud add on with new ttlstud
         latestStud = originalStud + newTeacherStudNum;
 
-//              
         //then update latest ttlstud inside schoolcsmap table
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -2366,18 +2068,6 @@ public class MaintainTeacher {
         } catch (Exception ex) {
             System.out.println("Error: " + ex);
         }
-
-//        switch (verifyCounter) {
-//            case 0:
-//                context.addMessage(null, new FacesMessage("Total Enrolment student for school " + school + " updated not successful!"));
-//                break;
-//            case 1:
-//                context.addMessage(null, new FacesMessage("Total Enrolment student for school " + school + " updated successful!"));
-////                disabledTxt = true;
-////                disabledStatus = true;
-//                break;
-//        }
-        // temp = "lateststud: " + latestStud + " studNum: " + studNum + " originalStud: " + originalStud + " scID: " + scID;
     }
 
     //auto generate teacher ID
@@ -2415,13 +2105,9 @@ public class MaintainTeacher {
 
         newCount = 1;
         newTeacherIDName = "TH1 - Teoh Wei Ran";
-
-        // newTeacherID = "TH21";
-//        newTeacherStatus = "Available";
         newTeacherYear = year;
         newTeacherSchoolState = state;
         newTeacherSchoolName = school;
-//        newTeacherCSLevel = cslevel;
 
         newTeacherID = null;
         newTeacherName = null;
@@ -2441,12 +2127,10 @@ public class MaintainTeacher {
 
         newCount = 2;
 
-//        newTeacherID = autoGenerateTeacherID();
         newTeacherStatus = "Available";
         newTeacherYear = year;
         newTeacherSchoolState = state;
         newTeacherSchoolName = school;
-//        newTeacherCSLevel = cslevel;
         newTeacherName = null;
         newTeacherIDName = "---";
 
@@ -2467,10 +2151,6 @@ public class MaintainTeacher {
 
         int verifyCounter = 0;
 
-        // newCount = 0;
-        //   newTeacherName = "newTeacherID: " + newTeacherID + " newTeacherName: " + ttt + " newTeacherStatus: " + newTeacherStatus + " newTeacherYear: " + newTeacherYear;
-//        newTeacherStudNum = 65412;
-//        newTeacherNameID;
         switch (newCount) {
             case 1: //select
             case 3: //select
@@ -2516,7 +2196,6 @@ public class MaintainTeacher {
                         case 0:
                             break;
                         case 1:
-//                            context.addMessage(null, new FacesMessage("Add New Teacher name " + newTeacherName + " for school " + newTeacherSchoolName + " successful!"));
                             addTeacherCSMap();
                     }
                     break;
@@ -2537,10 +2216,8 @@ public class MaintainTeacher {
 
         tcID = autoGenerateTeacherCSMapID();
         scID = matchSchoolCSMapID();
-        //   thID = matchTeacherID();
         numSampleAss = matchNumSampleAss(scID, newTeacherID);
 
-        //   tmp = "tcID : " + tcID + " scID : " + scID + " thID : " + thID + " numSampleAss : " + numSampleAss;
         //insert teachercsmap
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -2682,9 +2359,6 @@ public class MaintainTeacher {
             newTeacherStudNum = 0;
             newTeacherCSLevel = "CS Level 1";
             teacherIDNameChanged();
-
-//            newTeacherStatus = "Available";
-//            get_newTeacherIDName();
         }
 
     }
@@ -2730,8 +2404,6 @@ public class MaintainTeacher {
                 }
             }
 
-            //    String[] scListNew = new String[tmpCount]; 
-            //    tmp = "verify: " + verify + " thID: " + thID;
             int csListLength = countCSID(scList); //2. declare school cs map id array length
             String[] csList = new String[csListLength]; //3. declare school cs map id array
             String csID = "", csName = "";
@@ -2741,7 +2413,6 @@ public class MaintainTeacher {
             String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
             int yearSystem = Integer.valueOf(systemYear);
 
-            //   scList = matchSchoolCSMapID1(thID, scListLength); //4. find school cs map id based on teacher id
             if ((verify && year != yearSystem) || (verify && year == yearSystem)) {
 
                 status = matchStatus(thID);
@@ -2763,13 +2434,10 @@ public class MaintainTeacher {
                             csName = matchCSLevelName(csID);
                             csList[tmp1] = csName;
                             tmp1++;
-//                        CSLevel_list.add(csName);
-//                            if (csList[tmp1].equals(csName)) {
+
                             studNumList[tmp2] = matchStudNum(scList[i], thID);
                             tmp2++;
                             disabledTxt = true;
-//                            }
-
                         }
 
                         st.close();
@@ -2781,19 +2449,6 @@ public class MaintainTeacher {
 
                 }
 
-//                String[] sortArr = new String[csList.length];
-//
-//                for (int i = 0; i < csList.length; i++) {
-//                    sortArr[i] = csList[i] + " - " + studNumList[i];
-//                }
-//
-//                Arrays.sort(sortArr);
-//
-//                for (int i = 0; i < csList.length; i++) {
-//                    String[] parts = sortArr[i].split(" - ");
-//                    csList[i] = parts[0];
-//                    studNumList[i] = parts[1]; //cannot work coz int cannot convert to string
-//                }
                 cslevelList = new ArrayList();
 
                 for (int i = 0; i < csList.length; i++) {

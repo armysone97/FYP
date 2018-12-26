@@ -47,9 +47,9 @@ public class CSLevelSetting {
     private int counterReset; //growl purpose
 
     public CSLevelSetting() {
-         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-         int yearSystem = Integer.valueOf(systemYear);
-         
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
         this.year = yearSystem;
         this.cslevel = "CS Level 1";
         this.disabledDDL = false;
@@ -348,7 +348,7 @@ public class CSLevelSetting {
 
         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
         int yearSystem = Integer.valueOf(systemYear);
-        
+
         //when page onload, need to show previous(2017) record, so for year and yearComm 2018 temporaily become 2017
         if (year == yearSystem) {
             tmpYear = yearSystem - 1;
@@ -358,7 +358,6 @@ public class CSLevelSetting {
                 con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
                 Statement st = con.createStatement();
                 ResultSet rs = st.executeQuery("SELECT CSLevelName FROM cslevel");
-                // ResultSet rs = st.executeQuery("SELECT CSLevelID FROM assessment WHERE year='2017'");
 
                 while (rs.next()) {
                     CSLevel_list.add(rs.getString("CSLevelName"));
@@ -381,7 +380,6 @@ public class CSLevelSetting {
                 st.setInt(1, year);
                 ResultSet rs = st.executeQuery();
                 while (rs.next()) {
-                    // CSLevel_list.add(rs.getString("CSLevelID"));
                     CSLevelIDListDuplicate[tmpCount] = rs.getString("CSLevelID");
                     tmpCount++;
                 }
@@ -402,7 +400,6 @@ public class CSLevelSetting {
             length = removeDuplicateElementsString(CSLevelIDListDuplicate, length);
 
             for (int i = 0; i < length; i++) {
-                //CSLevel_list.add(CSLevelIDListDuplicate[i]);
 
                 try {
                     Class.forName("com.mysql.cj.jdbc.Driver");
@@ -442,7 +439,6 @@ public class CSLevelSetting {
             st.setString(3, assActivityID);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
-                // CSLevel_list.add(rs.getString("CSLevelID"));
                 assID = rs.getString("assID");
             }
 
@@ -518,9 +514,9 @@ public class CSLevelSetting {
         Boolean checkboxChecked = false;
         String csid1 = "";
         int verifyRecord = 0;
-        
+
         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-         int yearSystem = Integer.valueOf(systemYear);
+        int yearSystem = Integer.valueOf(systemYear);
 
         //when page onload, need to show previous(2017) record, 
         //so for year 2018 which have not record in db temporaily become 2017
@@ -555,7 +551,6 @@ public class CSLevelSetting {
             disabledReset = true;
         }
 
-        //newcslevelname = tmpYear + "x";
         //get project checked
         csid = matchCSLevelID();
         assactivityid = "AA1";
@@ -880,7 +875,6 @@ public class CSLevelSetting {
     //navigation bar purpose
     public String goToNextPage() {
 
-//        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ajax Update"));
         counterReset = 1;
 
         reset();
@@ -897,9 +891,9 @@ public class CSLevelSetting {
                 context.addMessage(null, new FacesMessage("Reset successful!"));
                 break;
         }
-        
+
         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-         int yearSystem = Integer.valueOf(systemYear);
+        int yearSystem = Integer.valueOf(systemYear);
 
         //set default value
         year = yearSystem;

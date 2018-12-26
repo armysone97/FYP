@@ -155,7 +155,6 @@ public class Login {
         Boolean verify = false;
         Boolean verify1 = false;
         String roleTypes = "";
-//        String nextPage = "";
 
         int lengthRoleList = get_roleCount(staffID);
 
@@ -172,7 +171,6 @@ public class Login {
 
             while (rs.next()) {
                 count += 1;
-                //  context.addMessage(null, new FacesMessage("success1"));
 
                 roleList[tmp] = rs.getString("roleID");
                 tmp++;
@@ -201,7 +199,6 @@ public class Login {
                     context.addMessage(null, new FacesMessage("Login Successful!"));
 
                 } else if (role.equals("Evaluator")) {
-//                    nextPage = "WorkloadClaimApplication";
                     nextPage = "ProfileManagement";
                     globalStaffID = username;
                     globalCounter = 1;
@@ -209,7 +206,6 @@ public class Login {
                     context.addMessage(null, new FacesMessage("Login Successful!"));
 
                 }
-//                nextPage = "login" + role;
 
                 break;
             }
@@ -228,7 +224,6 @@ public class Login {
         FacesContext context = FacesContext.getCurrentInstance();
         Boolean verify = false;
         String staffID = "";
-//        String nextPage = "";
 
         if (username.equals("") || password.equals("")) {
             context.addMessage(null, new FacesMessage("Username or password cannot be empty, please try again!"));
@@ -268,8 +263,6 @@ public class Login {
     //navigation bar purpose
     public String goToNextPage() {
 
-//        FacesContext context = FacesContext.getCurrentInstance();
-//        context.addMessage(null, new FacesMessage("Logout successful!"));
         counterReset = 1;
 
         reset();
@@ -299,9 +292,4 @@ public class Login {
 
         MaintainSchoolMenu.setGlobalCounter(0);
     }
-
-//    public void main(String args[]) {
-//
-//        verifyUser();
-//    }
 }

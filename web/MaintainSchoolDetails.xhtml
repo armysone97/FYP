@@ -44,7 +44,7 @@
 
                     <p:menuitem title="Click to redirect to Evaluator Personal Details page" value="EVALUATOR MANAGEMENT" action="#{evaluatorPersonalDetails.goToNextPage()}" />
                     <p:menuitem title="Click to redirect to Workload Allocation page" value="WORKLOAD ALLOCATION" action="#{evaluatorWorkloadAllocation.goToNextPage()}" />
-                     <p:submenu label="REPORT">
+                    <p:submenu label="REPORT">
                         <p:menuitem title="Click to redirect to School Workload Allocation Report page" value="School Workload Allocation Report" action="#{workloadReport.goToNextPage()}" />
                         <p:menuitem title="Click to redirect to Evaluator Workload Allocation Report page" value="Evaluator Workload Allocation Report" action="#{generateReport.goToNextPage()}" />
                         <p:menuitem title="Click to redirect to Workload Claim Report page" value="Workload Claim Report" action="#{workloadClaimReport.goToNextPage()}" />
@@ -162,17 +162,14 @@
                                 <th align="left">
                                     <h:outputText id="lblYear" value="Year : "  styleClass="lblStyle"/> 
 
-                                    <!--<th colspan="3" align="left">-->
                                     &nbsp;&nbsp;&nbsp;      <h:selectOneMenu title="Select year"  value="#{maintainSchoolDetails.year}" styleClass="ddlSmallSpecialStyle" disabled="#{maintainSchoolDetails.disabledEnrol}">
                                         <f:selectItems value="#{maintainSchoolDetails.get_year()}"  />
                                         <!--valuechangelistener-->
-                                        <!--<f:ajax listener="#{rateSetting.yearChanged()}" render="dataTableStudNum lblCSLevelNewOutput lblTotalStudentNewOutput row1 row2"/>-->
                                     </h:selectOneMenu> 
 
                                     &nbsp;&nbsp;&nbsp;    <h:commandButton title="Click to show CS level"  id="btnShowllk" action="#{maintainSchoolDetails.callCSLevel()}"  value="Show" styleClass="buttonShowStyle" disabled="#{maintainSchoolDetails.disabledEnrol}">
-                                     </h:commandButton>
+                                    </h:commandButton>
                                 </th>
-                                <!--</th>-->
                             </tr> 
                         </table>
 

@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -74,7 +75,11 @@ public class MaintainTeacher {
     public MaintainTeacher() {
         this.state = "Pulau Pinang";
         this.school = "SJK Air Itam";
-        this.year = 2018;
+
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
+        this.year = yearSystem;
         this.commYear = 0;
         this.teacher = "Teoh Wei Ran";
         this.status = "Available";
@@ -1121,11 +1126,15 @@ public class MaintainTeacher {
 
         Boolean verify = false;
 
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT schoolCSMapID FROM schoolcsmap WHERE schoolID = ? AND year = '2018'");
+            PreparedStatement st = con.prepareStatement("SELECT schoolCSMapID FROM schoolcsmap WHERE schoolID = ? AND year = ?");
             st.setString(1, schoolID);
+            st.setInt(2, yearSystem);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -1187,6 +1196,9 @@ public class MaintainTeacher {
 
         Boolean verifyRecord = verifyRecord(schoolID);
 
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
         if (verifyRecord) { //means got 2018 data 
             lengthYearListEnhance = lengthYearList;
 //            context.addMessage(null, new FacesMessage("bbb"));
@@ -1202,7 +1214,7 @@ public class MaintainTeacher {
         if (verifyRecord) { //means got 2018 data 
             //  lengthYearListEnhance = lengthYearList;
         } else {
-            yearListDuplicate[0] = 2018;
+            yearListDuplicate[0] = yearSystem;
             tmp++;
         }
 
@@ -1933,8 +1945,11 @@ public class MaintainTeacher {
         String[] csList = new String[csListLength]; //3. declare school cs map id array
         String csID = "", csName = "";
 
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
         //   scList = matchSchoolCSMapID1(thID, scListLength); //4. find school cs map id based on teacher id
-        if ((verify && year != 2018) || (verify && year == 2018)) {
+        if ((verify && year != yearSystem) || (verify && year == yearSystem)) {
 
             status = matchStatus(thID);
             disabledDdl = false;
@@ -2613,7 +2628,11 @@ public class MaintainTeacher {
         state = "Pulau Pinang";
         school = "SJK Air Itam";
         schoolNameDefault = "SJK Air Itam";
-        year = 2018;
+
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
+        year = yearSystem;
         commYear = 0;
         teacher = "Teoh Wei Ran";
         studNum = 0;
@@ -2663,7 +2682,7 @@ public class MaintainTeacher {
             newTeacherStudNum = 0;
             newTeacherCSLevel = "CS Level 1";
             teacherIDNameChanged();
-            
+
 //            newTeacherStatus = "Available";
 //            get_newTeacherIDName();
         }
@@ -2719,8 +2738,11 @@ public class MaintainTeacher {
 
             int[] studNumList = new int[csListLength];
 
+            String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+            int yearSystem = Integer.valueOf(systemYear);
+
             //   scList = matchSchoolCSMapID1(thID, scListLength); //4. find school cs map id based on teacher id
-            if ((verify && year != 2018) || (verify && year == 2018)) {
+            if ((verify && year != yearSystem) || (verify && year == yearSystem)) {
 
                 status = matchStatus(thID);
                 disabledDdl = false;

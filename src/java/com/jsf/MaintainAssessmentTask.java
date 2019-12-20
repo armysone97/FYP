@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -58,7 +59,11 @@ public class MaintainAssessmentTask {
     public MaintainAssessmentTask() {
         this.state = "Pulau Pinang";
         this.school = "SJK Air Itam";
-        this.year = 2018;
+
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
+        this.year = yearSystem;
         this.teacher = "Teoh Wei Ran";
         this.schoolNameDefault = "SJK Air Itam";
         this.teacherNameDefault = "Teoh Wei Ran";
@@ -455,7 +460,7 @@ public class MaintainAssessmentTask {
         length = removeDuplicateElementsString(teacherIDListDuplicate, length);
 
         int teacherNameDefaultCount = 0;
-        
+
         //finally due to teacherID is an array, need to get the teacherName in for loop
         //last, add teacherName into ddl
         for (int i = 0; i < length; i++) {
@@ -469,8 +474,8 @@ public class MaintainAssessmentTask {
 
                 while (rs.next()) {
                     teacher_list.add(rs.getString("teacherName"));
-                    
-                       //valuechangelistener purpose
+
+                    //valuechangelistener purpose
                     if (teacherNameDefaultCount == 0) {
                         teacherNameDefault = rs.getString("teacherName");
                         teacherNameDefaultCount++;
@@ -965,16 +970,6 @@ public class MaintainAssessmentTask {
         return CSLevel_list;
     }
 
-    public void disabledOrEnable() {
-        if (year == 2018) {
-            disabledNumSampleAss = false;
-        } else {
-            disabledNumSampleAss = true;
-        }
-
-        counterDataTable = 1;
-    }
-
     //update numSampleAss in teachercsmap table
     public void updateNumSampleAss() {
 
@@ -1078,7 +1073,11 @@ public class MaintainAssessmentTask {
         //set default value
         state = "Pulau Pinang";
         school = "SJK Air Itam";
-        year = 2018;
+
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
+        year = yearSystem;
         teacher = "Teoh Wei Ran";
         schoolNameDefault = "SJK Air Itam";
         studEnrol = 0;
@@ -1147,6 +1146,20 @@ public class MaintainAssessmentTask {
         }
 
         return CSID;
+    }
+
+   public void disabledOrEnable123() {
+       
+       String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+         int yearSystem = Integer.valueOf(systemYear);
+       
+        if (year == yearSystem) {
+            disabledNumSampleAss = false;
+        } else {
+            disabledNumSampleAss = true;
+        }
+
+        counterDataTable = 1;
     }
 
     //datatable
@@ -1247,7 +1260,7 @@ public class MaintainAssessmentTask {
                         numSampleAssList[i] = numSampleAssConstant;
                     }
                 }
-                
+
 //                String[] sortArr = new String[csList.length];
 //
 //                for (int i = 0; i < csList.length; i++) {
@@ -1262,7 +1275,6 @@ public class MaintainAssessmentTask {
 //                    studEnrolList[i] = parts[1]; //cannot work coz int cannot convert to string
 //                    numSampleAssList[i] = parts[2]; //cannot work coz int cannot convert to string
 //                }
-
                 cslevelList = new ArrayList();
 
                 for (int i = 0; i < csList.length; i++) {
@@ -1300,33 +1312,33 @@ public class MaintainAssessmentTask {
         school = schoolNameDefault;
         get_teacher();
         get_year();
-        
+
         teacher = teacherNameDefault;
-        
+
         String thID = "";
         thID = matchTeacherID();
-        
+
         status = matchStatus(thID);
     }
 
     public void schoolChanged() {
         get_teacher();
         get_year();
-        
+
         teacher = teacherNameDefault;
-        
+
         String thID = "";
         thID = matchTeacherID();
-        
+
         status = matchStatus(thID);
     }
 
     public void teacherChanged() {
         get_year();
-        
+
         String thID = "";
         thID = matchTeacherID();
-        
+
         status = matchStatus(thID);
     }
 

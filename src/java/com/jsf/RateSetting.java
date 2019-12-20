@@ -45,7 +45,11 @@ public class RateSetting {
     private int counterReset; //growl purpose
 
     public RateSetting() {
-        this.year = 2018;
+        //system date
+         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+         int yearSystem = Integer.valueOf(systemYear);
+         
+        this.year = yearSystem;
         this.disabledTxt = true;
         this.counterReset = 0;
         this.mtHourlyRate = "0.00";
@@ -162,15 +166,15 @@ public class RateSetting {
 
     //get year from db 
     public List<Integer> get_year() {
-        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
-        
         year_list.clear();
         int lengthYearList = get_yearCount();
         int lengthYearListEnhance = 0;
+        
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
 
         Boolean verifyYear = verifyYear();
 
-        if (verifyYear) { //2018 got inside
+        if (verifyYear) { //system year got inside
             lengthYearListEnhance = lengthYearList;
         } else {
             lengthYearListEnhance = lengthYearList + 1;
@@ -182,7 +186,7 @@ public class RateSetting {
         if (verifyYear) { //2018 got inside
             //    lengthYearListEnhance = lengthYearList;
         } else {
-            int yearSystem= Integer.valueOf(systemYear);
+            int yearSystem = Integer.valueOf(systemYear);
             yearListDuplicate[0] = yearSystem;
             tmp++;
         }
@@ -259,66 +263,10 @@ public class RateSetting {
                 tmpYear = year;
                 disabledTxt = true;
             } else {
-                tmpYear = 2017;
+                tmpYear = yearSystem - 1;
                 disabledTxt = false;
             }
-        } 
-//        else if (year == 2019) {
-//
-//            verifyRecord = verifyRecord();
-//
-//            if (verifyRecord > 0) { //means got data inside
-//                tmpYear = year;
-//                disabledTxt = true;
-//            } else {
-//                tmpYear = 2018;
-//                disabledTxt = false;
-//            }
-//        } else if (year == 2020) {
-//
-//            verifyRecord = verifyRecord();
-//
-//            if (verifyRecord > 0) { //means got data inside
-//                tmpYear = year;
-//                disabledTxt = true;
-//            } else {
-//                tmpYear = 2019;
-//                disabledTxt = false;
-//            }
-//        }else if (year == 2021) {
-//
-//            verifyRecord = verifyRecord();
-//
-//            if (verifyRecord > 0) { //means got data inside
-//                tmpYear = year;
-//                disabledTxt = true;
-//            } else {
-//                tmpYear = 2020;
-//                disabledTxt = false;
-//            }
-//        }else if (year == 2022) {
-//
-//            verifyRecord = verifyRecord();
-//
-//            if (verifyRecord > 0) { //means got data inside
-//                tmpYear = year;
-//                disabledTxt = true;
-//            } else {
-//                tmpYear = 2021;
-//                disabledTxt = false;
-//            }
-//        }else if (year == 2023) {
-//
-//            verifyRecord = verifyRecord();
-//
-//            if (verifyRecord > 0) { //means got data inside
-//                tmpYear = year;
-//                disabledTxt = true;
-//            } else {
-//                tmpYear = 2022;
-//                disabledTxt = false;
-//            }
-//        } 
+        }
         else {
             tmpYear = year;
             disabledTxt = true;
@@ -519,9 +467,12 @@ public class RateSetting {
                 context.addMessage(null, new FacesMessage("Reset successful!"));
                 break;
         }
+        
+         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+         int yearSystem = Integer.valueOf(systemYear);
 
         //set default value
-        year = 2018;
+        year = yearSystem;
         numSampleAss = 0;
         mtHourlyRate = "0.00";
         evHourlyRate = "0.00";

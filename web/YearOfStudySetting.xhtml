@@ -66,7 +66,7 @@
                             <h:selectOneMenu title="Select year" styleClass="ddlStyle" value="#{yearOfStudySetting.year}">
                                 <f:selectItems value="#{yearOfStudySetting.get_year()}" />
                                 <!--valuechangelistener-->
-                                <f:ajax listener="#{yearOfStudySetting.yearChanged()}" render="ddlStandard1 ddlStandard2 ddlStandard3 ddlStandard4 ddlStandard5 ddlStandard6 btnReset btnConfirm"/>
+                                <f:ajax listener="#{yearOfStudySetting.yearChanged()}" render="ddlCommYear ddlStandard1 ddlStandard2 ddlStandard3 ddlStandard4 ddlStandard5 ddlStandard6 btnReset btnConfirm"/>
                             </h:selectOneMenu>  
                         </th>
                     </tr>   
@@ -75,7 +75,7 @@
                         <th colspan="2" align="left">
                             <h:outputText id="lblYear1" value="Commencement Year of STEM CS: "  styleClass="lblStyle"/>
 
-                            <h:selectOneMenu title="Select STEM CS commencement year" styleClass="ddlStyle" value="#{yearOfStudySetting.yearComm}">
+                            <h:selectOneMenu id="ddlCommYear" title="Select STEM CS commencement year" styleClass="ddlStyle" value="#{yearOfStudySetting.yearComm}">
                                 <f:selectItems value="#{yearOfStudySetting.get_year()}" /> 
                                 <!--valuechangelistener-->
                                 <f:ajax listener="#{yearOfStudySetting.yearCommChanged()}" render="ddlStandard1 ddlStandard2 ddlStandard3 ddlStandard4 ddlStandard5 ddlStandard6 btnReset btnConfirm"/>

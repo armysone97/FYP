@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -41,8 +42,11 @@ public class YearOfStudySetting {
     private int counterReset; //growl purpose
 
     public YearOfStudySetting() {
-        this.year = 2018;
-        this.yearComm = 2018;
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
+        this.year = yearSystem;
+        this.yearComm = year;
         this.disabledDDL = true;
         this.counterReset = 0;
     }
@@ -169,13 +173,16 @@ public class YearOfStudySetting {
         year_list.clear();
         int lengthYearList = get_yearCount();
 
-        int[] yearListDuplicate = new int[lengthYearList];
+        int[] yearListDuplicate = new int[lengthYearList + 1];
 
 //        FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         int tmp = 0;
 
-        yearListDuplicate[0] = 2018;
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
+        yearListDuplicate[0] = yearSystem;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -267,11 +274,15 @@ public class YearOfStudySetting {
     public int verifyRecord() {
 
         int count = 0;
+        
+        int yearCommTmp = year - yearComm;
+        
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/csdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC", "root", "");
-            PreparedStatement st = con.prepareStatement("SELECT CSLevelID, yearOfStudyID FROM yearofstudycsmap WHERE year = ? and numYearComm = 0");
+            PreparedStatement st = con.prepareStatement("SELECT CSLevelID, yearOfStudyID FROM yearofstudycsmap WHERE year = ? and numYearComm = ?");
             st.setInt(1, year);
+            st.setInt(2, yearCommTmp);
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
@@ -299,9 +310,12 @@ public class YearOfStudySetting {
 
         String csid = "", csname = "", yosid = "";
 
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
         //when page onload, need to show previous(2017) record, 
         //so for year and yearComm 2018 which have not record in db temporaily become 2017
-        if (year == 2018 && yearComm == 2018) {
+//        if (year == yearSystem && yearComm == yearSystem) {
             verifyRecord = verifyRecord();
 
             if (verifyRecord > 0) {
@@ -309,15 +323,15 @@ public class YearOfStudySetting {
                 tmpyearComm = yearComm;
                 disabledDDL = true;
             } else {
-                tmpYear = 2017;
-                tmpyearComm = 2017;
+                tmpYear = yearSystem - 1;
+                tmpyearComm = yearComm - 1;
                 disabledDDL = false;
             }
-        } else {
-            tmpYear = year;
-            tmpyearComm = yearComm;
-            disabledDDL = true;
-        }
+//        } else {
+//            tmpYear = year;
+//            tmpyearComm = yearComm;
+//            disabledDDL = true;
+//        }
 
         numYearComm = tmpYear - tmpyearComm;
 //        context.addMessage(null, new FacesMessage(year + " : " + yearComm + " : " + tmpYear + " : " + tmpyearComm + " : " + numYearComm));
@@ -769,7 +783,6 @@ public class YearOfStudySetting {
 //                context.addMessage(null, new FacesMessage("Add School CS Map Setting for year " + year + " with commencement year " + yearComm + " successful!"));
 //                break;
 //        }
-
     }
 
     //navigation bar purpose
@@ -792,9 +805,12 @@ public class YearOfStudySetting {
                 break;
         }
 
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
         //set default value
-        year = 2018;
-        yearComm = 2018;
+        year = yearSystem;
+        yearComm = year;
         standard1 = "CS Level 1";
         standard2 = "CS Level 1";
         standard3 = "CS Level 1";
@@ -803,7 +819,7 @@ public class YearOfStudySetting {
         standard6 = "CS Level 1";
 
         counterReset = 0;
-        
+
         MaintainSchoolMenu.setGlobalCounter(0);
 
         //set default disabled
@@ -812,12 +828,15 @@ public class YearOfStudySetting {
     }
 
     //valuechangelistener purpose
-    public void yearChanged(){
-        yearComm = 2018;
+    public void yearChanged() {
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
+        yearComm = year;
         yearOfStudyCSMapList();
     }
-    
-    public void yearCommChanged(){
+
+    public void yearCommChanged() {
         yearOfStudyCSMapList();
     }
 }

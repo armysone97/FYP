@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -42,7 +43,10 @@ public class AssessmentTaskSetting {
     private int counterReset; //growl purpose
 
     public AssessmentTaskSetting() {
-        this.year = 2018;
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+          int yearSystem = Integer.valueOf(systemYear);
+          
+        this.year = yearSystem;
         this.cslevel = "CS Level 1";
         this.disabledProject = true;
         this.disabledCollaboration = true;
@@ -142,17 +146,6 @@ public class AssessmentTaskSetting {
         this.groupwork = groupwork;
     }
 
-    //   change text box disabled when click the button
-    public Boolean changeDDLDisabled() {
-        if (year == 2018) {
-            disabledDDL = false;
-        } else {
-            disabledDDL = true;
-        }
-
-        return disabledDDL;
-    }
-
     //remove duplicate element for cs level id array
     public static int removeDuplicateElementsString(String arr[], int n) {
         if (n == 0 || n == 1) {
@@ -224,13 +217,16 @@ public class AssessmentTaskSetting {
         year_list.clear();
         int lengthYearList = get_yearCount();
 
-        int[] yearListDuplicate = new int[lengthYearList];
+        int[] yearListDuplicate = new int[lengthYearList + 1];
 
         FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         int tmp = 0;
 
-        yearListDuplicate[0] = 2018;
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+          int yearSystem = Integer.valueOf(systemYear);
+          
+        yearListDuplicate[0] = yearSystem;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -546,9 +542,12 @@ public class AssessmentTaskSetting {
 
         int verifyRecord = 0;
         String csid1 = "", assid1 = "";
+        
+          String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+          int yearSystem = Integer.valueOf(systemYear);
 
         //when page onload, need to show previous(2017) record, so for year and yearComm 2018 temporaily become 2017
-        if (year == 2018) {
+        if (year == yearSystem) {
 
             csid1 = matchCSLevelID();
             assid1 = verifyAssRecord(csid1);
@@ -562,7 +561,7 @@ public class AssessmentTaskSetting {
                 disabledGroupwork = true;
                 disabledReset = true;
             } else {
-                tmpYear = 2017;
+                tmpYear = yearSystem - 1;
                 disabledProject = false;
                 disabledCollaboration = false;
                 disabledPractical = false;
@@ -854,9 +853,12 @@ public class AssessmentTaskSetting {
                 context.addMessage(null, new FacesMessage("Reset successful!"));
                 break;
         }
+        
+         String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+          int yearSystem = Integer.valueOf(systemYear);
 
         //set default value
-        year = 2018;
+        year = yearSystem;
         cslevel = "CS Level 1";
         project = null;
         collaboration = null;

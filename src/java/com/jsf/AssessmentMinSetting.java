@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -43,7 +44,10 @@ public class AssessmentMinSetting {
     private int counterReset; //growl purpose
 
     public AssessmentMinSetting() {
-        this.year = 2018;
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+        
+        this.year = yearSystem;
         this.cslevel = "CS Level 1";
         this.disabledProject = true;
         this.disabledCollaboration = true;
@@ -213,13 +217,16 @@ public class AssessmentMinSetting {
         year_list.clear();
         int lengthYearList = get_yearCount();
 
-        int[] yearListDuplicate = new int[lengthYearList];
+        int[] yearListDuplicate = new int[lengthYearList + 1];
 
         FacesContext context = FacesContext.getCurrentInstance();
         int count = 1;
         int tmp = 0;
 
-        yearListDuplicate[0] = 2018;
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
+
+        yearListDuplicate[0] = yearSystem;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -487,9 +494,12 @@ public class AssessmentMinSetting {
 
         String csid1 = "";
         int minPerStud1 = 0;
+        
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
 
         //when page onload, need to show previous(2017) record, so for year and yearComm 2018 temporaily become 2017
-        if (year == 2018) {
+        if (year == yearSystem) {
 
             csid1 = matchCSLevelID();
             minPerStud1 = verifyRecord(csid1);
@@ -502,7 +512,7 @@ public class AssessmentMinSetting {
                 disabledGroupwork = true;
                 disabledReset = true;
             } else {
-                tmpYear = 2017;
+                tmpYear = yearSystem - 1;
                 disabledProject = false;
                 disabledCollaboration = false;
                 disabledPractical = false;
@@ -831,9 +841,12 @@ public class AssessmentMinSetting {
                 context.addMessage(null, new FacesMessage("Reset successful!"));
                 break;
         }
+        
+        String systemYear = String.valueOf(Calendar.getInstance().get(Calendar.YEAR));
+        int yearSystem = Integer.valueOf(systemYear);
 
         //set default value
-        year = 2018;
+        year = yearSystem;
         cslevel = "CS Level 1";
         project = 0;
         collaboration = 0;
